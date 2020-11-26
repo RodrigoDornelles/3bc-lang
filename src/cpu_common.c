@@ -6,9 +6,8 @@ void cpu_null(PARAMS_DEFINE){}
 
 void cpu_mode(PARAMS_DEFINE)
 {
-    VALIDATE_NOT_DUALITY
-    AUX_USE_ANY_PARAM
-    internal_memory_cpu_mode_set(0, AUX);
+    VALIDATE_NOT_ADRESS
+    internal_memory_cpu_mode_set(0, value);
 }
 
 void cpu_not_mode(PARAMS_DEFINE)
