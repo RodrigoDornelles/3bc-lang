@@ -1,0 +1,9 @@
+# Mac OSX Files
+.DS_Store
+
+# Windows Files
+Thumbs.db
+
+# Binary  Files
+main
+*.o
