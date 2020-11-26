@@ -34,7 +34,7 @@ void cpu_mode(PARAMS_DEFINE);
 void cpu_not_mode(PARAMS_DEFINE);
 void cpu_not_duality(PARAMS_DEFINE);
 void cpu_not_exist(PARAMS_DEFINE);
-void cpu_not_adress(PARAMS_DEFINE);
+void cpu_not_addres(PARAMS_DEFINE);
 void cpu_not_value(PARAMS_DEFINE);
 void cpu_mode_protected(PARAMS_DEFINE);
 
