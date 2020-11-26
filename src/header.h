@@ -44,6 +44,24 @@ void cpu_debug_strc(PARAMS_DEFINE);
 void cpu_debug_stro(PARAMS_DEFINE);
 void cpu_debug_strx(PARAMS_DEFINE);
 
+// FILE: cpu_input.c
+void cpu_input_stri(PARAMS_DEFINE);
+void cpu_input_strc(PARAMS_DEFINE);
+void cpu_input_stro(PARAMS_DEFINE);
+void cpu_input_strx(PARAMS_DEFINE);
+void cpu_input_silent_stri(PARAMS_DEFINE);
+void cpu_input_silent_strc(PARAMS_DEFINE);
+void cpu_input_silent_stro(PARAMS_DEFINE);
+void cpu_input_silent_strx(PARAMS_DEFINE);
+void cpu_input_password_stri(PARAMS_DEFINE);
+void cpu_input_password_strc(PARAMS_DEFINE);
+void cpu_input_password_stro(PARAMS_DEFINE);
+void cpu_input_password_strx(PARAMS_DEFINE);
+void internal_input_stri(PARAMS_DEFINE);
+void internal_input_strc(PARAMS_DEFINE);
+void internal_input_stro(PARAMS_DEFINE);
+void internal_input_strx(PARAMS_DEFINE);
+
 // FILE: cpu_memory.c
 void cpu_memory_free(PARAMS_DEFINE);
 void cpu_memory_aloc(PARAMS_DEFINE);

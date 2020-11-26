@@ -41,7 +41,7 @@ void cpu_not_value(PARAMS_DEFINE)
     exit(0);   
 }
 
-void cpu_protected(PARAMS_DEFINE)
+void cpu_mode_protected(PARAMS_DEFINE)
 {
     fprintf(stderr, "[!] [3BC] [CRITICAL ERROR] PROTECTED CPU MODE");
     exit(0);   

@@ -4,6 +4,7 @@
 #include "src/register.h"
 #include "src/cpu_common.c"
 #include "src/cpu_debug.c"
+#include "src/cpu_input.c"
 #include "src/cpu_memory.c"
 #include "src/cpu_string.c"
 

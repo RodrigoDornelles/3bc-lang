@@ -1,0 +1,3 @@
+rm a.out
+gcc main.c -o a.out -lncurses
+./a.out
