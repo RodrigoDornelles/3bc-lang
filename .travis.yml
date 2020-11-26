@@ -1,0 +1,9 @@
+language: c
+sudo: false
+script:
+  - gcc -coverage -O0 main.c -o program
+  - ./program
+  - gcov main.c
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
