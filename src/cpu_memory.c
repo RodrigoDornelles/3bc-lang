@@ -2,6 +2,7 @@
 #include "register.h"
 
 val_t memory_aux;
+val_t memory_cpu_mode;
 val_t memory_safe[ (mem_t) MEMORY_SAFE_LIMIT ];
 
 void cpu_memory_free(PARAMS_DEFINE)
@@ -52,4 +53,14 @@ val_t internal_memory_aux_get(PARAMS_DEFINE)
 void internal_memory_aux_set(PARAMS_DEFINE)
 {
     memory_aux = value;
+}
+
+val_t internal_memory_cpu_mode_get(PARAMS_DEFINE)
+{
+    return memory_cpu_mode;
+}
+
+void internal_memory_cpu_mode_set(PARAMS_DEFINE)
+{
+    memory_cpu_mode = value;
 }

@@ -1,6 +1,7 @@
 #pragma once
 #define PARAMS_DEFINE           mem_t addres, val_t value
 #define PARAMS_USE              addres,value
+#define CPU_PACK_PROTECTED()    {&cpu_null,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode}
 #define CPU_PACK0()             {&cpu_null,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_mode}
 #define CPU_PACK1(a)            {&cpu_null,&a,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_mode}
 #define CPU_PACK2(a,b)          {&cpu_null,&a,&b,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_mode}
@@ -14,6 +15,7 @@
 #define MEMORY_SAFE_LIMIT       255
 #define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux(0,addres);else internal_memory_aux_set(0,value);
 #define AUX                     internal_memory_aux_get(0,0)
+#define CMODE                   internal_memory_cpu_mode_get(0,0)
 
 typedef unsigned char reg_t;
 typedef unsigned char mem_t;
@@ -34,6 +36,7 @@ void cpu_not_duality(PARAMS_DEFINE);
 void cpu_not_exist(PARAMS_DEFINE);
 void cpu_not_adress(PARAMS_DEFINE);
 void cpu_not_value(PARAMS_DEFINE);
+void cpu_mode_protected(PARAMS_DEFINE);
 
 // FILE: cpu_debug.c
 void cpu_debug_stri(PARAMS_DEFINE);
@@ -50,6 +53,8 @@ void cpu_memory_size_set(PARAMS_DEFINE);
 void cpu_memory_aux(PARAMS_DEFINE);
 val_t internal_memory_aux_get(PARAMS_DEFINE);
 void internal_memory_aux_set(PARAMS_DEFINE);
+val_t internal_memory_cpu_mode_get(PARAMS_DEFINE);
+void internal_memory_cpu_mode_set(PARAMS_DEFINE);
 
 // FILE: cpu_string.c
 void cpu_string_stri(PARAMS_DEFINE);

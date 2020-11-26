@@ -6,7 +6,9 @@ void cpu_null(PARAMS_DEFINE){}
 
 void cpu_mode(PARAMS_DEFINE)
 {
-
+    VALIDATE_NOT_DUALITY
+    AUX_USE_ANY_PARAM
+    internal_memory_cpu_mode_set(0, AUX);
 }
 
 void cpu_not_mode(PARAMS_DEFINE)
@@ -36,5 +38,11 @@ void cpu_not_addres(PARAMS_DEFINE)
 void cpu_not_value(PARAMS_DEFINE)
 {
     fprintf(stderr, "[!] [3BC] [CRITICAL ERROR] NOT ALOWED VALUE");
+    exit(0);   
+}
+
+void cpu_protected(PARAMS_DEFINE)
+{
+    fprintf(stderr, "[!] [3BC] [CRITICAL ERROR] PROTECTED CPU MODE");
     exit(0);   
 }
