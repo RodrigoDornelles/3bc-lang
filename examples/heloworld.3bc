@@ -1,0 +1,13 @@
+mode 0x03
+strc nill 'h'
+strc nill 'e'
+strc nill 'l'
+strc nill 'l'
+strc nill 'o'
+strc nill ' '
+strc nill 'w'
+strc nill 'o'
+strc nill 'r'
+strc nill 'l'
+strc nill 'd'
+strc nill '!'
