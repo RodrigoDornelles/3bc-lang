@@ -28,3 +28,4 @@
 | `copy` | 3 | 011 | clone value from another address |
 | `getm` | 4 | 100 | get memory size |
 | `setm` | 5 | 101 | set memory size |
+| `auxm` | 6 | 110 | aux memory use |

@@ -2,26 +2,30 @@
 #include "header.h"
 
 
-void cpu_debug_stri(PARAMS)
+void cpu_debug_stri(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    fprintf(stderr, "%i", value);
+    AUX_USE_ANY_PARAM
+    fprintf(stderr, "%i", AUX);
 }
 
-void cpu_debug_strc(PARAMS)
+void cpu_debug_strc(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    fprintf(stderr, "%c", value);
+    AUX_USE_ANY_PARAM
+    fprintf(stderr, "%c", AUX);
 }
 
-void cpu_debug_stro(PARAMS)
+void cpu_debug_stro(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    fprintf(stderr, "%o", value);
+    AUX_USE_ANY_PARAM
+    fprintf(stderr, "%o", AUX);
 }
 
-void cpu_debug_strx(PARAMS)
+void cpu_debug_strx(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    fprintf(stderr, "%x", value);
+    AUX_USE_ANY_PARAM
+    fprintf(stderr, "%x", AUX);
 }
