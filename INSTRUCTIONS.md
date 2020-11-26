@@ -26,3 +26,5 @@
 | `free` | 1 | 001 | realese memory |
 | `aloc` | 2 | 010 | reserve memory and set a value |
 | `copy` | 3 | 011 | clone value from another address |
+| `getm` | 4 | 100 | get memory size |
+| `setm` | 5 | 101 | set memory size |

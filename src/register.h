@@ -14,9 +14,9 @@
 #define STRO 0x01   
 #define STRX 0x04
 
-void (*instructions[][8]) (mem_t addres, mem_t value) = {
-    CPU_PACK(cpu_not_mode, cpu_not_mode, cpu_not_mode, cpu_not_mode),
-    CPU_PACK(cpu_debug_stri, cpu_debug_strc, cpu_debug_stro, cpu_debug_strx),
-    CPU_PACK(cpu_string_stri, cpu_string_strc, cpu_string_stro, cpu_string_strx),
-    CPU_PACK(cpu_memory_free, cpu_memory_aloc, cpu_memory_copy, cpu_null)
+void (*instructions[][8]) (PARAMS) = {
+    CPU_PACK0(),
+    CPU_PACK4(cpu_debug_stri, cpu_debug_strc, cpu_debug_stro, cpu_debug_strx),
+    CPU_PACK4(cpu_string_stri, cpu_string_strc, cpu_string_stro, cpu_string_strx),
+    CPU_PACK5(cpu_memory_free, cpu_memory_aloc, cpu_memory_copy, cpu_memory_size_get, cpu_memory_size_set)
 };
