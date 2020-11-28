@@ -26,7 +26,7 @@
  - [ ] VM Mathematic Basics
  - [ ] VM Labels
  - [ ] VM Conditional Jumps
- - [ ] Textual Interpreter for bitcode
+ - [ ] Textual Interpreter to binary
  - [ ] Programming IDE
  - [ ] Arduino Framework C Transpiler 
 
