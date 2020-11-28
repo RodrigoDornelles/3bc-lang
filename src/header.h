@@ -12,15 +12,14 @@
 #define VALIDATE_NOT_DUALITY    if(addres&&value)cpu_not_duality(addres,value);
 #define VALIDATE_NOT_ADRESS     if(addres)cpu_not_addres(addres,value);
 #define VALIDATE_NOT_VALUES     if(value)cpu_not_value(addres,value);
-#define MEMORY_SAFE_LIMIT       255
-#define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux(0,addres);else internal_memory_aux_set(0,value);
+#define MEMORY_SAFE_LIMIT       (255)
+#define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux_push(addres,0);else cpu_memory_aux_aloc(0,value);
 #define AUX                     internal_memory_aux_get(0,0)
 #define CMODE                   internal_memory_cpu_mode_get(0,0)
 
 typedef unsigned char reg_t;
 typedef unsigned char mem_t;
 typedef unsigned char val_t;
-
 
 struct line_s {
     reg_t reg;
@@ -68,9 +67,14 @@ void cpu_memory_aloc(PARAMS_DEFINE);
 void cpu_memory_copy(PARAMS_DEFINE);
 void cpu_memory_size_get(PARAMS_DEFINE);
 void cpu_memory_size_set(PARAMS_DEFINE);
-void cpu_memory_aux(PARAMS_DEFINE);
+void cpu_memory_aux_free(PARAMS_DEFINE);
+void cpu_memory_aux_aloc(PARAMS_DEFINE);
+void cpu_memory_aux_pull(PARAMS_DEFINE);
+void cpu_memory_aux_push(PARAMS_DEFINE);
+val_t internal_memory_addres_get(PARAMS_DEFINE);
 val_t internal_memory_aux_get(PARAMS_DEFINE);
 void internal_memory_aux_set(PARAMS_DEFINE);
+void internal_memory_aux_free(PARAMS_DEFINE);
 val_t internal_memory_cpu_mode_get(PARAMS_DEFINE);
 void internal_memory_cpu_mode_set(PARAMS_DEFINE);
 

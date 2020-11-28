@@ -60,5 +60,7 @@
 ## MEMORY AUX `mode: 8` ##
 | name | octal | bit | description |
 | ------ | - | --- | - |
-| `pull` | 1 | 001 | pull aux memory to address memory |
-| `push` | 2 | 010 | push aux memory to address memory |
+| `free` | 1 | 001 | realese memory aux |
+| `aloc` | 2 | 010 | set a value in aux memory |
+| `pull` | 3 | 011 | pull aux memory to address memory (addr <- aux) |
+| `push` | 4 | 100 | push aux memory to address memory (addr -> aux) |

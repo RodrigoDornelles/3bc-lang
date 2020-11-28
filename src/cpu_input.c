@@ -87,7 +87,6 @@ void cpu_input_password_strx(PARAMS_DEFINE)
 
 void internal_input_stri(PARAMS_DEFINE)
 {
-    VALIDATE_NOT_DUALITY
     VALIDATE_NOT_VALUES
     int input_val;
     char input_key[2] = "\0";
@@ -100,7 +99,6 @@ void internal_input_stri(PARAMS_DEFINE)
 
 void internal_input_strc(PARAMS_DEFINE)
 {
-    VALIDATE_NOT_DUALITY
     VALIDATE_NOT_VALUES
     int input_val;
     char input_key[2] = "\0";
@@ -111,7 +109,6 @@ void internal_input_strc(PARAMS_DEFINE)
 
 void internal_input_stro(PARAMS_DEFINE)
 {
-    VALIDATE_NOT_DUALITY
     VALIDATE_NOT_VALUES
     int input_val;
     char input_key[2] = "\0";
@@ -124,7 +121,6 @@ void internal_input_stro(PARAMS_DEFINE)
 
 void internal_input_strx(PARAMS_DEFINE)
 {
-    VALIDATE_NOT_DUALITY
     VALIDATE_NOT_VALUES
     int input_val;
     char input_key[2] = "\0";

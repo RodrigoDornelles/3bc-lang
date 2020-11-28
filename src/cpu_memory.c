@@ -35,14 +35,36 @@ void cpu_memory_size_set(PARAMS_DEFINE)
 
 }
 
-void cpu_memory_aux(PARAMS_DEFINE)
+void cpu_memory_aux_free(PARAMS_DEFINE)
 {
-    VALIDATE_NOT_DUALITY
-    if(addres) {
-        cpu_memory_aux(NILL, memory_safe[addres]);
-    }
+    VALIDATE_NOT_ADRESS
+    VALIDATE_NOT_VALUES
+    internal_memory_aux_free(NILL, NILL);
+}
 
-    memory_aux = memory_safe[value];
+void cpu_memory_aux_aloc(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_ADRESS
+    internal_memory_aux_set(NILL, value);
+}
+
+void cpu_memory_aux_pull(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_VALUES
+    cpu_memory_aloc(addres, memory_aux);
+}
+
+void cpu_memory_aux_push(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_VALUES
+    internal_memory_aux_set(NILL, internal_memory_addres_get(addres, NILL));
+}
+
+/***********************************************************************/
+
+val_t internal_memory_addres_get(PARAMS_DEFINE)
+{
+    return memory_safe[addres];
 }
 
 val_t internal_memory_aux_get(PARAMS_DEFINE)
@@ -53,6 +75,11 @@ val_t internal_memory_aux_get(PARAMS_DEFINE)
 void internal_memory_aux_set(PARAMS_DEFINE)
 {
     memory_aux = value;
+}
+
+void internal_memory_aux_free(PARAMS_DEFINE)
+{
+    memory_aux = 0;
 }
 
 val_t internal_memory_cpu_mode_get(PARAMS_DEFINE)
