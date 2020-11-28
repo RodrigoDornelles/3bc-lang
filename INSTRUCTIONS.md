@@ -54,6 +54,10 @@
 | `copy` | 3 | 011 | clone value from another address |
 | `getm` | 4 | 100 | get memory size |
 | `setm` | 5 | 101 | set memory size |
-| `auxm` | 6 | 110 | aux memory use |
 
 ## PROTECTED `mode: 7` `DONT USE` ##
+
+## MEMORY AUX `mode: 8` ##
+| ------ | - | --- | - |
+| `pull` | 1 | 001 | pull aux memory to address memory |
+| `push` | 2 | 010 | push aux memory to address memory |
