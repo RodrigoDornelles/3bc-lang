@@ -58,6 +58,7 @@
 ## PROTECTED `mode: 7` `DONT USE` ##
 
 ## MEMORY AUX `mode: 8` ##
+| name | octal | bit | description |
 | ------ | - | --- | - |
 | `pull` | 1 | 001 | pull aux memory to address memory |
 | `push` | 2 | 010 | push aux memory to address memory |
