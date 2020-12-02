@@ -71,3 +71,5 @@
 | `goto` | 1 | 001 | jump to the label unconditionally |
 | `fgto` | 2 | 010 | jump to the label if aux memory is fill |
 | `zgto` | 3 | 011 | jump to the label if aux memory is empty |
+| `pgto` | 4 | 100 | jump to the label if aux memory is positive |
+| `ngto` | 5 | 101 | jump to the label if aux memory is negative |
