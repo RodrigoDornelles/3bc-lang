@@ -1,7 +1,7 @@
 ## COMMON ##
 | name | octal | bit | description |
 | ------ | - | --- | - |
-| `nill` | 0 | 000 | skip line (null) |
+| `nill` | 0 | 000 | label reference point or skip line (null) |
 | `mode` | 7 | 111 | change cpu register bank |
 
 ## NO MODE `mode: 0` `DONT USE` ##
@@ -64,3 +64,10 @@
 | `aloc` | 2 | 010 | set a value in aux memory |
 | `pull` | 3 | 011 | pull aux memory to address memory (addr <- aux) |
 | `push` | 4 | 100 | push aux memory to address memory (addr -> aux) |
+
+## JUMP `mode: 9` ##
+| name | octal | bit | description |
+| ------ | - | --- | - |
+| `goto` | 1 | 001 | jump to the label unconditionally |
+| `fgto` | 2 | 010 | jump to the label if aux memory is fill |
+| `zgto` | 3 | 011 | jump to the label if aux memory is empty |

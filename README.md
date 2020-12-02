@@ -40,6 +40,7 @@ although the CPU is limited only by 3 bits (8 registers in all), the main idea i
 | [6](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#memory-mode-6) | x86_64 ARM RISC-V | main memory |
 | 7 | `dont use` | protected |
 | [8](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#memory-aux-mode-8) | x86_64 ARM RISC-V | aux memory |
+| [8](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#jump-mode-9) | x86_64 ARM RISC-V | logical jumps |
  * **x86_64:** conventional computer
  * **ARM:** smartphone, tv-box, raspbarry and similars
  * **RISC-V:** Arduino, ESP
