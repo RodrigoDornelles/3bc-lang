@@ -83,3 +83,7 @@ void cpu_string_stri(PARAMS_DEFINE);
 void cpu_string_strc(PARAMS_DEFINE);
 void cpu_string_stro(PARAMS_DEFINE);
 void cpu_string_strx(PARAMS_DEFINE);
+
+// FILE: lang_driver.c
+void lang_driver_init(void);
+void lang_driver_exit(int sig);

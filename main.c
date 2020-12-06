@@ -1,10 +1,3 @@
-#include <stdio.h>
-#ifndef _WIN32
-#include <curses.h> 
-#else
-#include <conio.h> 
-#endif
-
 #include "src/header.h"
 #include "src/register.h"
 #include "src/cpu_common.c"
@@ -12,12 +5,12 @@
 #include "src/cpu_input.c"
 #include "src/cpu_memory.c"
 #include "src/cpu_string.c"
+#include "src/lang_driver.c"
+#include "src/lang_interpreter.c"
 
 int main(void)
 {
-    initscr();
-    cbreak();
-    
+    lang_driver_init();
     (*instructions[MODE_STRING][STRC])(NILL, 'H');
     (*instructions[MODE_STRING][STRC])(NILL, 'E');
     (*instructions[MODE_STRING][STRC])(NILL, 'L');
@@ -30,7 +23,6 @@ int main(void)
     (*instructions[MODE_STRING][STRC])(NILL, 'D');
     (*instructions[MODE_STRING][STRC])(NILL, '!');
     (*instructions[MODE_STRING][STRC])(NILL, '\n');
-
-    refresh();
+    lang_driver_exit(0);
     return 0;
 }
