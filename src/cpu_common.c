@@ -10,6 +10,12 @@ void cpu_mode(PARAMS_DEFINE)
     tape_router_cpu_set(value);
 }
 
+void cpu_label_invalid(PARAMS_DEFINE)
+{
+    fprintf(stderr, "[!] [3BC] [CRITICAL ERROR] LABEL INVALID");
+    lang_driver_exit(EXIT_FAILURE);
+}
+
 void cpu_not_mode(PARAMS_DEFINE)
 {
     fprintf(stderr, "[!] [3BC] [CRITICAL ERROR] EMPUTY CPU MODE");

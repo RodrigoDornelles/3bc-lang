@@ -1,13 +1,20 @@
 #include "header.h"
 #include "register.h"
 
+compass_t tape_last_label;
 compass_t tape_last_line;
 compass_t tape_current_line;
 
+static compass_t* tape_labels;
 struct line_s* tape_master;
 
-void tape_program_add(reg_t reg, mem_t mem, val_t val)
+void tape_program_line_add(reg_t reg, mem_t mem, val_t val)
 {
+    // is a label
+    if (reg == 0 && mem == 0 && val != 0) {
+        tape_program_label_add(CLINE, val);
+        val = 0;
+    }
     tape_master[CELNE].reg = reg;
     tape_master[CELNE].adr = mem;
     tape_master[CELNE].dta = val;
@@ -43,6 +50,7 @@ void tape_program_exe()
 
 void tape_program_destroy()
 {
+    free(tape_labels);
     free(tape_master);
 }
 
@@ -59,4 +67,15 @@ compass_t tape_program_line_get()
 compass_t tape_program_line_end()
 {
     return tape_last_line <= 0? 0: (tape_last_line - 1);
+}
+
+void tape_program_label_add(compass_t line, compass_t label)
+{
+    if (label <= tape_last_label) {
+        cpu_label_invalid(NILL, NILL);
+        return;
+    }
+
+    tape_labels = realloc(tape_labels, sizeof (compass_t) * (label + 1));
+    tape_labels[label] = line;
 }

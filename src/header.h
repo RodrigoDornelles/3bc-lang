@@ -46,6 +46,7 @@ void cpu_not_value(PARAMS_DEFINE);
 void cpu_required_addres(PARAMS_DEFINE);
 void cpu_required_value(PARAMS_DEFINE);
 void cpu_mode_protected(PARAMS_DEFINE);
+void cpu_invalid_label(PARAMS_DEFINE);
 
 // FILE: cpu_debug.c
 void cpu_debug_stri(PARAMS_DEFINE);
@@ -113,13 +114,15 @@ void tape_output_serial_1(reg_t type, val_t value);
 void tape_output_serial_2(reg_t type, val_t value);
 
 // FILE: tape_program.c
-void tape_program_add(reg_t reg, mem_t mem, val_t val);
 void tape_program_resize(void);
 void tape_program_exe(void);
 void tape_program_destroy(void);
 void tape_program_line_set(compass_t line);
+void tape_program_line_add(reg_t reg, mem_t mem, val_t val);
+void tape_program_label_add(compass_t line, compass_t label);
 compass_t tape_program_line_get();
 compass_t tape_program_line_end();
+
 
 // FILE: tape_router.c
 void tape_router_cpu_set(cch_t value);
