@@ -73,6 +73,13 @@ void internal_input_strc(PARAMS_DEFINE);
 void internal_input_stro(PARAMS_DEFINE);
 void internal_input_strx(PARAMS_DEFINE);
 
+// FILE: cpu_jump.c
+void cpu_jump_goto(PARAMS_DEFINE);
+void cpu_jump_fgto(PARAMS_DEFINE);
+void cpu_jump_zgto(PARAMS_DEFINE);
+void cpu_jump_pgto(PARAMS_DEFINE);
+void cpu_jump_ngto(PARAMS_DEFINE);
+
 // FILE: cpu_memory.c
 void cpu_memory_free(PARAMS_DEFINE);
 void cpu_memory_aloc(PARAMS_DEFINE);
@@ -122,6 +129,8 @@ void tape_program_line_add(reg_t reg, mem_t mem, val_t val);
 void tape_program_label_add(compass_t line, compass_t label);
 compass_t tape_program_line_get();
 compass_t tape_program_line_end();
+void tape_program_target_label(compass_t label);
+void tape_program_target_line(compass_t line);
 
 
 // FILE: tape_router.c

@@ -76,6 +76,15 @@ void tape_program_label_add(compass_t line, compass_t label)
         return;
     }
 
-    tape_labels = realloc(tape_labels, sizeof (compass_t) * (label + 1));
+    tape_last_label = label + 1;
+    tape_labels = realloc(tape_labels, sizeof (compass_t) * (tape_last_label));
     tape_labels[label] = line;
+}
+
+void tape_program_target_label(compass_t label)
+{
+    if (label < tape_last_label) {
+        tape_program_line_set(tape_labels[label]);
+        return;
+    }
 }

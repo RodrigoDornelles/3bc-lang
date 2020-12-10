@@ -10,6 +10,7 @@
 #define MODE_MEMORY             0x6
 #define MODE_PROTECTED          0x7
 #define MODE_MEMORY_AUX         0x8
+#define MODE_JUMP               0x9
 
 #define NILL 0x00
 #define MODE 0X07
@@ -26,6 +27,11 @@
 #define GETM 0x04
 #define SETM 0x05
 #define AUXM 0x06
+#define GOTO 0x01
+#define FGTO 0x02
+#define ZGTO 0x03
+#define PGTO 0x04
+#define NGTO 0x05
 
 void (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK0(),
@@ -36,5 +42,6 @@ void (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK4(cpu_input_password_stri, cpu_input_password_strc, cpu_input_password_stro, cpu_input_password_strx),
     CPU_PACK5(cpu_memory_free, cpu_memory_aloc, cpu_memory_copy, cpu_memory_size_get, cpu_memory_size_set),
     CPU_PACK_PROTECTED(),
-    CPU_PACK4(cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_push)
+    CPU_PACK4(cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_push),
+    CPU_PACK5(cpu_jump_goto, cpu_jump_fgto, cpu_jump_zgto, cpu_jump_pgto, cpu_jump_ngto)
 };
