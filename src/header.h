@@ -16,8 +16,10 @@
 #define REQUIRED_VALUE          if(value==0)cpu_required_value(addres,value);
 #define MEMORY_SAFE_LIMIT       (255)
 #define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux_push(addres,0);else cpu_memory_aux_aloc(0,value);
-#define AUX                     tape_aux_get()
-#define CMODE                   tape_router_cpu_get()
+#define AUX                     tape_aux_get()              // memory auxilary
+#define CMODE                   tape_router_cpu_get()       // current cpu mode
+#define CLINE                   tape_program_line_get()     // current line
+#define CELNE                   tape_program_line_end()     // current end of lines
 
 // types
 typedef unsigned int compass_t;
@@ -115,6 +117,9 @@ void tape_program_add(reg_t reg, mem_t mem, val_t val);
 void tape_program_resize(void);
 void tape_program_exe(void);
 void tape_program_destroy(void);
+void tape_program_line_set(compass_t line);
+compass_t tape_program_line_get();
+compass_t tape_program_line_end();
 
 // FILE: tape_router.c
 void tape_router_cpu_set(cch_t value);

@@ -6,6 +6,7 @@
 #include <conio.h> 
 #endif
 #include "header.h"
+#include "register.h"
 
 
 void cpu_input_stri(PARAMS_DEFINE)

@@ -8,9 +8,9 @@ struct line_s* tape_master;
 
 void tape_program_add(reg_t reg, mem_t mem, val_t val)
 {
-    tape_master[tape_last_line].reg = reg;
-    tape_master[tape_last_line].adr = mem;
-    tape_master[tape_last_line].dta = val;
+    tape_master[CELNE].reg = reg;
+    tape_master[CELNE].adr = mem;
+    tape_master[CELNE].dta = val;
 }
 
 void tape_program_resize()
@@ -30,12 +30,12 @@ void tape_program_exe()
         CMODE
     ][  
         // second index use function pointer register
-        tape_master[tape_current_line].reg
+        tape_master[CLINE].reg
     ])(
         // param for function: mem_t addres
-        tape_master[tape_current_line].adr,
+        tape_master[CLINE].adr,
         // param for function: val_t value
-        tape_master[tape_current_line].dta
+        tape_master[CLINE].dta
     );
 
     tape_current_line += 1;
@@ -44,4 +44,19 @@ void tape_program_exe()
 void tape_program_destroy()
 {
     free(tape_master);
+}
+
+void tape_program_line_set(compass_t line)
+{
+    tape_current_line = line;
+}
+
+compass_t tape_program_line_get()
+{
+    return tape_current_line;
+}
+
+compass_t tape_program_line_end()
+{
+    return tape_last_line <= 0? 0: (tape_last_line - 1);
 }
