@@ -50,6 +50,7 @@ void cpu_debug_stri(PARAMS_DEFINE);
 void cpu_debug_strc(PARAMS_DEFINE);
 void cpu_debug_stro(PARAMS_DEFINE);
 void cpu_debug_strx(PARAMS_DEFINE);
+void cpu_debug_stru(PARAMS_DEFINE);
 
 // FILE: cpu_input.c
 void cpu_input_stri(PARAMS_DEFINE);
@@ -85,6 +86,7 @@ void cpu_string_stri(PARAMS_DEFINE);
 void cpu_string_strc(PARAMS_DEFINE);
 void cpu_string_stro(PARAMS_DEFINE);
 void cpu_string_strx(PARAMS_DEFINE);
+void cpu_string_stru(PARAMS_DEFINE);
 
 // FILE: lang_line.c
 void lang_line(reg_t reg, mem_t mem, val_t val);
@@ -102,11 +104,17 @@ void tape_aux_free(void);
 val_t tape_memory_get(mem_t addres);
 void tape_memory_set(mem_t addres, val_t value);
 void tape_memory_free(mem_t addres);
+void tape_memory_destroy(void);
+
+// FILE: tape_output.c
+void tape_output_serial_1(reg_t type, val_t value);
+void tape_output_serial_2(reg_t type, val_t value);
 
 // FILE: tape_program.c
 void tape_program_add(reg_t reg, mem_t mem, val_t val);
-void tape_program_resize();
-void tape_program_exe();
+void tape_program_resize(void);
+void tape_program_exe(void);
+void tape_program_destroy(void);
 
 // FILE: tape_router.c
 void tape_router_cpu_set(cch_t value);
