@@ -10,7 +10,7 @@
 void lang_driver_init()
 {
     signal(SIGINT, lang_driver_exit);
-    newterm(NULL, stderr, stdin);   /* Start curses mode */
+    newterm(NULL, stdout, stdin);   /* Start curses mode */
     keypad(stdscr, TRUE);           /* We get F1, F2...  */
     cbreak();                       /* Characters buffering disabled */
     raw();                          /* Line buffering disabled */
