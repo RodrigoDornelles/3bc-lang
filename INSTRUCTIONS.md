@@ -13,6 +13,7 @@
 | `strc` | 2 | 010 | log ascii character |
 | `stro` | 3 | 011 | log literal number in octal |
 | `strx` | 4 | 100 | log literal number in hexadecimal |
+| `stru` | 5 | 001 | log literal number (unsigned) |
 
 ## STRING `mode: 2` ##
 | name | octal | bit | description |
@@ -21,6 +22,7 @@
 | `strc` | 2 | 010 | put ascii character |
 | `stro` | 3 | 011 | put literal number in octal |
 | `strx` | 4 | 100 | put literal number in hexadecimal |
+| `stru` | 5 | 001 | put literal number (unsigned) |
 
 ## INPUT `mode: 3` ##
 | name | octal | bit | description |
