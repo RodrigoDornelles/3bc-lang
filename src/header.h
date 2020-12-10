@@ -9,17 +9,20 @@
 #define CPU_PACK4(a,b,c,d)      {&cpu_null,&a,&b,&c,&d,&cpu_not_exist,&cpu_not_exist,&cpu_mode}
 #define CPU_PACK5(a,b,c,d,e)    {&cpu_null,&a,&b,&c,&d,&e,&cpu_not_exist,&cpu_mode}
 #define CPU_PACK6(a,b,c,d,e,f)  {&cpu_null,&a,&b,&c,&d,&e,&f,&cpu_mode}
-#define VALIDATE_NOT_DUALITY    if(addres&&value)cpu_not_duality(addres,value);
-#define VALIDATE_NOT_ADRESS     if(addres)cpu_not_addres(addres,value);
-#define VALIDATE_NOT_VALUES     if(value)cpu_not_value(addres,value);
+#define VALIDATE_NOT_DUALITY    if(addres!=0&&value!=0)cpu_not_duality(addres,value);
+#define VALIDATE_NOT_ADRESS     if(addres!=0)cpu_not_addres(addres,value);
+#define VALIDATE_NOT_VALUES     if(value!=0)cpu_not_value(addres,value);
+#define REQUIRED_ADDRESS        if(addres==0)cpu_required_addres(addres,value);
+#define REQUIRED_VALUE          if(value==0)cpu_required_value(addres,value);
 #define MEMORY_SAFE_LIMIT       (255)
 #define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux_push(addres,0);else cpu_memory_aux_aloc(0,value);
-#define AUX                     internal_memory_aux_get(0,0)
-#define CMODE                   internal_memory_cpu_mode_get(0,0)
+#define AUX                     tape_aux_get()
+#define CMODE                   tape_router_cpu_get()
 
 typedef unsigned char reg_t;
 typedef unsigned char mem_t;
 typedef unsigned char val_t;
+typedef unsigned char cch_t;
 
 struct line_s {
     reg_t reg;
@@ -35,6 +38,8 @@ void cpu_not_duality(PARAMS_DEFINE);
 void cpu_not_exist(PARAMS_DEFINE);
 void cpu_not_addres(PARAMS_DEFINE);
 void cpu_not_value(PARAMS_DEFINE);
+void cpu_required_addres(PARAMS_DEFINE);
+void cpu_required_value(PARAMS_DEFINE);
 void cpu_mode_protected(PARAMS_DEFINE);
 
 // FILE: cpu_debug.c
@@ -71,12 +76,6 @@ void cpu_memory_aux_free(PARAMS_DEFINE);
 void cpu_memory_aux_aloc(PARAMS_DEFINE);
 void cpu_memory_aux_pull(PARAMS_DEFINE);
 void cpu_memory_aux_push(PARAMS_DEFINE);
-val_t internal_memory_addres_get(PARAMS_DEFINE);
-val_t internal_memory_aux_get(PARAMS_DEFINE);
-void internal_memory_aux_set(PARAMS_DEFINE);
-void internal_memory_aux_free(PARAMS_DEFINE);
-val_t internal_memory_cpu_mode_get(PARAMS_DEFINE);
-void internal_memory_cpu_mode_set(PARAMS_DEFINE);
 
 // FILE: cpu_string.c
 void cpu_string_stri(PARAMS_DEFINE);
@@ -87,3 +86,17 @@ void cpu_string_strx(PARAMS_DEFINE);
 // FILE: lang_driver.c
 void lang_driver_init(void);
 void lang_driver_exit(int sig);
+
+// FILE: tape_aux.c
+val_t tape_aux_get(void);
+void tape_aux_set(val_t value);
+void tape_aux_free(void);
+
+// FILE: tape_memory.c
+val_t tape_memory_get(mem_t addres);
+void tape_memory_set(mem_t addres, val_t value);
+void tape_memory_free(mem_t addres);
+
+// FILE: tape_router.c
+void tape_router_cpu_set(cch_t value);
+cch_t tape_router_cpu_get(void);

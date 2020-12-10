@@ -7,7 +7,7 @@ void cpu_null(PARAMS_DEFINE){}
 void cpu_mode(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
-    internal_memory_cpu_mode_set(0, value);
+    tape_router_cpu_set(value);
 }
 
 void cpu_not_mode(PARAMS_DEFINE)
@@ -37,6 +37,18 @@ void cpu_not_addres(PARAMS_DEFINE)
 void cpu_not_value(PARAMS_DEFINE)
 {
     fprintf(stderr, "[!] [3BC] [CRITICAL ERROR] NOT ALOWED VALUE");
+    lang_driver_exit(EXIT_FAILURE); 
+}
+
+void cpu_required_addres(PARAMS_DEFINE)
+{
+    fprintf(stderr, "[!] [3BC] [CRITICAL ERROR] ADDRES IS REQUIRED");
+    lang_driver_exit(EXIT_FAILURE);
+}
+
+void cpu_required_value(PARAMS_DEFINE)
+{
+    fprintf(stderr, "[!] [3BC] [CRITICAL ERROR] VALUE IS REQUIRED");
     lang_driver_exit(EXIT_FAILURE); 
 }
 

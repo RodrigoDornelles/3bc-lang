@@ -6,7 +6,13 @@
 #include "src/cpu_memory.c"
 #include "src/cpu_string.c"
 #include "src/lang_driver.c"
-#include "src/lang_interpreter.c"
+#include "src/parser_interpreter.c"
+#include "src/parser_transpiler.c"
+#include "src/parser_compiler.c"
+#include "src/tape_aux.c"
+#include "src/tape_memory.c"
+#include "src/tape_program.c"
+#include "src/tape_router.c"
 
 int main(void)
 {
