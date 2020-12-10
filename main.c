@@ -5,6 +5,7 @@
 #include "src/cpu_input.c"
 #include "src/cpu_memory.c"
 #include "src/cpu_string.c"
+#include "src/lang_line.c"
 #include "src/lang_driver.c"
 #include "src/parser_interpreter.c"
 #include "src/parser_transpiler.c"
@@ -17,18 +18,19 @@
 int main(void)
 {
     lang_driver_init();
-    (*instructions[MODE_STRING][STRC])(NILL, 'H');
-    (*instructions[MODE_STRING][STRC])(NILL, 'E');
-    (*instructions[MODE_STRING][STRC])(NILL, 'L');
-    (*instructions[MODE_STRING][STRC])(NILL, 'O');
-    (*instructions[MODE_STRING][STRC])(NILL, ' ');
-    (*instructions[MODE_STRING][STRC])(NILL, 'W');
-    (*instructions[MODE_STRING][STRC])(NILL, 'O');
-    (*instructions[MODE_STRING][STRC])(NILL, 'R');
-    (*instructions[MODE_STRING][STRC])(NILL, 'L');
-    (*instructions[MODE_STRING][STRC])(NILL, 'D');
-    (*instructions[MODE_STRING][STRC])(NILL, '!');
-    (*instructions[MODE_STRING][STRC])(NILL, '\n');
+    lang_line(MODE, NILL, MODE_STRING);
+    lang_line(STRC, NILL, 'H');
+    lang_line(STRC, NILL, 'E');
+    lang_line(STRC, NILL, 'L');
+    lang_line(STRC, NILL, 'L');
+    lang_line(STRC, NILL, 'O');
+    lang_line(STRC, NILL, ' ');
+    lang_line(STRC, NILL, 'W');
+    lang_line(STRC, NILL, 'O');
+    lang_line(STRC, NILL, 'R');
+    lang_line(STRC, NILL, 'L');
+    lang_line(STRC, NILL, 'D');
+    lang_line(STRC, NILL, '!');
     lang_driver_exit(0);
     return 0;
 }

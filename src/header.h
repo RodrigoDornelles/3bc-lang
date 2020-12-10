@@ -19,11 +19,14 @@
 #define AUX                     tape_aux_get()
 #define CMODE                   tape_router_cpu_get()
 
+// types
+typedef unsigned int compass_t;
 typedef unsigned char reg_t;
 typedef unsigned char mem_t;
 typedef unsigned char val_t;
 typedef unsigned char cch_t;
 
+// structs
 struct line_s {
     reg_t reg;
     mem_t adr;
@@ -83,6 +86,9 @@ void cpu_string_strc(PARAMS_DEFINE);
 void cpu_string_stro(PARAMS_DEFINE);
 void cpu_string_strx(PARAMS_DEFINE);
 
+// FILE: lang_line.c
+void lang_line(reg_t reg, mem_t mem, val_t val);
+
 // FILE: lang_driver.c
 void lang_driver_init(void);
 void lang_driver_exit(int sig);
@@ -96,6 +102,11 @@ void tape_aux_free(void);
 val_t tape_memory_get(mem_t addres);
 void tape_memory_set(mem_t addres, val_t value);
 void tape_memory_free(mem_t addres);
+
+// FILE: tape_program.c
+void tape_program_add(reg_t reg, mem_t mem, val_t val);
+void tape_program_resize();
+void tape_program_exe();
 
 // FILE: tape_router.c
 void tape_router_cpu_set(cch_t value);
