@@ -16,3 +16,8 @@ void tape_memory_free(mem_t addres)
 {
     memory_safe[addres] = 0;
 }
+
+void tape_memory_destroy()
+{
+    
+}

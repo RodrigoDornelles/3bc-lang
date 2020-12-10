@@ -20,5 +20,7 @@ void lang_driver_init()
 void lang_driver_exit(int sig)
 {
     refresh();
+    tape_memory_destroy();
+    tape_program_destroy();
     exit(sig);
 }

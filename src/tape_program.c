@@ -40,3 +40,8 @@ void tape_program_exe()
 
     tape_current_line += 1;
 }
+
+void tape_program_destroy()
+{
+    free(tape_master);
+}
