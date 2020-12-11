@@ -24,7 +24,7 @@
  - [X] VM Input characters
  - [X] VM Memory Allocation 
  - [ ] VM Mathematic Basics
- - [ ] VM Labels
+ - [X] VM Labels
  - [ ] VM Conditional Jumps
  - [ ] Textual Interpreter to binary
  - [ ] Programming IDE
