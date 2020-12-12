@@ -5,9 +5,10 @@
 Thumbs.db
 
 # Binary  Files
+bin/
 *.out
 main
 *.o
 
 # IDE FILES
-.vscode
+#.vscode comenta se n eu n consigo ver

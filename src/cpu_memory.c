@@ -18,23 +18,17 @@ void cpu_memory_aloc(PARAMS_DEFINE)
 /**
  * @deprecated
  */
-void cpu_memory_copy(PARAMS_DEFINE)
+void cpu_memory_srev(PARAMS_DEFINE)
 {
 
 }
 
-/**
- * @deprecated
- */
-void cpu_memory_size_get(PARAMS_DEFINE)
+void cpu_memory_smin(PARAMS_DEFINE)
 {
     
 }
 
-/**
- * @deprecated
- */
-void cpu_memory_size_set(PARAMS_DEFINE)
+void cpu_memory_smax(PARAMS_DEFINE)
 {
 
 }

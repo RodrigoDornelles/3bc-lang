@@ -83,9 +83,9 @@ void cpu_jump_ngto(PARAMS_DEFINE);
 // FILE: cpu_memory.c
 void cpu_memory_free(PARAMS_DEFINE);
 void cpu_memory_aloc(PARAMS_DEFINE);
-void cpu_memory_copy(PARAMS_DEFINE);
-void cpu_memory_size_get(PARAMS_DEFINE);
-void cpu_memory_size_set(PARAMS_DEFINE);
+void cpu_memory_srev(PARAMS_DEFINE);
+void cpu_memory_smin(PARAMS_DEFINE);
+void cpu_memory_smax(PARAMS_DEFINE);
 void cpu_memory_aux_free(PARAMS_DEFINE);
 void cpu_memory_aux_aloc(PARAMS_DEFINE);
 void cpu_memory_aux_pull(PARAMS_DEFINE);
@@ -113,6 +113,7 @@ void tape_aux_free(void);
 // FILE: tape_memory.c
 val_t tape_memory_get(mem_t addres);
 void tape_memory_set(mem_t addres, val_t value);
+void tape_memory_resize(mem_t addres);
 void tape_memory_free(mem_t addres);
 void tape_memory_destroy(void);
 

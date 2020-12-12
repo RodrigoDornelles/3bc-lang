@@ -23,9 +23,9 @@
 #define ALOC 0x02
 #define PULL 0x03
 #define PUSH 0x04
-#define COPY 0x03
-#define GETM 0x04
-#define SETM 0x05
+#define SREV 0x03
+#define SMIN 0x04
+#define SMAX 0x05
 #define AUXM 0x06
 #define GOTO 0x01
 #define FGTO 0x02
@@ -40,7 +40,7 @@ void (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK4(cpu_input_stri, cpu_input_strc, cpu_input_stro, cpu_input_strx),
     CPU_PACK4(cpu_input_silent_stri, cpu_input_silent_strc, cpu_input_silent_stro, cpu_input_silent_strx),
     CPU_PACK4(cpu_input_password_stri, cpu_input_password_strc, cpu_input_password_stro, cpu_input_password_strx),
-    CPU_PACK5(cpu_memory_free, cpu_memory_aloc, cpu_memory_copy, cpu_memory_size_get, cpu_memory_size_set),
+    CPU_PACK5(cpu_memory_free, cpu_memory_aloc, cpu_memory_srev, cpu_memory_smin, cpu_memory_smax),
     CPU_PACK_PROTECTED(),
     CPU_PACK4(cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_push),
     CPU_PACK5(cpu_jump_goto, cpu_jump_fgto, cpu_jump_zgto, cpu_jump_pgto, cpu_jump_ngto)
