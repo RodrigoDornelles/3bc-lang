@@ -1,4 +1,5 @@
 #include "header.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -25,7 +26,7 @@ val_t tape_memory_get(mem_t addres)
         tape_memory_set(addres, 0);
     }
 
-    return &(memory_pointers[addres].p)->value;
+    return (val_t) &(memory_pointers[addres].p)->value;
 }
 
 /**
@@ -40,8 +41,8 @@ void tape_memory_set(mem_t addres, val_t value)
         memory_pointers[addres].alocated = true;
     }
 
-    write = &memory_pointers[addres].p;
-    write->value = value;
+    //write = &memory_pointers[addres].p;
+    //write->value = value;
 }
 
 void tape_memory_resize(mem_t addres)
@@ -58,7 +59,7 @@ void tape_memory_resize(mem_t addres)
  */
 void tape_memory_free(mem_t addres)
 {
-    //free(memory_pointers[addres].p) sef fault;
+    free(memory_pointers[addres].p);
     memory_pointers[addres].alocated = false;
 }
 

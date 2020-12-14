@@ -21,10 +21,12 @@
 int main(void)
 {
     lang_driver_init();
-
-    lang_line(NILL, NILL, 0x1);
+    lang_line(MODE, NILL, MODE_MEMORY);
+    lang_line(ALOC, 0x01, 'H');
+    
     lang_line(MODE, NILL, MODE_STRING);
-    lang_line(STRC, NILL, 'H');
+    lang_line(NILL, NILL, 0x1);
+    lang_line(STRC, 0x01, NILL);
     lang_line(STRC, NILL, 'E');
     lang_line(STRC, NILL, 'L');
     lang_line(STRC, NILL, 'L');

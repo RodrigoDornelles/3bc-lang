@@ -11,4 +11,4 @@ main
 *.o
 
 # IDE FILES
-#.vscode comenta se n eu n consigo ver
+.vscode
