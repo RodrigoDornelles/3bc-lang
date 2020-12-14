@@ -111,11 +111,15 @@ void tape_aux_set(val_t value);
 void tape_aux_free(void);
 
 // FILE: tape_memory.c
+void tape_memory_reversable_toggle(mem_t addres, val_t value);
+void tape_memory_value_min(mem_t addres, val_t value);
+void tape_memory_value_max(mem_t addres, val_t value);
 val_t tape_memory_get(mem_t addres);
 void tape_memory_set(mem_t addres, val_t value);
 void tape_memory_resize(mem_t addres);
 void tape_memory_free(mem_t addres);
 void tape_memory_destroy(void);
+
 
 // FILE: tape_output.c
 void tape_output_serial_1(reg_t type, val_t value);

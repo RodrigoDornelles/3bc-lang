@@ -20,17 +20,17 @@ void cpu_memory_aloc(PARAMS_DEFINE)
  */
 void cpu_memory_srev(PARAMS_DEFINE)
 {
-
+    tape_memory_reversable_toggle(addres, value);
 }
 
 void cpu_memory_smin(PARAMS_DEFINE)
 {
-    
+    tape_memory_value_min(addres, value);
 }
 
 void cpu_memory_smax(PARAMS_DEFINE)
 {
-
+    tape_memory_value_max(addres, value);
 }
 
 void cpu_memory_aux_free(PARAMS_DEFINE)
