@@ -5,6 +5,7 @@
 Thumbs.db
 
 # Binary  Files
+bin/
 *.out
 main
 *.o

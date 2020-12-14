@@ -35,12 +35,12 @@ although the CPU is limited only by 3 bits (8 registers in all), the main idea i
 | Channels | Architetures | Description |
 | :------: | :----------: | :----------- |
 | 0 | `dont use` | No Mode |
-| [1](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#debug-mode-1) [2](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#string-mode-2) | x86_64 ARM RISC-V | character output |
-| [3](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#input-mode-3) [4](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#input-silent-mode-4) [5](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#input-silent-mode-4) |  x86_64 ARM | character input |
-| [6](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#memory-mode-6) | x86_64 ARM RISC-V | main memory |
+| [1](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#debug-mode-1) [2](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#string-mode-2) | x86 ARM RISC-V | character output |
+| [3](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#input-mode-3) [4](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#input-silent-mode-4) [5](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#input-silent-mode-4) |  x86 ARM | character input |
+| [6](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#memory-mode-6) | x86 ARM RISC-V | main memory |
 | 7 | `dont use` | protected |
-| [8](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#memory-aux-mode-8) | x86_64 ARM RISC-V | aux memory |
-| [9](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#jump-mode-9) | x86_64 ARM RISC-V | logical jumps |
- * **x86_64:** conventional computer
+| [8](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#memory-aux-mode-8) | x86 ARM RISC-V | aux memory |
+| [9](https://github.com/RodrigoDornelles/3bc-lang/blob/master/INSTRUCTIONS.md#jump-mode-9) | x86 ARM RISC-V | logical jumps |
+ * **x86:** conventional computer
  * **ARM:** smartphone, tv-box, raspbarry and similars
  * **RISC-V:** Arduino, ESP
