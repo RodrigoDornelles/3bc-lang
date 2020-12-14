@@ -26,23 +26,18 @@ val_t tape_memory_get(mem_t addres)
         tape_memory_set(addres, 0);
     }
 
-    return (val_t) &(memory_pointers[addres].p)->value;
+    return (val_t) (*memory_pointers[addres].p).value;
 }
 
-/**
- * @todo remove memory_s* write variable
- */
 void tape_memory_set(mem_t addres, val_t value)
 {
-    static struct memory_s* write;
     tape_memory_resize(addres);
     if (memory_pointers[addres].alocated == false) {
         memory_pointers[addres].p = malloc(sizeof (struct memory_s));
         memory_pointers[addres].alocated = true;
     }
 
-    //write = &memory_pointers[addres].p;
-    //write->value = value;
+    (*memory_pointers[addres].p).value = value;
 }
 
 void tape_memory_resize(mem_t addres)
