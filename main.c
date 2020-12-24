@@ -24,8 +24,8 @@ int main(void)
     lang_line(MODE, NILL, MODE_MEMORY);
     lang_line(ALOC, 0x01, 'H');
     
-    lang_line(MODE, NILL, MODE_STRING);
     lang_line(NILL, NILL, 0x1);
+    lang_line(MODE, NILL, MODE_STRING);
     lang_line(STRC, 0x01, NILL);
     lang_line(STRC, NILL, 'E');
     lang_line(STRC, NILL, 'L');
@@ -43,6 +43,7 @@ int main(void)
     lang_line(MODE, NILL, MODE_JUMP);
     lang_line(GOTO, NILL, 0x01);
 
+    lang_driver_run();
     lang_driver_exit(0);
     return 0;
 }

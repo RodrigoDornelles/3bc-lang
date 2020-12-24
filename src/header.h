@@ -1,4 +1,11 @@
 #pragma once
+
+#include <stdio.h>
+#include <stdbool.h>
+
+#define RETURN_OK               0x1
+#define RETURN_EXIT             0x0
+#define RETURN_DEFINE           char
 #define PARAMS_DEFINE           mem_t addres, val_t value
 #define PARAMS_USE              addres,value
 #define CPU_PACK_PROTECTED()    {&cpu_null,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode}
@@ -36,72 +43,73 @@ struct line_s {
 };
 
 // FILE: cpu_common.c
-void cpu_null(PARAMS_DEFINE);
-void cpu_mode(PARAMS_DEFINE);
-void cpu_not_mode(PARAMS_DEFINE);
-void cpu_not_duality(PARAMS_DEFINE);
-void cpu_not_exist(PARAMS_DEFINE);
-void cpu_not_addres(PARAMS_DEFINE);
-void cpu_not_value(PARAMS_DEFINE);
-void cpu_required_addres(PARAMS_DEFINE);
-void cpu_required_value(PARAMS_DEFINE);
-void cpu_mode_protected(PARAMS_DEFINE);
-void cpu_invalid_label(PARAMS_DEFINE);
+RETURN_DEFINE cpu_null(PARAMS_DEFINE);
+RETURN_DEFINE cpu_mode(PARAMS_DEFINE);
+RETURN_DEFINE cpu_not_mode(PARAMS_DEFINE);
+RETURN_DEFINE cpu_not_duality(PARAMS_DEFINE);
+RETURN_DEFINE cpu_not_exist(PARAMS_DEFINE);
+RETURN_DEFINE cpu_not_addres(PARAMS_DEFINE);
+RETURN_DEFINE cpu_not_value(PARAMS_DEFINE);
+RETURN_DEFINE cpu_required_addres(PARAMS_DEFINE);
+RETURN_DEFINE cpu_required_value(PARAMS_DEFINE);
+RETURN_DEFINE cpu_mode_protected(PARAMS_DEFINE);
+RETURN_DEFINE cpu_invalid_label(PARAMS_DEFINE);
 
 // FILE: cpu_debug.c
-void cpu_debug_stri(PARAMS_DEFINE);
-void cpu_debug_strc(PARAMS_DEFINE);
-void cpu_debug_stro(PARAMS_DEFINE);
-void cpu_debug_strx(PARAMS_DEFINE);
-void cpu_debug_stru(PARAMS_DEFINE);
+RETURN_DEFINE cpu_debug_stri(PARAMS_DEFINE);
+RETURN_DEFINE cpu_debug_strc(PARAMS_DEFINE);
+RETURN_DEFINE cpu_debug_stro(PARAMS_DEFINE);
+RETURN_DEFINE cpu_debug_strx(PARAMS_DEFINE);
+RETURN_DEFINE cpu_debug_stru(PARAMS_DEFINE);
 
 // FILE: cpu_input.c
-void cpu_input_stri(PARAMS_DEFINE);
-void cpu_input_strc(PARAMS_DEFINE);
-void cpu_input_stro(PARAMS_DEFINE);
-void cpu_input_strx(PARAMS_DEFINE);
-void cpu_input_silent_stri(PARAMS_DEFINE);
-void cpu_input_silent_strc(PARAMS_DEFINE);
-void cpu_input_silent_stro(PARAMS_DEFINE);
-void cpu_input_silent_strx(PARAMS_DEFINE);
-void cpu_input_password_stri(PARAMS_DEFINE);
-void cpu_input_password_strc(PARAMS_DEFINE);
-void cpu_input_password_stro(PARAMS_DEFINE);
-void cpu_input_password_strx(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_stri(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_strc(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_stro(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_strx(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_silent_stri(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_silent_strc(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_silent_stro(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_silent_strx(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_password_stri(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_password_strc(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_password_stro(PARAMS_DEFINE);
+RETURN_DEFINE cpu_input_password_strx(PARAMS_DEFINE);
 void internal_input_stri(PARAMS_DEFINE);
 void internal_input_strc(PARAMS_DEFINE);
 void internal_input_stro(PARAMS_DEFINE);
 void internal_input_strx(PARAMS_DEFINE);
 
 // FILE: cpu_jump.c
-void cpu_jump_goto(PARAMS_DEFINE);
-void cpu_jump_fgto(PARAMS_DEFINE);
-void cpu_jump_zgto(PARAMS_DEFINE);
-void cpu_jump_pgto(PARAMS_DEFINE);
-void cpu_jump_ngto(PARAMS_DEFINE);
+RETURN_DEFINE cpu_jump_goto(PARAMS_DEFINE);
+RETURN_DEFINE cpu_jump_fgto(PARAMS_DEFINE);
+RETURN_DEFINE cpu_jump_zgto(PARAMS_DEFINE);
+RETURN_DEFINE cpu_jump_pgto(PARAMS_DEFINE);
+RETURN_DEFINE cpu_jump_ngto(PARAMS_DEFINE);
 
 // FILE: cpu_memory.c
-void cpu_memory_free(PARAMS_DEFINE);
-void cpu_memory_aloc(PARAMS_DEFINE);
-void cpu_memory_srev(PARAMS_DEFINE);
-void cpu_memory_smin(PARAMS_DEFINE);
-void cpu_memory_smax(PARAMS_DEFINE);
-void cpu_memory_aux_free(PARAMS_DEFINE);
-void cpu_memory_aux_aloc(PARAMS_DEFINE);
-void cpu_memory_aux_pull(PARAMS_DEFINE);
-void cpu_memory_aux_push(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_free(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_aloc(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_srev(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_smin(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_smax(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_aux_free(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_aux_aloc(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_aux_pull(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_aux_push(PARAMS_DEFINE);
 
 // FILE: cpu_string.c
-void cpu_string_stri(PARAMS_DEFINE);
-void cpu_string_strc(PARAMS_DEFINE);
-void cpu_string_stro(PARAMS_DEFINE);
-void cpu_string_strx(PARAMS_DEFINE);
-void cpu_string_stru(PARAMS_DEFINE);
+RETURN_DEFINE cpu_string_stri(PARAMS_DEFINE);
+RETURN_DEFINE cpu_string_strc(PARAMS_DEFINE);
+RETURN_DEFINE cpu_string_stro(PARAMS_DEFINE);
+RETURN_DEFINE cpu_string_strx(PARAMS_DEFINE);
+RETURN_DEFINE cpu_string_stru(PARAMS_DEFINE);
 
 // FILE: lang_line.c
 void lang_line(reg_t reg, mem_t mem, val_t val);
 
 // FILE: lang_driver.c
+void lang_driver_run(void);
 void lang_driver_init(void);
 void lang_driver_exit(int sig);
 
@@ -127,7 +135,7 @@ void tape_output_serial_2(reg_t type, val_t value);
 
 // FILE: tape_program.c
 void tape_program_resize(void);
-void tape_program_exe(void);
+RETURN_DEFINE tape_program_exe(void);
 void tape_program_destroy(void);
 void tape_program_line_set(compass_t line);
 void tape_program_line_add(reg_t reg, mem_t mem, val_t val);
@@ -136,7 +144,7 @@ compass_t tape_program_line_get();
 compass_t tape_program_line_end();
 void tape_program_target_label(compass_t label);
 void tape_program_target_line(compass_t line);
-
+bool tape_program_avaliable(void);
 
 // FILE: tape_router.c
 void tape_router_cpu_set(cch_t value);

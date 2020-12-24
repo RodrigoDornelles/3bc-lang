@@ -6,6 +6,12 @@
 #endif
 #include <stdio.h>
 #include <signal.h>
+#include "header.h"
+
+void lang_driver_run()
+{
+    while(tape_program_avaliable()? tape_program_exe(): RETURN_EXIT);
+}
 
 void lang_driver_init()
 {

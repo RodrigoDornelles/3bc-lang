@@ -9,81 +9,92 @@
 #include "register.h"
 
 
-void cpu_input_stri(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_stri(PARAMS_DEFINE)
 {
     echo();
     internal_input_stri(PARAMS_USE);
+    return RETURN_OK;
 }
 
-void cpu_input_strc(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_strc(PARAMS_DEFINE)
 {
     echo();
     internal_input_strc(PARAMS_USE);
+    return RETURN_OK;
 }
 
-void cpu_input_stro(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_stro(PARAMS_DEFINE)
 {
     echo();
     internal_input_stro(PARAMS_USE);
+    return RETURN_OK;
 }
 
-void cpu_input_strx(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_strx(PARAMS_DEFINE)
 {
     echo();
     internal_input_strx(PARAMS_USE);
+    return RETURN_OK;
 }
 
-void cpu_input_silent_stri(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_silent_stri(PARAMS_DEFINE)
 {
     noecho();
     internal_input_stri(PARAMS_USE);
+    return RETURN_OK;
 }
 
-void cpu_input_silent_strc(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_silent_strc(PARAMS_DEFINE)
 {
     noecho();
     internal_input_strc(PARAMS_USE);
+    return RETURN_OK;
 }
 
-void cpu_input_silent_stro(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_silent_stro(PARAMS_DEFINE)
 {
     noecho();
     internal_input_strc(PARAMS_USE);
+    return RETURN_OK;
 }
 
-void cpu_input_silent_strx(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_silent_strx(PARAMS_DEFINE)
 {
     noecho();
     internal_input_strx(PARAMS_USE);
+    return RETURN_OK;
 }
 
-void cpu_input_password_stri(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_password_stri(PARAMS_DEFINE)
 {
     noecho();
     internal_input_stri(PARAMS_USE);
     cpu_string_strc(NILL, '*');
+    return RETURN_OK;
 }
 
-void cpu_input_password_strc(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_password_strc(PARAMS_DEFINE)
 {
     noecho();
     internal_input_strc(PARAMS_USE);
     cpu_string_strc(NILL, '*');
-
+    return RETURN_OK;
 }
 
-void cpu_input_password_stro(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_password_stro(PARAMS_DEFINE)
 {
     noecho();
     internal_input_stro(PARAMS_USE);
     cpu_string_strc(NILL, '*');
+    return RETURN_OK;
 }
 
-void cpu_input_password_strx(PARAMS_DEFINE)
+RETURN_DEFINE cpu_input_password_strx(PARAMS_DEFINE)
 {
     noecho();
     internal_input_strx(PARAMS_USE);
     cpu_string_strc(NILL, '*');
+    return RETURN_OK;
 }
 
 void internal_input_stri(PARAMS_DEFINE)

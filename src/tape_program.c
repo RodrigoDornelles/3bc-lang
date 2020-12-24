@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 #include "header.h"
 #include "register.h"
 
@@ -28,12 +29,12 @@ void tape_program_resize()
     tape_master = realloc(tape_master, sizeof (struct line_s) * (tape_last_line));
 }
 
-void tape_program_exe()
+RETURN_DEFINE tape_program_exe()
 {
     // call the register function
     // from within a two-dimensional array of pointers
     // FILE: register.h
-    (*instructions[
+    RETURN_DEFINE result = (*instructions[
         // first index use current cpu channel
         CMODE
     ][  
@@ -47,6 +48,7 @@ void tape_program_exe()
     );
 
     tape_current_line += 1;
+    return result;
 }
 
 void tape_program_destroy()
@@ -88,4 +90,9 @@ void tape_program_target_label(compass_t label)
         tape_program_line_set(tape_labels[label]);
         return;
     }
+}
+
+bool tape_program_avaliable()
+{
+    return tape_current_line < tape_last_line;
 }
