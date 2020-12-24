@@ -44,3 +44,11 @@ although the CPU is limited only by 3 bits (8 registers in all), the main idea i
  * **x86:** conventional computer
  * **ARM:** smartphone, tv-box, raspbarry and similars
  * **RISC-V:** Arduino, ESP
+
+## List of early developers ##
+| **1º** | ![avatar](https://avatars.githubusercontent.com/rodrigodornelles?size=32) | **[Rodrigo Dornelles](https://github.com/rodrigodornelles)** | **26 November 2020** |
+| :-: | :-: | :-- | :--: |
+| **2º** | ![avatar](https://avatars.githubusercontent.com/kadu?size=32) | **[Carlos Eduardo](https://github.com/kadu)** | **28 
+November 2020** |
+| **3º** |  ![avatar](https://avatars.githubusercontent.com/robsondrs?size=32) | **[Robson Soares](https://github.com/robsondrs)** | **23 
+December 2020** |
