@@ -25,7 +25,7 @@
  - [X] VM Memory Allocation 
  - [ ] VM Mathematic Basics
  - [X] VM Labels
- - [ ] VM Conditional Jumps
+ - [X] VM Conditional Jumps
  - [ ] Textual Interpreter to binary
  - [ ] Programming IDE
  - [ ] Arduino Framework C Transpiler 
