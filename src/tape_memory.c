@@ -84,6 +84,6 @@ void tape_memory_free(mem_t addres)
 
 void tape_memory_destroy()
 {
-    for(compass_t addres = 0; addres < memory_end; addres++, tape_memory_free(addres));
+    for(compass_t addres = 0; addres < (memory_end - 1); addres++, tape_memory_free(addres));
     free(memory_pointers);
 }
