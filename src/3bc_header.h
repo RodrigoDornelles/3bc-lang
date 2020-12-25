@@ -18,6 +18,7 @@
 #define REQUIRED_ADDRESS        if(addres==0)cpu_required_addres(addres,value);
 #define REQUIRED_VALUE          if(value==0)cpu_required_value(addres,value);
 #define MEMORY_SAFE_LIMIT       (255)
+#define GET_ANY_PARAM           (addres?tape_memory_get(addres):value)
 #define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux_push(addres,0);else cpu_memory_aux_aloc(0,value);
 #define AUX                     tape_aux_get()              // memory auxilary
 #define CMODE                   tape_router_cpu_get()       // current cpu mode
@@ -72,6 +73,18 @@ RETURN_DEFINE cpu_input_password_strc(PARAMS_DEFINE);
 RETURN_DEFINE cpu_input_password_stro(PARAMS_DEFINE);
 RETURN_DEFINE cpu_input_password_strx(PARAMS_DEFINE);
 
+// FILE: cpu_math.c
+RETURN_DEFINE cpu_math_sum(PARAMS_DEFINE);
+RETURN_DEFINE cpu_math_sub(PARAMS_DEFINE);
+RETURN_DEFINE cpu_math_mul(PARAMS_DEFINE);
+RETURN_DEFINE cpu_math_div(PARAMS_DEFINE);
+RETURN_DEFINE cpu_math_mod(PARAMS_DEFINE);
+RETURN_DEFINE cpu_math_power(PARAMS_DEFINE);
+RETURN_DEFINE cpu_math_root(PARAMS_DEFINE);
+RETURN_DEFINE cpu_math_percentage(PARAMS_DEFINE);
+RETURN_DEFINE cpu_math_abs(PARAMS_DEFINE);
+RETURN_DEFINE cpu_math_average(PARAMS_DEFINE);
+
 // FILE: cpu_jump.c
 RETURN_DEFINE cpu_jump_goto(PARAMS_DEFINE);
 RETURN_DEFINE cpu_jump_fgto(PARAMS_DEFINE);
@@ -114,6 +127,7 @@ void lang_driver_error(const char *text);
 val_t tape_aux_get(void);
 void tape_aux_set(val_t value);
 void tape_aux_free(void);
+val_t *tape_aux_ptr(void);
 
 // FILE: tape_memory.c
 void tape_memory_reversable_toggle(mem_t addres, val_t value);

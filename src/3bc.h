@@ -2,6 +2,7 @@
 #define _LANG_3BC_H
 
 /** libaries **/
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -17,6 +18,7 @@
 #include "cpu_common.c"
 #include "cpu_debug.c"
 #include "cpu_input.c"
+#include "cpu_math.c"
 #include "cpu_jump.c"
 #include "cpu_memory.c"
 #include "cpu_string.c"
