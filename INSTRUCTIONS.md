@@ -125,7 +125,7 @@ reserved for future memory bank function
 | ------ | - | --- | - |
 | `math` | 1 | 001 | module positive aux memory value |
 
-## MATH AVARAGE `mode: 20` ##
+## MATH AVERAGE `mode: 20` ##
 | name | octal | bit | description |
 | ------ | - | --- | - |
 | `math` | 1 | 001 | avarange values received and storage in the aux memory |
