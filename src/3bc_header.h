@@ -1,8 +1,4 @@
-#pragma once
-
-#include <stdio.h>
-#include <stdbool.h>
-
+#include "3bc.h"
 #define RETURN_OK               0x1
 #define RETURN_EXIT             0x0
 #define RETURN_DEFINE           char
@@ -75,10 +71,6 @@ RETURN_DEFINE cpu_input_password_stri(PARAMS_DEFINE);
 RETURN_DEFINE cpu_input_password_strc(PARAMS_DEFINE);
 RETURN_DEFINE cpu_input_password_stro(PARAMS_DEFINE);
 RETURN_DEFINE cpu_input_password_strx(PARAMS_DEFINE);
-void internal_input_stri(PARAMS_DEFINE);
-void internal_input_strc(PARAMS_DEFINE);
-void internal_input_stro(PARAMS_DEFINE);
-void internal_input_strx(PARAMS_DEFINE);
 
 // FILE: cpu_jump.c
 RETURN_DEFINE cpu_jump_goto(PARAMS_DEFINE);
@@ -109,9 +101,14 @@ RETURN_DEFINE cpu_string_stru(PARAMS_DEFINE);
 void lang_line(reg_t reg, mem_t mem, val_t val);
 
 // FILE: lang_driver.c
+int getch(void);
+int getch_parser(const char *format);
 void lang_driver_run(void);
 void lang_driver_init(void);
 void lang_driver_exit(int sig);
+void lang_driver_output_1(reg_t type, val_t value);
+void lang_driver_output_2(reg_t type, val_t value);
+void lang_driver_error(const char *text);
 
 // FILE: tape_aux.c
 val_t tape_aux_get(void);
@@ -128,10 +125,6 @@ void tape_memory_resize(mem_t addres);
 void tape_memory_free(mem_t addres);
 void tape_memory_destroy(void);
 
-
-// FILE: tape_output.c
-void tape_output_serial_1(reg_t type, val_t value);
-void tape_output_serial_2(reg_t type, val_t value);
 
 // FILE: tape_program.c
 void tape_program_resize(void);

@@ -1,5 +1,4 @@
-#include "header.h"
-#include "register.h"
+#include "3bc.h"
 
 RETURN_DEFINE cpu_memory_free(PARAMS_DEFINE)
 {

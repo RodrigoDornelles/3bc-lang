@@ -1,22 +1,4 @@
-#include "src/header.h"
-#include "src/register.h"
-#include "src/cpu_common.c"
-#include "src/cpu_debug.c"
-#include "src/cpu_input.c"
-#include "src/cpu_jump.c"
-#include "src/cpu_memory.c"
-#include "src/cpu_string.c"
-#include "src/lang_line.c"
-#include "src/lang_driver.c"
-#include "src/parser_interpreter.c"
-#include "src/parser_transpiler.c"
-#include "src/parser_compiler.c"
-#include "src/tape_aux.c"
-#include "src/tape_input.c"
-#include "src/tape_memory.c"
-#include "src/tape_program.c"
-#include "src/tape_output.c"
-#include "src/tape_router.c"
+#include "src/3bc.h"
 
 int main(void)
 {

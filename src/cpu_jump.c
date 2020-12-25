@@ -1,4 +1,4 @@
-#include "header.h"
+#include "3bc.h"
 
 RETURN_DEFINE cpu_jump_goto(PARAMS_DEFINE)
 {

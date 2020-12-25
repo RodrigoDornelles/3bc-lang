@@ -1,7 +1,4 @@
-#include <stdlib.h>
-#include <stdbool.h>
-#include "header.h"
-#include "register.h"
+#include "3bc.h"
 
 compass_t tape_last_label;
 compass_t tape_last_line;

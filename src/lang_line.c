@@ -1,4 +1,4 @@
-#include "header.h"
+#include "3bc.h"
 
 void lang_line(reg_t reg, mem_t mem, val_t val)
 {

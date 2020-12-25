@@ -1,5 +1,4 @@
-#pragma once
-#include "header.h"
+#include "3bc.h"
 
 #define MODE_EMPUTY             0x0
 #define MODE_DEBUG              0x1

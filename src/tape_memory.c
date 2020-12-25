@@ -1,7 +1,4 @@
-#include "header.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include "3bc.h"
 #define _MEM3BC(obj) ((*memory_pointers[addres].p).obj)
 
 struct memory_s {
