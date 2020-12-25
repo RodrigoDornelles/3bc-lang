@@ -21,27 +21,31 @@
 #define MODE_MATH_ABS           0x13
 #define MODE_MATH_AVARAGE       0x14
 
-#define NILL 0x00
-#define MODE 0X07
-#define STRI 0x01
-#define STRC 0x02
-#define STRO 0x03   
-#define STRX 0x04
-#define STRU 0x05
-#define FREE 0x01
-#define ALOC 0x02
-#define PULL 0x03
-#define PUSH 0x04
-#define SREV 0x03
-#define SMIN 0x04
-#define SMAX 0x05
-#define AUXM 0x06
-#define GOTO 0x01
-#define FGTO 0x02
-#define ZGTO 0x03
-#define PGTO 0x04
-#define NGTO 0x05
-#define MATH 0x01
+#define NILL 0b000
+#define MODE 0b111
+
+#define STRI 0b001
+#define FREE 0b001
+#define MATH 0b001
+#define GOTO 0b001
+
+#define STRC 0b010
+#define ALOC 0b010
+#define FGTO 0b010
+
+#define STRO 0b011 
+#define SREV 0b011
+#define PULL 0b011  
+#define ZGTO 0b011
+
+#define STRX 0b100
+#define SMIN 0b100
+#define PUSH 0b100
+#define PGTO 0b100
+
+#define STRU 0b101
+#define NGTO 0b101
+#define SMAX 0b101
 
 RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK0(),
