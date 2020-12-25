@@ -2,6 +2,7 @@
 
 RETURN_DEFINE cpu_input_stri(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch_parser("%i");
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
@@ -11,6 +12,7 @@ RETURN_DEFINE cpu_input_stri(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_input_strc(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch();
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
@@ -20,6 +22,7 @@ RETURN_DEFINE cpu_input_strc(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_input_stro(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch_parser("%o");
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
@@ -29,6 +32,7 @@ RETURN_DEFINE cpu_input_stro(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_input_strx(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch_parser("%x");
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
@@ -38,6 +42,7 @@ RETURN_DEFINE cpu_input_strx(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_input_silent_stri(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch_parser("%i");
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
@@ -46,6 +51,7 @@ RETURN_DEFINE cpu_input_silent_stri(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_input_silent_strc(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch();
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
@@ -54,6 +60,7 @@ RETURN_DEFINE cpu_input_silent_strc(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_input_silent_stro(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch_parser("%o");
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
@@ -62,6 +69,7 @@ RETURN_DEFINE cpu_input_silent_stro(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_input_silent_strx(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch_parser("%x");
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
@@ -70,6 +78,7 @@ RETURN_DEFINE cpu_input_silent_strx(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_input_password_stri(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch_parser("%i");
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
@@ -79,6 +88,7 @@ RETURN_DEFINE cpu_input_password_stri(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_input_password_strc(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch();
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
@@ -88,6 +98,7 @@ RETURN_DEFINE cpu_input_password_strc(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_input_password_stro(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch_parser("%o");
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
@@ -97,6 +108,7 @@ RETURN_DEFINE cpu_input_password_stro(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_input_password_strx(PARAMS_DEFINE)
 {
+    VALIDATE_NOT_VALUES
     value = getch_parser("%x");
     tape_aux_set(value);
     tape_memory_set(addres, AUX);
