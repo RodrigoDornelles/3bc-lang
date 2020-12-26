@@ -12,152 +12,152 @@
 # c = a ** (1/b); print('a ** (1/b) =', c)
 
 # equivalent to alocate variables (a, b)
-MODE    STRC    0x06    # MODE_MEM
+MODE    NILL    0x06    # MODE_MEM
 ALOC    'a'     5
 ALOC    'b'     2
 
 ###########################################
 # equivalent to sum (a + b)
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'a'     STRC
 
-MODE    STRC    0x0b    # MODE_MATH_SUM
+MODE    NILL    0x0b    # MODE_MATH_SUM
 MATH    'b'     STRC
 
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'c'     STRC
 
 # equivalent to print('a + b =', c)
-MODE    STRC    0x02    # MODE_STRING
-STRC    STRC    'a'
-STRC    STRC    '+'
-STRC    STRC    'b'
-STRC    STRC    '='
+MODE    NILL    0x02    # MODE_STRING
+STRC    NILL    'a'
+STRC    NILL    '+'
+STRC    NILL    'b'
+STRC    NILL    '='
 STRI    'c'     STRC
-STRC    STRC    '\n'
+STRC    NILL    '\n'
 
 ###########################################
 # equivalent to sub (a - b)
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'a'     STRC
 
-MODE    STRC    0x0c    # MODE_MATH_SUB
+MODE    NILL    0x0c    # MODE_MATH_SUB
 MATH    'b'     STRC
 
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'c'     STRC
 
 # equivalent to print('a - b =', c)
-MODE    STRC    0x02    # MODE_STRING
-STRC    STRC    'a'
-STRC    STRC    '-'
-STRC    STRC    'b'
-STRC    STRC    '='
+MODE    NILL    0x02    # MODE_STRING
+STRC    NILL    'a'
+STRC    NILL    '-'
+STRC    NILL    'b'
+STRC    NILL    '='
 STRI    'c'     STRC
-STRC    STRC    '\n'
+STRC    NILL    '\n'
 
 ###########################################
 # equivalent to sum (a * b)
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'a'     STRC
 
-MODE    STRC    0x0d    # MODE_MATH_MUL
+MODE    NILL    0x0d    # MODE_MATH_MUL
 MATH    'b'     STRC
 
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'c'     STRC
 
 # equivalent to print('a * b =', c)
-MODE    STRC    0x02    # MODE_STRING
-STRC    STRC    'a'
-STRC    STRC    '*'
-STRC    STRC    'b'
-STRC    STRC    '='
+MODE    NILL    0x02    # MODE_STRING
+STRC    NILL    'a'
+STRC    NILL    '*'
+STRC    NILL    'b'
+STRC    NILL    '='
 STRI    'c'     STRC
-STRC    STRC    '\n'
+STRC    NILL    '\n'
 
 ###########################################
 # equivalent to sub (a / b)
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'a'     STRC
 
-MODE    STRC    0x0e    # MODE_MATH_DIV
+MODE    NILL    0x0e    # MODE_MATH_DIV
 MATH    'b'     STRC
 
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'c'     STRC
 
 # equivalent to print('a / b =', c)
-MODE    STRC    0x02    # MODE_STRING
-STRC    STRC    'a'
-STRC    STRC    '/'
-STRC    STRC    'b'
-STRC    STRC    '='
+MODE    NILL    0x02    # MODE_STRING
+STRC    NILL    'a'
+STRC    NILL    '/'
+STRC    NILL    'b'
+STRC    NILL    '='
 STRI    'c'     STRC
-STRC    STRC    '\n'
+STRC    NILL    '\n'
 
 ###########################################
 # equivalent to sum (a % b)
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'a'     STRC
 
-MODE    STRC    0x0f    # MODE_MATH_MOD
+MODE    NILL    0x0f    # MODE_MATH_MOD
 MATH    'b'     STRC
 
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'c'     STRC
 
 # equivalent to print('a % b =', c)
-MODE    STRC    0x02    # MODE_STRING
-STRC    STRC    'a'
-STRC    STRC    '%'
-STRC    STRC    'b'
-STRC    STRC    '='
+MODE    NILL    0x02    # MODE_STRING
+STRC    NILL    'a'
+STRC    NILL    '%'
+STRC    NILL    'b'
+STRC    NILL    '='
 STRI    'c'     STRC
-STRC    STRC    '\n'
+STRC    NILL    '\n'
 
 ###########################################
 # equivalent to sub (a ** b)
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'a'     STRC
 
-MODE    STRC    0x10    # MODE_MATH_POWER
+MODE    NILL    0x10    # MODE_MATH_POWER
 MATH    'b'     STRC
 
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'c'     STRC
 
 # equivalent to print('a ** b =', c)
-MODE    STRC    0x02    # MODE_STRING
-STRC    STRC    'a'
-STRC    STRC    '*'
-STRC    STRC    '*'
-STRC    STRC    'b'
-STRC    STRC    '='
+MODE    NILL    0x02    # MODE_STRING
+STRC    NILL    'a'
+STRC    NILL    '*'
+STRC    NILL    '*'
+STRC    NILL    'b'
+STRC    NILL    '='
 STRI    'c'     STRC
-STRC    STRC    '\n'
+STRC    NILL    '\n'
 
 ###########################################
 # equivalent to sub (a ** (1/b))
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'a'     STRC
 
-MODE    STRC    0x11    # MODE_MATH_ROOT
+MODE    NILL    0x11    # MODE_MATH_ROOT
 MATH    'b'     STRC
 
-MODE    STRC    0x08    # MODE_MEM_AUX
+MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'c'     STRC
 
 # equivalent to print('a ** (1/b) =', c)
-MODE    STRC    0x02    # MODE_STRING
-STRC    STRC    'a'
-STRC    STRC    '*'
-STRC    STRC    '*'
-STRC    STRC    '('
-STRC    STRC    '1'
-STRC    STRC    '/'
-STRC    STRC    'b'
-STRC    STRC    ')'
-STRC    STRC    '='
+MODE    NILL    0x02    # MODE_STRING
+STRC    NILL    'a'
+STRC    NILL    '*'
+STRC    NILL    '*'
+STRC    NILL    '('
+STRC    NILL    '1'
+STRC    NILL    '/'
+STRC    NILL    'b'
+STRC    NILL    ')'
+STRC    NILL    '='
 STRI    'c'     STRC
-STRC    STRC    '\n'
+STRC    NILL    '\n'
