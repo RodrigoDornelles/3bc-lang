@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include <signal.h>
 #include <unistd.h>
+#include <string.h>
 #include <termios.h>
 
 /** headers **/
@@ -24,9 +25,7 @@
 #include "cpu_string.c"
 #include "lang_line.c"
 #include "lang_driver.c"
-#include "parser_interpreter.c"
-#include "parser_transpiler.c"
-#include "parser_compiler.c"
+#include "lang_interpreter.c"
 #include "tape_aux.c"
 #include "tape_memory.c"
 #include "tape_program.c"

@@ -34,12 +34,12 @@
 #define FGTO 0b010
 
 #define STRO 0b011 
-#define SREV 0b011
+#define SMIN 0b011
 #define PULL 0b011  
 #define ZGTO 0b011
 
 #define STRX 0b100
-#define SMIN 0b100
+#define SREV 0b100
 #define PUSH 0b100
 #define PGTO 0b100
 

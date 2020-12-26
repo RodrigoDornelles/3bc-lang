@@ -123,6 +123,11 @@ void lang_driver_output_1(reg_t type, val_t value);
 void lang_driver_output_2(reg_t type, val_t value);
 void lang_driver_error(const char *text);
 
+// FILE: lang_interpreter.c
+char lang_interpreter_line(void);
+reg_t lang_interpreter_world(const char text_reg[5]);
+signed int lang_interpreter_value(const char text_value[12]);
+
 // FILE: tape_aux.c
 val_t tape_aux_get(void);
 void tape_aux_set(val_t value);

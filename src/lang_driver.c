@@ -13,7 +13,7 @@ struct termios term_new_attr;
 
 void lang_driver_run()
 {
-    while(tape_program_avaliable()? tape_program_exe(): RETURN_EXIT);
+    while(tape_program_avaliable()? tape_program_exe(): lang_interpreter_line());
 }
 
 void lang_driver_init()
