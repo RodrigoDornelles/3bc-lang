@@ -1,7 +1,4 @@
-#include "header.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
+#include "3bc.h"
 #define _MEM3BC(obj) ((*memory_pointers[addres].p).obj)
 
 struct memory_s {
@@ -84,6 +81,7 @@ void tape_memory_free(mem_t addres)
 
 void tape_memory_destroy()
 {
+    tape_memory_resize(0);
     for(compass_t addres = 0; addres < (memory_end - 1); addres++, tape_memory_free(addres));
     free(memory_pointers);
 }
