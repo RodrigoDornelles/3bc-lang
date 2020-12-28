@@ -23,12 +23,16 @@
  - [X] VM Memory Allocation 
  - [X] VM Input characters
  - [X] VM Memory Allocation 
- - [ ] VM Mathematic Basics
+ - [X] VM Mathematic Basics
  - [X] VM Labels
  - [X] VM Conditional Jumps
+ - [X] Textual Interpreter just in time
+ - [ ] Textual Interpreter to C transpiled
  - [ ] Textual Interpreter to binary
  - [ ] Programming IDE
- - [ ] Arduino Framework C Transpiler 
+ - [ ] Arduino Framework support
+ - [ ] Includes support
+ - [ ] Bindings support
 
 ## CPU Modes ##
 although the CPU is limited only by 3 bits (8 registers in all), the main idea is to work with processing blocks as if there are multiple cpu nuclei where each one is specified in type of work.
@@ -50,3 +54,4 @@ although the CPU is limited only by 3 bits (8 registers in all), the main idea i
 | :-: | :-: | :-- | :--: |
 | **2º** | ![avatar](https://avatars.githubusercontent.com/kadu?size=32) | **[Carlos Eduardo](https://github.com/kadu)** | **28 November 2020** |
 | **3º** |  ![avatar](https://avatars.githubusercontent.com/robsondrs?size=32) | **[Robson Soares](https://github.com/robsondrs)** | **23 December 2020** |
+| **4º** |  ![avatar](https://avatars.githubusercontent.com/gnevesdev?size=32) | **[Guilherme Neves](https://github.com/gnevesdev)** | **28 December 2020** |
