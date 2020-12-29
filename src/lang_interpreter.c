@@ -2,7 +2,7 @@
 
 #define PARSER_PACK(c1,c2,c3,c4,reg,...)\
 case c1+c2+c3+c4: return reg;\
-case c1+c2+c3+c4-120: return reg
+case c1+c2+c3+c4-128: return reg
 
 char lang_interpreter_line()
 {
