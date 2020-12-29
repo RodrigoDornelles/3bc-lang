@@ -86,6 +86,9 @@ signed int lang_interpreter_value(const char text_value[12])
     else if (sscanf(text_value, "'%c'", (char *) &value)) {
         return value;
     }
+    else if (strcasecmp(text_value, "nill") == 0) {
+        return 0x0;
+    }
 
     lang_driver_error(ERROR_INTERPRETER_NUMBER);
     return RETURN_EXIT;
