@@ -10,8 +10,10 @@ case STRU: fprintf(file, "%d", (signed int) val); break;}
 
 #define print_error(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);break
 
+#ifndef _WIN32
 struct termios term_old_attr;
 struct termios term_new_attr;
+#endif
 
 void lang_driver_run()
 {
@@ -22,6 +24,7 @@ void lang_driver_init()
 {
     signal(SIGINT, lang_driver_exit);
 
+    #ifndef _WIN32
     tcgetattr(0, &term_old_attr);
     tcgetattr(0, &term_new_attr);
 
@@ -30,11 +33,14 @@ void lang_driver_init()
 
     term_new_attr.c_cc[VTIME] = 0;
     term_new_attr.c_cc[VMIN] = 1;
+    #endif
 }
 
 void lang_driver_exit(int sig)
 {
+    #ifndef _WIN32
     tcsetattr(STDIN_FILENO,TCSANOW,&term_old_attr);
+    #endif
 
     tape_memory_destroy();
     tape_program_destroy();

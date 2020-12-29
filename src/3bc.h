@@ -9,7 +9,9 @@
 #include <signal.h>
 #include <unistd.h>
 #include <string.h>
+#ifndef _WIN32
 #include <termios.h>
+#endif
 
 /** headers **/
 #include "3bc_errors.h"
