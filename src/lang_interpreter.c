@@ -18,7 +18,7 @@ char lang_interpreter_line()
     if(fgets(text_line, 32, stdin) == NULL){
         return 1;
     }
-    if (!sscanf(text_line, "%5s %12s %12s", text_reg, text_mem, text_val)) {
+    if (!sscanf(text_line, "%4s %11s %11s", text_reg, text_mem, text_val)) {
         return 1;
     }
     if(text_line[0] == '\0' || text_line[0] == '\n') {
