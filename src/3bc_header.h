@@ -4,6 +4,7 @@
 #define RETURN_DEFINE           char
 #define PARAMS_DEFINE           mem_t addres, val_t value
 #define PARAMS_USE              addres,value
+#define CPU_PACK_RESERVED()     {&cpu_null,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode}
 #define CPU_PACK_PROTECTED()    {&cpu_null,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode}
 #define CPU_PACK0()             {&cpu_null,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_mode}
 #define CPU_PACK1(a)            {&cpu_null,&a,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_mode}
@@ -12,11 +13,11 @@
 #define CPU_PACK4(a,b,c,d)      {&cpu_null,&a,&b,&c,&d,&cpu_not_exist,&cpu_not_exist,&cpu_mode}
 #define CPU_PACK5(a,b,c,d,e)    {&cpu_null,&a,&b,&c,&d,&e,&cpu_not_exist,&cpu_mode}
 #define CPU_PACK6(a,b,c,d,e,f)  {&cpu_null,&a,&b,&c,&d,&e,&f,&cpu_mode}
-#define VALIDATE_NOT_DUALITY    if(addres!=0&&value!=0)cpu_not_duality(addres,value);
-#define VALIDATE_NOT_ADRESS     if(addres!=0)cpu_not_addres(addres,value);
-#define VALIDATE_NOT_VALUES     if(value!=0)cpu_not_value(addres,value);
-#define REQUIRED_ADDRESS        if(addres==0)cpu_required_addres(addres,value);
-#define REQUIRED_VALUE          if(value==0)cpu_required_value(addres,value);
+#define VALIDATE_NOT_DUALITY    if(addres!=0&&value!=0)lang_driver_error(ERROR_PARAM_DUALITY);
+#define VALIDATE_NOT_ADRESS     if(addres!=0)lang_driver_error(ERROR_PARAM_BLOCKED_ADDRESS);
+#define VALIDATE_NOT_VALUES     if(value!=0)lang_driver_error(ERROR_PARAM_BLOCKED_VALUE);
+#define REQUIRED_ADDRESS        if(addres==0)lang_driver_error(ERROR_PARAM_REQUIRE_ADDRESS);
+#define REQUIRED_VALUE          if(value==0)lang_driver_error(ERROR_PARAM_REQUIRE_VALUE);
 #define MEMORY_SAFE_LIMIT       (255)
 #define GET_ANY_PARAM           (addres?tape_memory_get(addres):value)
 #define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux_push(addres,0);else cpu_memory_aux_aloc(0,value);
@@ -43,14 +44,9 @@ struct line_s {
 RETURN_DEFINE cpu_null(PARAMS_DEFINE);
 RETURN_DEFINE cpu_mode(PARAMS_DEFINE);
 RETURN_DEFINE cpu_not_mode(PARAMS_DEFINE);
-RETURN_DEFINE cpu_not_duality(PARAMS_DEFINE);
 RETURN_DEFINE cpu_not_exist(PARAMS_DEFINE);
-RETURN_DEFINE cpu_not_addres(PARAMS_DEFINE);
-RETURN_DEFINE cpu_not_value(PARAMS_DEFINE);
-RETURN_DEFINE cpu_required_addres(PARAMS_DEFINE);
-RETURN_DEFINE cpu_required_value(PARAMS_DEFINE);
+RETURN_DEFINE cpu_mode_reserved(PARAMS_DEFINE);
 RETURN_DEFINE cpu_mode_protected(PARAMS_DEFINE);
-RETURN_DEFINE cpu_invalid_label(PARAMS_DEFINE);
 
 // FILE: cpu_debug.c
 RETURN_DEFINE cpu_debug_stri(PARAMS_DEFINE);
@@ -121,7 +117,7 @@ void lang_driver_init(void);
 void lang_driver_exit(int sig);
 void lang_driver_output_1(reg_t type, val_t value);
 void lang_driver_output_2(reg_t type, val_t value);
-void lang_driver_error(const char *text);
+void lang_driver_error(error_t error_code);
 
 // FILE: lang_interpreter.c
 char lang_interpreter_line(void);

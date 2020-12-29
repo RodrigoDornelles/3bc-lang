@@ -67,7 +67,8 @@ reg_t lang_interpreter_world(const char text_reg[5])
         PARSER_PACK('m', 'a', 't', 'h', MATH);
     }
 
-    return 0;
+    lang_driver_error(ERROR_INTERPRETER_REGISTER);
+    return RETURN_EXIT;
 }
 
 signed int lang_interpreter_value(const char text_value[12])
@@ -85,7 +86,7 @@ signed int lang_interpreter_value(const char text_value[12])
     else if (sscanf(text_value, "'%c'", (char *) &value)) {
         return value;
     }
-    else {
-        return 0;
-    }
+
+    lang_driver_error(ERROR_INTERPRETER_NUMBER);
+    return RETURN_EXIT;
 }

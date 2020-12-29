@@ -58,7 +58,7 @@ RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK_PROTECTED(),
     CPU_PACK4(cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_push),
     CPU_PACK5(cpu_jump_goto, cpu_jump_fgto, cpu_jump_zgto, cpu_jump_pgto, cpu_jump_ngto),
-    CPU_PACK0(),
+    CPU_PACK_RESERVED(),
     CPU_PACK1(cpu_math_sum),
     CPU_PACK1(cpu_math_sub),
     CPU_PACK1(cpu_math_mul),

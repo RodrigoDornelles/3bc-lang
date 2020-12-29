@@ -12,6 +12,7 @@
 #include <termios.h>
 
 /** headers **/
+#include "3bc_errors.h"
 #include "3bc_header.h"
 #include "3bc_register.h"
 
