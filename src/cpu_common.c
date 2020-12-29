@@ -12,65 +12,26 @@ RETURN_DEFINE cpu_mode(PARAMS_DEFINE)
     return RETURN_OK;
 }
 
-RETURN_DEFINE cpu_label_invalid(PARAMS_DEFINE)
-{
-    lang_driver_error("[!] [3BC] [CRITICAL ERROR] LABEL INVALID");
-    lang_driver_exit(EXIT_FAILURE);
-    return RETURN_OK;
-}
-
 RETURN_DEFINE cpu_not_mode(PARAMS_DEFINE)
 {
-    lang_driver_error("[!] [3BC] [CRITICAL ERROR] EMPUTY CPU MODE");
-    lang_driver_exit(EXIT_FAILURE);
-    return RETURN_OK;
-}
-
-RETURN_DEFINE cpu_not_duality(PARAMS_DEFINE)
-{
-    lang_driver_error("[!] [3BC] [CRITICAL ERROR] DUALITY ADDRES WITH VALUE IN SINGLE REGISTER");
-    lang_driver_exit(EXIT_FAILURE);
-    return RETURN_OK;
+    lang_driver_error(ERROR_CPU_ZERO);
+    return RETURN_EXIT;
 }
 
 RETURN_DEFINE cpu_not_exist(PARAMS_DEFINE)
 {
-    lang_driver_error("[!] [3BC] [CRITICAL ERROR] REGISTER NOT EXIST IN CPU MODE");
-    lang_driver_exit(EXIT_FAILURE);
+    lang_driver_error(ERROR_CPU_REGISTER);
     return RETURN_OK;
 }
 
-RETURN_DEFINE cpu_not_addres(PARAMS_DEFINE)
+RETURN_DEFINE cpu_mode_reserved(PARAMS_DEFINE)
 {
-    lang_driver_error("[!] [3BC] [CRITICAL ERROR] NOT ALOWED ADDRES");
-    lang_driver_exit(EXIT_FAILURE);
-    return RETURN_OK;
-}
-
-RETURN_DEFINE cpu_not_value(PARAMS_DEFINE)
-{
-    lang_driver_error("[!] [3BC] [CRITICAL ERROR] NOT ALOWED VALUE");
-    lang_driver_exit(EXIT_FAILURE);
-    return RETURN_OK;
-}
-
-RETURN_DEFINE cpu_required_addres(PARAMS_DEFINE)
-{
-    lang_driver_error("[!] [3BC] [CRITICAL ERROR] ADDRES IS REQUIRED");
-    lang_driver_exit(EXIT_FAILURE);
-    return RETURN_OK;
-}
-
-RETURN_DEFINE cpu_required_value(PARAMS_DEFINE)
-{
-    lang_driver_error("[!] [3BC] [CRITICAL ERROR] VALUE IS REQUIRED");
-    lang_driver_exit(EXIT_FAILURE);
-    return RETURN_OK;
+    lang_driver_error(ERROR_CPU_RESERVED);
+    return RETURN_EXIT;
 }
 
 RETURN_DEFINE cpu_mode_protected(PARAMS_DEFINE)
 {
-    lang_driver_error("[!] [3BC] [CRITICAL ERROR] PROTECTED CPU MODE");
-    lang_driver_exit(EXIT_FAILURE);
-    return RETURN_OK;
+    lang_driver_error(ERROR_CPU_PROTECT);
+    return RETURN_EXIT;
 }
