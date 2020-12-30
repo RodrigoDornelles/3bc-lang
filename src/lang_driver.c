@@ -15,14 +15,23 @@ struct termios term_old_attr;
 struct termios term_new_attr;
 #endif
 
+file_t* program_file;
+
 void lang_driver_run()
 {
-    while(tape_program_avaliable()? tape_program_exe(): lang_interpreter_line());
+    while(tape_program_avaliable()? tape_program_exe(): lang_interpreter_line(program_file));
 }
 
-void lang_driver_init()
+void lang_driver_init(int argc, char **argv)
 {
     signal(SIGINT, lang_driver_exit);
+
+    if (argc <= 1) {
+        program_file = stdin;
+    }
+    else {
+        program_file = fopen(argv[argc - 1], "r");
+    }
 
     #ifndef _WIN32
     tcgetattr(0, &term_old_attr);
@@ -41,6 +50,10 @@ void lang_driver_exit(int sig)
     #ifndef _WIN32
     tcsetattr(STDIN_FILENO,TCSANOW,&term_old_attr);
     #endif
+
+    if (program_file != stdin) {
+        fclose(program_file);
+    }
 
     tape_memory_destroy();
     tape_program_destroy();

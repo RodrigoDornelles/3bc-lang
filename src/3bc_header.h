@@ -32,6 +32,7 @@ typedef unsigned char reg_t;
 typedef unsigned char mem_t;
 typedef unsigned char val_t;
 typedef unsigned char cch_t;
+typedef FILE file_t;
 
 // structs
 struct line_s {
@@ -113,14 +114,14 @@ void lang_line(reg_t reg, mem_t mem, val_t val);
 int getch(void);
 int getch_parser(const char *format);
 void lang_driver_run(void);
-void lang_driver_init(void);
+void lang_driver_init(int argc, char **argv);
 void lang_driver_exit(int sig);
 void lang_driver_output_1(reg_t type, val_t value);
 void lang_driver_output_2(reg_t type, val_t value);
 void lang_driver_error(error_t error_code);
 
 // FILE: lang_interpreter.c
-char lang_interpreter_line(void);
+char lang_interpreter_line(file_t* stream);
 reg_t lang_interpreter_world(const char text_reg[5]);
 signed int lang_interpreter_value(const char text_value[12]);
 

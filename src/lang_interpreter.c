@@ -4,7 +4,7 @@
 case c1+c2+c3+c4: return reg;\
 case c1+c2+c3+c4-128: return reg
 
-char lang_interpreter_line()
+char lang_interpreter_line(file_t* stream)
 {
     static char text_line[32];
     static char text_reg[5], text_mem[12], text_val[12];
@@ -12,10 +12,10 @@ char lang_interpreter_line()
     static mem_t mem;
     static val_t val;
 
-    if(feof(stdin)) {
+    if(feof(stream)) {
         return 0;
     }
-    if(fgets(text_line, 32, stdin) == NULL){
+    if(fgets(text_line, 32, stream) == NULL){
         return 1;
     }
     if (!sscanf(text_line, "%4s %11s %11s", text_reg, text_mem, text_val)) {
