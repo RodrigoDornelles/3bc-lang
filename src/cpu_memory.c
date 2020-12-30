@@ -11,7 +11,6 @@ RETURN_DEFINE cpu_memory_free(PARAMS_DEFINE)
 RETURN_DEFINE cpu_memory_aloc(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    REQUIRED_VALUE
     tape_memory_set(addres, value);
     return RETURN_OK;
 }
@@ -19,7 +18,6 @@ RETURN_DEFINE cpu_memory_aloc(PARAMS_DEFINE)
 RETURN_DEFINE cpu_memory_srev(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    REQUIRED_VALUE
     tape_memory_reversable_toggle(addres, value);
     return RETURN_OK;
 }
@@ -27,7 +25,6 @@ RETURN_DEFINE cpu_memory_srev(PARAMS_DEFINE)
 RETURN_DEFINE cpu_memory_smin(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    REQUIRED_VALUE
     tape_memory_value_min(addres, value);
     return RETURN_OK;
 }
@@ -35,7 +32,6 @@ RETURN_DEFINE cpu_memory_smin(PARAMS_DEFINE)
 RETURN_DEFINE cpu_memory_smax(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    REQUIRED_VALUE
     tape_memory_value_max(addres, value);
     return RETURN_OK;
 }
