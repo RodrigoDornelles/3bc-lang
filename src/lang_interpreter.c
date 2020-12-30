@@ -89,6 +89,10 @@ signed int lang_interpreter_value(const char text_value[12])
     else if (strcasecmp(text_value, "nill") == 0) {
         return 0x0;
     }
+    else if (strcasecmp(text_value, "full") == 0) {
+        static val_t full = 0;
+        return ~full;
+    }
 
     lang_driver_error(ERROR_INTERPRETER_NUMBER);
     return RETURN_EXIT;
