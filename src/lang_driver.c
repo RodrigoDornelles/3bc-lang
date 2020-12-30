@@ -81,6 +81,9 @@ void lang_driver_error(error_t error_code)
         case ERROR_PARAM_BLOCKED_ADDRESS: print_error("ADDRESS IS NOT ALLOWED");
         case ERROR_INTERPRETER_REGISTER: print_error("INVALID REGISTER");
         case ERROR_INTERPRETER_NUMBER: print_error("INVALID NUMBER");
+        case ERROR_TAPE_LABEL: print_error("FAILURE TO EXPAND THE LABEL LIST");
+        case ERROR_TAPE_MEMORY: print_error("FAILURE TO EXPAND THE MEMORY");
+        case ERROR_TAPE_PROGRAM: print_error("FAILURE TO EXPAND THE PROGRAM");
         default: print_error("UNKNOWN ERROR");
     }
 

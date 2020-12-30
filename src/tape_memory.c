@@ -66,11 +66,18 @@ void tape_memory_set(mem_t addres, val_t value)
 
 void tape_memory_resize(mem_t addres)
 {
-    if (addres >= memory_end) {
-        compass_t memory_clean = memory_end;
-        memory_end = addres + 1;
-        memory_pointers = realloc(memory_pointers, sizeof (struct pointer_s) * (memory_end));
+    if (addres < memory_end) {
+        return;
     }
+
+    void* new_tape = realloc(memory_pointers, sizeof (struct pointer_s) * (memory_end = addres + 1));
+
+    if (new_tape == NULL) {
+        lang_driver_error(ERROR_TAPE_MEMORY);
+        return;
+    }
+
+    memory_pointers = new_tape;
 }
 
 void tape_memory_free(mem_t addres)

@@ -21,15 +21,14 @@ void tape_program_line_add(reg_t reg, mem_t mem, val_t val)
 
 void tape_program_resize()
 {
-    // expand program tape size
-    void* new_tape =  realloc(tape_master, sizeof (struct line_s) * (tape_last_line));
+    void* new_tape =  realloc(tape_master, sizeof (struct line_s) * (tape_last_line += 1));
 
     if (new_tape == NULL) {
+        lang_driver_error(ERROR_TAPE_PROGRAM);
         return;
     }
     
     tape_master = new_tape;
-    tape_last_line += 1;
 }
 
 RETURN_DEFINE tape_program_exe()
@@ -82,14 +81,15 @@ void tape_program_label_add(compass_t line, compass_t label)
         return;
     }
    
-    void* new_tape = realloc(tape_labels, sizeof (compass_t) * (tape_last_label));
+    void* new_tape = realloc(tape_labels, sizeof (compass_t) * (tape_last_label = label + 1));
+    
     if (new_tape == NULL) {
+        lang_driver_error(ERROR_TAPE_LABEL);
         return;
     }
 
     tape_labels = new_tape;
     tape_labels[label] = line;
-    tape_last_label = label + 1;
 }
 
 void tape_program_target_label(compass_t label)
