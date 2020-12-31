@@ -4,7 +4,12 @@ compass_t tape_last_label;
 compass_t tape_last_line;
 compass_t tape_current_line;
 
-static compass_t* tape_labels;
+struct label_s {
+    compass_t line;
+    cch_t cpu_mode;
+};
+
+struct label_s* tape_labels;
 struct line_s* tape_master;
 
 void tape_program_line_add(reg_t reg, mem_t mem, val_t val)
@@ -89,13 +94,15 @@ void tape_program_label_add(compass_t line, compass_t label)
     }
 
     tape_labels = new_tape;
-    tape_labels[label] = line;
+    tape_labels[label].line = line;
+    tape_labels[label].cpu_mode = CMODE;
 }
 
 void tape_program_target_label(compass_t label)
 {
     if (label < tape_last_label) {
-        tape_program_line_set(tape_labels[label]);
+        tape_program_line_set(tape_labels[label].line);
+        tape_router_cpu_set(tape_labels[label].cpu_mode);
         return;
     }
 }

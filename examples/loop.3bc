@@ -1,0 +1,21 @@
+MODE 0 6
+ALOC 'i' 3
+
+MODE 0 2
+NILL 0 0x1
+STRC 0 'H'
+STRC 0 'I'
+STRC 0 '!'
+STRC 0 0xA
+
+MODE 0 8
+PUSH 'i' 0
+
+MODE 0 12
+MATH 0 1
+
+MODE 0 8
+PULL 'i' 0
+
+MODE 0 9
+FGTO 0 0x1
