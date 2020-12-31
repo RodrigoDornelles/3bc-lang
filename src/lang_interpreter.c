@@ -18,6 +18,10 @@ char lang_interpreter_line(file_t* stream)
     if(fgets(text_line, 32, stream) == NULL){
         return 1;
     }
+    for (char i = 0; i < 32; i++) if (text_line[i] == '#') {
+        text_line[i] = '\0';
+        break;
+    }
     if (!sscanf(text_line, "%4s %11s %11s", text_reg, text_mem, text_val)) {
         return 1;
     }
