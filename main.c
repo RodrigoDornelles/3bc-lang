@@ -1,8 +1,8 @@
 #include "src/3bc.h"
 
-int main(void)
+int main(int argc, char **argv)
 {
-    lang_driver_init();
+    lang_driver_init(argc, argv);
 
     /** 
      * put transpiled program here.
@@ -13,7 +13,7 @@ int main(void)
     lang_line(STRC, NILL, 'L');
     lang_line(STRC, NILL, 'L');
     lang_line(STRC, NILL, 'O');
-    lang_line(STRC, NILL, ' ');
+    lang_line(STRC, NILL, 0x20);
     lang_line(STRC, NILL, 'W');
     lang_line(STRC, NILL, 'O');
     lang_line(STRC, NILL, 'R');

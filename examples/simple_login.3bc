@@ -1,27 +1,28 @@
-mode nill 0x2
+mode nill 0x02
+strc nill 0x0A
 strc nill '['
 strc nill '?'
 strc nill ']'
-strc nill ' '
+strc nill 0x20
 strc nill 'l'
 strc nill 'o'
 strc nill 'g'
 strc nill 'i'
 strc nill 'n'
 strc nill ':'
-strc nill ' '
+strc nill 0x20
 
-mode nill 0x3
-strc 0x01
-strc 0x02 
-strc 0x03
+mode nill 0x03
+strc 0x01 nill
+strc 0x02 nill
+strc 0x03 nill
 
-mode nill 0x2
-strc nill '\n'
+mode nill 0x02
+strc nill 0x0A
 strc nill '['
 strc nill '?'
 strc nill ']'
-strc nill ' '
+strc nill 0x20
 strc nill 'p'
 strc nill 'a'
 strc nill 's'
@@ -31,34 +32,35 @@ strc nill 'o'
 strc nill 'r'
 strc nill 'd'
 strc nill ':'
-strc nill ' '
+strc nill 0x20
 
-mode nill 0x5
-strc 0x04
-strc 0x05 
-strc 0x06
+mode nill 0x05
+strc 0x04 nill
+strc 0x05 nill
+strc 0x06 nill
 
-mode nill 0x2
-strc nill '\n'
+mode nill 0x02
+strc nill 0x0A
+strc nill 0x0A
 strc nill '['
 strc nill '!'
 strc nill ']'
-strc nill ' '
+strc nill 0x20
 strc nill 'p'
 strc nill 'r'
 strc nill 'e'
 strc nill 's'
 strc nill 's'
-strc nill ' '
+strc nill 0x20
 strc nill 'a'
 strc nill 'n'
 strc nill 'y'
-strc nill ' '
+strc nill 0x20
 strc nill 'k'
 strc nill 'e'
 strc nill 'y'
 strc nill '.'
-strc nill '\n'
+strc nill 0x0A
 
 mode nill 0x4
-strc
+strc full 0

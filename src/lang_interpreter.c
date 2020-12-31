@@ -4,7 +4,7 @@
 case c1+c2+c3+c4: return reg;\
 case c1+c2+c3+c4-128: return reg
 
-char lang_interpreter_line()
+char lang_interpreter_line(file_t* stream)
 {
     static char text_line[32];
     static char text_reg[5], text_mem[12], text_val[12];
@@ -12,11 +12,15 @@ char lang_interpreter_line()
     static mem_t mem;
     static val_t val;
 
-    if(feof(stdin)) {
+    if(feof(stream)) {
         return 0;
     }
-    if(fgets(text_line, 32, stdin) == NULL){
+    if(fgets(text_line, 32, stream) == NULL){
         return 1;
+    }
+    for (char i = 0; i < 32; i++) if (text_line[i] == '#') {
+        text_line[i] = '\0';
+        break;
     }
     if (!sscanf(text_line, "%4s %11s %11s", text_reg, text_mem, text_val)) {
         return 1;
@@ -88,6 +92,10 @@ signed int lang_interpreter_value(const char text_value[12])
     }
     else if (strcasecmp(text_value, "nill") == 0) {
         return 0x0;
+    }
+    else if (strcasecmp(text_value, "full") == 0) {
+        static val_t full = 0;
+        return ~full;
     }
 
     lang_driver_error(ERROR_INTERPRETER_NUMBER);
