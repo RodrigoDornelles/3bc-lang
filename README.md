@@ -57,3 +57,4 @@ although the CPU is limited only by 3 bits (8 registers in all), the main idea i
 | **4º** |  ![avatar](https://avatars.githubusercontent.com/gnevesdev?size=32) | **[Guilherme Neves](https://github.com/gnevesdev)** | **28 December 2020** |
 | **5º** |  ![avatar](https://avatars.githubusercontent.com/marcusmmmz?size=32) | **[Marcus Paulo](https://github.com/marcusmmmz)** | **30 December 2020** |
 | **6º** |  ![avatar](https://avatars.githubusercontent.com/keshizin?size=32) | **[Takeshi Ishikawa](https://github.com/keshizin)** | **30 December 2020** |
+| **7º** |  ![avatar](https://avatars.githubusercontent.com/andreluispy?size=32) | **[André Luis](https://github.com/andreluispy)** | **31 December 2020** |
