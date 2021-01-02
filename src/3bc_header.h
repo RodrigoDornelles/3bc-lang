@@ -25,6 +25,10 @@
 #define CMODE                   tape_router_cpu_get()       // current cpu mode
 #define CLINE                   tape_program_line_get()     // current line
 #define CELNE                   tape_program_line_end()     // current end of lines
+#define MEM_CONFIG_SIGNED       0b0001
+#define MEM_CONFIG_MAX_VALUE    0b0010
+#define MEM_CONFIG_MIN_VALUE    0b0100
+#define MEM_CONFIG_NORMALIZE    0b1000
 
 // types
 typedef unsigned int compass_t;
@@ -32,6 +36,7 @@ typedef unsigned char reg_t;
 typedef unsigned char mem_t;
 typedef unsigned char val_t;
 typedef unsigned char cch_t;
+typedef unsigned char conf_t;
 typedef FILE file_t;
 
 // structs
@@ -92,9 +97,9 @@ RETURN_DEFINE cpu_jump_ngto(PARAMS_DEFINE);
 // FILE: cpu_memory.c
 RETURN_DEFINE cpu_memory_free(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_aloc(PARAMS_DEFINE);
-RETURN_DEFINE cpu_memory_srev(PARAMS_DEFINE);
-RETURN_DEFINE cpu_memory_smin(PARAMS_DEFINE);
-RETURN_DEFINE cpu_memory_smax(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_tcfg(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_tmin(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_tmax(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_aux_free(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_aux_aloc(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_aux_pull(PARAMS_DEFINE);
@@ -132,7 +137,7 @@ void tape_aux_free(void);
 val_t *tape_aux_ptr(void);
 
 // FILE: tape_memory.c
-void tape_memory_reversable_toggle(mem_t addres, val_t value);
+void tape_memory_type_set(mem_t addres, val_t value);
 void tape_memory_value_min(mem_t addres, val_t value);
 void tape_memory_value_max(mem_t addres, val_t value);
 val_t tape_memory_get(mem_t addres);
@@ -140,7 +145,7 @@ void tape_memory_set(mem_t addres, val_t value);
 void tape_memory_resize(mem_t addres);
 void tape_memory_free(mem_t addres);
 void tape_memory_destroy(void);
-
+void tape_memory_safe(mem_t addres);
 
 // FILE: tape_program.c
 void tape_program_resize(void);

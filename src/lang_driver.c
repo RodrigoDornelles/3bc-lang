@@ -97,6 +97,8 @@ void lang_driver_error(error_t error_code)
         case ERROR_TAPE_LABEL: print_error("FAILURE TO EXPAND THE LABEL LIST");
         case ERROR_TAPE_MEMORY: print_error("FAILURE TO EXPAND THE MEMORY");
         case ERROR_TAPE_PROGRAM: print_error("FAILURE TO EXPAND THE PROGRAM");
+        case ERROR_INVALID_MEMORY_CONFIG: print_error("INVALID MEMORY TYPE CONFIG");
+        case ERROR_INVALID_MEMORY_CLAMP:  print_error("INVALID MEMORY TYPE CLAMP");
         default: print_error("UNKNOWN ERROR");
     }
 
