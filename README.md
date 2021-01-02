@@ -58,3 +58,20 @@ although the CPU is limited only by 3 bits (8 registers in all), the main idea i
 | **5º** |  ![avatar](https://avatars.githubusercontent.com/marcusmmmz?size=32) | **[Marcus Paulo](https://github.com/marcusmmmz)** | **30 December 2020** |
 | **6º** |  ![avatar](https://avatars.githubusercontent.com/keshizin?size=32) | **[Takeshi Ishikawa](https://github.com/keshizin)** | **30 December 2020** |
 | **7º** |  ![avatar](https://avatars.githubusercontent.com/andreluispy?size=32) | **[André Luis](https://github.com/andreluispy)** | **31 December 2020** |
+
+## How to "Hello World" ##
+This steps will guide you to run the hello world example and have first 3bc program running in your machine,  let get's started
+
+After download the binary on release session, just decompress on folder and execute from command line:
+**windows**
+[folder]  > 3bc.exe [filename.3bc]
+**mac / linux**
+[folder]  > ./3bc [filename.3bc]
+
+change the [filename.3bc] to file that you want to execute, you can use one source file from the examples folder like helloworld.3bc
+
+[folder]  > 3bc.exe examples/helloworld.3bc
+
+    C:\Users\nicod\Downloads\3bc-windows-32>3bc.exe helloworld.3bc
+    hello world!
+    C:\Users\nicod\Downloads\3bc-windows-32>
