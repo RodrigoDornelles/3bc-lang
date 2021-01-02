@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="{{ site.locale }}">
+    <head>
+        <!-- META TAGS -->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- MATERIALIZE CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+        <!-- FAV ICON-->
+        <link rel="shortcut icon" href="{{ '/favicon.ico' | absolute_url }}" type="image/x-icon"/>
+        <link rel="icon" href="{{ '/favicon.ico' | absolute_url }}" type="image/x-icon">
+
+        {% seo %}
+        <!-- DESIGN -->
+        <style>
+
+        </style>
+
+        <!-- IDE MOUNT -->
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                M.Tabs.init(document.querySelectorAll('.tabs'), {swipeable: false});
+            });
+        </script>
+    </head>
+    <body>
+        <main>
+            <!-- BEGIN NAV -->
+            <nav class="nav-extended">
+                <!-- DESTKTOP MENU-->
+                <div class="nav-wrapper">
+                    <a href="/" class="brand-logo">3BC Language</a>
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="https://github.com/rodrigodornelles/3bc-lang" target="_blank">Github</a></li>
+                    <li><a href="https://rdornelles.github.io/projeto/3bc" target="_blank">Project</a></li>
+                    </ul>
+                </div>
+            <div class="nav-content">
+                <!-- TABS HEADER-->
+                <ul class="row tabs tabs-transparent">
+                <li class="tab col s4"><a class="active" href="#editor">Editor</a></li>
+                <li class="tab col s4"><a href="#documentation">Documentation</a></li>
+                <li class="tab col s4"><a href="#changelog">Changelog</a></li>
+                </ul>
+            </div>
+            </nav>
+            
+            <!-- BEGIN MOBILE MENU-->
+            <ul class="sidenav" id="mobile-demo">
+                <li><a href="https://github.com/rodrigodornelles/3bc-lang" target="_blank">Github</a></li>
+                <li><a href="https://rdornelles.github.io/projeto/3bc" target="_blank">Project</a></li>
+            </ul>
+
+            <!-- TABS CONTENT -->
+            <div id="editor" class="col s12">Test 2</div>
+            <div id="documentation" class="col s12"><section class="container">{{ content }}</section></div>
+            <div id="changelog" class="col s12"></div>
+        </main>
+    </body>
+</html>
