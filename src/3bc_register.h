@@ -34,18 +34,18 @@
 #define FGTO 0b010
 
 #define STRO 0b011 
-#define SMIN 0b011
+#define TCFG 0b011
 #define PULL 0b011  
 #define ZGTO 0b011
 
 #define STRX 0b100
-#define SREV 0b100
+#define TMIN 0b100
 #define PUSH 0b100
 #define PGTO 0b100
 
 #define STRU 0b101
 #define NGTO 0b101
-#define SMAX 0b101
+#define TMAX 0b101
 
 RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK0(),
@@ -54,7 +54,7 @@ RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK4(cpu_input_stri, cpu_input_strc, cpu_input_stro, cpu_input_strx),
     CPU_PACK4(cpu_input_silent_stri, cpu_input_silent_strc, cpu_input_silent_stro, cpu_input_silent_strx),
     CPU_PACK4(cpu_input_password_stri, cpu_input_password_strc, cpu_input_password_stro, cpu_input_password_strx),
-    CPU_PACK5(cpu_memory_free, cpu_memory_aloc, cpu_memory_srev, cpu_memory_smin, cpu_memory_smax),
+    CPU_PACK5(cpu_memory_free, cpu_memory_aloc, cpu_memory_tcfg, cpu_memory_tmin, cpu_memory_tmax),
     CPU_PACK_PROTECTED(),
     CPU_PACK4(cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_push),
     CPU_PACK5(cpu_jump_goto, cpu_jump_fgto, cpu_jump_zgto, cpu_jump_pgto, cpu_jump_ngto),

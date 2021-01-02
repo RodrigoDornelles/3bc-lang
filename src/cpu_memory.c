@@ -15,21 +15,21 @@ RETURN_DEFINE cpu_memory_aloc(PARAMS_DEFINE)
     return RETURN_OK;
 }
 
-RETURN_DEFINE cpu_memory_srev(PARAMS_DEFINE)
+RETURN_DEFINE cpu_memory_tcfg(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    tape_memory_reversable_toggle(addres, value);
+    tape_memory_type_set(addres, value);
     return RETURN_OK;
 }
 
-RETURN_DEFINE cpu_memory_smin(PARAMS_DEFINE)
+RETURN_DEFINE cpu_memory_tmin(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     tape_memory_value_min(addres, value);
     return RETURN_OK;
 }
 
-RETURN_DEFINE cpu_memory_smax(PARAMS_DEFINE)
+RETURN_DEFINE cpu_memory_tmax(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     tape_memory_value_max(addres, value);
