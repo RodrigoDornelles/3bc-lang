@@ -1,0 +1,16 @@
+helloworld: |
+  # prints Hello World!
+  MODE NILL 0x02
+  STRC NILL 'h'
+  STRC NILL 'e'
+  STRC NILL 'l'
+  STRC NILL 'l'
+  STRC NILL 'o'
+  STRC NILL 0x20
+  STRC NILL 'w'
+  STRC NILL 'o'
+  STRC NILL 'r'
+  STRC NILL 'l'
+  STRC NILL 'd'
+  STRC NILL '!'
+  STRC NILL 0x0A

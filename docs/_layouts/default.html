@@ -16,15 +16,23 @@
         <link rel="icon" href="{{ '/favicon.ico' | absolute_url }}" type="image/x-icon">
 
         {% seo %}
-        <!-- DESIGN -->
+
+        <!-- CUSTOM DESIGN -->
         <style>
+            #ide-editor {
+                border-style: solid;
+                border-color: black;
+                border-width: 1px;
+            }
+            
 
         </style>
 
-        <!-- IDE MOUNT -->
+        <!-- MATERILIZE SCRIPT -->
         <script>
             document.addEventListener('DOMContentLoaded', () => {
                 M.Tabs.init(document.querySelectorAll('.tabs'), {swipeable: false});
+                M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
             });
         </script>
     </head>
@@ -58,9 +66,35 @@
             </ul>
 
             <!-- TABS CONTENT -->
-            <div id="editor" class="col s12">Test 2</div>
-            <div id="documentation" class="col s12"><section class="container">{{ content }}</section></div>
-            <div id="changelog" class="col s12"></div>
+            <section class="container">
+                <!-- EDITOR -->
+                <div id="editor" class="col s12">
+                    <pre id="ide-editor" contentEditable="true">loading...</pre>
+                </div>
+
+                <!-- DOCUMENTATION -->
+                <div id="documentation" class="col s12">
+                    {{ content }}
+                </div>
+                
+                <!-- CHANGELOG -->
+                <div id="changelog" class="col s12">
+                    {% for page in site.pages %}{% if page.path == 'CHANGELOG.md' %}{{ page.content }}{% endif %}{% endfor %}
+                </div>
+            </section>
         </main>
     </body>
+
+    <!-- IDE SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById("ide-editor").innerHTML = `{{ site.data.examples.helloworld }}`;
+
+        });
+
+        document.getElementById("ide-editor").addEventListener("input", function() {
+            console.log("input event fired");
+        }, false);
+
+    </script>
 </html>
