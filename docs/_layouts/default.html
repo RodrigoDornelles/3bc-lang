@@ -25,7 +25,13 @@
                 border-width: 1px;
             }
             
+            #ide-editor .comment {
+                color: green;
+            }
 
+            #ide-editor .number {
+                color: red;
+            }
         </style>
 
         <!-- MATERILIZE SCRIPT -->
@@ -87,14 +93,13 @@
 
     <!-- IDE SCRIPT -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById("ide-editor").innerHTML = `{{ site.data.examples.helloworld }}`;
-
-        });
-
-        document.getElementById("ide-editor").addEventListener("input", function() {
-            console.log("input event fired");
-        }, false);
-
+    /** add example and call edit event **/
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById("ide-editor").innerHTML = `{{ site.data.examples.helloworld }}`;
+        document.getElementById("ide-editor").dispatchEvent(new Event('input'));
+    });
     </script>
+    <script src="/ide/helpers.js"></script>
+    <script src="/ide/highlights.js"></script>
+    
 </html>
