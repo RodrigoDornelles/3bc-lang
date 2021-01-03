@@ -48,7 +48,7 @@
             <nav class="nav-extended">
                 <!-- DESTKTOP MENU-->
                 <div class="nav-wrapper">
-                    <a href="/" class="brand-logo">3BC Language</a>
+                    <a href="{{ '/' | relative_url }}" class="brand-logo">3BC Language</a>
                     <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                     <li><a href="https://github.com/rodrigodornelles/3bc-lang" target="_blank">Github</a></li>
@@ -99,7 +99,7 @@
         document.getElementById("ide-editor").dispatchEvent(new Event('input'));
     });
     </script>
-    <script src="/ide/helpers.js"></script>
-    <script src="/ide/highlights.js"></script>
+    <script src="{{ '/ide/helpers.js' | relative_url }}"></script>
+    <script src="{{ '/ide/highlights.js' | relative_url }}"></script>
     
 </html>

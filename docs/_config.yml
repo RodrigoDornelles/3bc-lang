@@ -22,7 +22,7 @@ title: 3BC Language
 description: >- # 
   This is a machine language that has only 3 register bits for CPU,
   the idea is to make it so simple and intuitive that it can be easily read on punched cards.
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "/3bc-lang" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 plugins:
