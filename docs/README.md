@@ -8,7 +8,7 @@ permalink: /index.html
 
 | Mode | Name | Description | Instructions |
 | :--: | :--: | :---------- | :----------- |
-| 0 | <br/> | not use | <br/> | `nill` `mode` |
+| 0 | <br/> | not use | `nill` `mode` |
 | 1 | **[MODE_DEBUG](#mode-debug)** | depuration put char | `nill` `stri` `strc` `stro` `strx` `stru` `mode` |
 | 2 | **[MODE_STRING](#mode-string)** | console put char | `nill` `stri` `strc` `stro` `strx` `stru` `mode` |
 | 3 | **[MODE_INPUT](#mode-input)** | console input keyboard | `nill` `stri` `strc` `stro` `strx` `stru` `mode` |
