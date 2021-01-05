@@ -65,6 +65,7 @@ RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK1(cpu_math_div),
     CPU_PACK1(cpu_math_mod),
     CPU_PACK1(cpu_math_power),
+    CPU_PACK1(cpu_math_root),
     CPU_PACK1(cpu_math_percentage),
     CPU_PACK1(cpu_math_abs),
     CPU_PACK1(cpu_math_average)
