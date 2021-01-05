@@ -86,6 +86,7 @@ RETURN_DEFINE cpu_math_root(PARAMS_DEFINE);
 RETURN_DEFINE cpu_math_percentage(PARAMS_DEFINE);
 RETURN_DEFINE cpu_math_abs(PARAMS_DEFINE);
 RETURN_DEFINE cpu_math_average(PARAMS_DEFINE);
+void before_mode_math_average(void);
 
 // FILE: cpu_jump.c
 RETURN_DEFINE cpu_jump_goto(PARAMS_DEFINE);
