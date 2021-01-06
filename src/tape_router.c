@@ -2,6 +2,9 @@
 
 static cch_t channel_cpu_mode;
 
+/**
+ * switch between cpu mode channels
+ */
 void tape_router_cpu_set(cch_t value)
 {
     /** prevent enter in invalid cpu mode **/
@@ -30,6 +33,10 @@ void tape_router_cpu_set(cch_t value)
     channel_cpu_mode = value;    
 }
 
+/**
+ * current cpu channel
+ * ALIAS: CMODE
+ */
 cch_t tape_router_cpu_get()
 {
     return channel_cpu_mode;
