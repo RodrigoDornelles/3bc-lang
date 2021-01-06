@@ -11,6 +11,7 @@ char lang_interpreter_line(file_t* stream)
     static reg_t reg;
     static mem_t mem;
     static val_t val;
+    char i;
 
     if(feof(stream)) {
         return 0;
@@ -18,7 +19,7 @@ char lang_interpreter_line(file_t* stream)
     if(fgets(text_line, 32, stream) == NULL){
         return 1;
     }
-    for (char i = 0; i < 32; i++) if (text_line[i] == '#') {
+    for (i = 0; i < 32; i++) if (text_line[i] == '#') {
         text_line[i] = '\0';
         break;
     }

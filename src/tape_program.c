@@ -9,12 +9,18 @@ struct label_s {
     cch_t cpu_mode;
 };
 
+struct line_s {
+    reg_t reg;
+    mem_t adr;
+    mem_t dta;
+};
+
 struct label_s* tape_labels;
 struct line_s* tape_master;
 
 void tape_program_line_add(reg_t reg, mem_t mem, val_t val)
 {
-    // is a label
+    /** is a label **/
     if (reg == 0 && mem == 0 && val != 0) {
         tape_program_label_add(CLINE, val);
         val = 0;
@@ -38,19 +44,21 @@ void tape_program_resize()
 
 RETURN_DEFINE tape_program_exe()
 {
-    // call the register function
-    // from within a two-dimensional array of pointers
-    // FILE: register.h
+    /**
+     *  call the register function
+     * from within a two-dimensional array of pointers
+     * FILE: register.h
+     **/
     RETURN_DEFINE result = (*instructions[
-        // first index use current cpu channel
+        /** first index use current cpu channel **/
         CMODE
     ][  
-        // second index use function pointer register
+        /** second index use function pointer register **/
         tape_master[CLINE].reg
     ])(
-        // param for function: mem_t addres
+        /** param for function: mem_t addres **/
         tape_master[CLINE].adr,
-        // param for function: val_t value
+        /** param for function: val_t value **/
         tape_master[CLINE].dta
     );
 
