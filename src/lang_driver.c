@@ -84,6 +84,7 @@ void lang_driver_error(error_t error_code)
         case ERROR_CPU_PROTECT: print_error("PROTECTED CPU MODE");
         case ERROR_CPU_RESERVED: print_error("RESERVED CPU MODE");
         case ERROR_CPU_REGISTER: print_error("UNDEFINED CPU REGISTER");
+        case ERROR_CPU_INVALID: print_error("INVALID CPU MODE");
         case ERROR_INVALID_LABEL: print_error("INVALID LABEL");
         case ERROR_INVALID_VALUE: print_error("INVALID VALUE");
         case ERROR_INVALID_ADDRESS: print_error("INVALID ADDRESS");
