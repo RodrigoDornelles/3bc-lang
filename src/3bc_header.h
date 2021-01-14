@@ -140,6 +140,7 @@ void tape_memory_resize(mem_t addres);
 void tape_memory_free(mem_t addres);
 void tape_memory_destroy(void);
 void tape_memory_safe(mem_t addres);
+void tape_memory_reset(mem_t addres);
 
 /** FILE: tape_program.c **/
 void tape_program_resize(void);

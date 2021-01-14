@@ -142,6 +142,11 @@ void tape_memory_resize(mem_t addres)
  */
 void tape_memory_free(mem_t addres)
 {
+    /** prevent data access before is no longer useful (security) **/
+    if (memory_pointers[addres].allocated) {
+        tape_memory_reset(addres);   
+    }
+    
     free(memory_pointers[addres].p);
     memory_pointers[addres].allocated = false;
 }
@@ -167,11 +172,17 @@ void tape_memory_safe(mem_t addres)
         /** alloc physically **/
         memory_pointers[addres].p = malloc(sizeof (struct memory_s));
         memory_pointers[addres].allocated = true;
-
-        /** initial memory configurations **/
-        _MEM3BC(configuration) = 0;
-        _MEM3BC(v_min) = 0;
-        _MEM3BC(v_max) = 0;
-        _MEM3BC(value) = 0;
+        tape_memory_reset(addres);
     }
+}
+
+/**
+ * initial memory configurations
+ */
+void tape_memory_reset(mem_t addres)
+{
+    _MEM3BC(configuration) = 0;
+    _MEM3BC(v_min) = 0;
+    _MEM3BC(v_max) = 0;
+    _MEM3BC(value) = 0;
 }
