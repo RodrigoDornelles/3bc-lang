@@ -18,18 +18,28 @@ struct line_s {
 struct label_s* tape_labels;
 struct line_s* tape_master;
 
+/**
+ * record program memory,
+ * similar to writing a line on the punch card.
+ */
 void tape_program_line_add(reg_t reg, mem_t mem, val_t val)
 {
-    /** is a label **/
+    /** register point label for jumps logical **/
     if (reg == 0 && mem == 0 && val != 0) {
         tape_program_label_add(CLINE, val);
         val = 0;
     }
+
+    /** register program bytecode **/
     tape_master[CELNE].reg = reg;
     tape_master[CELNE].adr = mem;
     tape_master[CELNE].dta = val;
 }
 
+/**
+ * Expand program memory,
+ * provide more punch card lines.
+ */
 void tape_program_resize()
 {
     void* new_tape =  realloc(tape_master, sizeof (struct line_s) * (tape_last_line += 1));
@@ -42,6 +52,10 @@ void tape_program_resize()
     tape_master = new_tape;
 }
 
+/**
+ * run processor instructions,
+ * this is a core of virtual machine
+ */
 RETURN_DEFINE tape_program_exe()
 {
     /**
@@ -66,6 +80,9 @@ RETURN_DEFINE tape_program_exe()
     return result;
 }
 
+/**
+ * eject punch card program
+ */
 void tape_program_destroy()
 {
     free(tape_labels);
@@ -77,6 +94,9 @@ void tape_program_line_set(compass_t line)
     tape_current_line = line;
 }
 
+/**
+ * current program line
+ */
 compass_t tape_program_line_get()
 {
     return tape_current_line;
@@ -87,6 +107,9 @@ compass_t tape_program_line_end()
     return tape_last_line <= 0? 0: (tape_last_line - 1);
 }
 
+/**
+ * mark point to logical jumps
+ */
 void tape_program_label_add(compass_t line, compass_t label)
 {
     if (label <= tape_last_label) {
@@ -106,6 +129,9 @@ void tape_program_label_add(compass_t line, compass_t label)
     tape_labels[label].cpu_mode = CMODE;
 }
 
+/**
+ * seek program label point
+ */
 void tape_program_target_label(compass_t label)
 {
     if (label < tape_last_label) {
@@ -115,6 +141,9 @@ void tape_program_target_label(compass_t label)
     }
 }
 
+/**
+ * check if there is tape program available
+ */
 bool tape_program_avaliable()
 {
     return tape_current_line < tape_last_line;
