@@ -62,11 +62,11 @@ reg_t lang_interpreter_world(const char text_reg[5])
         PARSER_PACK('p', 'u', 'l', 'l', PULL);
         PARSER_PACK('p', 'u', 's', 'h', PUSH);
         PARSER_PACK('t', 'c', 'f', 'g', TCFG);
-
+    
         PARSER_PACK('g', 'o', 't', 'o', GOTO);
         PARSER_PACK('f', 'g', 't', 'o', FGTO);
         PARSER_PACK('z', 'g', 't', 'o', ZGTO);
-        PARSER_PACK('p', 'g', 't', 'o', PGTO, TMIN);
+        PARSER_PACK('p', 'g', 't', 'o', SPIN, PGTO, TMIN);
         PARSER_PACK('n', 'g', 't', 'o', NGTO, TMAX);
 
         PARSER_PACK('m', 'a', 't', 'h', MATH);

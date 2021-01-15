@@ -40,12 +40,13 @@
 
 #define STRX 0b100
 #define TMIN 0b100
-#define PUSH 0b100
 #define PGTO 0b100
+#define SPIN 0b100
 
 #define STRU 0b101
 #define NGTO 0b101
 #define TMAX 0b101
+#define PUSH 0b101
 
 RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK0(),
@@ -56,7 +57,7 @@ RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK4(cpu_input_password_stri, cpu_input_password_strc, cpu_input_password_stro, cpu_input_password_strx),
     CPU_PACK5(cpu_memory_free, cpu_memory_aloc, cpu_memory_tcfg, cpu_memory_tmin, cpu_memory_tmax),
     CPU_PACK_PROTECTED(),
-    CPU_PACK4(cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_push),
+    CPU_PACK5(cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_spin, cpu_memory_aux_push),
     CPU_PACK5(cpu_jump_goto, cpu_jump_fgto, cpu_jump_zgto, cpu_jump_pgto, cpu_jump_ngto),
     CPU_PACK_RESERVED(),
     CPU_PACK1(cpu_math_sum),

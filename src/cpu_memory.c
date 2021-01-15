@@ -64,3 +64,15 @@ RETURN_DEFINE cpu_memory_aux_push(PARAMS_DEFINE)
     tape_aux_set(tape_memory_get(addres));
     return RETURN_OK;
 }
+
+/**
+ * invert values inner AUX & Memory
+ */
+RETURN_DEFINE cpu_memory_aux_spin(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_VALUES
+    val_t aux_old = AUX;
+    tape_aux_set(tape_memory_get(addres));
+    tape_memory_set(addres, aux_old);
+    return RETURN_OK;
+}

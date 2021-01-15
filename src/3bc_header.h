@@ -98,6 +98,7 @@ RETURN_DEFINE cpu_memory_aux_free(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_aux_aloc(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_aux_pull(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_aux_push(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_aux_spin(PARAMS_DEFINE);
 
 /** FILE: cpu_string.c **/
 RETURN_DEFINE cpu_string_stri(PARAMS_DEFINE);
