@@ -159,7 +159,7 @@ void tape_memory_resize(mem_t addres)
         return;
     }
 
-    void* new_tape = realloc(memory_pointers, sizeof (struct pointer_s) * (memory_end = addres + 1));
+    struct pointer_s* new_tape = (struct pointer_s*) realloc(memory_pointers, sizeof (struct pointer_s) * (memory_end = addres + 1));
 
     /** was not possible expand memory tape **/
     if (new_tape == NULL) {
@@ -203,7 +203,7 @@ void tape_memory_safe(mem_t addres)
 {
     if (memory_pointers[addres].allocated == false) {
         /** alloc physically **/
-        memory_pointers[addres].p = malloc(sizeof (struct memory_s));
+        memory_pointers[addres].p = (struct memory_s*) malloc(sizeof (struct memory_s));
         memory_pointers[addres].allocated = true;
         tape_memory_reset(addres);
     }
