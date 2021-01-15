@@ -54,6 +54,10 @@ RETURN_DEFINE cpu_debug_stro(PARAMS_DEFINE);
 RETURN_DEFINE cpu_debug_strx(PARAMS_DEFINE);
 RETURN_DEFINE cpu_debug_stru(PARAMS_DEFINE);
 
+/** FILE: cpu_helper.c **/
+RETURN_DEFINE cpu_helper_average(PARAMS_DEFINE);
+void before_helper_average(void);
+
 /** FILE: cpu_input.c **/
 RETURN_DEFINE cpu_input_stri(PARAMS_DEFINE);
 RETURN_DEFINE cpu_input_strc(PARAMS_DEFINE);
@@ -78,8 +82,6 @@ RETURN_DEFINE cpu_math_power(PARAMS_DEFINE);
 RETURN_DEFINE cpu_math_root(PARAMS_DEFINE);
 RETURN_DEFINE cpu_math_percentage(PARAMS_DEFINE);
 RETURN_DEFINE cpu_math_abs(PARAMS_DEFINE);
-RETURN_DEFINE cpu_math_average(PARAMS_DEFINE);
-void before_mode_math_average(void);
 
 /** FILE: cpu_jump.c **/
 RETURN_DEFINE cpu_jump_goto(PARAMS_DEFINE);

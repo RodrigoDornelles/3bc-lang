@@ -21,6 +21,7 @@
 /** program **/
 #include "cpu_common.c"
 #include "cpu_debug.c"
+#include "cpu_helper.c"
 #include "cpu_input.c"
 #include "cpu_math.c"
 #include "cpu_jump.c"

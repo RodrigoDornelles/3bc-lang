@@ -10,6 +10,7 @@
 #define MODE_PROTECTED          0x07
 #define MODE_MEMORY_AUX         0x08
 #define MODE_JUMP               0x09
+#define MODE_CUSTOM_1           0x0A
 #define MODE_MATH_SUM           0x0B
 #define MODE_MATH_SUB           0x0C
 #define MODE_MATH_MUL           0x0D
@@ -19,7 +20,8 @@
 #define MODE_MATH_ROOT          0x11
 #define MODE_MATH_PERCENTAGE    0x12
 #define MODE_MATH_ABS           0x13
-#define MODE_MATH_AVARAGE       0x14
+#define MODE_CUSTOM_2           0x14
+#define MODE_HELPER_AVARAGE     0x15
 
 #define NILL 0b000
 #define MODE 0b111
@@ -48,6 +50,12 @@
 #define NGTO 0b101
 #define PUSH 0b101
 
+
+
+
+
+
+
 RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK0(),
     CPU_PACK5(cpu_debug_stri, cpu_debug_strc, cpu_debug_stro, cpu_debug_strx, cpu_debug_stru),
@@ -69,5 +77,6 @@ RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK1(cpu_math_root),
     CPU_PACK1(cpu_math_percentage),
     CPU_PACK1(cpu_math_abs),
-    CPU_PACK1(cpu_math_average)
+    CPU_PACK_RESERVED(),
+    CPU_PACK1(cpu_helper_average)
 };

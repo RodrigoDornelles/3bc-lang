@@ -21,8 +21,8 @@ void tape_router_cpu_set(cch_t value)
 
     /** before cpu mode change **/
     switch (value) {
-        case MODE_MATH_AVARAGE:
-            before_mode_math_average();
+        case MODE_HELPER_AVARAGE:
+            before_helper_average();
             break;
 
         default:
