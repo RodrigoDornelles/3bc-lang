@@ -20,6 +20,39 @@ struct pointer_s* memory_pointers;
 struct memory_s* memory_tape;
 
 /**
+ * get memory address type configurations
+ */
+val_t tape_memory_type_get(mem_t addres)
+{
+    tape_memory_resize(addres);
+    tape_memory_safe(addres);
+
+    return _MEM3BC(configuration);
+}
+
+/**
+ * set memory address range value minimal
+ */
+val_t tape_memory_value_min_get(mem_t addres)
+{
+    tape_memory_resize(addres);
+    tape_memory_safe(addres);
+
+    return _MEM3BC(v_min);
+}
+
+/**
+ * set memory address range value maximum
+ */
+val_t tape_memory_value_max_get(mem_t addres)
+{
+    tape_memory_resize(addres);
+    tape_memory_safe(addres);
+
+    return _MEM3BC(v_max);
+}
+
+/**
  * set memory address type configurations
  */
 void tape_memory_type_set(mem_t addres, val_t value)
@@ -49,7 +82,7 @@ void tape_memory_type_set(mem_t addres, val_t value)
 /**
  * set memory address range value minimal
  */
-void tape_memory_value_min(mem_t addres, val_t value)
+void tape_memory_value_min_set(mem_t addres, val_t value)
 {
     tape_memory_resize(addres);
     tape_memory_safe(addres);
@@ -67,7 +100,7 @@ void tape_memory_value_min(mem_t addres, val_t value)
 /**
  * set memory address range value maximum
  */
-void tape_memory_value_max(mem_t addres, val_t value)
+void tape_memory_value_max_set(mem_t addres, val_t value)
 {
     tape_memory_resize(addres);
     tape_memory_safe(addres);

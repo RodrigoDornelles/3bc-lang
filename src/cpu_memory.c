@@ -25,14 +25,14 @@ RETURN_DEFINE cpu_memory_tcfg(PARAMS_DEFINE)
 RETURN_DEFINE cpu_memory_tmin(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    tape_memory_value_min(addres, value);
+    tape_memory_value_min_set(addres, value);
     return RETURN_OK;
 }
 
 RETURN_DEFINE cpu_memory_tmax(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    tape_memory_value_max(addres, value);
+    tape_memory_value_max_set(addres, value);
     return RETURN_OK;
 }
 

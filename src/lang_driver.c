@@ -106,28 +106,58 @@ void lang_driver_error(error_t error_code)
     lang_driver_exit(EXIT_FAILURE);
 }
 
-#ifndef _WIN32
-int getch()
+/**
+ * detect keyboard input
+ */
+val_t lang_driver_input(reg_t type, mem_t addres)
 {
-    int c ;
-
-    tcsetattr(STDIN_FILENO,TCSANOW, &term_new_attr);
-    c = getchar() ;
-    tcsetattr(STDIN_FILENO,TCSANOW, &term_old_attr);
-    return c ;
-}
-#endif
-
-
-int getch_parser(const char* format)
-{
-    static int input_val;
-    static char input_key[2] = "\0";
-
-    input_key[0] = getch();
+    static unsigned int value;
+    static char c[2] = "\0";
+    static bool invalid;
     
-    sscanf(input_key, format, &input_val);
+    do {
+        invalid = false;
+
+        /** capture input **/
+        #ifndef _WIN32
+        tcsetattr(STDIN_FILENO,TCSANOW, &term_new_attr);
+        c[0] = getchar();
+        tcsetattr(STDIN_FILENO,TCSANOW, &term_old_attr);
+        #else 
+        c[0] = getch();
+        #endif
+
+        /** validate input **/
+        switch (type) {
+            case STRC: 
+                /** verify is a ASCII alphabet's letter/symbol **/
+                invalid |= (c[0] < 0x20 || c[0] > 0x7E);
+                value = c[0];
+                break;
+
+            case STRI: 
+                invalid |= !sscanf(c, "%d", &value);
+                break;
+            
+            case STRO: 
+                invalid |= !sscanf(c, "%o", &value);
+                break;
+
+            case STRX:
+                invalid |= !sscanf(c, "%x", &value);
+                break;
+        }
+
+        /** validade input inner memory clamp limits **/
+        if ((tape_memory_type_get(addres) & MEM_CONFIG_MIN_VALUE) == MEM_CONFIG_MIN_VALUE) {
+            invalid |= tape_memory_value_min_get(addres) > value;
+        }
+        if ((tape_memory_type_get(addres) & MEM_CONFIG_MAX_VALUE) == MEM_CONFIG_MAX_VALUE) {
+            invalid |= tape_memory_value_max_get(addres) < value;
+        }
     
-    return input_val;
+    }
+    while (invalid);
+
+    return (val_t) value;
 }
- 

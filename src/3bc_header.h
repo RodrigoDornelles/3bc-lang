@@ -111,14 +111,13 @@ RETURN_DEFINE cpu_string_stru(PARAMS_DEFINE);
 void lang_line(reg_t reg, mem_t mem, val_t val);
 
 /** FILE: lang_driver.c **/
-int getch(void);
-int getch_parser(const char *format);
 void lang_driver_run(void);
 void lang_driver_init(int argc, char **argv);
 void lang_driver_exit(int sig);
 void lang_driver_output_1(reg_t type, val_t value);
 void lang_driver_output_2(reg_t type, val_t value);
 void lang_driver_error(error_t error_code);
+val_t lang_driver_input(reg_t type, mem_t addres);
 
 /** FILE: lang_interpreter.c **/
 char lang_interpreter_line(file_t* stream);
@@ -132,9 +131,12 @@ void tape_aux_free(void);
 val_t *tape_aux_ptr(void);
 
 /** FILE: tape_memory.c **/
+val_t tape_memory_type_get(mem_t addres);
+val_t tape_memory_value_min_get(mem_t addres);
+val_t tape_memory_value_max_get(mem_t addres);
 void tape_memory_type_set(mem_t addres, val_t value);
-void tape_memory_value_min(mem_t addres, val_t value);
-void tape_memory_value_max(mem_t addres, val_t value);
+void tape_memory_value_min_set(mem_t addres, val_t value);
+void tape_memory_value_max_set(mem_t addres, val_t value);
 val_t tape_memory_get(mem_t addres);
 void tape_memory_set(mem_t addres, val_t value);
 void tape_memory_resize(mem_t addres);
