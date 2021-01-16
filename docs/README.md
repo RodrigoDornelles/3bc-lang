@@ -8,7 +8,7 @@ permalink: /index.html
 
 | Mode | Name | Description | Instructions |
 | :--: | :--: | :---------- | :----------- |
-| 0 | <br/> | not use | <br/> | `nill` `mode` |
+| 0 | <br/> | not use | `nill` `mode` |
 | 1 | **[MODE_DEBUG](#mode-debug)** | depuration put char | `nill` `stri` `strc` `stro` `strx` `stru` `mode` |
 | 2 | **[MODE_STRING](#mode-string)** | console put char | `nill` `stri` `strc` `stro` `strx` `stru` `mode` |
 | 3 | **[MODE_INPUT](#mode-input)** | console input keyboard | `nill` `stri` `strc` `stro` `strx` `stru` `mode` |
@@ -28,7 +28,9 @@ permalink: /index.html
 | 17 | **[MODE_MATH_ROOT](#mode-math-root)** | basic mathematic root | `nill` `math` `mode` |
 | 18 | **[MODE_MATH_PERCENTAGE](#mode-math-percentage)** | basic mathematic percentage | `nill` `math` `mode` |
 | 19 | **[MODE_MATH_ABS](#mode-math-abs)** | basic mathematic module | `nill` `math` `mode` |
-| 20 | **[MODE_MATH_AVERAGE](#mode-math-average)** | basic mathematic avarege | `nill` `math` `mode` |
+| 20 | <br/> | reserved | <br/> |
+| 21 | **[MODE_HELPER_AVERAGE](#mode-helper-average)** | helper mathematic avarege | `nill` `math` `mode` |
+| 22 | **[MODE_HELPER_SORT](#mode-helper-sort)** | helper mathematic sort | `nill` `math` `mode` |
 
 # Architecture details  #
 
@@ -94,11 +96,9 @@ permalink: /index.html
 | :--: | :---: | :-: | :---------- |
 | `free` | 1 | 001 | realese memory |
 | `aloc` | 2 | 010 | reserve memory and set a value |
-| `smin` | 4 | 011 | set memory min value possible |
-| `srev` | 3 | 100 | set memory reversable |
-| `smax` | 5 | 101 | set memory max value possible |
-
-## PROTECTED `DONT USE` ##
+| `tcfg` | 3 | 011 | set config memory type |
+| `tmax` | 4 | 100 | set max value in memory |
+| `tmin` | 5 | 101 | set min value in memory |
 
 ## MODE MEMORY AUX ##
 
@@ -107,7 +107,8 @@ permalink: /index.html
 | `free` | 1 | 001 | realese memory aux |
 | `aloc` | 2 | 010 | set a value in aux memory |
 | `pull` | 3 | 011 | pull aux memory to address memory (addr <- aux) |
-| `push` | 4 | 100 | push aux memory to address memory (addr -> aux) |
+| `spin` | 4 | 100 | inverse values inner memory and aux (addr <-> aux) |
+| `push` | 5 | 101 | push aux memory to address memory (addr -> aux) |
 
 ## MODE JUMP ##
 
@@ -118,10 +119,6 @@ permalink: /index.html
 | `zgto` | 3 | 011 | jump to the label if aux memory is empty |
 | `pgto` | 4 | 100 | jump to the label if aux memory is positive |
 | `ngto` | 5 | 101 | jump to the label if aux memory is negative |
-
-## _RESERVED_ `not use` ##
-
-reserved for future memory bank function
 
 ## MODE MATH SUM ##
 
@@ -178,8 +175,14 @@ reserved for future memory bank function
 | :--: | :---: | :-: | :---------- |
 | `math` | 1 | 001 | module positive aux memory value |
 
-## MODE MATH AVERAGE ##
+## MODE HELPER AVERAGE ##
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
 | `math` | 1 | 001 | avarange values received and storage in the aux memory |
+
+## MODE HELPER SORT ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | sort memory address values |
