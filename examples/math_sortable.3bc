@@ -1,0 +1,36 @@
+mode nill 0x02
+strc nill '3'
+strc nill 'x'
+strc nill 0x20
+strc nill 'n'
+strc nill 'u'
+strc nill 'm'
+strc nill 'b'
+strc nill 'e'
+strc nill 'r'
+strc nill 's'
+strc nill ':'
+strc nill 0x20
+
+mode nill 0x03
+stri 0x01 nill
+stri 0x02 nill
+stri 0x03 nill
+
+mode nill 0x16
+math 0x01 nill
+math 0x02 nill
+math 0x03 nill
+
+mode nill 0x02
+strc nill 0x0A
+strc nill 's'
+strc nill 'o'
+strc nill 'r'
+strc nill 't'
+strc nill ':'
+strc nill 0x20
+stri 0x01 nill
+stri 0x02 nill
+stri 0x03 nill
+strc nill 0x0A

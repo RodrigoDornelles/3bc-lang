@@ -56,7 +56,9 @@ RETURN_DEFINE cpu_debug_stru(PARAMS_DEFINE);
 
 /** FILE: cpu_helper.c **/
 RETURN_DEFINE cpu_helper_average(PARAMS_DEFINE);
+RETURN_DEFINE cpu_helper_sort(PARAMS_DEFINE);
 void before_helper_average(void);
+void after_helper_average(void);
 
 /** FILE: cpu_input.c **/
 RETURN_DEFINE cpu_input_stri(PARAMS_DEFINE);
@@ -163,3 +165,8 @@ bool tape_program_avaliable(void);
 /** FILE: tape_router.c **/
 void tape_router_cpu_set(cch_t value);
 cch_t tape_router_cpu_get(void);
+
+/** FILE: tape_sort.c **/
+void tape_sort_init();
+void tape_sort_destroy();
+void tape_sort_insert(mem_t addres);

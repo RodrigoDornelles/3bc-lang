@@ -22,6 +22,7 @@
 #define MODE_MATH_ABS           0x13
 #define MODE_CUSTOM_2           0x14
 #define MODE_HELPER_AVARAGE     0x15
+#define MODE_HELPER_SORT        0x16
 
 #define NILL 0b000
 #define MODE 0b111
@@ -55,7 +56,6 @@
 
 
 
-
 RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK0(),
     CPU_PACK5(cpu_debug_stri, cpu_debug_strc, cpu_debug_stro, cpu_debug_strx, cpu_debug_stru),
@@ -78,5 +78,6 @@ RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK1(cpu_math_percentage),
     CPU_PACK1(cpu_math_abs),
     CPU_PACK_RESERVED(),
-    CPU_PACK1(cpu_helper_average)
+    CPU_PACK1(cpu_helper_average),
+    CPU_PACK1(cpu_helper_sort)
 };

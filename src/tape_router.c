@@ -25,6 +25,10 @@ void tape_router_cpu_set(cch_t value)
             before_helper_average();
             break;
 
+        case MODE_HELPER_SORT:
+            before_helper_sort();
+            break;
+
         default:
             break;
     }

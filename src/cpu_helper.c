@@ -3,6 +3,22 @@
 static val_t average_sum;
 static val_t average_count;
 
+void before_helper_average()
+{
+    average_count = 0;
+    average_sum = 0;
+}
+
+void before_helper_sort()
+{
+    tape_sort_init();
+}
+
+void after_helper_sort()
+{
+    tape_sort_destroy();
+}
+
 RETURN_DEFINE cpu_helper_average(PARAMS_DEFINE)
 {   
     VALIDATE_NOT_DUALITY
@@ -15,8 +31,12 @@ RETURN_DEFINE cpu_helper_average(PARAMS_DEFINE)
     return RETURN_OK;
 }
 
-void before_helper_average()
-{
-    average_count = 0;
-    average_sum = 0;
+/**
+ * Insert Sort Algorithm
+ */
+RETURN_DEFINE cpu_helper_sort(PARAMS_DEFINE)
+{   
+    VALIDATE_NOT_VALUES
+    tape_sort_insert(addres);
+    return RETURN_OK;
 }
