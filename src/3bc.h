@@ -21,6 +21,7 @@
 /** program **/
 #include "cpu_common.c"
 #include "cpu_debug.c"
+#include "cpu_helper.c"
 #include "cpu_input.c"
 #include "cpu_math.c"
 #include "cpu_jump.c"
@@ -33,5 +34,6 @@
 #include "tape_memory.c"
 #include "tape_program.c"
 #include "tape_router.c"
+#include "tape_sort.c"
 
 #endif

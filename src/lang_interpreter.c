@@ -11,6 +11,7 @@ char lang_interpreter_line(file_t* stream)
     static reg_t reg;
     static mem_t mem;
     static val_t val;
+    char i;
 
     if(feof(stream)) {
         return 0;
@@ -18,7 +19,7 @@ char lang_interpreter_line(file_t* stream)
     if(fgets(text_line, 32, stream) == NULL){
         return 1;
     }
-    for (char i = 0; i < 32; i++) if (text_line[i] == '#') {
+    for (i = 0; i < 32; i++) if (text_line[i] == '#') {
         text_line[i] = '\0';
         break;
     }
@@ -65,8 +66,8 @@ reg_t lang_interpreter_world(const char text_reg[5])
         PARSER_PACK('g', 'o', 't', 'o', GOTO);
         PARSER_PACK('f', 'g', 't', 'o', FGTO);
         PARSER_PACK('z', 'g', 't', 'o', ZGTO);
-        PARSER_PACK('p', 'g', 't', 'o', PGTO, TMIN);
-        PARSER_PACK('n', 'g', 't', 'o', NGTO, TMAX);
+        PARSER_PACK('p', 'g', 't', 'o', SPIN, PGTO, TMAX);
+        PARSER_PACK('n', 'g', 't', 'o', NGTO, TMIN);
 
         PARSER_PACK('m', 'a', 't', 'h', MATH);
     }

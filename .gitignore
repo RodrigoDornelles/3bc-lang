@@ -6,6 +6,9 @@ Thumbs.db
 
 # Binary  Files
 bin/
+*.bin
+*.app
+*.exe
 *.out
 main
 *.o

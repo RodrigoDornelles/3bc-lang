@@ -25,14 +25,14 @@ RETURN_DEFINE cpu_memory_tcfg(PARAMS_DEFINE)
 RETURN_DEFINE cpu_memory_tmin(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    tape_memory_value_min(addres, value);
+    tape_memory_value_min_set(addres, value);
     return RETURN_OK;
 }
 
 RETURN_DEFINE cpu_memory_tmax(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    tape_memory_value_max(addres, value);
+    tape_memory_value_max_set(addres, value);
     return RETURN_OK;
 }
 
@@ -62,5 +62,17 @@ RETURN_DEFINE cpu_memory_aux_push(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     tape_aux_set(tape_memory_get(addres));
+    return RETURN_OK;
+}
+
+/**
+ * invert values inner AUX & Memory
+ */
+RETURN_DEFINE cpu_memory_aux_spin(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_VALUES
+    val_t aux_old = AUX;
+    tape_aux_set(tape_memory_get(addres));
+    tape_memory_set(addres, aux_old);
     return RETURN_OK;
 }

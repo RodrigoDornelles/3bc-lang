@@ -7,9 +7,6 @@
 # c = a - b; print('a - b =', c)
 # c = a * b; print('a * b =', c)
 # c = a / b; print('a / b =', c)
-# c = a % b; print('a % b =', c)
-# c = a ** b; print('a ** b =', c)
-# c = a ** (1/b); print('a ** (1/b) =', c)
 
 # equivalent to alocate variables (a, b)
 MODE    NILL    0x06    # MODE_MEM
@@ -92,72 +89,6 @@ MODE    NILL    0x02    # MODE_STRING
 STRC    NILL    'a'
 STRC    NILL    '/'
 STRC    NILL    'b'
-STRC    NILL    '='
-STRI    'c'     NILL
-STRC    NILL    0xA
-
-###########################################
-# equivalent to sum (a % b)
-MODE    NILL    0x08    # MODE_MEM_AUX
-PUSH    'a'     NILL
-
-MODE    NILL    0x0f    # MODE_MATH_MOD
-MATH    'b'     NILL
-
-MODE    NILL    0x08    # MODE_MEM_AUX
-PULL    'c'     NILL
-
-# equivalent to print('a % b =', c)
-MODE    NILL    0x02    # MODE_STRING
-STRC    NILL    'a'
-STRC    NILL    '%'
-STRC    NILL    'b'
-STRC    NILL    '='
-STRI    'c'     NILL
-STRC    NILL    0xA
-
-###########################################
-# equivalent to sub (a ** b)
-MODE    NILL    0x08    # MODE_MEM_AUX
-PUSH    'a'     NILL
-
-MODE    NILL    0x10    # MODE_MATH_POWER
-MATH    'b'     NILL
-
-MODE    NILL    0x08    # MODE_MEM_AUX
-PULL    'c'     NILL
-
-# equivalent to print('a ** b =', c)
-MODE    NILL    0x02    # MODE_STRING
-STRC    NILL    'a'
-STRC    NILL    '*'
-STRC    NILL    '*'
-STRC    NILL    'b'
-STRC    NILL    '='
-STRI    'c'     NILL
-STRC    NILL    0xA
-
-###########################################
-# equivalent to sub (a ** (1/b))
-MODE    NILL    0x08    # MODE_MEM_AUX
-PUSH    'a'     NILL
-
-MODE    NILL    0x11    # MODE_MATH_ROOT
-MATH    'b'     NILL
-
-MODE    NILL    0x08    # MODE_MEM_AUX
-PULL    'c'     NILL
-
-# equivalent to print('a ** (1/b) =', c)
-MODE    NILL    0x02    # MODE_STRING
-STRC    NILL    'a'
-STRC    NILL    '*'
-STRC    NILL    '*'
-STRC    NILL    '('
-STRC    NILL    '1'
-STRC    NILL    '/'
-STRC    NILL    'b'
-STRC    NILL    ')'
 STRC    NILL    '='
 STRI    'c'     NILL
 STRC    NILL    0xA
