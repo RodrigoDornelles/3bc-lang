@@ -35,7 +35,7 @@ $
 | `mode` `nill` `0x2`<br/>`strc` `nill` `'h'`<br/>`strc` `nill` `'e'`<br/>`strc` `nill` `'l'`<br/>`strc` `nill` `'l'`<br/>`strc` `nill` `'o'`<br/>`strc` `nill` `' '`<br/>`strc` `nill` `'w'`<br/>`strc` `nill` `'o'`<br/>`strc` `nill` `'r'`<br/>`strc` `nill` `'l'`<br/>`strc` `nill` `'d'`<br/>`strc` `nill` `'!'`  | `0o007` `0o000` `0o002`<br/>`0o002` `0o000` `0o150`<br/>`0o002` `0o000` `0o145`<br/>`0o002` `0o000` `0o154`<br/>`0o002` `0o000` `0o154`<br/>`0o002` `0o000` `0o157`<br/>`0o002` `0o000` `0o040`<br/>`0o002` `0o000` `0o167`<br/>`0o002` `0o000` `0o157`<br/>`0o002` `0o000` `0o162`<br/>`0o002` `0o000` `0o154`<br/>`0o002` `0o000` `0o144`<br/>`0o002` `0o000` `0o041` |
 
 # Documentation #
-* **[clice here](/INSTRUCTIONS.md)**
+* **[clice here](https://github.com/RodrigoDornelles/3bc-lang/blob/ide/docs/README.md)**
 
 # Ambient Roadmap #
  - [X] VM Memory auxiliary
