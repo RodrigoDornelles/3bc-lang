@@ -10,6 +10,7 @@
 #define MODE_PROTECTED          0x07
 #define MODE_MEMORY_AUX         0x08
 #define MODE_JUMP               0x09
+#define MODE_CUSTOM_1           0x0A
 #define MODE_MATH_SUM           0x0B
 #define MODE_MATH_SUB           0x0C
 #define MODE_MATH_MUL           0x0D
@@ -19,7 +20,9 @@
 #define MODE_MATH_ROOT          0x11
 #define MODE_MATH_PERCENTAGE    0x12
 #define MODE_MATH_ABS           0x13
-#define MODE_MATH_AVARAGE       0x14
+#define MODE_CUSTOM_2           0x14
+#define MODE_HELPER_AVARAGE     0x15
+#define MODE_HELPER_SORT        0x16
 
 #define NILL 0b000
 #define MODE 0b111
@@ -39,13 +42,19 @@
 #define ZGTO 0b011
 
 #define STRX 0b100
-#define TMIN 0b100
-#define PUSH 0b100
 #define PGTO 0b100
+#define TMAX 0b100
+#define SPIN 0b100
 
 #define STRU 0b101
+#define TMIN 0b101
 #define NGTO 0b101
-#define TMAX 0b101
+#define PUSH 0b101
+
+
+
+
+
 
 RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK0(),
@@ -54,9 +63,9 @@ RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK4(cpu_input_stri, cpu_input_strc, cpu_input_stro, cpu_input_strx),
     CPU_PACK4(cpu_input_silent_stri, cpu_input_silent_strc, cpu_input_silent_stro, cpu_input_silent_strx),
     CPU_PACK4(cpu_input_password_stri, cpu_input_password_strc, cpu_input_password_stro, cpu_input_password_strx),
-    CPU_PACK5(cpu_memory_free, cpu_memory_aloc, cpu_memory_tcfg, cpu_memory_tmin, cpu_memory_tmax),
+    CPU_PACK5(cpu_memory_free, cpu_memory_aloc, cpu_memory_tcfg, cpu_memory_tmax, cpu_memory_tmin),
     CPU_PACK_PROTECTED(),
-    CPU_PACK4(cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_push),
+    CPU_PACK5(cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_spin, cpu_memory_aux_push),
     CPU_PACK5(cpu_jump_goto, cpu_jump_fgto, cpu_jump_zgto, cpu_jump_pgto, cpu_jump_ngto),
     CPU_PACK_RESERVED(),
     CPU_PACK1(cpu_math_sum),
@@ -65,7 +74,10 @@ RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK1(cpu_math_div),
     CPU_PACK1(cpu_math_mod),
     CPU_PACK1(cpu_math_power),
+    CPU_PACK1(cpu_math_root),
     CPU_PACK1(cpu_math_percentage),
     CPU_PACK1(cpu_math_abs),
-    CPU_PACK1(cpu_math_average)
+    CPU_PACK_RESERVED(),
+    CPU_PACK1(cpu_helper_average),
+    CPU_PACK1(cpu_helper_sort)
 };

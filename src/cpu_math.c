@@ -1,5 +1,6 @@
 #include "3bc.h"
 
+
 RETURN_DEFINE cpu_math_sum(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
@@ -60,11 +61,5 @@ RETURN_DEFINE cpu_math_abs(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
     tape_aux_set((val_t) labs((long int) AUX));
-    return RETURN_OK;
-}
-
-RETURN_DEFINE cpu_math_average(PARAMS_DEFINE)
-{   
-    VALIDATE_NOT_DUALITY
     return RETURN_OK;
 }

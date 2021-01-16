@@ -21,16 +21,16 @@
 #define MEMORY_SAFE_LIMIT       (255)
 #define GET_ANY_PARAM           (addres?tape_memory_get(addres):value)
 #define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux_push(addres,0);else cpu_memory_aux_aloc(0,value);
-#define AUX                     tape_aux_get()              // memory auxilary
-#define CMODE                   tape_router_cpu_get()       // current cpu mode
-#define CLINE                   tape_program_line_get()     // current line
-#define CELNE                   tape_program_line_end()     // current end of lines
+#define AUX                     tape_aux_get()              /** memory auxilary **/
+#define CMODE                   tape_router_cpu_get()       /** current cpu mode **/
+#define CLINE                   tape_program_line_get()     /** current line **/
+#define CELNE                   tape_program_line_end()     /** current end of lines **/
 #define MEM_CONFIG_SIGNED       0b0001
 #define MEM_CONFIG_MAX_VALUE    0b0010
 #define MEM_CONFIG_MIN_VALUE    0b0100
 #define MEM_CONFIG_NORMALIZE    0b1000
 
-// types
+/**  types **/
 typedef unsigned int compass_t;
 typedef unsigned char reg_t;
 typedef unsigned char mem_t;
@@ -39,14 +39,7 @@ typedef unsigned char cch_t;
 typedef unsigned char conf_t;
 typedef FILE file_t;
 
-// structs
-struct line_s {
-    reg_t reg;
-    mem_t adr;
-    mem_t dta;
-};
-
-// FILE: cpu_common.c
+/** FILE: cpu_common.c **/
 RETURN_DEFINE cpu_null(PARAMS_DEFINE);
 RETURN_DEFINE cpu_mode(PARAMS_DEFINE);
 RETURN_DEFINE cpu_not_mode(PARAMS_DEFINE);
@@ -54,14 +47,20 @@ RETURN_DEFINE cpu_not_exist(PARAMS_DEFINE);
 RETURN_DEFINE cpu_mode_reserved(PARAMS_DEFINE);
 RETURN_DEFINE cpu_mode_protected(PARAMS_DEFINE);
 
-// FILE: cpu_debug.c
+/** FILE: cpu_debug.c **/
 RETURN_DEFINE cpu_debug_stri(PARAMS_DEFINE);
 RETURN_DEFINE cpu_debug_strc(PARAMS_DEFINE);
 RETURN_DEFINE cpu_debug_stro(PARAMS_DEFINE);
 RETURN_DEFINE cpu_debug_strx(PARAMS_DEFINE);
 RETURN_DEFINE cpu_debug_stru(PARAMS_DEFINE);
 
-// FILE: cpu_input.c
+/** FILE: cpu_helper.c **/
+RETURN_DEFINE cpu_helper_average(PARAMS_DEFINE);
+RETURN_DEFINE cpu_helper_sort(PARAMS_DEFINE);
+void before_helper_average(void);
+void after_helper_average(void);
+
+/** FILE: cpu_input.c **/
 RETURN_DEFINE cpu_input_stri(PARAMS_DEFINE);
 RETURN_DEFINE cpu_input_strc(PARAMS_DEFINE);
 RETURN_DEFINE cpu_input_stro(PARAMS_DEFINE);
@@ -75,7 +74,7 @@ RETURN_DEFINE cpu_input_password_strc(PARAMS_DEFINE);
 RETURN_DEFINE cpu_input_password_stro(PARAMS_DEFINE);
 RETURN_DEFINE cpu_input_password_strx(PARAMS_DEFINE);
 
-// FILE: cpu_math.c
+/** FILE: cpu_math.c **/
 RETURN_DEFINE cpu_math_sum(PARAMS_DEFINE);
 RETURN_DEFINE cpu_math_sub(PARAMS_DEFINE);
 RETURN_DEFINE cpu_math_mul(PARAMS_DEFINE);
@@ -85,16 +84,15 @@ RETURN_DEFINE cpu_math_power(PARAMS_DEFINE);
 RETURN_DEFINE cpu_math_root(PARAMS_DEFINE);
 RETURN_DEFINE cpu_math_percentage(PARAMS_DEFINE);
 RETURN_DEFINE cpu_math_abs(PARAMS_DEFINE);
-RETURN_DEFINE cpu_math_average(PARAMS_DEFINE);
 
-// FILE: cpu_jump.c
+/** FILE: cpu_jump.c **/
 RETURN_DEFINE cpu_jump_goto(PARAMS_DEFINE);
 RETURN_DEFINE cpu_jump_fgto(PARAMS_DEFINE);
 RETURN_DEFINE cpu_jump_zgto(PARAMS_DEFINE);
 RETURN_DEFINE cpu_jump_pgto(PARAMS_DEFINE);
 RETURN_DEFINE cpu_jump_ngto(PARAMS_DEFINE);
 
-// FILE: cpu_memory.c
+/** FILE: cpu_memory.c **/
 RETURN_DEFINE cpu_memory_free(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_aloc(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_tcfg(PARAMS_DEFINE);
@@ -104,50 +102,54 @@ RETURN_DEFINE cpu_memory_aux_free(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_aux_aloc(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_aux_pull(PARAMS_DEFINE);
 RETURN_DEFINE cpu_memory_aux_push(PARAMS_DEFINE);
+RETURN_DEFINE cpu_memory_aux_spin(PARAMS_DEFINE);
 
-// FILE: cpu_string.c
+/** FILE: cpu_string.c **/
 RETURN_DEFINE cpu_string_stri(PARAMS_DEFINE);
 RETURN_DEFINE cpu_string_strc(PARAMS_DEFINE);
 RETURN_DEFINE cpu_string_stro(PARAMS_DEFINE);
 RETURN_DEFINE cpu_string_strx(PARAMS_DEFINE);
 RETURN_DEFINE cpu_string_stru(PARAMS_DEFINE);
 
-// FILE: lang_line.c
+/** FILE: lang_line.c **/
 void lang_line(reg_t reg, mem_t mem, val_t val);
 
-// FILE: lang_driver.c
-int getch(void);
-int getch_parser(const char *format);
+/** FILE: lang_driver.c **/
 void lang_driver_run(void);
 void lang_driver_init(int argc, char **argv);
 void lang_driver_exit(int sig);
 void lang_driver_output_1(reg_t type, val_t value);
 void lang_driver_output_2(reg_t type, val_t value);
 void lang_driver_error(error_t error_code);
+val_t lang_driver_input(reg_t type, mem_t addres);
 
-// FILE: lang_interpreter.c
+/** FILE: lang_interpreter.c **/
 char lang_interpreter_line(file_t* stream);
 reg_t lang_interpreter_world(const char text_reg[5]);
 signed int lang_interpreter_value(const char text_value[12]);
 
-// FILE: tape_aux.c
+/** FILE: tape_aux.c **/
 val_t tape_aux_get(void);
 void tape_aux_set(val_t value);
 void tape_aux_free(void);
 val_t *tape_aux_ptr(void);
 
-// FILE: tape_memory.c
+/** FILE: tape_memory.c **/
+val_t tape_memory_type_get(mem_t addres);
+val_t tape_memory_value_min_get(mem_t addres);
+val_t tape_memory_value_max_get(mem_t addres);
 void tape_memory_type_set(mem_t addres, val_t value);
-void tape_memory_value_min(mem_t addres, val_t value);
-void tape_memory_value_max(mem_t addres, val_t value);
+void tape_memory_value_min_set(mem_t addres, val_t value);
+void tape_memory_value_max_set(mem_t addres, val_t value);
 val_t tape_memory_get(mem_t addres);
 void tape_memory_set(mem_t addres, val_t value);
 void tape_memory_resize(mem_t addres);
 void tape_memory_free(mem_t addres);
 void tape_memory_destroy(void);
 void tape_memory_safe(mem_t addres);
+void tape_memory_reset(mem_t addres);
 
-// FILE: tape_program.c
+/** FILE: tape_program.c **/
 void tape_program_resize(void);
 RETURN_DEFINE tape_program_exe(void);
 void tape_program_destroy(void);
@@ -160,6 +162,11 @@ void tape_program_target_label(compass_t label);
 void tape_program_target_line(compass_t line);
 bool tape_program_avaliable(void);
 
-// FILE: tape_router.c
+/** FILE: tape_router.c **/
 void tape_router_cpu_set(cch_t value);
 cch_t tape_router_cpu_get(void);
+
+/** FILE: tape_sort.c **/
+void tape_sort_init();
+void tape_sort_destroy();
+void tape_sort_insert(mem_t addres);

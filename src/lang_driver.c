@@ -57,7 +57,8 @@ void lang_driver_exit(int sig)
 
     tape_memory_destroy();
     tape_program_destroy();
-    
+    tape_sort_destroy();
+
     exit(sig);
 }
 
@@ -84,6 +85,7 @@ void lang_driver_error(error_t error_code)
         case ERROR_CPU_PROTECT: print_error("PROTECTED CPU MODE");
         case ERROR_CPU_RESERVED: print_error("RESERVED CPU MODE");
         case ERROR_CPU_REGISTER: print_error("UNDEFINED CPU REGISTER");
+        case ERROR_CPU_INVALID: print_error("INVALID CPU MODE");
         case ERROR_INVALID_LABEL: print_error("INVALID LABEL");
         case ERROR_INVALID_VALUE: print_error("INVALID VALUE");
         case ERROR_INVALID_ADDRESS: print_error("INVALID ADDRESS");
@@ -97,6 +99,7 @@ void lang_driver_error(error_t error_code)
         case ERROR_TAPE_LABEL: print_error("FAILURE TO EXPAND THE LABEL LIST");
         case ERROR_TAPE_MEMORY: print_error("FAILURE TO EXPAND THE MEMORY");
         case ERROR_TAPE_PROGRAM: print_error("FAILURE TO EXPAND THE PROGRAM");
+        case ERROR_TAPE_SORT: print_error("FAILURE TO EXPAND THE SORT");
         case ERROR_INVALID_MEMORY_CONFIG: print_error("INVALID MEMORY TYPE CONFIG");
         case ERROR_INVALID_MEMORY_CLAMP:  print_error("INVALID MEMORY TYPE CLAMP");
         default: print_error("UNKNOWN ERROR");
@@ -105,28 +108,58 @@ void lang_driver_error(error_t error_code)
     lang_driver_exit(EXIT_FAILURE);
 }
 
-#ifndef _WIN32
-int getch()
+/**
+ * detect keyboard input
+ */
+val_t lang_driver_input(reg_t type, mem_t addres)
 {
-    int c ;
-
-    tcsetattr(STDIN_FILENO,TCSANOW, &term_new_attr);
-    c = getchar() ;
-    tcsetattr(STDIN_FILENO,TCSANOW, &term_old_attr);
-    return c ;
-}
-#endif
-
-
-int getch_parser(const char* format)
-{
-    static int input_val;
-    static char input_key[2] = "\0";
-
-    input_key[0] = getch();
+    static unsigned int value;
+    static char c[2] = "\0";
+    static bool invalid;
     
-    sscanf(input_key, format, &input_val);
+    do {
+        invalid = false;
+
+        /** capture input **/
+        #ifndef _WIN32
+        tcsetattr(STDIN_FILENO,TCSANOW, &term_new_attr);
+        c[0] = getchar();
+        tcsetattr(STDIN_FILENO,TCSANOW, &term_old_attr);
+        #else 
+        c[0] = getch();
+        #endif
+
+        /** validate input **/
+        switch (type) {
+            case STRC: 
+                /** verify is a ASCII alphabet's letter/symbol **/
+                invalid |= (c[0] < 0x20 || c[0] > 0x7E);
+                value = c[0];
+                break;
+
+            case STRI: 
+                invalid |= !sscanf(c, "%d", &value);
+                break;
+            
+            case STRO: 
+                invalid |= !sscanf(c, "%o", &value);
+                break;
+
+            case STRX:
+                invalid |= !sscanf(c, "%x", &value);
+                break;
+        }
+
+        /** validade input inner memory clamp limits **/
+        if ((tape_memory_type_get(addres) & MEM_CONFIG_MIN_VALUE) == MEM_CONFIG_MIN_VALUE) {
+            invalid |= tape_memory_value_min_get(addres) > value;
+        }
+        if ((tape_memory_type_get(addres) & MEM_CONFIG_MAX_VALUE) == MEM_CONFIG_MAX_VALUE) {
+            invalid |= tape_memory_value_max_get(addres) < value;
+        }
     
-    return input_val;
+    }
+    while (invalid);
+
+    return (val_t) value;
 }
- 
