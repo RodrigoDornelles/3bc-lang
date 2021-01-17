@@ -55,7 +55,7 @@
 
 
 
-
+#ifndef _NN
 RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK0(),
     CPU_PACK5(cpu_debug_stri, cpu_debug_strc, cpu_debug_stro, cpu_debug_strx, cpu_debug_stru),
@@ -81,3 +81,4 @@ RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK1(cpu_helper_average),
     CPU_PACK1(cpu_helper_sort)
 };
+#endif

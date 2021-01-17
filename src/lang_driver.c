@@ -10,7 +10,7 @@ case STRU: fprintf(file, "%d", (signed int) val); break;}
 
 #define print_error(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);break
 
-#ifndef _WIN32
+#ifdef _3BC_PC_NOT_WINDOWS
 struct termios term_old_attr;
 struct termios term_new_attr;
 #endif
@@ -24,8 +24,10 @@ void lang_driver_run()
 
 void lang_driver_init(int argc, char **argv)
 {
+    #ifdef _3BC_COMPUTER
     signal(SIGINT, lang_driver_exit);
-
+    #endif
+    
     if (argc <= 1) {
         program_file = stdin;
     }
@@ -33,7 +35,7 @@ void lang_driver_init(int argc, char **argv)
         program_file = fopen(argv[argc - 1], "r");
     }
 
-    #ifndef _WIN32
+    #ifdef _3BC_PC_NOT_WINDOWS
     tcgetattr(0, &term_old_attr);
     tcgetattr(0, &term_new_attr);
 
@@ -47,8 +49,8 @@ void lang_driver_init(int argc, char **argv)
 
 void lang_driver_exit(int sig)
 {
-    #ifndef _WIN32
-    tcsetattr(STDIN_FILENO,TCSANOW,&term_old_attr);
+    #ifdef _3BC_PC_NOT_WINDOWS
+    tcsetattr(STDIN_FILENO, TCSANOW, &term_old_attr);
     #endif
 
     if (program_file != stdin) {
@@ -78,6 +80,7 @@ void lang_driver_error(error_t error_code)
     fprintf(stderr, "\n> ERROR LINE: %d", CLINE + 1);
     fprintf(stderr, "\n> ERROR CODE: %d\n", error_code);
 
+    #ifndef _3BC_ARDUINO
     switch(error_code)
     {
         case ERROR_CPU_ZERO: print_error("EMPUTY CPU MODE"); 
@@ -104,6 +107,7 @@ void lang_driver_error(error_t error_code)
         case ERROR_INVALID_MEMORY_CLAMP:  print_error("INVALID MEMORY TYPE CLAMP");
         default: print_error("UNKNOWN ERROR");
     }
+    #endif
 
     lang_driver_exit(EXIT_FAILURE);
 }
@@ -121,11 +125,13 @@ val_t lang_driver_input(reg_t type, mem_t addres)
         invalid = false;
 
         /** capture input **/
-        #ifndef _WIN32
+        #ifdef _3BC_PC_NOT_WINDOWS
         tcsetattr(STDIN_FILENO,TCSANOW, &term_new_attr);
         c[0] = getchar();
         tcsetattr(STDIN_FILENO,TCSANOW, &term_old_attr);
-        #else 
+        #endif 
+
+        #ifdef _3BC_PC_WINDOWS
         c[0] = getch();
         #endif
 
