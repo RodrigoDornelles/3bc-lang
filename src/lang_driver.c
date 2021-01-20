@@ -102,6 +102,7 @@ void lang_driver_error(error_t error_code)
         case ERROR_TAPE_SORT: print_error("FAILURE TO EXPAND THE SORT");
         case ERROR_INVALID_MEMORY_CONFIG: print_error("INVALID MEMORY TYPE CONFIG");
         case ERROR_INVALID_MEMORY_CLAMP:  print_error("INVALID MEMORY TYPE CLAMP");
+        case ERROR_VOID_HELPER_MAX_MIN: print_error("MAX/MIN CANNOT BE EMPTY");
         default: print_error("UNKNOWN ERROR");
     }
 

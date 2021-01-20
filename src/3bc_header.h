@@ -57,8 +57,15 @@ RETURN_DEFINE cpu_debug_stru(PARAMS_DEFINE);
 /** FILE: cpu_helper.c **/
 RETURN_DEFINE cpu_helper_average(PARAMS_DEFINE);
 RETURN_DEFINE cpu_helper_sort(PARAMS_DEFINE);
+RETURN_DEFINE cpu_helper_max(PARAMS_DEFINE);
+RETURN_DEFINE cpu_helper_min(PARAMS_DEFINE);
 void before_helper_average(void);
-void after_helper_average(void);
+void before_helper_sort(void);
+void before_helper_max(void);
+void before_helper_min(void);
+void after_helper_sort(void);
+void after_helper_max(void);
+void after_helper_min(void);
 
 /** FILE: cpu_input.c **/
 RETURN_DEFINE cpu_input_stri(PARAMS_DEFINE);

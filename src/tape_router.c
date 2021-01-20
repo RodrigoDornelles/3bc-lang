@@ -18,6 +18,11 @@ void tape_router_cpu_set(cch_t value)
             after_helper_sort();
             break;
 
+        case MODE_HELPER_MAX:
+        case MODE_HELPER_MIN:
+            after_helper_maxmin();
+            break;
+
         default:
             break;
 
@@ -33,6 +38,11 @@ void tape_router_cpu_set(cch_t value)
             before_helper_sort();
             break;
 
+        case MODE_HELPER_MAX:
+        case MODE_HELPER_MIN:
+            before_helper_maxmin();
+            break;
+        
         default:
             break;
     }
