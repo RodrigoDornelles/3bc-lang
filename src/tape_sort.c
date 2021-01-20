@@ -13,6 +13,7 @@ void tape_sort_destroy()
 {
     if (addresses_list != NULL) {
         free(addresses_list);
+        addresses_list = NILL;
     }
 }
 

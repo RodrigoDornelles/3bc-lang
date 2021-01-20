@@ -14,6 +14,10 @@ void tape_router_cpu_set(cch_t value)
 
     /** after cpu mode change **/
     switch (channel_cpu_mode) {
+        case MODE_HELPER_SORT:
+            after_helper_sort();
+            break;
+
         default:
             break;
 
