@@ -1,4 +1,13 @@
 #include "3bc.h"
+#ifdef __cplusplus
+/**
+ * for compilation in separate static libraries,
+ * preserve native C names.
+ * 
+ * (required for avr compiler in arduino ide)
+ */
+extern "C" {
+#endif
 #define RETURN_OK               0x1
 #define RETURN_EXIT             0x0
 #define RETURN_DEFINE           char
@@ -114,9 +123,20 @@ RETURN_DEFINE cpu_string_stru(PARAMS_DEFINE);
 /** FILE: lang_line.c **/
 void lang_line(reg_t reg, mem_t mem, val_t val);
 
+/** FILE: lang_plus.cpp **/
+#ifdef _3BC_ARDUINO
+void arduino_serial_begin(void);
+void arduino_serial_print(unsigned char serial, const char* string);
+#endif
+
 /** FILE: lang_driver.c **/
 void lang_driver_run(void);
+#ifdef _3BC_COMPUTER
 void lang_driver_init(int argc, char **argv);
+#endif
+#ifdef _3BC_ARDUINO
+void lang_driver_init();
+#endif
 void lang_driver_exit(int sig);
 void lang_driver_output_1(reg_t type, val_t value);
 void lang_driver_output_2(reg_t type, val_t value);
@@ -161,6 +181,7 @@ compass_t tape_program_line_end();
 void tape_program_target_label(compass_t label);
 void tape_program_target_line(compass_t line);
 bool tape_program_avaliable(void);
+reg_t tape_program_cpu_size(void);
 
 /** FILE: tape_router.c **/
 void tape_router_cpu_set(cch_t value);
@@ -170,3 +191,7 @@ cch_t tape_router_cpu_get(void);
 void tape_sort_init();
 void tape_sort_destroy();
 void tape_sort_insert(mem_t addres);
+
+#ifdef __cplusplus
+}
+#endif
