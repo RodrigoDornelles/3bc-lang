@@ -1,4 +1,8 @@
 #include "3bc.h"
+#ifdef _3BC_ARDUINO
+#include <Arduino.h>
+#include <avr/pgmspace.h>
+#endif
 
 #define print_file(file,type, val);\
 switch(type){\
@@ -22,11 +26,15 @@ void lang_driver_run()
     while(tape_program_avaliable()? tape_program_exe(): lang_interpreter_line(program_file));
 }
 
+#ifdef _3BC_COMPUTER
 void lang_driver_init(int argc, char **argv)
+#endif
+#ifdef _3BC_ARDUINO
+void lang_driver_init()
+#endif
 {
     #ifdef _3BC_COMPUTER
     signal(SIGINT, lang_driver_exit);
-    #endif
     
     if (argc <= 1) {
         program_file = stdin;
@@ -34,6 +42,7 @@ void lang_driver_init(int argc, char **argv)
     else {
         program_file = fopen(argv[argc - 1], "r");
     }
+    #endif
 
     #ifdef _3BC_PC_NOT_WINDOWS
     tcgetattr(0, &term_old_attr);
@@ -45,6 +54,10 @@ void lang_driver_init(int argc, char **argv)
     term_new_attr.c_cc[VTIME] = 0;
     term_new_attr.c_cc[VMIN] = 1;
     #endif
+
+    #ifdef _3BC_ARDUINO
+    arduino_serial_begin();
+    #endif
 }
 
 void lang_driver_exit(int sig)
@@ -53,34 +66,80 @@ void lang_driver_exit(int sig)
     tcsetattr(STDIN_FILENO, TCSANOW, &term_old_attr);
     #endif
 
+    #ifdef _3BC_COMPUTER
     if (program_file != stdin) {
         fclose(program_file);
     }
+    #endif
 
     tape_memory_destroy();
     tape_program_destroy();
     tape_sort_destroy();
 
+    #ifdef _3BC_ARDUINO
+    while(1);
+    #endif
+
+    #ifdef _3BC_COMPUTER
     exit(sig);
+    #endif
 }
 
 void lang_driver_output_1(reg_t type, val_t val)
 {
+    #ifdef _3BC_COMPUTER
     print_file(stdout, type, val);
+    #endif
+
+    #ifdef _3BC_ARDUINO
+    static char output[8];
+    switch (type) {
+        case STRC:
+            format(output, ("%c"), val);
+            break;
+        
+        case STRX:
+            format(output, ("%x"), val);
+            break;
+
+        case STRI:
+            format(output, ("%d"), val);
+            break;
+
+        case STRO:
+            format(output, ("%o"), val);
+            break;
+    }
+
+    arduino_serial_print(1, output);
+    #endif
 }
 
 void lang_driver_output_2(reg_t type, val_t val)
 {
     print_file(stderr, type, val);
+
+    #ifdef _3BC_ARDUINO
+    lang_driver_output_1(type, val);
+    /** @todo second serial output **/
+    /** arduino_serial_print(2, type, val); **/
+    #endif
 }
 
 void lang_driver_error(error_t error_code)
 {
+    #ifdef _3BC_ARDUINO
+    /** smaller log erros for economy rom memory **/
+    static char error_code_string[32];
+    format(error_code_string, ("\n\n[3BC] Fatal error: %d"), error_code);
+    arduino_serial_print(1, error_code_string);
+    #endif
+
+    #ifdef _3BC_COMPUTER
     fprintf(stderr, "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM");
     fprintf(stderr, "\n> ERROR LINE: %d", CLINE + 1);
     fprintf(stderr, "\n> ERROR CODE: %d\n", error_code);
 
-    #ifndef _3BC_ARDUINO
     switch(error_code)
     {
         case ERROR_CPU_ZERO: print_error("EMPUTY CPU MODE"); 

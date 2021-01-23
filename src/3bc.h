@@ -41,6 +41,11 @@
 #include "tape_program.c"
 #include "tape_router.c"
 #include "tape_sort.c"
+#ifdef __cplusplus
+/** 
+ * when require C++ adpatations
+ */
+#include "lang_plus.cpp"
 #endif
-
+#endif
 #endif

@@ -51,11 +51,13 @@
 #define NGTO 0b101
 #define PUSH 0b101
 
-
-
-
-
-#ifndef _NN
+/**
+ * case of separate compilation in different statistical libraries,
+ * only FILE: tape_program.c must know this variable
+ * 
+ * (required for avr compiler in arduino ide)
+ */
+#ifdef _3BC_REQUIRE_INSTRUCTIONS
 RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK0(),
     CPU_PACK5(cpu_debug_stri, cpu_debug_strc, cpu_debug_stro, cpu_debug_strx, cpu_debug_stru),
