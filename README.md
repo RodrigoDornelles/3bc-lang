@@ -4,6 +4,7 @@
 [![license](https://img.shields.io/github/license/rodrigodornelles/3bc-lang)](https://github.com/RodrigoDornelles/3bc-lang/blob/master/LICENSE.txt) 
 [![quality](https://app.codacy.com/project/badge/Grade/10888eee2fbc460b8ddb7476b0aceb23)](https://www.codacy.com/gh/RodrigoDornelles/3bc-lang/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=RodrigoDornelles/3bc-lang&amp;utm_campaign=Badge_Grade)
 [![covarage](https://codecov.io/gh/RodrigoDornelles/3bc-lang/branch/master/graph/badge.svg?token=FS152PL31C)](https://codecov.io/gh/RodrigoDornelles/3bc-lang)
+[![Build Status](https://travis-ci.com/RodrigoDornelles/3bc-lang.svg?branch=master)](https://travis-ci.com/RodrigoDornelles/3bc-lang)
 
 > this is a machine language that has only 3 register bits for CPU, the idea is to make it so simple and intuitive that it can be easily read on punched cards.
 
