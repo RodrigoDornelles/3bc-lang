@@ -1,8 +1,8 @@
 language: c
 sudo: false
 script:
-  - gcc -coverage -O0 main.c -o program
-  - ./program
+  - g++ -coverage -O0 -lm main.c -o 3bc
+  - ./3bc ./examples/heloworld.3bc
   - gcov main.c
 
 after_success:
