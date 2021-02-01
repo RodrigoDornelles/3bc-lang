@@ -1,4 +1,11 @@
 language: c
+os: ubuntu
+
+before_install:
+    - curl -fsSL https://deno.land/x/install/install.sh | sh
+    - export DENO_INSTALL="$HOME/.deno"
+    - export PATH="$DENO_INSTALL/bin:$PATH"
+
 script:
   - g++ -coverage -O0 -lm main.c -o 3bc.test.bin
   - deno test --allow-read --allow-run
