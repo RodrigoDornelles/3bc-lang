@@ -71,20 +71,3 @@ Deno.test("Test Invert Helper", async () => {
 
     await cmd.close();
 });
-
-/**
- * @file examples/math_basics.3bc
- */
-Deno.test("Test Math Basics", async () => {
-    const cmd = await Deno.run({
-        cmd: ["./3bc.test.bin", "./examples/math_basics.3bc"],
-        stdout: "piped",
-    });
-
-    const output = new TextDecoder().decode(await cmd.output());
-    const { code } = await cmd.status();
-
-    assertEquals(code, 0, "return code");
-
-    await cmd.close();
-});
