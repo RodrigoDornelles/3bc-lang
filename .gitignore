@@ -13,5 +13,11 @@ bin/
 main
 *.o
 
-# IDE FILES
+# IDE Files
 .vscode
+
+# Tests files
+*.test.bin
+*.gcov
+*.gcno
+*.gcda
