@@ -8,7 +8,6 @@ before_install:
 
 script:
   - g++ -coverage -O0 -lm main.c -o 3bc.test.bin
-  - rm *.c.gcov
   - deno test --allow-read --allow-run
   - gcov main.c
 
