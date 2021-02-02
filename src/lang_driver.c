@@ -168,7 +168,7 @@ void lang_driver_error(error_t error_code)
     }
     #endif
 
-    lang_driver_exit(EXIT_FAILURE);
+    lang_driver_exit(error_code);
 }
 
 /**
