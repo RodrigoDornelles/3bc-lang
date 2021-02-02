@@ -1,3 +1,4 @@
+#define _3BC_REQUIRE_INSTRUCTIONS
 #include "3bc.h"
 
 compass_t tape_last_label;
@@ -147,4 +148,12 @@ void tape_program_target_label(compass_t label)
 bool tape_program_avaliable()
 {
     return tape_current_line < tape_last_line;
+}
+
+/**
+ * get size of instructions (cpu channels max)
+ */
+reg_t tape_program_cpu_size()
+{
+    return (sizeof(instructions)/sizeof(instructions[0]));
 }

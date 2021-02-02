@@ -1,4 +1,8 @@
 #include "3bc.h"
+#ifdef _3BC_ARDUINO
+#include <Arduino.h>
+#include <avr/pgmspace.h>
+#endif
 
 #define print_file(file,type, val);\
 switch(type){\
@@ -10,7 +14,7 @@ case STRU: fprintf(file, "%d", (signed int) val); break;}
 
 #define print_error(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);break
 
-#ifndef _WIN32
+#ifdef _3BC_PC_NOT_WINDOWS
 struct termios term_old_attr;
 struct termios term_new_attr;
 #endif
@@ -22,18 +26,25 @@ void lang_driver_run()
     while(tape_program_avaliable()? tape_program_exe(): lang_interpreter_line(program_file));
 }
 
+#ifdef _3BC_COMPUTER
 void lang_driver_init(int argc, char **argv)
+#endif
+#ifdef _3BC_ARDUINO
+void lang_driver_init()
+#endif
 {
+    #ifdef _3BC_COMPUTER
     signal(SIGINT, lang_driver_exit);
-
+    
     if (argc <= 1) {
         program_file = stdin;
     }
     else {
         program_file = fopen(argv[argc - 1], "r");
     }
+    #endif
 
-    #ifndef _WIN32
+    #ifdef _3BC_PC_NOT_WINDOWS
     tcgetattr(0, &term_old_attr);
     tcgetattr(0, &term_new_attr);
 
@@ -43,37 +54,88 @@ void lang_driver_init(int argc, char **argv)
     term_new_attr.c_cc[VTIME] = 0;
     term_new_attr.c_cc[VMIN] = 1;
     #endif
+
+    #ifdef _3BC_ARDUINO
+    arduino_serial_begin();
+    #endif
 }
 
 void lang_driver_exit(int sig)
 {
-    #ifndef _WIN32
-    tcsetattr(STDIN_FILENO,TCSANOW,&term_old_attr);
+    #ifdef _3BC_PC_NOT_WINDOWS
+    tcsetattr(STDIN_FILENO, TCSANOW, &term_old_attr);
     #endif
 
+    #ifdef _3BC_COMPUTER
     if (program_file != stdin) {
         fclose(program_file);
     }
+    #endif
 
     tape_memory_destroy();
     tape_program_destroy();
     tape_sort_destroy();
 
+    #ifdef _3BC_ARDUINO
+    while(1);
+    #endif
+
+    #ifdef _3BC_COMPUTER
     exit(sig);
+    #endif
 }
 
 void lang_driver_output_1(reg_t type, val_t val)
 {
+    #ifdef _3BC_COMPUTER
     print_file(stdout, type, val);
+    #endif
+
+    #ifdef _3BC_ARDUINO
+    static char output[8];
+    switch (type) {
+        case STRC:
+            format(output, ("%c"), val);
+            break;
+        
+        case STRX:
+            format(output, ("%x"), val);
+            break;
+
+        case STRI:
+            format(output, ("%d"), val);
+            break;
+
+        case STRO:
+            format(output, ("%o"), val);
+            break;
+    }
+
+    arduino_serial_print(1, output);
+    #endif
 }
 
 void lang_driver_output_2(reg_t type, val_t val)
 {
     print_file(stderr, type, val);
+
+    #ifdef _3BC_ARDUINO
+    lang_driver_output_1(type, val);
+    /** @todo second serial output **/
+    /** arduino_serial_print(2, type, val); **/
+    #endif
 }
 
 void lang_driver_error(error_t error_code)
 {
+    #ifdef _3BC_ARDUINO
+    /** smaller log erros for economy rom memory **/
+    static char error_code_string[32];
+    format(error_code_string, ("\n\n[3BC] Fatal error: %d"), error_code);
+    arduino_serial_print(1, error_code_string);
+    #endif
+
+    #ifdef _3BC_COMPUTER
     fprintf(stderr, "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM");
     fprintf(stderr, "\n> ERROR LINE: %d", CLINE + 1);
     fprintf(stderr, "\n> ERROR CODE: %d\n", error_code);
@@ -105,8 +167,9 @@ void lang_driver_error(error_t error_code)
         case ERROR_VOID_HELPER_MAX_MIN: print_error("MAX/MIN CANNOT BE EMPTY");
         default: print_error("UNKNOWN ERROR");
     }
+    #endif
 
-    lang_driver_exit(EXIT_FAILURE);
+    lang_driver_exit(error_code);
 }
 
 /**
@@ -122,11 +185,13 @@ val_t lang_driver_input(reg_t type, mem_t addres)
         invalid = false;
 
         /** capture input **/
-        #ifndef _WIN32
+        #ifdef _3BC_PC_NOT_WINDOWS
         tcsetattr(STDIN_FILENO,TCSANOW, &term_new_attr);
         c[0] = getchar();
         tcsetattr(STDIN_FILENO,TCSANOW, &term_old_attr);
-        #else 
+        #endif 
+
+        #ifdef _3BC_PC_WINDOWS
         c[0] = getch();
         #endif
 
@@ -163,4 +228,63 @@ val_t lang_driver_input(reg_t type, mem_t addres)
     while (invalid);
 
     return (val_t) value;
+}
+
+/**
+ * convert string in any numeric base
+ */
+bool lang_driver_strtol(const char* string, val_t* value)
+{
+    static char decode[32];
+    static char* endptr;
+    static char type;
+    
+    /** verify valid number **/
+    if (string[0] != '-' && !isdigit(string[0])){
+        return false;
+    }
+
+    /** protect original string **/
+    strcpy(decode, string);
+
+    /** custom base with sign **/
+    if(decode[0] == '-' && decode[1] == '0' && !isdigit(2) && decode[2] != '\0'){
+        type = tolower(decode[2]);
+        memmove(&decode[2], &decode[3], strlen(decode) - 2);
+    }
+    /** custom base whiout sign **/
+    else if(decode[0] == '0' && !isdigit(1) && decode[1] != '\0') {
+        type = tolower(decode[1]);
+        memmove(&decode[1], &decode[2], strlen(decode) - 1);
+    }
+    /** decimal base **/
+    else {
+        type = 'd';
+    }
+
+    /** convert string to number **/
+    switch(type) {
+        case 'x':
+            /** base hexadecimal **/
+            *value = strtol(decode, &endptr, 16);
+            break;
+
+        case 'i':
+        case 'd':
+            /** base decimal **/
+            *value = strtol(decode, &endptr, 10);
+            break;
+
+        case 'o':
+            /** base octal **/
+            *value = strtol(decode, &endptr, 8);
+            break;
+
+        case 'b':
+            /** base binary **/
+            *value = strtol(decode, &endptr, 2);
+            break;
+    }
+
+    return true;
 }
