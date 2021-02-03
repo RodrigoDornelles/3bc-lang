@@ -142,22 +142,25 @@ void lang_driver_error(error_t error_code)
 
     switch(error_code)
     {
-        case ERROR_CPU_ZERO: print_error("EMPUTY CPU MODE"); 
-        case ERROR_CPU_UNDEF: print_error("UNDEFINED CPU MODE");
-        case ERROR_CPU_PROTECT: print_error("PROTECTED CPU MODE");
-        case ERROR_CPU_RESERVED: print_error("RESERVED CPU MODE");
-        case ERROR_CPU_REGISTER: print_error("UNDEFINED CPU REGISTER");
-        case ERROR_CPU_INVALID: print_error("INVALID CPU MODE");
-        case ERROR_INVALID_LABEL: print_error("INVALID LABEL");
-        case ERROR_INVALID_VALUE: print_error("INVALID VALUE");
+        case ERROR_CPU_ZERO: print_error("CPU MODE IS NOT DEFINED"); 
+        case ERROR_CPU_PROTECT: print_error("CPU MODE IS PROTECTED");
+        case ERROR_CPU_RESERVED: print_error("CPU MODE IS RESERVED");
+        case ERROR_INVALID_REGISTER: print_error("INVALID REGISTER");
         case ERROR_INVALID_ADDRESS: print_error("INVALID ADDRESS");
+        case ERROR_INVALID_CONSTANT: print_error("INVALID CONSTANT");
+        case ERROR_INVALID_CPU: print_error("INVALID CPU");
+        case ERROR_INVALID_LABEL: print_error("INVALID LABEL");
         case ERROR_PARAM_DUALITY: print_error("DUALITY ADDRES WITH VALUE IS NOT ALLOWED");
         case ERROR_PARAM_REQUIRE_VALUE: print_error("VALUE IS REQUIRED");
         case ERROR_PARAM_REQUIRE_ADDRESS: print_error("ADDRESS IS REQUIRED");
         case ERROR_PARAM_BLOCKED_VALUE: print_error("VALUE IS NOT ALLOWED");
         case ERROR_PARAM_BLOCKED_ADDRESS: print_error("ADDRESS IS NOT ALLOWED");
-        case ERROR_INTERPRETER_REGISTER: print_error("INVALID REGISTER");
-        case ERROR_INTERPRETER_NUMBER: print_error("INVALID NUMBER");
+        case ERROR_NUMBER_NO_DIGITS: print_error("NUMBER WHIOUT DIGITS");
+        case ERROR_NUMBER_UNDERFLOW: print_error("NUMBER UNDERFLOW");
+        case ERROR_NUMBER_OVERFLOW: print_error("NUMBER OVERFLOW");
+        case ERROR_NUMBER_WRONG_BASE: print_error("NUMBER WRONG BASE");
+        case ERROR_NUMBER_UNKOWN: print_error("NUMBER UNKNOWN");
+        case ERROR_NUMBER_DIRTY: print_error("NUMBER DIRTY");
         case ERROR_TAPE_LABEL: print_error("FAILURE TO EXPAND THE LABEL LIST");
         case ERROR_TAPE_MEMORY: print_error("FAILURE TO EXPAND THE MEMORY");
         case ERROR_TAPE_PROGRAM: print_error("FAILURE TO EXPAND THE PROGRAM");
@@ -262,6 +265,9 @@ bool lang_driver_strtol(const char* string, val_t* value)
         type = 'd';
     }
 
+    /** reset error **/
+    errno = 0;
+
     /** convert string to number **/
     switch(type) {
         case 'x':
@@ -284,6 +290,28 @@ bool lang_driver_strtol(const char* string, val_t* value)
             /** base binary **/
             *value = strtol(decode, &endptr, 2);
             break;
+    }
+
+    if (decode == endptr){
+        lang_driver_error(ERROR_NUMBER_NO_DIGITS);
+    }
+    else if (errno == ERANGE && *value == 0){
+        lang_driver_error(ERROR_NUMBER_UNDERFLOW);
+    }
+    else if (errno == ERANGE && *value == 255){
+        lang_driver_error(ERROR_NUMBER_OVERFLOW);
+    }
+    #ifdef EINVAL
+    /** not in all c99 implementations **/
+    else if (errno == EINVAL){ 
+        lang_driver_error(ERROR_NUMBER_WRONG_BASE); 
+    }
+    #endif
+    else if (errno != 0 && *value == 0){
+        lang_driver_error(ERROR_NUMBER_UNKOWN);    
+    }
+    else if (errno == 0 && *endptr != 0){
+        lang_driver_error(ERROR_NUMBER_DIRTY);    
     }
 
     return true;

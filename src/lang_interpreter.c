@@ -1,8 +1,8 @@
 #include "3bc.h"
 
-#define PARSER_PACK(c1,c2,c3,c4,reg,...)\
-case c1+c2+c3+c4: return reg;\
-case c1+c2+c3+c4-128: return reg
+#define PARSER_PACK(c1,c2,c3,c4,r,...)\
+case c1+c2+c3+c4: *reg=r;return true;\
+case c1+c2+c3+c4-128: *reg=r;return true
 
 char lang_interpreter_line(file_t* stream)
 {
@@ -13,38 +13,50 @@ char lang_interpreter_line(file_t* stream)
     static val_t val;
     char i;
 
+    /** when end stream close it **/
     if(feof(stream)) {
         return 0;
     }
     if(fgets(text_line, 32, stream) == NULL){
         return 1;
     }
+    /** ignore comments **/
     for (i = 0; i < 32; i++) if (text_line[i] == '#') {
         text_line[i] = '\0';
         break;
     }
+    /** scan string paterns **/
     if (!sscanf(text_line, "%5s %11s %11s", text_reg, text_mem, text_val)) {
         return 1;
     }
+    /** blank line **/
     if(text_line[0] == '\0' || text_line[0] == '\n') {
         return 1;
     }
+    /*** exit interpreter **/
     if(strcasecmp(text_reg, "exit") == 0) {
         return 0;
     }
 
-    reg = (reg_t) lang_interpreter_world(text_reg);
-    mem = (mem_t) lang_interpreter_value(text_mem);
-    val = (val_t) lang_interpreter_value(text_val);
-
-    if (reg || mem || val) {
-        lang_line(reg, mem, val);
+    /** parse string to register and validate **/
+    if (!lang_interpreter_world(text_reg, (int*) &reg)){
+        lang_driver_error(ERROR_INVALID_REGISTER);
     }
-
+    /** parse string to address and validate **/
+    if (!lang_interpreter_value(text_mem, (int*) &mem)){
+        lang_driver_error(ERROR_INVALID_ADDRESS);
+    }
+    /** parse string to constant and validate **/
+    if (!lang_interpreter_value(text_val, (int*) &val)){
+        lang_driver_error(ERROR_INVALID_CONSTANT);
+    }
+    
+    /** add new line **/
+    lang_line(reg, mem, val);
     return 1;
 }
 
-reg_t lang_interpreter_world(const char text_reg[6])
+bool lang_interpreter_world(const char text_reg[6], int* reg)
 {
     /** mnemonic translate world to register **/
     switch(text_reg[0] + text_reg[1] + text_reg[2] + text_reg[3])
@@ -74,31 +86,29 @@ reg_t lang_interpreter_world(const char text_reg[6])
     }
 
     /** passing register as numerical (octo, bin) **/
-    if(lang_driver_strtol(text_reg, (val_t *) &text_reg[0])){
-        return (reg_t) text_reg[0];
+    if(lang_driver_strtol(text_reg, (val_t *) reg)){
+        return true;
     }
 
-    lang_driver_error(ERROR_INTERPRETER_REGISTER);
-    return RETURN_EXIT;
+    return false;
 }
 
-signed int lang_interpreter_value(const char text_value[12])
+bool lang_interpreter_value(const char text_value[12], int* value)
 {
-    static signed int value;
-    if (lang_driver_strtol(text_value, (val_t *) &value)){
-        return value;
+    if (lang_driver_strtol(text_value, (val_t *) value)){
+        return true;
     }
-    else if (sscanf(text_value, "'%c'", (char *) &value)){
-        return value;
+    else if (sscanf(text_value, "'%c'", (char *) value)){
+        return true;    
     }
-    else if (strcasecmp(text_value, "nill") == 0) {
-        return 0x0;
+    else if (strcasecmp(text_value, "nill") == 0){
+        *value = 0;
+        return true;
     }
-    else if (strcasecmp(text_value, "full") == 0) {
-        static val_t full = 0;
-        return ~full;
+    else if (strcasecmp(text_value, "full") == 0){
+        *value = ~0;
+        return true;
     }
 
-    lang_driver_error(ERROR_INTERPRETER_NUMBER);
-    return RETURN_EXIT;
+    return false;
 }

@@ -153,8 +153,8 @@ bool lang_driver_strtol(const char* string, val_t* value);
 
 /** FILE: lang_interpreter.c **/
 char lang_interpreter_line(file_t* stream);
-reg_t lang_interpreter_world(const char text_reg[6]);
-signed int lang_interpreter_value(const char text_value[12]);
+bool lang_interpreter_world(const char text_reg[6], int* reg);
+bool lang_interpreter_value(const char text_value[12], int* value);
 
 /** FILE: tape_aux.c **/
 val_t tape_aux_get(void);

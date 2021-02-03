@@ -9,7 +9,7 @@ void tape_router_cpu_set(cch_t value)
 {
     /** prevent enter in invalid cpu mode **/
     if (value >= tape_program_cpu_size()) {
-        lang_driver_error(ERROR_CPU_INVALID);
+        lang_driver_error(ERROR_INVALID_CPU);
     }
 
     /** after cpu mode change **/
