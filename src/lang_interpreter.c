@@ -86,7 +86,7 @@ bool lang_interpreter_world(const char text_reg[6], int* reg)
     }
 
     /** passing register as numerical (octo, bin) **/
-    if(lang_driver_strtol(text_reg, (val_t *) reg)){
+    if(lang_driver_strtol(text_reg, (signed long int *) reg)){
         return true;
     }
 
@@ -95,7 +95,7 @@ bool lang_interpreter_world(const char text_reg[6], int* reg)
 
 bool lang_interpreter_value(const char text_value[12], int* value)
 {
-    if (lang_driver_strtol(text_value, (val_t *) value)){
+    if (lang_driver_strtol(text_value, (signed long int*) value)){
         return true;
     }
     else if (sscanf(text_value, "'%c'", (char *) value)){
@@ -106,7 +106,8 @@ bool lang_interpreter_value(const char text_value[12], int* value)
         return true;
     }
     else if (strcasecmp(text_value, "full") == 0){
-        *value = ~0;
+        static int full = 0;
+        *value = ~full;
         return true;
     }
 

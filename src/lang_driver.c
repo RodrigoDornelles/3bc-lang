@@ -236,7 +236,7 @@ val_t lang_driver_input(reg_t type, mem_t addres)
 /**
  * convert string in any numeric base
  */
-bool lang_driver_strtol(const char* string, val_t* value)
+bool lang_driver_strtol(const char* string, signed long int* value)
 {
     static char decode[32];
     static char* endptr;
@@ -295,10 +295,10 @@ bool lang_driver_strtol(const char* string, val_t* value)
     if (decode == endptr){
         lang_driver_error(ERROR_NUMBER_NO_DIGITS);
     }
-    else if (errno == ERANGE && *value == 0){
+    else if (errno == ERANGE && *value == LONG_MIN){
         lang_driver_error(ERROR_NUMBER_UNDERFLOW);
     }
-    else if (errno == ERANGE && *value == 255){
+    else if (errno == ERANGE && *value == LONG_MAX){
         lang_driver_error(ERROR_NUMBER_OVERFLOW);
     }
     #ifdef EINVAL
