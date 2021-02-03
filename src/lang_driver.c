@@ -126,7 +126,7 @@ void lang_driver_output_2(reg_t type, val_t val)
     #endif
 }
 
-void lang_driver_error(error_t error_code)
+void lang_driver_error(error_3bc_t error_code)
 {
     #ifdef _3BC_ARDUINO
     /** smaller log erros for economy rom memory **/

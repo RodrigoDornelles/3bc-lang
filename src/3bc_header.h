@@ -147,7 +147,7 @@ void lang_driver_init();
 void lang_driver_exit(int sig);
 void lang_driver_output_1(reg_t type, val_t value);
 void lang_driver_output_2(reg_t type, val_t value);
-void lang_driver_error(error_t error_code);
+void lang_driver_error(error_3bc_t error_code);
 val_t lang_driver_input(reg_t type, mem_t addres);
 bool lang_driver_strtol(const char* string, signed long int* value);
 

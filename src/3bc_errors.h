@@ -1,4 +1,4 @@
-enum error_e {
+enum error_3bc_e {
     ERROR_CPU_ZERO = 2,
     ERROR_CPU_PROTECT,
     ERROR_CPU_RESERVED,
@@ -27,4 +27,4 @@ enum error_e {
     ERROR_VOID_HELPER_MAX_MIN
 };
 
-typedef enum error_e error_t;
+typedef enum error_3bc_e error_3bc_t;
