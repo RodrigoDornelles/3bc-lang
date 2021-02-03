@@ -3,7 +3,7 @@ import { assertEquals } from "https://deno.land/std@0.85.0/testing/asserts.ts";
 /**
  * @file examples/helloworld.3bc
  */
-Deno.test("Test Hello world!", async () => {
+Deno.test("Example Hello world!", async () => {
     const cmd = await Deno.run({
         cmd: ["./3bc.test.bin", "./examples/heloworld.3bc"],
         stdout: "piped",
@@ -21,7 +21,7 @@ Deno.test("Test Hello world!", async () => {
 /**
  * @file examples/input_login.3bc
  */
-Deno.test("Test Input Login", async () => {
+Deno.test("Example Input Login", async () => {
    const cmd = await Deno.run({
         cmd: ["./3bc.test.bin", "./examples/input_login.3bc"],
         stdout: "piped",
@@ -43,7 +43,7 @@ Deno.test("Test Input Login", async () => {
 /**
  * @file examples/loop.3bc
  */
-Deno.test("Test Looping", async () => {
+Deno.test("Example Looping", async () => {
     const cmd = await Deno.run({
         cmd: ["./3bc.test.bin", "./examples/loop.3bc"],
         stdout: "piped",
@@ -61,7 +61,7 @@ Deno.test("Test Looping", async () => {
 /**
  * @file examples/loop.3bc
  */
-Deno.test("Test Invert Default", async () => {
+Deno.test("Example Invert Default", async () => {
     const cmd = await Deno.run({
         cmd: ["./3bc.test.bin", "./examples/invert_default.3bc"],
         stdout: "piped",
@@ -79,7 +79,7 @@ Deno.test("Test Invert Default", async () => {
 /**
  * @file examples/loop.3bc
  */
-Deno.test("Test Invert Helper", async () => {
+Deno.test("Example Invert Helper", async () => {
     const cmd = await Deno.run({
         cmd: ["./3bc.test.bin", "./examples/invert_helper.3bc"],
         stdout: "piped",
@@ -97,7 +97,7 @@ Deno.test("Test Invert Helper", async () => {
 /**
  * @file examples/math_average.3bc
  */
-Deno.test("Test Math Average Helper", async () => {
+Deno.test("Example Math Average Helper", async () => {
     const tests = [
         {input:"888", output: "N1: 8\nN2: 8\nN3: 8\nA:8\n"},
         {input:"246", output: "N1: 2\nN2: 4\nN3: 6\nA:4\n"},
@@ -127,7 +127,7 @@ Deno.test("Test Math Average Helper", async () => {
 /**
  * @file examples/math_sortable.3bc
  */
-Deno.test("Test Math Sort Helper", async () => {
+Deno.test("Example Math Sort Helper", async () => {
     const tests = [
         {input:"123", output: "3x numbers: 123\nsort: 123\n"},
         {input:"321", output: "3x numbers: 321\nsort: 123\n"},
