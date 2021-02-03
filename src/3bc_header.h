@@ -66,8 +66,15 @@ RETURN_DEFINE cpu_debug_stru(PARAMS_DEFINE);
 /** FILE: cpu_helper.c **/
 RETURN_DEFINE cpu_helper_average(PARAMS_DEFINE);
 RETURN_DEFINE cpu_helper_sort(PARAMS_DEFINE);
+RETURN_DEFINE cpu_helper_max(PARAMS_DEFINE);
+RETURN_DEFINE cpu_helper_min(PARAMS_DEFINE);
 void before_helper_average(void);
-void after_helper_average(void);
+void before_helper_sort(void);
+void before_helper_max(void);
+void before_helper_min(void);
+void after_helper_sort(void);
+void after_helper_max(void);
+void after_helper_min(void);
 
 /** FILE: cpu_input.c **/
 RETURN_DEFINE cpu_input_stri(PARAMS_DEFINE);
@@ -140,13 +147,14 @@ void lang_driver_init();
 void lang_driver_exit(int sig);
 void lang_driver_output_1(reg_t type, val_t value);
 void lang_driver_output_2(reg_t type, val_t value);
-void lang_driver_error(error_t error_code);
+void lang_driver_error(error_3bc_t error_code);
 val_t lang_driver_input(reg_t type, mem_t addres);
+bool lang_driver_strtol(const char* string, signed long int* value);
 
 /** FILE: lang_interpreter.c **/
 char lang_interpreter_line(file_t* stream);
-reg_t lang_interpreter_world(const char text_reg[5]);
-signed int lang_interpreter_value(const char text_value[12]);
+bool lang_interpreter_world(const char text_reg[6], int* reg);
+bool lang_interpreter_value(const char text_value[12], int* value);
 
 /** FILE: tape_aux.c **/
 val_t tape_aux_get(void);

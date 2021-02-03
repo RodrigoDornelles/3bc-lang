@@ -126,7 +126,7 @@ void lang_driver_output_2(reg_t type, val_t val)
     #endif
 }
 
-void lang_driver_error(error_t error_code)
+void lang_driver_error(error_3bc_t error_code)
 {
     #ifdef _3BC_ARDUINO
     /** smaller log erros for economy rom memory **/
@@ -142,28 +142,32 @@ void lang_driver_error(error_t error_code)
 
     switch(error_code)
     {
-        case ERROR_CPU_ZERO: print_error("EMPUTY CPU MODE"); 
-        case ERROR_CPU_UNDEF: print_error("UNDEFINED CPU MODE");
-        case ERROR_CPU_PROTECT: print_error("PROTECTED CPU MODE");
-        case ERROR_CPU_RESERVED: print_error("RESERVED CPU MODE");
-        case ERROR_CPU_REGISTER: print_error("UNDEFINED CPU REGISTER");
-        case ERROR_CPU_INVALID: print_error("INVALID CPU MODE");
-        case ERROR_INVALID_LABEL: print_error("INVALID LABEL");
-        case ERROR_INVALID_VALUE: print_error("INVALID VALUE");
+        case ERROR_CPU_ZERO: print_error("CPU MODE IS NOT DEFINED"); 
+        case ERROR_CPU_PROTECT: print_error("CPU MODE IS PROTECTED");
+        case ERROR_CPU_RESERVED: print_error("CPU MODE IS RESERVED");
+        case ERROR_INVALID_REGISTER: print_error("INVALID REGISTER");
         case ERROR_INVALID_ADDRESS: print_error("INVALID ADDRESS");
+        case ERROR_INVALID_CONSTANT: print_error("INVALID CONSTANT");
+        case ERROR_INVALID_CPU: print_error("INVALID CPU");
+        case ERROR_INVALID_LABEL: print_error("INVALID LABEL");
         case ERROR_PARAM_DUALITY: print_error("DUALITY ADDRES WITH VALUE IS NOT ALLOWED");
         case ERROR_PARAM_REQUIRE_VALUE: print_error("VALUE IS REQUIRED");
         case ERROR_PARAM_REQUIRE_ADDRESS: print_error("ADDRESS IS REQUIRED");
         case ERROR_PARAM_BLOCKED_VALUE: print_error("VALUE IS NOT ALLOWED");
         case ERROR_PARAM_BLOCKED_ADDRESS: print_error("ADDRESS IS NOT ALLOWED");
-        case ERROR_INTERPRETER_REGISTER: print_error("INVALID REGISTER");
-        case ERROR_INTERPRETER_NUMBER: print_error("INVALID NUMBER");
+        case ERROR_NUMBER_NO_DIGITS: print_error("NUMBER WHIOUT DIGITS");
+        case ERROR_NUMBER_UNDERFLOW: print_error("NUMBER UNDERFLOW");
+        case ERROR_NUMBER_OVERFLOW: print_error("NUMBER OVERFLOW");
+        case ERROR_NUMBER_WRONG_BASE: print_error("NUMBER WRONG BASE");
+        case ERROR_NUMBER_UNKOWN: print_error("NUMBER UNKNOWN");
+        case ERROR_NUMBER_DIRTY: print_error("NUMBER DIRTY");
         case ERROR_TAPE_LABEL: print_error("FAILURE TO EXPAND THE LABEL LIST");
         case ERROR_TAPE_MEMORY: print_error("FAILURE TO EXPAND THE MEMORY");
         case ERROR_TAPE_PROGRAM: print_error("FAILURE TO EXPAND THE PROGRAM");
         case ERROR_TAPE_SORT: print_error("FAILURE TO EXPAND THE SORT");
         case ERROR_INVALID_MEMORY_CONFIG: print_error("INVALID MEMORY TYPE CONFIG");
         case ERROR_INVALID_MEMORY_CLAMP:  print_error("INVALID MEMORY TYPE CLAMP");
+        case ERROR_VOID_HELPER_MAX_MIN: print_error("MAX/MIN CANNOT BE EMPTY");
         default: print_error("UNKNOWN ERROR");
     }
     #endif
@@ -227,4 +231,88 @@ val_t lang_driver_input(reg_t type, mem_t addres)
     while (invalid);
 
     return (val_t) value;
+}
+
+/**
+ * convert string in any numeric base
+ */
+bool lang_driver_strtol(const char* string, signed long int* value)
+{
+    static char decode[32];
+    static char* endptr;
+    static char type;
+    
+    /** verify valid number **/
+    if (string[0] != '-' && !isdigit(string[0])){
+        return false;
+    }
+
+    /** protect original string **/
+    strcpy(decode, string);
+
+    /** custom base with sign **/
+    if(decode[0] == '-' && decode[1] == '0' && !isdigit(2) && decode[2] != '\0'){
+        type = tolower(decode[2]);
+        memmove(&decode[2], &decode[3], strlen(decode) - 2);
+    }
+    /** custom base whiout sign **/
+    else if(decode[0] == '0' && !isdigit(1) && decode[1] != '\0') {
+        type = tolower(decode[1]);
+        memmove(&decode[1], &decode[2], strlen(decode) - 1);
+    }
+    /** decimal base **/
+    else {
+        type = 'd';
+    }
+
+    /** reset error **/
+    errno = 0;
+
+    /** convert string to number **/
+    switch(type) {
+        case 'x':
+            /** base hexadecimal **/
+            *value = strtol(decode, &endptr, 16);
+            break;
+
+        case 'i':
+        case 'd':
+            /** base decimal **/
+            *value = strtol(decode, &endptr, 10);
+            break;
+
+        case 'o':
+            /** base octal **/
+            *value = strtol(decode, &endptr, 8);
+            break;
+
+        case 'b':
+            /** base binary **/
+            *value = strtol(decode, &endptr, 2);
+            break;
+    }
+
+    if (decode == endptr){
+        lang_driver_error(ERROR_NUMBER_NO_DIGITS);
+    }
+    else if (errno == ERANGE && *value == LONG_MIN){
+        lang_driver_error(ERROR_NUMBER_UNDERFLOW);
+    }
+    else if (errno == ERANGE && *value == LONG_MAX){
+        lang_driver_error(ERROR_NUMBER_OVERFLOW);
+    }
+    #ifdef EINVAL
+    /** not in all c99 implementations **/
+    else if (errno == EINVAL){ 
+        lang_driver_error(ERROR_NUMBER_WRONG_BASE); 
+    }
+    #endif
+    else if (errno != 0 && *value == 0){
+        lang_driver_error(ERROR_NUMBER_UNKOWN);    
+    }
+    else if (errno == 0 && *endptr != 0){
+        lang_driver_error(ERROR_NUMBER_DIRTY);    
+    }
+
+    return true;
 }

@@ -20,7 +20,7 @@ RETURN_DEFINE cpu_not_mode(PARAMS_DEFINE)
 
 RETURN_DEFINE cpu_not_exist(PARAMS_DEFINE)
 {
-    lang_driver_error(ERROR_CPU_REGISTER);
+    lang_driver_error(ERROR_INVALID_REGISTER);
     return RETURN_OK;
 }
 

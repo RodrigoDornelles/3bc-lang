@@ -6,10 +6,13 @@
 
 /** libaries **/
 #include <math.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <errno.h>
+#include <limits.h>
 #include <string.h>
 #ifdef _3BC_COMPUTER
 #include <signal.h>

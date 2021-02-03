@@ -23,6 +23,8 @@
 #define MODE_CUSTOM_2           0x14
 #define MODE_HELPER_AVARAGE     0x15
 #define MODE_HELPER_SORT        0x16
+#define MODE_HELPER_MAX         0x17
+#define MODE_HELPER_MIN         0x18
 
 #define NILL 0b000
 #define MODE 0b111
@@ -81,6 +83,8 @@ RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK1(cpu_math_abs),
     CPU_PACK_RESERVED(),
     CPU_PACK1(cpu_helper_average),
-    CPU_PACK1(cpu_helper_sort)
+    CPU_PACK1(cpu_helper_sort),
+    CPU_PACK1(cpu_helper_max),
+    CPU_PACK1(cpu_helper_min)
 };
 #endif
