@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="{{ site.locale }}">
+    <head>
+        <link rel="stylesheet" href="{{ '/ide/highlights.css' | relative_url}}"/>
+        {% include head.html %}
+        {% seo %}
+    </head>
+    <!-- IDE MARKUP -->
+    <body>
+        <main>
+            {% include header.html tabs = 1 %}
+            <section class="container">
+                <!-- EDITOR -->
+                <div id="editor" class="col s12">
+                    <pre id="ide-editor" contentEditable="true">loading...</pre>
+                </div>
+
+                <!-- DOCUMENTATION -->
+                <div id="docs" class="col s12">
+                    {{ content }}
+                </div>
+            </section>
+        </main>
+    </body>
+    <!-- IDE SCRIPT -->
+    <script>
+    /** add example and call edit event **/
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById("ide-editor").innerHTML = `{{ site.data.examples.helloworld }}`;
+        document.getElementById("ide-editor").dispatchEvent(new Event('input'));
+    });
+    </script>
+    <script src="{{ '/ide/helpers.js' | relative_url }}"></script>
+    <script src="{{ '/ide/highlights.js' | relative_url }}"></script>
+</html>

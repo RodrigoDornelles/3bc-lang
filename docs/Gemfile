@@ -14,7 +14,6 @@ gem "jekyll", "~> 3.9.0"
 # If you have any plugins, put them here!
 group :jekyll_plugins do
   gem 'jekyll-redirect-from'
-  gem "jekyll-readme-index"
   gem "jekyll-seo-tag"
   gem "github-pages", "~> 209"
 end

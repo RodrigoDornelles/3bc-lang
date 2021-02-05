@@ -1,105 +1,13 @@
 <!DOCTYPE html>
 <html lang="{{ site.locale }}">
     <head>
-        <!-- META TAGS -->
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!-- MATERIALIZE CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-        <!-- FAV ICON-->
-        <link rel="shortcut icon" href="{{ '/favicon.ico' | absolute_url }}" type="image/x-icon"/>
-        <link rel="icon" href="{{ '/favicon.ico' | absolute_url }}" type="image/x-icon">
-
+        {% include head.html %}
         {% seo %}
-
-        <!-- CUSTOM DESIGN -->
-        <style>
-            #ide-editor {
-                border-style: solid;
-                border-color: black;
-                border-width: 1px;
-            }
-            
-            #ide-editor .comment {
-                color: green;
-            }
-
-            #ide-editor .number {
-                color: red;
-            }
-        </style>
-
-        <!-- MATERILIZE SCRIPT -->
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                M.Tabs.init(document.querySelectorAll('.tabs'), {swipeable: false});
-                M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
-            });
-        </script>
     </head>
     <body>
         <main>
-            <!-- BEGIN NAV -->
-            <nav class="nav-extended">
-                <!-- DESTKTOP MENU-->
-                <div class="nav-wrapper">
-                    <a href="{{ '/' | relative_url }}" class="brand-logo">3BC Language</a>
-                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-                    <ul id="nav-mobile" class="right hide-on-med-and-down">
-                    <li><a href="https://github.com/rodrigodornelles/3bc-lang" target="_blank">Github</a></li>
-                    <li><a href="https://rdornelles.github.io/projeto/3bc" target="_blank">Project</a></li>
-                    </ul>
-                </div>
-            <div class="nav-content">
-                <!-- TABS HEADER-->
-                <ul class="row tabs tabs-transparent">
-                <li class="tab col s4"><a class="active" href="#editor">Editor</a></li>
-                <li class="tab col s4"><a href="#documentation">Documentation</a></li>
-                <li class="tab col s4"><a href="#changelog">Changelog</a></li>
-                </ul>
-            </div>
-            </nav>
-            
-            <!-- BEGIN MOBILE MENU-->
-            <ul class="sidenav" id="mobile-demo">
-                <li><a href="https://github.com/rodrigodornelles/3bc-lang" target="_blank">Github</a></li>
-                <li><a href="https://rdornelles.github.io/projeto/3bc" target="_blank">Project</a></li>
-            </ul>
-
-            <!-- TABS CONTENT -->
-            <section class="container">
-                <!-- EDITOR -->
-                <div id="editor" class="col s12">
-                    <pre id="ide-editor" contentEditable="true">loading...</pre>
-                </div>
-
-                <!-- DOCUMENTATION -->
-                <div id="documentation" class="col s12">
-                    {{ content }}
-                </div>
-                
-                <!-- CHANGELOG -->
-                <div id="changelog" class="col s12">
-                    {% for page in site.pages %}{% if page.path == 'CHANGELOG.md' %}{{ page.content }}{% endif %}{% endfor %}
-                </div>
-            </section>
+            {% include header.html %}
+            {{ content }}
         </main>
-    </body>
-
-    <!-- IDE SCRIPT -->
-    <script>
-    /** add example and call edit event **/
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById("ide-editor").innerHTML = `{{ site.data.examples.helloworld }}`;
-        document.getElementById("ide-editor").dispatchEvent(new Event('input'));
-    });
-    </script>
-    <script src="{{ '/ide/helpers.js' | relative_url }}"></script>
-    <script src="{{ '/ide/highlights.js' | relative_url }}"></script>
-    
+    </body>    
 </html>

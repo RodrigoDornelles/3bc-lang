@@ -18,7 +18,7 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: 3BC Language
+title: 3BC
 description: >- # 
   This is a machine language that has only 3 register bits for CPU,
   the idea is to make it so simple and intuitive that it can be easily read on punched cards.
@@ -27,7 +27,6 @@ url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 plugins:
   - jekyll-redirect-from
-  - jekyll-readme-index
   - jekyll-seo-tag
   - github-pages
 

@@ -1,0 +1,21 @@
+<!-- META TAGS -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- MATERIALIZE CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<!-- FAV ICON-->
+<link rel="shortcut icon" href="{{ '/favicon.ico' | absolute_url }}" type="image/x-icon"/>
+<link rel="icon" href="{{ '/favicon.ico' | absolute_url }}" type="image/x-icon">
+
+<!-- MATERILIZE SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        M.Tabs.init(document.querySelectorAll('.tabs'), {swipeable: false});
+        M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
+    });
+</script>

@@ -1,7 +1,7 @@
 ---
 title: IDE
-layout: default
-permalink: /index.html
+layout: editor
+permalink: /ide.html
 ---
 
 # CheatSheet #
@@ -31,6 +31,8 @@ permalink: /index.html
 | 20 | <br/> | reserved | <br/> |
 | 21 | **[MODE_HELPER_AVERAGE](#mode-helper-average)** | helper mathematic avarege | `nill` `math` `mode` |
 | 22 | **[MODE_HELPER_SORT](#mode-helper-sort)** | helper mathematic sort | `nill` `math` `mode` |
+| 23 | **[MODE_HELPER_MAX](#mode-helper-max)** | helper mathematic maximum  | `nill` `math` `mode` |
+| 24 | **[MODE_HELPER_MIN](#mode-helper-min)** | helper mathematic minimum | `nill` `math` `mode` |
 
 # Architecture details  #
 
@@ -186,3 +188,15 @@ permalink: /index.html
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
 | `math` | 1 | 001 | sort memory address values |
+
+## MODE HELPER MAX ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | keep higher number in auxiliary memory |
+
+## MODE HELPER MIN ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | keep less number in aux memory |
