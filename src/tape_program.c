@@ -113,7 +113,7 @@ compass_t tape_program_line_end()
  */
 void tape_program_label_add(compass_t line, compass_t label)
 {
-    if (label <= tape_last_label) {
+    if (label < tape_last_label) {
         lang_driver_error(ERROR_INVALID_LABEL);
         return;
     }
