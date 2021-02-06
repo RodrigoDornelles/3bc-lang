@@ -55,6 +55,29 @@ $
  - [ ] Includes support
  - [ ] Bindings support
 
+# How To Compile #
+
+### Linux ###
+```
+git clone https://github.com/RodrigoDornelles/3bc-lang.git
+cd 3bc-lang
+gcc main.c -lm -o 3bc
+chmod +x ./3bc # add execution permission to the executable if you don't have
+```
+
+### mac/unix ###
+```
+git clone https://github.com/RodrigoDornelles/3bc-lang.git
+cd 3bc-lang
+gcc main.c -o 3bc
+chmod +x ./3bc # add execution permission to the executable if you don't have
+```
+
+### windows ###
+
+for windows I recommend following microsoft documentation on how to compile in C on windows **[clice here for microsoft documentation](https://docs.microsoft.com/en-us/cpp/build/walkthrough-compile-a-c-program-on-the-command-line?view=msvc-160)**
+
+
 
 # List of early developers #
 | **1º** | ![avatar](https://avatars.githubusercontent.com/rodrigodornelles?size=32) | **[Rodrigo Dornelles](https://github.com/rodrigodornelles)** | **26 November 2020** |
