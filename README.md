@@ -22,7 +22,7 @@ hello world!
 C:\Users\nicod\Downloads\3bc-windows-32>
 ```
 
-### mac / linux / unix ###
+### mac / unix / linux ###
 ./3bc [filename.3bc]
 ```
 $ ./3bc helloworld.3bc
