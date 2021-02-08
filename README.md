@@ -89,3 +89,5 @@ for windows I recommend following microsoft documentation on how to compile in C
 | **6º** |  ![avatar](https://avatars.githubusercontent.com/keshizin?size=32) | **[Takeshi Ishikawa](https://github.com/keshizin)** | **30 December 2020** |
 | **7º** |  ![avatar](https://avatars.githubusercontent.com/andreluispy?size=32) | **[André Luis](https://github.com/andreluispy)** | **31 December 2020** |
 | **8º** |  ![avatar](https://avatars.githubusercontent.com/guridev?size=32) | **[Francisco Noble](https://github.com/guridev)** | **2 January 2021** |
+| **9º** |  ![avatar](https://avatars.githubusercontent.com/lrv-dev?size=32) | **[Lucas Rangel](https://github.com/lrv-dev)** | **5 February 2021** |
+| **10º** |  ![avatar](https://avatars.githubusercontent.com/otavio-burato?size=32) | **[Otávio Burato](https://github.com/otavio-burato)** | **6 February 2021** |
