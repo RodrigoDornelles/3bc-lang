@@ -39,7 +39,7 @@ void after_helper_maxmin()
 /**
  * Calculate average between numbers
  */
-RETURN_DEFINE cpu_helper_average(PARAMS_DEFINE)
+void cpu_helper_average(PARAMS_DEFINE)
 {   
     VALIDATE_NOT_DUALITY
     /** add number to average **/
@@ -48,23 +48,21 @@ RETURN_DEFINE cpu_helper_average(PARAMS_DEFINE)
 
     /** recalculate average **/
     tape_aux_set(average_sum/average_count);
-    return RETURN_OK;
 }
 
 /**
  * Insert Sort Algorithm
  */
-RETURN_DEFINE cpu_helper_sort(PARAMS_DEFINE)
+void cpu_helper_sort(PARAMS_DEFINE)
 {   
     VALIDATE_NOT_VALUES
     tape_sort_insert(addres);
-    return RETURN_OK;
 }
 
 /**
  * Aux memory uses bigger value
  */
-RETURN_DEFINE cpu_helper_max(PARAMS_DEFINE)
+void cpu_helper_max(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
     AUX_USE_ANY_PARAM
@@ -74,13 +72,12 @@ RETURN_DEFINE cpu_helper_max(PARAMS_DEFINE)
         maxmin_init = true;
     }
 
-    return RETURN_OK;
 }
 
 /**
  * Aux memory uses bigger value
  */
-RETURN_DEFINE cpu_helper_min(PARAMS_DEFINE)
+void cpu_helper_min(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
     AUX_USE_ANY_PARAM
@@ -90,5 +87,4 @@ RETURN_DEFINE cpu_helper_min(PARAMS_DEFINE)
         maxmin_init = true;
     }
 
-    return RETURN_OK;
 }

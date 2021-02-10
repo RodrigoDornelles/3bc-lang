@@ -47,7 +47,6 @@ void tape_program_resize()
 
     if (new_tape == NULL) {
         lang_driver_error(ERROR_TAPE_PROGRAM);
-        return;
     }
     
     tape_master = new_tape;
@@ -57,14 +56,14 @@ void tape_program_resize()
  * run processor instructions,
  * this is a core of virtual machine
  */
-RETURN_DEFINE tape_program_exe()
+bool tape_program_exe()
 {
     /**
      *  call the register function
      * from within a two-dimensional array of pointers
      * FILE: register.h
      **/
-    RETURN_DEFINE result = (*instructions[
+    (*instructions[
         /** first index use current cpu channel **/
         CMODE
     ][  
@@ -78,7 +77,7 @@ RETURN_DEFINE tape_program_exe()
     );
 
     tape_current_line += 1;
-    return result;
+    return true;
 }
 
 /**
@@ -115,14 +114,12 @@ void tape_program_label_add(compass_t line, compass_t label)
 {
     if (label < tape_last_label) {
         lang_driver_error(ERROR_INVALID_LABEL);
-        return;
     }
    
     struct label_s* new_tape = (struct label_s*) realloc(tape_labels, sizeof (struct label_s) * (tape_last_label = label + 1));
     
     if (new_tape == NULL) {
         lang_driver_error(ERROR_TAPE_LABEL);
-        return;
     }
 
     tape_labels = new_tape;

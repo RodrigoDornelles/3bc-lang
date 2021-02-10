@@ -63,13 +63,11 @@ void tape_memory_type_set(mem_t addres, val_t value)
     /** not allow normalize whitout clamp (limit max & min) **/
     if (value & MEM_CONFIG_NORMALIZE &&  !_VALCONFIG(value, MEM_CONFIG_MIN_VALUE | MEM_CONFIG_MAX_VALUE)) {
         lang_driver_error(ERROR_INVALID_MEMORY_CONFIG);
-        return;
     }
     
     /** verifiy valid value between max & min **/
     if (_MEM3BC(v_min) > _MEM3BC(v_max) && _VALCONFIG(value, MEM_CONFIG_MIN_VALUE | MEM_CONFIG_MAX_VALUE)) {
         lang_driver_error(ERROR_INVALID_MEMORY_CLAMP);
-        return;
     }
 
     /** update memory address type **/
@@ -164,7 +162,6 @@ void tape_memory_resize(mem_t addres)
     /** was not possible expand memory tape **/
     if (new_tape == NULL) {
         lang_driver_error(ERROR_TAPE_MEMORY);
-        return;
     }
 
     memory_pointers = new_tape;
