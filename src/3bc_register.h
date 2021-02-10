@@ -60,7 +60,7 @@
  * (required for avr compiler in arduino ide)
  */
 #ifdef _3BC_REQUIRE_INSTRUCTIONS
-RETURN_DEFINE (*instructions[][8]) (PARAMS_DEFINE) = {
+void (*instructions[][8]) (PARAMS_DEFINE) = {
     CPU_PACK0(),
     CPU_PACK5(cpu_debug_stri, cpu_debug_strc, cpu_debug_stro, cpu_debug_strx, cpu_debug_stru),
     CPU_PACK5(cpu_string_stri, cpu_string_strc, cpu_string_stro, cpu_string_strx, cpu_string_stru),
