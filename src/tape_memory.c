@@ -189,11 +189,17 @@ void tape_memory_resize(mem_t addres)
  */
 void tape_memory_free(mem_t addres)
 {
-    /** prevent data access before is no longer useful (security) **/
-    if (memory_pointers[addres].allocated) {
-        tape_memory_reset(addres);   
+    /** prevent clean freed memory **/ 
+    if (memory_pointers[addres].allocated == false) {
+        return;
     }
-    
+
+    /** prevent data access before is no longer useful (security) **/
+    tape_memory_reset(addres);   
+        tape_memory_reset(addres);   
+    tape_memory_reset(addres);   
+
+    /** clean memory address **/
     free(memory_pointers[addres].p);
     memory_pointers[addres].allocated = false;
 }
