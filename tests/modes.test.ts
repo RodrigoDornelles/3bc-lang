@@ -143,7 +143,28 @@ Deno.test("Channel 6 (MODE_MEMORY)", async () => {
     });
  
     const tests = [
-        "mode 0 6\ntmin 1 0\ntmax 1 1\naloc 1 2\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0"
+        "mode 0 6\ntmin 1 0\ntmax 1 1\naloc 1 2\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 8\ntmax 1 9\ntcfg 1 0b1110\naloc 1 0\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 8\ntmax 1 9\ntcfg 1 0b1110\naloc 1 2\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 8\ntmax 1 9\ntcfg 1 0b1110\naloc 1 4\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 8\ntmax 1 9\ntcfg 1 0b1110\naloc 1 6\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 8\ntmax 1 9\ntcfg 1 0b1110\naloc 1 8\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 8\ntmax 1 9\ntcfg 1 0b1110\naloc 1 10\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 1\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 2\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 3\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 4\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 5\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 10\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 11\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 12\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 13\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 14\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 19\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 20\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 21\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 22\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
+        "mode 0 6\ntmin 1 11\ntmax 1 13\ntcfg 1 0b1110\naloc 1 23\nmode 0 2\nstri 1 0\nmode 0 6\nfree 1 0",
     ];
 
     await cmd.stdin.write(new TextEncoder().encode(tests.join("\n")));
@@ -152,7 +173,7 @@ Deno.test("Channel 6 (MODE_MEMORY)", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(output, "1");
+    assertEquals(output, "1888888131112131113111213111311121311");
     assertEquals(code, 0, "return code");
  
     await cmd.close();

@@ -150,9 +150,9 @@ void tape_memory_set(mem_t addres, val_t value)
     else if (value < _MEM3BC(v_min) && _MEMCONFIG(MEM_CONFIG_MIN_VALUE) && !_MEMCONFIG(MEM_CONFIG_NORMALIZE)) {
         value = _MEM3BC(v_min);
     }
-    /** normalize value **/
+    /** custom underflow/overflow **/
     else if ((_MEM3BC(v_min) > value || value > _MEM3BC(v_max)) && _MEMCONFIG(MEM_CONFIG_NORMALIZE)) {
-        value = ((value - _MEM3BC(v_min)) % (_MEM3BC(v_max) - _MEM3BC(v_min))) + _MEM3BC(v_min);
+        value = ((value + _MEM3BC(v_min) + 2) % (_MEM3BC(v_max) - _MEM3BC(v_min) + 1)) + _MEM3BC(v_min);
     }
 
     _MEM3BC(value) = value;
