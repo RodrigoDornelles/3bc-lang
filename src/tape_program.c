@@ -20,6 +20,21 @@ struct label_s* tape_labels;
 struct line_s* tape_master;
 
 /**
+ * reset primitive state program
+ */
+void tape_program_init()
+{
+    /** reset counters **/
+    tape_current_line = 0;
+    tape_last_label = 0;
+    tape_last_line = 0;
+
+    /** prevent wild pointers **/
+    tape_labels = NULL;
+    tape_master = NULL;
+}
+
+/**
  * record program memory,
  * similar to writing a line on the punch card.
  */
@@ -43,12 +58,15 @@ void tape_program_line_add(reg_t reg, mem_t mem, val_t val)
  */
 void tape_program_resize()
 {
+    /** expand program tape **/
     struct line_s* new_tape = (struct line_s*) realloc(tape_master, sizeof (struct line_s) * (tape_last_line += 1));
 
+    /** was not possible expand program tape **/
     if (new_tape == NULL) {
         lang_driver_error(ERROR_TAPE_PROGRAM);
     }
     
+    /** take program tape **/
     tape_master = new_tape;
 }
 
@@ -112,16 +130,20 @@ compass_t tape_program_line_end()
  */
 void tape_program_label_add(compass_t line, compass_t label)
 {
+    /** new label require asc order **/
     if (label < tape_last_label) {
         lang_driver_error(ERROR_INVALID_LABEL);
     }
    
+    /** expand labels tape **/
     struct label_s* new_tape = (struct label_s*) realloc(tape_labels, sizeof (struct label_s) * (tape_last_label = label + 1));
     
+    /** was not possible expand labels tape **/
     if (new_tape == NULL) {
         lang_driver_error(ERROR_TAPE_LABEL);
     }
 
+    /** take labels tape **/
     tape_labels = new_tape;
     tape_labels[label].line = line;
     tape_labels[label].cpu_mode = CMODE;
