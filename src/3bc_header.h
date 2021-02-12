@@ -170,6 +170,7 @@ val_t tape_memory_get(mem_t addres);
 void tape_memory_set(mem_t addres, val_t value);
 void tape_memory_resize(mem_t addres);
 void tape_memory_free(mem_t addres);
+void tape_memory_init(void);
 void tape_memory_destroy(void);
 void tape_memory_safe(mem_t addres);
 void tape_memory_reset(mem_t addres);
@@ -177,6 +178,7 @@ void tape_memory_reset(mem_t addres);
 /** FILE: tape_program.c **/
 void tape_program_resize(void);
 bool tape_program_exe(void);
+void tape_program_init(void);
 void tape_program_destroy(void);
 void tape_program_line_set(compass_t line);
 void tape_program_line_add(reg_t reg, mem_t mem, val_t val);

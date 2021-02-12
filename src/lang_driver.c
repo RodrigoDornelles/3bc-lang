@@ -34,6 +34,9 @@ void lang_driver_init()
 #endif
 {
     #ifdef _3BC_COMPUTER
+    /**
+     * Capture computer signals
+     */
     signal(SIGINT, lang_driver_exit);
     
     if (argc <= 1) {
@@ -44,7 +47,14 @@ void lang_driver_init()
     }
     #endif
 
+    tape_memory_init();
+    tape_program_init();
+
     #ifdef _3BC_PC_NOT_WINDOWS
+    /**
+     * Turn possible terminal uncannonical mode 
+     * whiout conio.h in linux/unix builds
+     */
     tcgetattr(0, &term_old_attr);
     tcgetattr(0, &term_new_attr);
 
@@ -290,6 +300,10 @@ bool lang_driver_strtol(const char* string, signed long int* value)
             /** base binary **/
             *value = strtol(decode, &endptr, 2);
             break;
+
+        default:
+            /** base invalid **/
+            lang_driver_error(ERROR_NUMBER_WRONG_BASE); 
     }
 
     if (decode == endptr){
