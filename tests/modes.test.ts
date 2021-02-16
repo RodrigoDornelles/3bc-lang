@@ -4,14 +4,13 @@ Deno.test("Channel 1 (MODE_DEBUG)", async () => {
     const cmd = await Deno.run({
         cmd: ["./3bc.test.bin"],
         stdin: "piped",
-        stdout: "piped",
-        stderr: 1
+        stderr: "piped"
     });
  
-    await cmd.stdin.write(new TextEncoder().encode("mode 0 2\nstri 0 0i9\nstrc 0 'a'\nstro 0 0o7\nstrx 0 0xA"));
+    await cmd.stdin.write(new TextEncoder().encode("mode 0 1\nstri 0 0i9\nstrc 0 'a'\nstro 0 0o7\nstrx 0 0xA"));
     await cmd.stdin.close();
  
-    const output = new TextDecoder().decode(await cmd.output());
+    const output = new TextDecoder().decode(await cmd.stderrOutput());
     const { code } = await cmd.status();
  
     assertEquals(output, "9a7a");
