@@ -24,7 +24,9 @@ enum error_3bc_e {
     ERROR_TAPE_SORT,
     ERROR_INVALID_MEMORY_CONFIG,
     ERROR_INVALID_MEMORY_CLAMP,
-    ERROR_VOID_HELPER_MAX_MIN
+    ERROR_VOID_HELPER_MAX_MIN,
+    ERROR_OPEN_FILE,
+    ERROR_LONG_LINE
 };
 
 typedef enum error_3bc_e error_3bc_t;

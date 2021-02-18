@@ -1,12 +1,22 @@
 #include "3bc.h"
 
+#define LINE_LIMIT 29
 #define PARSER_PACK(c1,c2,c3,c4,r,...)\
 case c1+c2+c3+c4: *reg=r;return true;\
 case c1+c2+c3+c4-128: *reg=r;return true
 
+/** 
+ * Textually parse an instruction line
+ * 
+ * 
+ * NOTE:
+ * -> the line size the actual interpretation is (limit + 1) seeing the line break.
+ * -> the character after limit has different from nul, that line was crossed.
+ * -> text_line has the size (limit + 3) to respect text limit (line + 1).
+ */
 char lang_interpreter_line(file_t* stream)
 {
-    static char text_line[32];
+    static char text_line[LINE_LIMIT + 3];
     static char text_reg[6], text_mem[12], text_val[12];
     static reg_t reg;
     static mem_t mem;
@@ -17,20 +27,25 @@ char lang_interpreter_line(file_t* stream)
     if(feof(stream)) {
         return 0;
     }
-    if(fgets(text_line, 32, stream) == NULL){
+    /** try scan line **/
+    if(fgets(text_line, sizeof (text_line), stream) == NULL){
         return 1;
     }
+    /** line soo long **/
+    if (text_line[LINE_LIMIT + 1] != 0) {
+        lang_driver_error(ERROR_LONG_LINE);
+    }
     /** ignore comments **/
-    for (i = 0; i < 32; i++) if (text_line[i] == '#') {
+    for (i = 0; i < sizeof(text_line); i++) if (text_line[i] == '#') {
         text_line[i] = '\0';
         break;
     }
     /** scan string paterns **/
-    if (!sscanf(text_line, "%5s %11s %11s", text_reg, text_mem, text_val)) {
+    if (!sscanf(text_line, "%s %s %s", text_reg, text_mem, text_val)){
         return 1;
     }
     /** blank line **/
-    if(text_line[0] == '\0' || text_line[0] == '\n') {
+    if(!text_line[0] || text_line[0] == '\0' || text_line[0] == '\n') {
         return 1;
     }
     /*** exit interpreter **/

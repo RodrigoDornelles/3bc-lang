@@ -322,3 +322,33 @@ Deno.test("Error Helper MaxMin", async () => {
  
     await cmd.close();
 });
+
+Deno.test("Error Open File", async () => {
+    const cmd = await Deno.run({
+        cmd: ["./3bc.test.bin", "none.3bc"],
+        stderr: "null",
+    });
+ 
+    const { code } = await cmd.status();
+ 
+    assertEquals(code, 28, "return code");
+ 
+    await cmd.close();
+});
+
+Deno.test("Error Long Line", async () => {
+    const cmd = await Deno.run({
+        cmd: ["./3bc.test.bin"],
+        stdin: "piped",
+        stderr: "null",
+    });
+ 
+    await cmd.stdin.write(new TextEncoder().encode("#" + "0".repeat(65)));
+    await cmd.stdin.close();
+ 
+    const { code } = await cmd.status();
+ 
+    assertEquals(code, 29, "return code");
+ 
+    await cmd.close();
+});

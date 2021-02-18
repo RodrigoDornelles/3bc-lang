@@ -44,7 +44,6 @@ void lang_driver_init()
     else {
         program_file = fopen(argv[argc - 1], "r");
     }
-    #endif
 
     tape_memory_init();
     tape_program_init();
@@ -64,6 +63,12 @@ void lang_driver_init()
     term_new_attr.c_cc[VMIN] = 1;
     #endif
 
+    /** file not found | forbidden **/
+    if (program_file == NULL) {
+        lang_driver_error(ERROR_OPEN_FILE);
+    }
+    #endif
+
     #ifdef _3BC_ARDUINO
     arduino_serial_begin();
     #endif
@@ -71,16 +76,26 @@ void lang_driver_init()
 
 void lang_driver_exit(int sig)
 {
+    #ifdef _3BC_COMPUTER
+    /** clear buffers **/
+    fflush(stdin);
+    fflush(stderr);
+    fflush(stdout);
+    #endif
+
     #ifdef _3BC_PC_NOT_WINDOWS
+    /** reset terminal to default mode (linux/unix) **/
     tcsetattr(STDIN_FILENO, TCSANOW, &term_old_attr);
     #endif
 
     #ifdef _3BC_COMPUTER
-    if (program_file != stdin) {
+    /** close file (safe pointer) **/
+    if (program_file != stdin && program_file != NULL) {
         fclose(program_file);
     }
     #endif
 
+    /** deallocate occupied memory **/
     tape_memory_destroy();
     tape_program_destroy();
     tape_sort_destroy();
@@ -177,6 +192,8 @@ void lang_driver_error(error_3bc_t error_code)
         case ERROR_INVALID_MEMORY_CONFIG: print_error("INVALID MEMORY TYPE CONFIG");
         case ERROR_INVALID_MEMORY_CLAMP:  print_error("INVALID MEMORY TYPE CLAMP");
         case ERROR_VOID_HELPER_MAX_MIN: print_error("MAX/MIN CANNOT BE EMPTY");
+        case ERROR_OPEN_FILE: print_error("CANNOT OPEN FILE");
+        case ERROR_LONG_LINE: print_error("EXCEED LINE COLUMN LIMIT");
         default: print_error("UNKNOWN ERROR");
     }
     #endif
