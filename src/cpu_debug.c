@@ -27,10 +27,3 @@ void cpu_debug_strx(PARAMS_DEFINE)
     AUX_USE_ANY_PARAM
     lang_driver_output_2(STRX, AUX);
 }
-
-void cpu_debug_stru(PARAMS_DEFINE)
-{
-    VALIDATE_NOT_DUALITY
-    AUX_USE_ANY_PARAM
-    lang_driver_output_2(STRU, AUX);
-}

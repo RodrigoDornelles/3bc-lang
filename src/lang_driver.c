@@ -9,8 +9,7 @@ switch(type){\
 case STRI: fprintf(file, "%lu", (unsigned long) val); break;\
 case STRO: fprintf(file, "%o", (unsigned int) val); break;\
 case STRC: fprintf(file, "%c", (unsigned char) val); break;\
-case STRX: fprintf(file, "%x", (unsigned int) val); break;\
-case STRU: fprintf(file, "%d", (signed int) val); break;} 
+case STRX: fprintf(file, "%x", (unsigned int) val); break;}
 
 #define print_error(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);break
 
