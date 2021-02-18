@@ -46,13 +46,6 @@ void lang_driver_init()
         program_file = fopen(argv[argc - 1], "r");
     }
 
-    /** file not found | forbidden **/
-    if (program_file == NULL) {
-        /** @todo resolve terminal break after crash **/
-        lang_driver_error(ERROR_OPEN_FILE);
-    }
-    #endif
-
     tape_memory_init();
     tape_program_init();
 
@@ -69,6 +62,12 @@ void lang_driver_init()
 
     term_new_attr.c_cc[VTIME] = 0;
     term_new_attr.c_cc[VMIN] = 1;
+    #endif
+
+    /** file not found | forbidden **/
+    if (program_file == NULL) {
+        lang_driver_error(ERROR_OPEN_FILE);
+    }
     #endif
 
     #ifdef _3BC_ARDUINO
