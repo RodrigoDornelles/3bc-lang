@@ -68,7 +68,6 @@ bool lang_interpreter_world(const char text_reg[6], int* reg)
         PARSER_PACK('s', 't', 'r', 'c', STRC);
         PARSER_PACK('s', 't', 'r', 'o', STRO);
         PARSER_PACK('s', 't', 'r', 'x', STRX);
-        PARSER_PACK('s', 't', 'r', 'u', STRU);
 
         PARSER_PACK('f', 'r', 'e', 'e', FREE);
         PARSER_PACK('a', 'l', 'o', 'c', ALOC);
