@@ -1,6 +1,8 @@
 #define _3BC_REQUIRE_INSTRUCTIONS
 #include "3bc.h"
 
+compass_t target_label;
+compass_t tape_last_cmode;
 compass_t tape_last_label;
 compass_t tape_last_line;
 compass_t tape_current_line;
@@ -26,8 +28,8 @@ void tape_program_init()
 {
     /** reset counters **/
     tape_current_line = 0;
-    tape_last_label = 0;
     tape_last_line = 0;
+    target_label = 0;
 
     /** prevent wild pointers **/
     tape_labels = NULL;
@@ -41,9 +43,14 @@ void tape_program_init()
 void tape_program_line_add(reg_t reg, mem_t mem, val_t val)
 {
     /** register point label for jumps logical **/
-    if (reg == 0 && mem == 0 && val != 0) {
-        tape_program_label_add(CLINE, val);
+    if (reg == NILL && mem == NILL && val != NILL) {
+        tape_program_label_add(CELNE, val);
         val = 0;
+    }
+
+    /** remember last cpu change interpreted **/
+    if (reg == MODE) {
+        tape_last_cmode = val;
     }
 
     /** register program bytecode **/
@@ -146,7 +153,7 @@ void tape_program_label_add(compass_t line, compass_t label)
     /** take labels tape **/
     tape_labels = new_tape;
     tape_labels[label].line = line;
-    tape_labels[label].cpu_mode = CMODE;
+    tape_labels[label].cpu_mode = tape_last_cmode;
 }
 
 /**
@@ -154,11 +161,7 @@ void tape_program_label_add(compass_t line, compass_t label)
  */
 void tape_program_target_label(compass_t label)
 {
-    if (label < tape_last_label) {
-        tape_program_line_set(tape_labels[label].line);
-        tape_router_cpu_set(tape_labels[label].cpu_mode);
-        return;
-    }
+    target_label = label;
 }
 
 /**
@@ -166,6 +169,18 @@ void tape_program_target_label(compass_t label)
  */
 bool tape_program_avaliable()
 {
+    /** jump target is solved **/
+    if (target_label != NILL && target_label < tape_last_label) {
+        tape_router_cpu_set(tape_labels[target_label].cpu_mode);
+        tape_program_line_set(tape_labels[target_label].line);
+        tape_program_target_label(0);
+        return true;
+    }
+    /** waiting for label **/
+    else if (target_label != NILL) {
+        return false;
+    }
+
     return tape_current_line < tape_last_line;
 }
 
