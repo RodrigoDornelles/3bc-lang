@@ -84,23 +84,22 @@ void tape_program_resize()
 bool tape_program_exe()
 {
     /**
-     *  call the register function
-     * from within a two-dimensional array of pointers
-     * FILE: register.h
-     **/
-    (*instructions[
-        /** first index use current cpu channel **/
-        CMODE
-    ][  
-        /** second index use function pointer register **/
-        tape_master[CLINE].reg
-    ])(
+     * request function pointer to machine instruction
+     * FILE: 3bc_register.h
+     */
+    reg_f instruction = instructions(CMODE, tape_master[CLINE].reg);
+
+    /**
+     * Perform physical function
+     */
+    (instruction)(
         /** param for function: mem_t addres **/
         tape_master[CLINE].adr,
         /** param for function: val_t value **/
         tape_master[CLINE].dta
     );
 
+    /** go next line **/
     tape_current_line += 1;
     return true;
 }
@@ -182,12 +181,4 @@ bool tape_program_avaliable()
     }
 
     return tape_current_line < tape_last_line;
-}
-
-/**
- * get size of instructions (cpu channels max)
- */
-reg_t tape_program_cpu_size()
-{
-    return (sizeof(instructions)/sizeof(instructions[0]));
 }

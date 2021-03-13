@@ -7,11 +7,6 @@ static cch_t channel_cpu_mode;
  */
 void tape_router_cpu_set(cch_t value)
 {
-    /** prevent enter in invalid cpu mode **/
-    if (value >= tape_program_cpu_size()) {
-        lang_driver_error(ERROR_INVALID_CPU);
-    }
-
     /** after cpu mode change **/
     switch (channel_cpu_mode) {
         case MODE_HELPER_SORT:

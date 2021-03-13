@@ -122,7 +122,7 @@ Deno.test("Error Invalid CPU", async () => {
         stderr: "null",
     });
  
-    await cmd.stdin.write(new TextEncoder().encode("mode nill full"));
+    await cmd.stdin.write(new TextEncoder().encode("mode nill full\nstri 0 0"));
     await cmd.stdin.close();
  
     const output = new TextDecoder().decode(await cmd.output());
