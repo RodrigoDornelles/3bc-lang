@@ -1,5 +1,5 @@
 enum error_3bc_e {
-    ERROR_CPU_ZERO = 2,
+    ERROR_CPU_ZERO = 0x3BC000,
     ERROR_CPU_PROTECT,
     ERROR_CPU_RESERVED,
     ERROR_INVALID_REGISTER,
@@ -28,5 +28,3 @@ enum error_3bc_e {
     ERROR_OPEN_FILE,
     ERROR_LONG_LINE
 };
-
-typedef enum error_3bc_e error_3bc_t;

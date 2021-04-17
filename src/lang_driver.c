@@ -150,7 +150,7 @@ void lang_driver_output_2(register_3bc_t type, data_3bc_t val)
     #endif
 }
 
-void lang_driver_error(error_3bc_t error_code)
+void lang_driver_error(enum error_3bc_e error_code)
 {
     /**
      * NOTE: if the current line does not exist,
@@ -163,14 +163,14 @@ void lang_driver_error(error_3bc_t error_code)
     #ifdef _3BC_ARDUINO
     /** smaller log erros for economy rom memory **/
     static char error_code_string[32];
-    format(error_code_string, ("\n\n[3BC] Fatal error [%d] in line [%d]"), error_code, error_line);
+    format(error_code_string, ("\n\n[3BC] Fatal error 0x%06x in line: %d"), error_code, error_line);
     arduino_serial_print(1, error_code_string);
     #endif
 
     #ifdef _3BC_COMPUTER
     fprintf(stderr, "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM");
     fprintf(stderr, "\n> ERROR LINE: %d", error_line);
-    fprintf(stderr, "\n> ERROR CODE: %d\n", error_code);
+    fprintf(stderr, "\n> ERROR CODE: 0x%06x\n", error_code);
 
     switch(error_code)
     {
@@ -206,7 +206,7 @@ void lang_driver_error(error_3bc_t error_code)
     }
     #endif
 
-    lang_driver_exit(error_code);
+    lang_driver_exit(SIGTERM);
 }
 
 /**

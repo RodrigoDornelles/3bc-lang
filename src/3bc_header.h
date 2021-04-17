@@ -138,7 +138,7 @@ void lang_driver_init();
 void lang_driver_exit(int sig);
 void lang_driver_output_1(register_3bc_t type, data_3bc_t value);
 void lang_driver_output_2(register_3bc_t type, data_3bc_t value);
-void lang_driver_error(error_3bc_t error_code);
+void lang_driver_error(enum error_3bc_e error_code);
 data_3bc_t lang_driver_input(register_3bc_t type, address_3bc_t addres);
 bool lang_driver_strtol(const char* string, signed long int* value);
 

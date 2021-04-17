@@ -13,8 +13,8 @@ Deno.test("Error CPU Zero", async () => {
  
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
- 
-    assertEquals(code, 2, "return code");
+
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -33,7 +33,7 @@ Deno.test("Error CPU Protected", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 3, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -52,7 +52,7 @@ Deno.test("Error CPU reserved", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 4, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -71,7 +71,7 @@ Deno.test("Error Invalid Register", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 5, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -90,7 +90,7 @@ Deno.test("Error Invalid Address", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 6, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -109,7 +109,7 @@ Deno.test("Error Invalid Constant", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 7, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -128,7 +128,7 @@ Deno.test("Error Invalid CPU", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 8, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -147,7 +147,7 @@ Deno.test("Error Invalid Label", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 9, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -166,7 +166,7 @@ Deno.test("Error Param Duality", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 10, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -185,7 +185,7 @@ Deno.test("Error Required Value", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 11, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -204,7 +204,7 @@ Deno.test("Error Required Address", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 12, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -223,7 +223,7 @@ Deno.test("Error Number no digits", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 15, "return code");
+    assertEquals(code, 0x3BC013, "return code");
  
     await cmd.close();
 });
@@ -242,7 +242,7 @@ Deno.test("Error Number wrong base", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertArrayIncludes([18, 19, 20], [code], "return code");
+    assertEquals(15, code, "return code");
  
     await cmd.close();
 });
@@ -261,7 +261,7 @@ Deno.test("Error Number Dirty", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 20, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -279,8 +279,8 @@ Deno.test("Error Memory Config", async () => {
  
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
- 
-    assertEquals(code, 25, "return code");
+
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -299,7 +299,7 @@ Deno.test("Error Memory Clamp", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 26, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -318,7 +318,7 @@ Deno.test("Error Helper MaxMin", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 27, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -331,7 +331,7 @@ Deno.test("Error Open File", async () => {
  
     const { code } = await cmd.status();
  
-    assertEquals(code, 28, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
@@ -348,7 +348,7 @@ Deno.test("Error Long Line", async () => {
  
     const { code } = await cmd.status();
  
-    assertEquals(code, 29, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });
