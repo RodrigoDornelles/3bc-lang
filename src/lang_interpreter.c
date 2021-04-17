@@ -18,9 +18,9 @@ char lang_interpreter_line(file_t* stream)
 {
     static char text_line[LINE_LIMIT + 3];
     static char text_reg[6], text_mem[12], text_val[12];
-    static reg_t reg;
-    static mem_t mem;
-    static val_t val;
+    static register_3bc_t reg;
+    static address_3bc_t mem;
+    static data_3bc_t val;
     char i;
 
     /** when end stream close it **/
@@ -31,6 +31,10 @@ char lang_interpreter_line(file_t* stream)
     if(fgets(text_line, sizeof (text_line), stream) == NULL){
         return 1;
     }
+
+    /** more 1 line read **/
+    APP_3BC->program.last_line += 1;
+
     /** line soo long **/
     if (text_line[LINE_LIMIT + 1] != 0) {
         lang_driver_error(ERROR_LONG_LINE);

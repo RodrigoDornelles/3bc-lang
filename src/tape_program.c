@@ -1,62 +1,28 @@
 #define _3BC_REQUIRE_INSTRUCTIONS
 #include "3bc.h"
 
-compass_t target_label;
-compass_t tape_last_cmode;
-compass_t tape_last_label;
-compass_t tape_last_line;
-compass_t tape_current_line;
-
-struct label_s {
-    compass_t line;
-    cch_t cpu_mode;
-};
-
-struct line_s {
-    reg_t reg;
-    mem_t adr;
-    mem_t dta;
-};
-
-struct label_s* tape_labels;
-struct line_s* tape_master;
-
-/**
- * reset primitive state program
- */
-void tape_program_init()
-{
-    /** reset counters **/
-    tape_current_line = 0;
-    tape_last_line = 0;
-    target_label = 0;
-
-    /** prevent wild pointers **/
-    tape_labels = NULL;
-    tape_master = NULL;
-}
-
 /**
  * record program memory,
  * similar to writing a line on the punch card.
  */
-void tape_program_line_add(reg_t reg, mem_t mem, val_t val)
+void tape_program_line_add(register_3bc_t reg, address_3bc_t mem, data_3bc_t val)
 {
     /** register point label for jumps logical **/
     if (reg == NILL && mem == NILL && val != NILL) {
-        tape_program_label_add(CELNE, val);
-        val = 0;
+        tape_program_label_insert(val, APP_3BC->program.last_cpu, APP_3BC->program.tail);
+        val = NILL;
     }
 
     /** remember last cpu change interpreted **/
     if (reg == MODE) {
-        tape_last_cmode = val;
+        APP_3BC->program.last_cpu = val;
     }
 
     /** register program bytecode **/
-    tape_master[CELNE].reg = reg;
-    tape_master[CELNE].adr = mem;
-    tape_master[CELNE].dta = val;
+    tape_program_resize();
+    APP_3BC->program.tail->column.reg = reg;
+    APP_3BC->program.tail->column.adr = mem;
+    APP_3BC->program.tail->column.dta = val;
 }
 
 /**
@@ -65,16 +31,33 @@ void tape_program_line_add(reg_t reg, mem_t mem, val_t val)
  */
 void tape_program_resize()
 {
-    /** expand program tape **/
-    struct line_s* new_tape = (struct line_s*) realloc(tape_master, sizeof (struct line_s) * (tape_last_line += 1));
+    struct line_node_s* prev_line_node = APP_3BC->program.tail;
+    struct line_node_s* new_line_node = (struct line_node_s*) malloc(sizeof (struct line_node_s));
+    line_3bc_t prev_line_number = prev_line_node != NULL? prev_line_node->line: 0;
 
-    /** was not possible expand program tape **/
-    if (new_tape == NULL) {
+    /** was not possible expand program **/
+    if (new_line_node == NULL) {
         lang_driver_error(ERROR_TAPE_PROGRAM);
     }
     
-    /** take program tape **/
-    tape_master = new_tape;
+    /** first line program **/
+    if (APP_3BC->program.head == NULL) {
+        APP_3BC->program.head = new_line_node;
+    }
+
+    /** current line program **/
+    if (APP_3BC->program.curr == NULL){
+        APP_3BC->program.curr = new_line_node;
+    }
+
+    /** link line program **/
+    if (prev_line_node != NULL ) {
+        prev_line_node->next = new_line_node;
+    }
+    
+    /** last line program **/
+    APP_3BC->program.tail = new_line_node;
+    APP_3BC->program.tail->line = APP_3BC->program.last_line;
 }
 
 /**
@@ -87,20 +70,20 @@ bool tape_program_exe()
      * request function pointer to machine instruction
      * FILE: 3bc_register.h
      */
-    reg_f instruction = instructions(CMODE, tape_master[CLINE].reg);
+    reg_f instruction = instructions(APP_3BC->cpu_mode, APP_3BC->program.curr->column.reg);
 
     /**
      * Perform physical function
      */
     (instruction)(
-        /** param for function: mem_t addres **/
-        tape_master[CLINE].adr,
-        /** param for function: val_t value **/
-        tape_master[CLINE].dta
+        /** param for function: address_3bc_t addres **/
+        APP_3BC->program.curr->column.adr,
+        /** param for function: data_3bc_t value **/
+        APP_3BC->program.curr->column.dta
     );
 
     /** go next line **/
-    tape_current_line += 1;
+    APP_3BC->program.curr = APP_3BC->program.curr->next;
     return true;
 }
 
@@ -109,76 +92,83 @@ bool tape_program_exe()
  */
 void tape_program_destroy()
 {
-    free(tape_labels);
-    free(tape_master);
-}
-
-void tape_program_line_set(compass_t line)
-{
-    tape_current_line = line;
-}
-
-/**
- * current program line
- */
-compass_t tape_program_line_get()
-{
-    return tape_current_line;
-}
-
-compass_t tape_program_line_end()
-{
-    return tape_last_line <= 0? 0: (tape_last_line - 1);
+    struct line_node_s* node = APP_3BC->program.head;
+    for (struct line_node_s* prev; node != NULL; prev = node, node = node->next, free(prev));
 }
 
 /**
  * mark point to logical jumps
  */
-void tape_program_label_add(compass_t line, compass_t label)
+void tape_program_label_insert(label_3bc_t label, cpumode_3bc_t cpumode, struct line_node_s* line)
 {
-    /** new label require asc order **/
-    if (label < tape_last_label) {
+    /** label already exists **/
+    if (tape_program_label_search(label) != NULL) {
         lang_driver_error(ERROR_INVALID_LABEL);
     }
-   
-    /** expand labels tape **/
-    struct label_s* new_tape = (struct label_s*) realloc(tape_labels, sizeof (struct label_s) * (tape_last_label = label + 1));
-    
-    /** was not possible expand labels tape **/
-    if (new_tape == NULL) {
+
+    struct label_node_s* new_node = (struct label_node_s*) malloc(sizeof(struct label_node_s));
+    unsigned char hash = label % LABEL_HASH_SIZE;
+
+    /** was not possible expand labels **/
+    if (new_node == NULL) {
         lang_driver_error(ERROR_TAPE_LABEL);
     }
 
-    /** take labels tape **/
-    tape_labels = new_tape;
-    tape_labels[label].line = line;
-    tape_labels[label].cpu_mode = tape_last_cmode;
+    new_node->label = label;
+    new_node->point = APP_3BC->program.tail;
+    new_node->cpumode = APP_3BC->program.last_cpu;
+
+    if (APP_3BC->program.label_table[hash] == NULL) {
+        APP_3BC->program.label_table[hash] = new_node;
+        new_node->next = NULL;
+        return;
+    }
+
+    struct label_node_s* last_node = APP_3BC->program.label_table[hash];
+    for (;last_node->next != NULL; last_node = last_node->next);
+    last_node->next = new_node;
 }
 
 /**
- * seek program label point
+ * find label in hash tabel
  */
-void tape_program_target_label(compass_t label)
+struct label_node_s* tape_program_label_search(label_3bc_t label)
 {
-    target_label = label;
+    struct label_node_s* last_node = APP_3BC->program.label_table[label % LABEL_HASH_SIZE];
+    
+    while (last_node != NULL) {
+        if (last_node->label == label) {
+            return last_node;
+        }
+
+        last_node = last_node->next;
+    }
+
+    return NULL;
 }
+
 
 /**
  * check if there is tape program available
  */
 bool tape_program_avaliable()
 {
-    /** jump target is solved **/
-    if (target_label != NILL && target_label < tape_last_label) {
-        tape_router_cpu_set(tape_labels[target_label].cpu_mode);
-        tape_program_line_set(tape_labels[target_label].line);
-        tape_program_target_label(0);
+    /** waits for a label **/
+    if (APP_3BC->program.label_target != NILL) {
+        struct label_node_s* label_node = tape_program_label_search(APP_3BC->program.label_target);
+
+        /** cooming label **/
+        if (label_node == NULL) {
+            return true;
+        }
+    
+        /** jump to point **/
+        tape_router_cpu_set(label_node->cpumode);
+        APP_3BC->program.curr = label_node->point;
+        APP_3BC->program.label_target = NILL;
         return true;
     }
-    /** waiting for label **/
-    else if (target_label != NILL) {
-        return false;
-    }
 
-    return tape_current_line < tape_last_line;
+    /** end of program **/
+    return APP_3BC->program.curr != NULL;
 }

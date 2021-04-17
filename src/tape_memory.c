@@ -4,9 +4,9 @@
 #define _MEMCONFIG(conf)           ((((*memory_pointers[addres].p).configuration)&(conf)) == (conf))
 
 struct memory_s {
-    val_t value;
-    val_t v_min;
-    val_t v_max;
+    data_3bc_t value;
+    data_3bc_t v_min;
+    data_3bc_t v_max;
     conf_t configuration;
 };
 
@@ -33,7 +33,7 @@ void tape_memory_init()
 /**
  * get memory address type configurations
  */
-val_t tape_memory_type_get(mem_t addres)
+data_3bc_t tape_memory_type_get(address_3bc_t addres)
 {
     tape_memory_resize(addres);
     tape_memory_safe(addres);
@@ -44,7 +44,7 @@ val_t tape_memory_type_get(mem_t addres)
 /**
  * set memory address range value minimal
  */
-val_t tape_memory_value_min_get(mem_t addres)
+data_3bc_t tape_memory_value_min_get(address_3bc_t addres)
 {
     tape_memory_resize(addres);
     tape_memory_safe(addres);
@@ -55,7 +55,7 @@ val_t tape_memory_value_min_get(mem_t addres)
 /**
  * set memory address range value maximum
  */
-val_t tape_memory_value_max_get(mem_t addres)
+data_3bc_t tape_memory_value_max_get(address_3bc_t addres)
 {
     tape_memory_resize(addres);
     tape_memory_safe(addres);
@@ -66,7 +66,7 @@ val_t tape_memory_value_max_get(mem_t addres)
 /**
  * set memory address type configurations
  */
-void tape_memory_type_set(mem_t addres, val_t value)
+void tape_memory_type_set(address_3bc_t addres, data_3bc_t value)
 {
     tape_memory_resize(addres);
     tape_memory_safe(addres);
@@ -91,7 +91,7 @@ void tape_memory_type_set(mem_t addres, val_t value)
 /**
  * set memory address range value minimal
  */
-void tape_memory_value_min_set(mem_t addres, val_t value)
+void tape_memory_value_min_set(address_3bc_t addres, data_3bc_t value)
 {
     tape_memory_resize(addres);
     tape_memory_safe(addres);
@@ -109,7 +109,7 @@ void tape_memory_value_min_set(mem_t addres, val_t value)
 /**
  * set memory address range value maximum
  */
-void tape_memory_value_max_set(mem_t addres, val_t value)
+void tape_memory_value_max_set(address_3bc_t addres, data_3bc_t value)
 {
     tape_memory_resize(addres);
     tape_memory_safe(addres);
@@ -127,17 +127,17 @@ void tape_memory_value_max_set(mem_t addres, val_t value)
 /**
  * returns memory address alocated value
  */
-val_t tape_memory_get(mem_t addres) 
+data_3bc_t tape_memory_get(address_3bc_t addres) 
 {
     tape_memory_resize(addres);
     tape_memory_safe(addres);
-    return (val_t) _MEM3BC(value);
+    return (data_3bc_t) _MEM3BC(value);
 }
 
 /**
  * update memory address value definied
  */
-void tape_memory_set(mem_t addres, val_t value)
+void tape_memory_set(address_3bc_t addres, data_3bc_t value)
 {
     tape_memory_resize(addres);
     tape_memory_safe(addres);
@@ -162,7 +162,7 @@ void tape_memory_set(mem_t addres, val_t value)
  * expand the size of existing memory within the virtual machine,
  * abstraction of what would increase the size of the address tape
  */
-void tape_memory_resize(mem_t addres)
+void tape_memory_resize(address_3bc_t addres)
 {
     /** verify that it is not necessary to expand memory **/
     if (addres < memory_end) {
@@ -187,7 +187,7 @@ void tape_memory_resize(mem_t addres)
 /**
  * free memory in the address
  */
-void tape_memory_free(mem_t addres)
+void tape_memory_free(address_3bc_t addres)
 {
     /** prevent clean freed memory **/ 
     if (memory_pointers[addres].allocated == false) {
@@ -225,7 +225,7 @@ void tape_memory_destroy()
  * prevents that memory is not physically allocated,
  * make sure there is always a blank if it is first called
  */
-void tape_memory_safe(mem_t addres)
+void tape_memory_safe(address_3bc_t addres)
 {
     if (memory_pointers[addres].allocated == false) {
         /** alloc physically **/
@@ -238,7 +238,7 @@ void tape_memory_safe(mem_t addres)
 /**
  * initial memory configurations
  */
-void tape_memory_reset(mem_t addres)
+void tape_memory_reset(address_3bc_t addres)
 {
     _MEM3BC(configuration) = 0;
     _MEM3BC(v_min) = 0;

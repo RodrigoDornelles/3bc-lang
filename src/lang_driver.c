@@ -45,8 +45,8 @@ void lang_driver_init()
         program_file = fopen(argv[argc - 1], "r");
     }
 
+    /** TODO: REMOVE **/
     tape_memory_init();
-    tape_program_init();
 
     #ifdef _3BC_PC_NOT_WINDOWS
     /**
@@ -109,7 +109,7 @@ void lang_driver_exit(int sig)
     #endif
 }
 
-void lang_driver_output_1(reg_t type, val_t val)
+void lang_driver_output_1(register_3bc_t type, data_3bc_t val)
 {
     #ifdef _3BC_COMPUTER
     print_file(stdout, type, val);
@@ -139,7 +139,7 @@ void lang_driver_output_1(reg_t type, val_t val)
     #endif
 }
 
-void lang_driver_output_2(reg_t type, val_t val)
+void lang_driver_output_2(register_3bc_t type, data_3bc_t val)
 {
     print_file(stderr, type, val);
 
@@ -152,16 +152,24 @@ void lang_driver_output_2(reg_t type, val_t val)
 
 void lang_driver_error(error_3bc_t error_code)
 {
+    /**
+     * NOTE: if the current line does not exist,
+     * it was because it was interpreting a line which failed.
+     */
+    line_3bc_t error_line = APP_3BC->program.curr != NULL?
+        APP_3BC->program.curr->line:
+        APP_3BC->program.last_line;
+
     #ifdef _3BC_ARDUINO
     /** smaller log erros for economy rom memory **/
     static char error_code_string[32];
-    format(error_code_string, ("\n\n[3BC] Fatal error: %d"), error_code);
+    format(error_code_string, ("\n\n[3BC] Fatal error [%d] in line [%d]"), error_code, error_line);
     arduino_serial_print(1, error_code_string);
     #endif
 
     #ifdef _3BC_COMPUTER
     fprintf(stderr, "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM");
-    fprintf(stderr, "\n> ERROR LINE: %d", CLINE + 1);
+    fprintf(stderr, "\n> ERROR LINE: %d", error_line);
     fprintf(stderr, "\n> ERROR CODE: %d\n", error_code);
 
     switch(error_code)
@@ -204,7 +212,7 @@ void lang_driver_error(error_3bc_t error_code)
 /**
  * detect keyboard input
  */
-val_t lang_driver_input(reg_t type, mem_t addres)
+data_3bc_t lang_driver_input(register_3bc_t type, address_3bc_t addres)
 {
     static unsigned int value;
     static char c[2] = "\0";
@@ -256,7 +264,7 @@ val_t lang_driver_input(reg_t type, mem_t addres)
     }
     while (invalid);
 
-    return (val_t) value;
+    return (data_3bc_t) value;
 }
 
 /**

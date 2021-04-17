@@ -59,7 +59,7 @@
  * (required for avr compiler in arduino ide)
  */
 #ifdef _3BC_REQUIRE_INSTRUCTIONS
-reg_f instructions(compass_t mode, reg_t reg)
+reg_f instructions(compass_t mode, register_3bc_t reg)
 {
     switch (mode)
     {
