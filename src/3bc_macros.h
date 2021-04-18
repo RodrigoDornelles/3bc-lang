@@ -18,12 +18,18 @@
 #endif
 
 /**
- * GLOBAL MACROS
+ * CONSTS MACROS
  */
 #define APP_3BC                     (lang_bootstrap())
-#define lang_line(a,b,c)            tape_program_line_add(a,b,c)
 #ifdef _3BC_ARDUINO
 #define LABEL_HASH_SIZE             (8) 
 #else
 #define LABEL_HASH_SIZE             (128)
 #endif
+
+/**
+ * FUNCTIONS MACROS
+ */
+#define lang_line(a,b,c)                tape_program_line_add(a,b,c)
+#define PARSER_UNPACK(c)                (tolower(c[0])+tolower(c[1])+tolower(c[2])+tolower(c[3]))
+#define PARSER_PACK(c1,c2,c3,c4,v,r,...)  case(c1+c2+c3+c4):*v=r;return(true)

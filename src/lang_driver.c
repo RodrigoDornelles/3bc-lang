@@ -202,6 +202,8 @@ void lang_driver_error(enum error_3bc_e error_code)
         case ERROR_VOID_HELPER_MAX_MIN: print_error("MAX/MIN CANNOT BE EMPTY");
         case ERROR_OPEN_FILE: print_error("CANNOT OPEN FILE");
         case ERROR_LONG_LINE: print_error("EXCEED LINE COLUMN LIMIT");
+        case ERROR_CHAR_SCAPE: print_error("INVALID CHARACTER ESCAPE");
+        case ERROR_CHAR_SIZE: print_error("INVALID CHARACTER SIZE");
         default: print_error("UNKNOWN ERROR");
     }
     #endif
@@ -353,4 +355,71 @@ bool lang_driver_strtol(const char* string, signed long int* value)
     }
 
     return true;
+}
+
+bool lang_driver_strchar(const char* string, signed long int* value)
+{
+    /** not init with (') **/
+    if (string[0] != 0x27) {
+        return false;
+    }
+
+    /** not ends with (') **/
+    if (string[2] != 0x27 && string[3] != 0x27) {
+        lang_driver_error(ERROR_CHAR_SIZE);
+    }
+
+    /** single char **/
+    if (string[3] != 0x27) {
+        *value = string[1];
+        return true;
+    }
+
+    /** not scape **/
+    if (string[1] != '\\') {
+        lang_driver_error(ERROR_CHAR_SIZE);
+    }
+
+    /** scape controll char **/
+    switch (string[2]) 
+    {
+        case '0': *value = 0x00; break;
+        case 'a': *value = 0x07; break;
+        case 'b': *value = 0x08; break;
+        case 't': *value = 0x09; break;
+        case 'n': *value = 0x0A; break;
+        case '\'': *value = 0x27; break;
+        case '\\': *value = 0x5c; break;
+        default: lang_driver_error(ERROR_CHAR_SCAPE);
+    }
+
+    return true;
+}
+
+bool lang_driver_strhash(const char* string, signed long int* value)
+{
+    unsigned long hash = 5381;
+    int c;
+
+    /** is not hash **/
+    if (string[0] != '"') {
+        return false;
+    }
+
+    /** djb2 algorithm **/
+    for(;(c = *string++); hash = ((hash << 5) + hash) + c);
+    *value = hash % SHRT_MAX;
+
+    return true;
+}
+
+bool lang_driver_strword(const char* string, signed long int* value)
+{
+    switch(PARSER_UNPACK(string))
+    {
+        PARSER_PACK('n', 'i', 'l', 'l', value, NILL);
+        PARSER_PACK('f', 'u', 'l', 'l', value, SHRT_MAX);
+    }
+
+    return false;
 }

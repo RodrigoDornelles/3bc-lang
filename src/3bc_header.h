@@ -141,6 +141,9 @@ void lang_driver_output_2(register_3bc_t type, data_3bc_t value);
 void lang_driver_error(enum error_3bc_e error_code);
 data_3bc_t lang_driver_input(register_3bc_t type, address_3bc_t addres);
 bool lang_driver_strtol(const char* string, signed long int* value);
+bool lang_driver_strchar(const char* string, signed long int* value);
+bool lang_driver_strhash(const char* string, signed long int* value);
+bool lang_driver_strword(const char* string, signed long int* value);
 
 /** FILE: lang_interpreter.c **/
 char lang_interpreter_line(file_t* stream);
