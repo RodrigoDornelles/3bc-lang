@@ -10,26 +10,13 @@ extern "C" {
 #endif
 #define PARAMS_DEFINE           int addres, int value
 #define PARAMS_USE              addres,value
-#define CPU_PACK_ZEROMODE(mode);     case(mode):switch(reg){default:return(&cpu_not_mode);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);}
-#define CPU_PACK_RESERVED(mode);     case(mode):switch(reg){default:return(&cpu_mode_reserved);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);}
-#define CPU_PACK_PROTECTED(mode);    case(mode):switch(reg){default:return(&cpu_mode_protected);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);}
-#define CPU_PACK1(mode,a);           case(mode):switch(reg){default:return(&cpu_not_exist);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);case(0b001):return(&a);}
-#define CPU_PACK2(mode,a,b);         case(mode):switch(reg){default:return(&cpu_not_exist);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);case(0b001):return(&a);case(0b010):return(&b);}
-#define CPU_PACK3(mode,a,b,c);       case(mode):switch(reg){default:return(&cpu_not_exist);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);case(0b001):return(&a);case(0b010):return(&b);case(0b011):return(&c);}
-#define CPU_PACK4(mode,a,b,c,d);     case(mode):switch(reg){default:return(&cpu_not_exist);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);case(0b001):return(&a);case(0b010):return(&b);case(0b011):return(&c);case(0b100):return(&d);}
-#define CPU_PACK5(mode,a,b,c,d,e);   case(mode):switch(reg){default:return(&cpu_not_exist);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);case(0b001):return(&a);case(0b010):return(&b);case(0b011):return(&c);case(0b100):return(&d);case(0b101):return(&e);}
-#define CPU_PACK6(mode,a,b,c,d,e,f); case(mode):switch(reg){default:return(&cpu_not_exist);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);case(0b001):return(&a);case(0b010):return(&b);case(0b011):return(&c);case(0b100):return(&d);case(0b101):return(&e);case(0b110):return(&f);}
 #define VALIDATE_NOT_DUALITY    if(addres!=0&&value!=0)lang_driver_error(ERROR_PARAM_DUALITY);
 #define VALIDATE_NOT_ADRESS     if(addres!=0)lang_driver_error(ERROR_PARAM_BLOCKED_ADDRESS);
 #define VALIDATE_NOT_VALUES     if(value!=0)lang_driver_error(ERROR_PARAM_BLOCKED_VALUE);
 #define REQUIRED_ADDRESS        if(addres==0)lang_driver_error(ERROR_PARAM_REQUIRE_ADDRESS);
 #define REQUIRED_VALUE          if(value==0)lang_driver_error(ERROR_PARAM_REQUIRE_VALUE);
-#define MEMORY_SAFE_LIMIT       (255)
 #define GET_ANY_PARAM           (addres?tape_memory_get(addres):value)
 #define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux_push(addres,0);else cpu_memory_aux_aloc(0,value);
-#define AUX                     tape_aux_get()              /** memory auxilary **/
-#define CLINE                   tape_program_line_get()     /** current line **/
-#define CELNE                   tape_program_line_end()     /** current end of lines **/
 #define MEM_CONFIG_SIGNED       0b0001
 #define MEM_CONFIG_MAX_VALUE    0b0010
 #define MEM_CONFIG_MIN_VALUE    0b0100
@@ -153,8 +140,6 @@ bool lang_interpreter_value(const char text_value[12], int* value);
 /** FILE: tape_aux.c **/
 data_3bc_t tape_aux_get(void);
 void tape_aux_set(data_3bc_t value);
-void tape_aux_free(void);
-data_3bc_t *tape_aux_ptr(void);
 
 /** FILE: tape_memory.c **/
 data_3bc_t tape_memory_type_get(address_3bc_t addres);

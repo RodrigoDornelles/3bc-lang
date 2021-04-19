@@ -156,7 +156,7 @@ void tape_memory_set(address_3bc_t addres, data_3bc_t value)
     }
 
     _MEM3BC(value) = value;
-}
+}   
 
 /**
  * expand the size of existing memory within the virtual machine,
@@ -172,8 +172,10 @@ void tape_memory_resize(address_3bc_t addres)
     /** expand tape memory **/
     struct pointer_s* new_tape = (struct pointer_s*) realloc(memory_pointers, sizeof (struct pointer_s) * (addres + 1));
 
-    /** eliminate possible wild pointers **/
-    for (;memory_end <= addres; new_tape[memory_end++].allocated = false);
+    /**
+     * TODO: REMOVE
+     for (;memory_end <= addres; new_tape[memory_end++].allocated = false);
+     */
 
     /** was not possible expand memory tape **/
     if (new_tape == NULL) {

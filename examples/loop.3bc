@@ -6,6 +6,7 @@ NILL 0 0x1
 STRC 0 'H'
 STRC 0 'I'
 STRC 0 '!'
+STRI 'i' 0
 STRC 0 0xA
 
 MODE 0 8
