@@ -6,7 +6,18 @@
 [![covarage](https://codecov.io/gh/RodrigoDornelles/3bc-lang/branch/master/graph/badge.svg?token=FS152PL31C)](https://codecov.io/gh/RodrigoDornelles/3bc-lang)
 [![Build Status](https://travis-ci.com/RodrigoDornelles/3bc-lang.svg?branch=master)](https://travis-ci.com/RodrigoDornelles/3bc-lang)
 
-> this is a machine language that has only 3 register bits for CPU, the idea is to make it so simple and intuitive that it can be easily read on punched cards.
+> Low level language, tiny virtual machine works on computers and microcontrollers. (Friendly Punched cards)
+
+| Common questions | answer |
+| :--------------- | :----- |
+| What is the purpose of the language? | the idea is to be low level language, simple and intuitive language that anyone can learn! (even read on punched cards) |
+| Need knowledge of **C** to know? | No, they are different syntaxes |
+| What is the language typing level ? | There is no distinction of types, they are just data |
+| Has garbage collector? | No, the developer has full control over the memory, this follows the same philosophy as **C** "freedom with responsibility" |
+| Does it work as a compiler? | Mayabe, compilation is done at runtime (JIT Compiling), the byte code works directly on the virtual machine (similar to the JVM) |
+| What are the influences? | **Java**, **Cobol**, Assembly´s **ARM** **x86** |
+| Is it more compact than the **Lua**? | Yeah right, Because it has the same performance target have the Arduino Uno microcontroller |
+
 
 # How to "Hello World" #
 This steps will guide you to run the hello world example and have first 3bc program running in your machine,  let get's started
