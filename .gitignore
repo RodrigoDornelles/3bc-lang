@@ -23,3 +23,9 @@ _site/
 
 # IDE FILES
 .vscode
+
+# Tests files
+*.test.bin
+*.gcov
+*.gcno
+*.gcda

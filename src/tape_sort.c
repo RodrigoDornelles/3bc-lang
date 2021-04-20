@@ -13,6 +13,7 @@ void tape_sort_destroy()
 {
     if (addresses_list != NULL) {
         free(addresses_list);
+        addresses_list = NILL;
     }
 }
 
@@ -35,7 +36,6 @@ void tape_sort_insert(mem_t addres)
     /** was not possible expand sort tape **/
     if (new_tape == NULL) {
         lang_driver_error(ERROR_TAPE_SORT);
-        return;
     }
 
     /** insert address **/

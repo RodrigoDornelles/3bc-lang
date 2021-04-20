@@ -20,6 +20,17 @@ struct pointer_s* memory_pointers;
 struct memory_s* memory_tape;
 
 /**
+ * reset primitive state memory
+ */
+void tape_memory_init()
+{
+    /** prevent wild pointers **/
+    memory_pointers = NULL;
+    memory_tape = NULL;
+    memory_end = 0;
+}
+
+/**
  * get memory address type configurations
  */
 val_t tape_memory_type_get(mem_t addres)
@@ -63,13 +74,11 @@ void tape_memory_type_set(mem_t addres, val_t value)
     /** not allow normalize whitout clamp (limit max & min) **/
     if (value & MEM_CONFIG_NORMALIZE &&  !_VALCONFIG(value, MEM_CONFIG_MIN_VALUE | MEM_CONFIG_MAX_VALUE)) {
         lang_driver_error(ERROR_INVALID_MEMORY_CONFIG);
-        return;
     }
     
     /** verifiy valid value between max & min **/
     if (_MEM3BC(v_min) > _MEM3BC(v_max) && _VALCONFIG(value, MEM_CONFIG_MIN_VALUE | MEM_CONFIG_MAX_VALUE)) {
         lang_driver_error(ERROR_INVALID_MEMORY_CLAMP);
-        return;
     }
 
     /** update memory address type **/
@@ -141,9 +150,9 @@ void tape_memory_set(mem_t addres, val_t value)
     else if (value < _MEM3BC(v_min) && _MEMCONFIG(MEM_CONFIG_MIN_VALUE) && !_MEMCONFIG(MEM_CONFIG_NORMALIZE)) {
         value = _MEM3BC(v_min);
     }
-    /** normalize value **/
+    /** custom underflow/overflow **/
     else if ((_MEM3BC(v_min) > value || value > _MEM3BC(v_max)) && _MEMCONFIG(MEM_CONFIG_NORMALIZE)) {
-        value = ((value - _MEM3BC(v_min)) % (_MEM3BC(v_max) - _MEM3BC(v_min))) + _MEM3BC(v_min);
+        value = ((value + _MEM3BC(v_min) + 2) % (_MEM3BC(v_max) - _MEM3BC(v_min) + 1)) + _MEM3BC(v_min);
     }
 
     _MEM3BC(value) = value;
@@ -155,18 +164,23 @@ void tape_memory_set(mem_t addres, val_t value)
  */
 void tape_memory_resize(mem_t addres)
 {
+    /** verify that it is not necessary to expand memory **/
     if (addres < memory_end) {
         return;
     }
 
-    struct pointer_s* new_tape = (struct pointer_s*) realloc(memory_pointers, sizeof (struct pointer_s) * (memory_end = addres + 1));
+    /** expand tape memory **/
+    struct pointer_s* new_tape = (struct pointer_s*) realloc(memory_pointers, sizeof (struct pointer_s) * (addres + 1));
+
+    /** eliminate possible wild pointers **/
+    for (;memory_end <= addres; new_tape[memory_end++].allocated = false);
 
     /** was not possible expand memory tape **/
     if (new_tape == NULL) {
         lang_driver_error(ERROR_TAPE_MEMORY);
-        return;
     }
 
+    /** take memory tape **/
     memory_pointers = new_tape;
 }
 
@@ -175,11 +189,17 @@ void tape_memory_resize(mem_t addres)
  */
 void tape_memory_free(mem_t addres)
 {
-    /** prevent data access before is no longer useful (security) **/
-    if (memory_pointers[addres].allocated) {
-        tape_memory_reset(addres);   
+    /** prevent clean freed memory **/ 
+    if (memory_pointers[addres].allocated == false) {
+        return;
     }
-    
+
+    /** prevent data access before is no longer useful (security) **/
+    tape_memory_reset(addres);   
+        tape_memory_reset(addres);   
+    tape_memory_reset(addres);   
+
+    /** clean memory address **/
     free(memory_pointers[addres].p);
     memory_pointers[addres].allocated = false;
 }
@@ -190,7 +210,13 @@ void tape_memory_free(mem_t addres)
 void tape_memory_destroy()
 {
     compass_t i, j;
-    tape_memory_resize(0);
+    
+    /** memory was not used **/
+    if (memory_end == 0) {
+        return;
+    }
+
+    /** clean out all memory alocated **/
     for(i = 0, j = memory_end - 1; i < j; i++, tape_memory_free(i));
     free(memory_pointers);
 }

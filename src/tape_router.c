@@ -8,12 +8,21 @@ static cch_t channel_cpu_mode;
 void tape_router_cpu_set(cch_t value)
 {
     /** prevent enter in invalid cpu mode **/
-    if (value < 0 || value >= (sizeof(instructions)/sizeof(instructions[0])) ) {
-        lang_driver_error(ERROR_CPU_INVALID);
+    if (value >= tape_program_cpu_size()) {
+        lang_driver_error(ERROR_INVALID_CPU);
     }
 
     /** after cpu mode change **/
     switch (channel_cpu_mode) {
+        case MODE_HELPER_SORT:
+            after_helper_sort();
+            break;
+
+        case MODE_HELPER_MAX:
+        case MODE_HELPER_MIN:
+            after_helper_maxmin();
+            break;
+
         default:
             break;
 
@@ -29,6 +38,11 @@ void tape_router_cpu_set(cch_t value)
             before_helper_sort();
             break;
 
+        case MODE_HELPER_MAX:
+        case MODE_HELPER_MIN:
+            before_helper_maxmin();
+            break;
+        
         default:
             break;
     }
