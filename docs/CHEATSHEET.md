@@ -1,19 +1,14 @@
----
-title: IDE
-layout: editor
-permalink: /ide.html
----
-
-# CheatSheet #
+CheatSheet
+==========
 
 | Mode | Name | Description | Instructions |
 | :--: | :--: | :---------- | :----------- |
 | 0 | <br/> | not use | `nill` `mode` |
-| 1 | **[MODE_DEBUG](#mode-debug)** | depuration put char | `nill` `stri` `strc` `stro` `strx` `stru` `mode` |
-| 2 | **[MODE_STRING](#mode-string)** | console put char | `nill` `stri` `strc` `stro` `strx` `stru` `mode` |
-| 3 | **[MODE_INPUT](#mode-input)** | console input keyboard | `nill` `stri` `strc` `stro` `strx` `stru` `mode` |
-| 4 | **[MODE_INPUT_SILENT](#mode-input-silent)** | console input keyboard (silent) | `nill` `stri` `strc` `stro` `strx` `stru` `mode` |
-| 5 | **[MODE_INPUT_PASSWORD](#mode-input-password)** | console input keyboard (password) | `nill` `stri` `strc` `stro` `strx` `stru` `mode` |
+| 1 | **[MODE_DEBUG](#mode-debug)** | depuration put char | `nill` `stri` `strc` `stro` `strx` `mode` |
+| 2 | **[MODE_STRING](#mode-string)** | console put char | `nill` `stri` `strc` `stro` `strx` `mode` |
+| 3 | **[MODE_INPUT](#mode-input)** | console input keyboard | `nill` `stri` `strc` `stro` `strx` `mode` |
+| 4 | **[MODE_INPUT_SILENT](#mode-input-silent)** | console input keyboard (silent) | `nill` `stri` `strc` `stro` `strx` `mode` |
+| 5 | **[MODE_INPUT_PASSWORD](#mode-input-password)** | console input keyboard (password) | `nill` `stri` `strc` `stro` `strx` `mode` |
 | 6 | **[MODE_MEMORY](#mode-memory)** | main memory controller | `nill` `free` `aloc` `tcfg` `tmin` `tmax` `mode` |
 | 7| <br/> | not use | <br/> |
 | 8 | **[MODE_MEMORY_AUX](#mode-memory-aux)** | aux memory controller | `nill` `free` `aloc` `pull` `push` `mode` |
@@ -53,7 +48,7 @@ permalink: /ide.html
 | `strc` | 2 | 010 | log ascii character |
 | `stro` | 3 | 011 | log literal number in octal |
 | `strx` | 4 | 100 | log literal number in hexadecimal |
-| `stru` | 5 | 101 | log literal number (unsigned) |
+| | 5 | 101 | log literal number (unsigned) |
 
 ## MODE STRING ##
 
@@ -63,7 +58,7 @@ permalink: /ide.html
 | `strc` | 2 | 010 | put ascii character |
 | `stro` | 3 | 011 | put literal number in octal |
 | `strx` | 4 | 100 | put literal number in hexadecimal |
-| `stru` | 5 | 101 | put literal number (unsigned) |
+| | 5 | 101 | put literal number (unsigned) |
 
 ## MODE INPUT ##
 

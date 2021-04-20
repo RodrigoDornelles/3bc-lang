@@ -13,5 +13,13 @@ bin/
 main
 *.o
 
+# Jekyll files
+.jekyll-cache/
+.sass-cache/
+.jekyll-metadata
+Gemfile.lock
+Gemfile
+_site/
+
 # IDE FILES
 .vscode

@@ -1,4 +1,0 @@
----
-title: Tutorial
-layout: default
----

@@ -1,0 +1,33 @@
+title: 3BC
+description: >- # 
+  This is a machine language that has only 3 register bits for CPU,
+  the idea is to make it so simple and intuitive that it can be easily read on punched cards.
+baseurl: "/3bc-lang" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+
+plugins:
+  - jekyll-redirect-from
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jekyll-feed
+  - github-pages
+  - jemoji
+
+readme_index:
+  enabled:          true
+  remove_originals: false
+  with_frontmatter: false
+
+
+layouts_dir: docs/_layouts/
+
+exclude:
+  - src/
+  - tests/
+  - examples/
+  - .sass-cache/
+  - .jekyll-cache/
+  - main.c
+  - Gemfile
+  - Gemfile.lock
+  - library.properties
