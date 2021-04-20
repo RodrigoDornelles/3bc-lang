@@ -20,10 +20,10 @@
 
 ## Documentation ##
 
-* **[Tutorial :us:](/docs/tutorial-en-us)**
-* **[Tutorial :brazil:](/docs/tutorial-pt-br)**
-* **[Cheatsheet](/docs/cheatsheet)**
-* **[Changelogs](/docs/changelogs)**
+* **[Tutorial :us:](/docs/TUTORIAL-EN-US.md)**
+* **[Tutorial :brazil:](/docs/TUTORIAL-PT-BR.md)**
+* **[Cheatsheet](/docs/CHEATSHEET.md)**
+* **[Changelogs](/docs/CHANGELOGS.md)**
 * **[Ambient Roadmap](#ambient-roadmap)**
 * **[How to "Hello World"](#how-to-hello-world)**
 * **[List of early developers](#list-of-early-developers)**
