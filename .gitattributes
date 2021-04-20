@@ -1,1 +1,3 @@
 *.h   linguist-language=C
+Gemfile linguist-detectable=false
+Gemfile.lock linguist-detectable=false
