@@ -6,17 +6,17 @@
 [![covarage](https://codecov.io/gh/RodrigoDornelles/3bc-lang/branch/master/graph/badge.svg?token=FS152PL31C)](https://codecov.io/gh/RodrigoDornelles/3bc-lang)
 [![Build Status](https://travis-ci.com/RodrigoDornelles/3bc-lang.svg?branch=master)](https://travis-ci.com/RodrigoDornelles/3bc-lang)
 
-> Low level language, tiny virtual machine works on computers and microcontrollers. (Friendly Punched cards)
+> Low level language, tiny virtual machine that works on computers and microcontrollers. (Friendly Punched cards)
 
 | Common questions | answer |
 | :--------------- | :----- |
-| What is the purpose of the language? | the idea is to be low level language, simple and intuitive language that anyone can learn! (even read on punched cards) |
-| Need knowledge of **C** to know? | No, they are different syntaxes |
-| What is the language typing level ? | There is no distinction of types, they are just data |
-| Has garbage collector? | No, the developer has full control over the memory, this follows the same philosophy as **C** "freedom with responsibility" |
-| Does it work as a compiler? | Mayabe, compilation is done at runtime (JIT Compiling), the byte code works directly on the virtual machine (similar to the JVM) |
+| What is the purpose of the language? | the idea is to be a low level, simple and intuitive language that anyone can learn! (and that can even be read on punched cards) |
+| Do you need knowledge of **C** to understand 3BC? | No, they have different syntaxes |
+| What is the language's typing level ? | There is no distinction of types, they are just data |
+| Does it have garbage collector? | No, the developer has full control over the memory, this follows the same philosophy as **C** "freedom with responsibility" |
+| Does it work as a compiler? | It depends, compilation is done at runtime (JIT Compiling), the bytecode works directly on the virtual machine (similar to the JVM) |
 | What are the influences? | **Java**, **Cobol**, Assembly´s **ARM** **x86** |
-| Is it more compact than the **Lua**? | Yeah right, Because it has the same performance target have the Arduino Uno microcontroller |
+| Is it more compact than **Lua**? | Yeah, because it has the same performance target as the Arduino Uno microcontroller. And this impacts it's size (depending on the CPU's architecture, 14KiB ROM and 400 bytes RAM ) |
 
 ## Documentation ##
 
@@ -30,10 +30,9 @@
 
 ## How to "Hello World" ##
 
-This steps will guide you to run the hello world example and have first 3bc program running in your machine,  let get's started
+These steps will guide you to run the hello world example and to have your first 3BC program running in your machine, let get's started.
 
-After download the binary on release session, just decompress on folder and execute from command line:
-change the `[filename.3bc]` to file that you want to execute, you can use one source file from the examples folder like `helloworld.3bc`
+After downloading the binary on the [releases](#https://github.com/RodrigoDornelles/3bc-lang/releases) page, just decompress the file and utilize the command line to interpret the source code using the compiler according to your operating system: [windows](#windows),[mac osx](#mac--unix--linux), [unix](#mac--unix--linux), [linux](#mac--unix--linux)
 
 ### example: `helloworld.3bc` ###
 
