@@ -1,6 +1,10 @@
 language: c
 os: ubuntu
 
+branches:
+  only:
+  - master
+
 before_install:
     - curl -fsSL https://deno.land/x/install/install.sh | sh
     - export DENO_INSTALL="$HOME/.deno"
