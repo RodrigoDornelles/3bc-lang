@@ -12,6 +12,7 @@ bin/
 *.out
 main
 *.o
+3bc
 
 # Jekyll files
 .jekyll-cache/

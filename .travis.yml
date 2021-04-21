@@ -1,5 +1,4 @@
 language: c
-os: ubuntu
 
 branches:
   only:
@@ -11,8 +10,7 @@ before_install:
     - export PATH="$DENO_INSTALL/bin:$PATH"
 
 script:
-  - g++ -coverage -O0 -lm main.c -o 3bc.test.bin
-  - deno test --allow-read --allow-run
+  - make tests
   - gcov main.c
 
 after_success:
