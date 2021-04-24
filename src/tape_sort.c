@@ -47,9 +47,9 @@ void tape_sort_insert(address_3bc_t addres)
     while (index >= 1) {
         /** get values **/  
         address_3bc_t prev_addres = addresses_list[index - 1];
-        data_3bc_t prev_value = tape_memory_get(prev_addres);
+        data_3bc_t prev_value = tape_memory_data_get(prev_addres);
         address_3bc_t addres = addresses_list[index];
-        data_3bc_t value = tape_memory_get(addres);
+        data_3bc_t value = tape_memory_data_get(addres);
         
         /** finished order **/
         if (value >= prev_value) {
@@ -57,8 +57,8 @@ void tape_sort_insert(address_3bc_t addres)
         }
 
         /** spin values **/
-        tape_memory_set(prev_addres, value);
-        tape_memory_set(addres, prev_value);
+        tape_memory_data_set(prev_addres, value);
+        tape_memory_data_set(addres, prev_value);
 
         /** next number **/
         index -= 1;

@@ -45,9 +45,6 @@ void lang_driver_init()
         program_file = fopen(argv[argc - 1], "r");
     }
 
-    /** TODO: REMOVE **/
-    tape_memory_init();
-
     #ifdef _3BC_PC_NOT_WINDOWS
     /**
      * Turn possible terminal uncannonical mode 
@@ -256,11 +253,11 @@ data_3bc_t lang_driver_input(register_3bc_t type, address_3bc_t addres)
         }
 
         /** validade input inner memory clamp limits **/
-        if ((tape_memory_type_get(addres) & MEM_CONFIG_MIN_VALUE) == MEM_CONFIG_MIN_VALUE) {
-            invalid |= tape_memory_value_min_get(addres) > value;
+        if ((tape_memory_data_get(addres) & MEM_CONFIG_MIN_VALUE) == MEM_CONFIG_MIN_VALUE) {
+            invalid |= tape_memory_vmin_get(addres) > value;
         }
-        if ((tape_memory_type_get(addres) & MEM_CONFIG_MAX_VALUE) == MEM_CONFIG_MAX_VALUE) {
-            invalid |= tape_memory_value_max_get(addres) < value;
+        if ((tape_memory_data_get(addres) & MEM_CONFIG_MAX_VALUE) == MEM_CONFIG_MAX_VALUE) {
+            invalid |= tape_memory_vmax_get(addres) < value;
         }
     
     }

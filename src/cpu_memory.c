@@ -10,32 +10,32 @@ void cpu_memory_free(PARAMS_DEFINE)
 void cpu_memory_aloc(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    tape_memory_set(addres, value);
+    tape_memory_data_set(addres, value);
 }
 
 void cpu_memory_tcfg(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    tape_memory_type_set(addres, value);
+    tape_memory_conf_set(addres, value);
 }
 
 void cpu_memory_tmin(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    tape_memory_value_min_set(addres, value);
+    tape_memory_vmin_set(addres, value);
 }
 
 void cpu_memory_tmax(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    tape_memory_value_max_set(addres, value);
+    tape_memory_vmax_set(addres, value);
 }
 
 void cpu_memory_aux_free(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
     VALIDATE_NOT_VALUES
-    tape_aux_free();
+    tape_aux_set(NILL);
 }
 
 void cpu_memory_aux_aloc(PARAMS_DEFINE)
@@ -47,13 +47,13 @@ void cpu_memory_aux_aloc(PARAMS_DEFINE)
 void cpu_memory_aux_pull(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
-    tape_memory_set(addres, AUX);
+    tape_memory_data_set(addres, AUX);
 }
 
 void cpu_memory_aux_push(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
-    tape_aux_set(tape_memory_get(addres));
+    tape_aux_set(tape_memory_data_get(addres));
 }
 
 /**
@@ -63,6 +63,6 @@ void cpu_memory_aux_spin(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     data_3bc_t aux_old = AUX;
-    tape_aux_set(tape_memory_get(addres));
-    tape_memory_set(addres, aux_old);
+    tape_aux_set(tape_memory_data_get(addres));
+    tape_memory_data_set(addres, aux_old);
 }

@@ -1,5 +1,13 @@
 #include "3bc.h"
 
+/** PRIMITIVE TYPES **/
+typedef unsigned short int line_3bc_t;
+typedef unsigned char cpumode_3bc_t;
+typedef unsigned char register_3bc_t;
+typedef unsigned char address_3bc_t;
+typedef unsigned char label_3bc_t;
+typedef signed int data_3bc_t;
+
 /** FILE/STREAM/INTERFACE TYPES **/
 typedef FILE file_t;
 typedef FILE stream_t;
@@ -22,14 +30,26 @@ struct tty_3bc_s {
     union stream_file_u reference;
 };
 
+/** AUXILIARY MEMORY **/
+union aux_0_u {
+    data_3bc_t average_sum;
+    bool maxmin_init;
+};
 
-typedef unsigned short int line_3bc_t;
-typedef unsigned char cpumode_3bc_t;
-typedef unsigned char register_3bc_t;
-typedef unsigned char address_3bc_t;
-typedef unsigned char label_3bc_t;
-typedef signed int data_3bc_t;
+union aux_1_u {
+    unsigned int avarage_count;
+    data_3bc_t max_value;
+    data_3bc_t min_value;
 
+};
+
+/** PROGRAM MEMORY **/
+struct label_node_s {
+    label_3bc_t label;
+    cpumode_3bc_t cpumode;
+    struct label_node_s* next;
+    struct line_node_s* point;
+};
 
 struct line_columns_s {
     register_3bc_t reg;
@@ -43,28 +63,6 @@ struct line_node_s {
     struct line_columns_s column;
 };
 
-struct label_node_s {
-    label_3bc_t label;
-    cpumode_3bc_t cpumode;
-    struct label_node_s* next;
-    struct line_node_s* point;
-};
-
-
-/** AUXILIARY MEMORY **/
-
-union aux_0_u {
-    data_3bc_t average_sum;
-    bool maxmin_init;
-};
-
-union aux_1_u {
-    unsigned int avarage_count;
-    data_3bc_t max_value;
-    data_3bc_t min_value;
-
-};
-
 struct program_3bc_s {
     line_3bc_t last_line;
     cpumode_3bc_t last_cpu;
@@ -75,8 +73,23 @@ struct program_3bc_s {
     struct label_node_s* label_table[LABEL_HASH_SIZE];
 };
 
-typedef unsigned char memory_size_t;
+/** MEMORY PRIMARY **/
+struct memory_node_s {
+    bool color;
+    char conf;
+    data_3bc_t data;
+    data_3bc_t vmax;
+    data_3bc_t vmin;
+    address_3bc_t address;
+    struct memory_node_s *left;
+    struct memory_node_s *right;
+};
 
+struct memory_3bc_s {
+    struct memory_node_s* root;
+};
+
+/** APLICATION **/
 struct app_3bc_s {
     bool bootstrap;
     data_3bc_t mem_aux;
@@ -87,4 +100,5 @@ struct app_3bc_s {
     struct tty_3bc_s tty_debug;
     struct tty_3bc_s tty_output;
     struct program_3bc_s program;
+    struct memory_3bc_s memory;
 };

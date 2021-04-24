@@ -141,7 +141,7 @@ Deno.test("Error Invalid Label", async () => {
         stderr: "null",
     });
  
-    await cmd.stdin.write(new TextEncoder().encode("nill nill 2\nnill nill 1"));
+    await cmd.stdin.write(new TextEncoder().encode("nill nill 1\nnill nill 1"));
     await cmd.stdin.close();
  
     const output = new TextDecoder().decode(await cmd.output());
@@ -223,7 +223,7 @@ Deno.test("Error Number no digits", async () => {
     const output = new TextDecoder().decode(await cmd.output());
     const { code } = await cmd.status();
  
-    assertEquals(code, 0x3BC013, "return code");
+    assertEquals(code, 15, "return code");
  
     await cmd.close();
 });

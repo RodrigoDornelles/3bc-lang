@@ -10,7 +10,7 @@ void tape_program_line_add(register_3bc_t reg, address_3bc_t mem, data_3bc_t val
     /** register point label for jumps logical **/
     if (reg == NILL && mem == NILL && val != NILL) {
         tape_program_label_insert(val, APP_3BC->program.last_cpu, APP_3BC->program.tail);
-        val = NILL;
+        return;
     }
 
     /** remember last cpu change interpreted **/
@@ -164,7 +164,7 @@ bool tape_program_avaliable()
     
         /** jump to point **/
         tape_router_cpu_set(label_node->cpumode);
-        APP_3BC->program.curr = label_node->point;
+        APP_3BC->program.curr = label_node->point->next;
         APP_3BC->program.label_target = NILL;
         return true;
     }
