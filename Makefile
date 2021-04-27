@@ -24,10 +24,10 @@ all:
 	##################################
 
 docs:
-	bundle exec jekyll serve --watch --incremental
+	@bundle exec jekyll serve --watch --incremental
 	
 build:
-	${CC} ${SOURCES} ${CFLAGS} ${LDFLAGS}
+	@${CC} ${SOURCES} ${CFLAGS} ${LDFLAGS}
 
 tests: tests-clear tests-build tests-unit
 	@
@@ -38,8 +38,8 @@ tests-clear:
 
 tests-build:
 	@echo " > building..."
-	${CXX} -coverage ${SOURCES} ${CFLAGS} ${LDFLAGS} -o 3bc.test.bin
+	@${CXX} -Wno-deprecated -coverage ${SOURCES} ${CFLAGS} ${LDFLAGS} -o 3bc.test.bin
 
 tests-unit:
-	@echo " run units tests..."
-	@deno test --allow-run
+	@echo " > run units tests..."
+	@ruby -Ilib -e 'ARGV.each { |f| require f }' ./tests/*.test.rb

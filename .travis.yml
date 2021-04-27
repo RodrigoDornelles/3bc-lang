@@ -1,13 +1,7 @@
 language: c
 
-branches:
-  only:
+branches.only:
   - master
-
-before_install:
-    - curl -fsSL https://deno.land/x/install/install.sh | sh
-    - export DENO_INSTALL="$HOME/.deno"
-    - export PATH="$DENO_INSTALL/bin:$PATH"
 
 script:
   - make tests
