@@ -1,4 +1,5 @@
-# REFERENCES #
+References
+==========
 
 ## C Language ##
 * Schildt. Hebert (1997) _C Completo e total 3. rev._ (Mayer. Roberto Carlos Trad.) Editora Pearson Education do Brasil

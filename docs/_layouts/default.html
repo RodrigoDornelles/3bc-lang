@@ -23,7 +23,7 @@
         <link rel="icon" type="image/png" sizes="16x16" href="{{ '/images/favicon-16x16.png' | relative_url }}">
         <link rel="manifest" href="{{ '/images/manifest.json' | relative_url }}">
         <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="/images/ms-icon-144x144.png' | relative_url }}">
+        <meta name="msapplication-TileImage" content="{{ '/images/ms-icon-144x144.png' | relative_url }}">
         <meta name="theme-color" content="#ffffff">
 
         <!-- MATERIALIZE CSS -->
@@ -63,10 +63,10 @@
         <!-- BEGIN MOBILE MENU-->
         <ul class="sidenav" id="menu">
             <li><a href="{{ '/' | relative_url }}"><i class="material-icons">home</i>Home</a></li>
-            <li><a href="{{ site.github.url | downcase }}"><i class="material-icons">code</i>Source</a></li>
+            <li><a href="{{ site.github.clone_url }}"><i class="material-icons">code</i>Source</a></li>
             {% for page in site.pages %}
             {% if page.title and page.path != 'README.md' %}
-            <li><a href="{{ page.url | downcase | relative_url }}"><i class="material-icons">arrow_forward</i>{{ page.title }}</a></li>
+            <li><a href="{{ page.url | relative_url }}"><i class="material-icons">arrow_forward</i>{{ page.title }}</a></li>
             {% endif %}
             {% endfor %}
         </ul>

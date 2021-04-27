@@ -1,7 +1,7 @@
 title: 3BC
 description: >- # 
-  This is a machine language that has only 3 register bits for CPU,
-  the idea is to make it so simple and intuitive that it can be easily read on punched cards.
+  Low level language, tiny virtual machine that works on computers and microcontrollers.
+  (Friendly Punched cards)
 baseurl: "/3bc-lang" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
@@ -31,3 +31,4 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - library.properties
+  - Makefile
