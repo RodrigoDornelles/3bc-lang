@@ -12,8 +12,16 @@ bin/
 *.out
 main
 *.o
+3bc
 
-# IDE Files
+# Jekyll files
+.jekyll-cache/
+.sass-cache/
+.jekyll-metadata
+Gemfile.lock
+_site/
+
+# IDE FILES
 .vscode
 
 # Tests files

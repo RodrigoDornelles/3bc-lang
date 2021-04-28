@@ -1,21 +1,59 @@
-3BC Lang
-========
+3BC Language
+============
 [![version](https://img.shields.io/github/v/release/rodrigodornelles/3bc-lang?sort=semver)](https://github.com/RodrigoDornelles/3bc-lang/releases)
 [![license](https://img.shields.io/github/license/rodrigodornelles/3bc-lang)](https://github.com/RodrigoDornelles/3bc-lang/blob/master/LICENSE.txt) 
 [![quality](https://app.codacy.com/project/badge/Grade/10888eee2fbc460b8ddb7476b0aceb23)](https://www.codacy.com/gh/RodrigoDornelles/3bc-lang/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=RodrigoDornelles/3bc-lang&amp;utm_campaign=Badge_Grade)
 [![covarage](https://codecov.io/gh/RodrigoDornelles/3bc-lang/branch/master/graph/badge.svg?token=FS152PL31C)](https://codecov.io/gh/RodrigoDornelles/3bc-lang)
 [![Build Status](https://travis-ci.com/RodrigoDornelles/3bc-lang.svg?branch=master)](https://travis-ci.com/RodrigoDornelles/3bc-lang)
 
-> this is a machine language that has only 3 register bits for CPU, the idea is to make it so simple and intuitive that it can be easily read on punched cards.
+> Low level language, tiny virtual machine that works on computers and microcontrollers. (Friendly Punched cards)
 
-# How to "Hello World" #
-This steps will guide you to run the hello world example and have first 3bc program running in your machine,  let get's started
+| Common questions | answer |
+| :--------------- | :----- |
+| What is the purpose of the language? | the idea is to be a low level, simple and intuitive language that anyone can learn! (and that can even be read on punched cards) |
+| Do you need knowledge of **C** to understand 3BC? | No, they have different syntaxes |
+| What is the language's typing level ? | There is no distinction of types, they are just data |
+| Does it have garbage collector? | No, the developer has full control over the memory, this follows the same philosophy as **C** "freedom with responsibility" |
+| Does it work as a compiler? | It depends, compilation is done at runtime (JIT Compiling), the bytecode works directly on the virtual machine (similar to the JVM) |
+| What are the influences? | **Java**, **Cobol**, Assembly´s **ARM** **x86** |
+| Is it more compact than **Lua**? | Yeah, because it has the same performance target as the Arduino Uno microcontroller. And this impacts it's size (depending on the CPU's architecture, 14KiB ROM and 400 bytes RAM ) |
 
-After download the binary on release session, just decompress on folder and execute from command line:
-change the [filename.3bc] to file that you want to execute, you can use one source file from the examples folder like helloworld.3bc
+## Documentation ##
+
+* **[Tutorial :us:](docs/tutorial-en-us.md)**
+* **[Tutorial :brazil:](docs/tutorial-pt-br.md)**
+* **[Cheatsheet](docs/cheatsheet.md)**
+* **[Changelogs](docs/changelogs.md)**
+* **[Ambient Roadmap](#ambient-roadmap)**
+* **[How to "Hello World"](#how-to-hello-world)**
+* **[List of early developers](#list-of-early-developers)**
+
+## How to "Hello World" ##
+
+These steps will guide you to run the hello world example and to have your first 3BC program running in your machine, let get's started.
+
+After downloading the binary on the [releases](#https://github.com/RodrigoDornelles/3bc-lang/releases) page, just decompress the file and utilize the command line to interpret the source code using the compiler according to your operating system: [windows](#windows),[mac osx](#mac--unix--linux), [unix](#mac--unix--linux), [linux](#mac--unix--linux)
+
+### example: `helloworld.3bc` ###
+
+```RUBY
+mode nill 0x2
+strc nill 'h'
+strc nill 'e'
+strc nill 'l'
+strc nill 'l'
+strc nill 'o'
+strc nill 0x20
+strc nill 'w'
+strc nill 'o'
+strc nill 'r'
+strc nill 'l'
+strc nill 'd'
+strc nill '!'
+```
 
 ### windows ###
-3bc.exe [filename.3bc]
+
 ```
 C:\Users\nicod\Downloads\3bc-windows-32>3bc.exe helloworld.3bc
 hello world!
@@ -23,22 +61,15 @@ C:\Users\nicod\Downloads\3bc-windows-32>
 ```
 
 ### mac / unix / linux ###
-./3bc [filename.3bc]
+
 ```
 $ ./3bc helloworld.3bc
 hello world!
 $
 ```
 
-## Preview Concept ##
-| Textual Programing | Octal Code |
-| :----------------: | :--------: |
-| `mode` `nill` `0x2`<br/>`strc` `nill` `'h'`<br/>`strc` `nill` `'e'`<br/>`strc` `nill` `'l'`<br/>`strc` `nill` `'l'`<br/>`strc` `nill` `'o'`<br/>`strc` `nill` `' '`<br/>`strc` `nill` `'w'`<br/>`strc` `nill` `'o'`<br/>`strc` `nill` `'r'`<br/>`strc` `nill` `'l'`<br/>`strc` `nill` `'d'`<br/>`strc` `nill` `'!'`  | `0o007` `0o000` `0o002`<br/>`0o002` `0o000` `0o150`<br/>`0o002` `0o000` `0o145`<br/>`0o002` `0o000` `0o154`<br/>`0o002` `0o000` `0o154`<br/>`0o002` `0o000` `0o157`<br/>`0o002` `0o000` `0o040`<br/>`0o002` `0o000` `0o167`<br/>`0o002` `0o000` `0o157`<br/>`0o002` `0o000` `0o162`<br/>`0o002` `0o000` `0o154`<br/>`0o002` `0o000` `0o144`<br/>`0o002` `0o000` `0o041` |
+## Ambient Roadmap ##
 
-# Documentation #
-* **[clice here](https://github.com/RodrigoDornelles/3bc-lang/blob/ide/docs/README.md)**
-
-# Ambient Roadmap #
  - [X] VM Memory auxiliary
  - [X] VM Output characters
  - [X] VM Memory Allocation 
@@ -55,31 +86,8 @@ $
  - [ ] Includes support
  - [ ] Bindings support
 
-# How To Compile #
+## List of early developers ##
 
-### Linux ###
-```
-git clone https://github.com/RodrigoDornelles/3bc-lang.git
-cd 3bc-lang
-gcc main.c -lm -o 3bc
-chmod +x ./3bc # add execution permission to the executable if you don't have
-```
-
-### mac/unix ###
-```
-git clone https://github.com/RodrigoDornelles/3bc-lang.git
-cd 3bc-lang
-gcc main.c -o 3bc
-chmod +x ./3bc # add execution permission to the executable if you don't have
-```
-
-### windows ###
-
-for windows I recommend following microsoft documentation on how to compile in C on windows **[clice here for microsoft documentation](https://docs.microsoft.com/en-us/cpp/build/walkthrough-compile-a-c-program-on-the-command-line?view=msvc-160)**
-
-
-
-# List of early developers #
 | **1º** | ![avatar](https://avatars.githubusercontent.com/rodrigodornelles?size=32) | **[Rodrigo Dornelles](https://github.com/rodrigodornelles)** | **26 November 2020** |
 | :-: | :-: | :-- | :--: |
 | **2º** | ![avatar](https://avatars.githubusercontent.com/kadu?size=32) | **[Carlos Eduardo](https://github.com/kadu)** | **28 November 2020** |
