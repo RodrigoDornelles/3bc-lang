@@ -19,7 +19,6 @@ main
 .sass-cache/
 .jekyll-metadata
 Gemfile.lock
-Gemfile
 _site/
 
 # IDE FILES
