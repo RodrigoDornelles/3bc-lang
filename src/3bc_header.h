@@ -8,42 +8,19 @@
  */
 extern "C" {
 #endif
-#define PARAMS_DEFINE           mem_t addres, val_t value
+#define PARAMS_DEFINE           int addres, int value
 #define PARAMS_USE              addres,value
-#define CPU_PACK_RESERVED()     {&cpu_null,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode}
-#define CPU_PACK_PROTECTED()    {&cpu_null,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode}
-#define CPU_PACK0()             {&cpu_null,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_mode}
-#define CPU_PACK1(a)            {&cpu_null,&a,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_mode}
-#define CPU_PACK2(a,b)          {&cpu_null,&a,&b,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_mode}
-#define CPU_PACK3(a,b,c)        {&cpu_null,&a,&b,&c,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_mode}
-#define CPU_PACK4(a,b,c,d)      {&cpu_null,&a,&b,&c,&d,&cpu_not_exist,&cpu_not_exist,&cpu_mode}
-#define CPU_PACK5(a,b,c,d,e)    {&cpu_null,&a,&b,&c,&d,&e,&cpu_not_exist,&cpu_mode}
-#define CPU_PACK6(a,b,c,d,e,f)  {&cpu_null,&a,&b,&c,&d,&e,&f,&cpu_mode}
 #define VALIDATE_NOT_DUALITY    if(addres!=0&&value!=0)lang_driver_error(ERROR_PARAM_DUALITY);
 #define VALIDATE_NOT_ADRESS     if(addres!=0)lang_driver_error(ERROR_PARAM_BLOCKED_ADDRESS);
 #define VALIDATE_NOT_VALUES     if(value!=0)lang_driver_error(ERROR_PARAM_BLOCKED_VALUE);
 #define REQUIRED_ADDRESS        if(addres==0)lang_driver_error(ERROR_PARAM_REQUIRE_ADDRESS);
 #define REQUIRED_VALUE          if(value==0)lang_driver_error(ERROR_PARAM_REQUIRE_VALUE);
-#define MEMORY_SAFE_LIMIT       (255)
-#define GET_ANY_PARAM           (addres?tape_memory_get(addres):value)
+#define GET_ANY_PARAM           (addres?tape_memory_data_get(addres):value)
 #define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux_push(addres,0);else cpu_memory_aux_aloc(0,value);
-#define AUX                     tape_aux_get()              /** memory auxilary **/
-#define CMODE                   tape_router_cpu_get()       /** current cpu mode **/
-#define CLINE                   tape_program_line_get()     /** current line **/
-#define CELNE                   tape_program_line_end()     /** current end of lines **/
-#define MEM_CONFIG_SIGNED       0b0001
-#define MEM_CONFIG_MAX_VALUE    0b0010
-#define MEM_CONFIG_MIN_VALUE    0b0100
-#define MEM_CONFIG_NORMALIZE    0b1000
 
-/**  types **/
 typedef unsigned int compass_t;
-typedef unsigned char reg_t;
-typedef unsigned char mem_t;
-typedef unsigned char val_t;
-typedef unsigned char cch_t;
+typedef void (*reg_f)(PARAMS_DEFINE);
 typedef unsigned char conf_t;
-typedef FILE file_t;
 
 /** FILE: cpu_common.c **/
 void cpu_null(PARAMS_DEFINE);
@@ -124,8 +101,8 @@ void cpu_string_stro(PARAMS_DEFINE);
 void cpu_string_strx(PARAMS_DEFINE);
 void cpu_string_stru(PARAMS_DEFINE);
 
-/** FILE: lang_line.c **/
-void lang_line(reg_t reg, mem_t mem, val_t val);
+/** FILE: lang_boostrap.c **/
+struct app_3bc_s* lang_bootstrap(void);
 
 /** FILE: lang_plus.cpp **/
 #ifdef _3BC_ARDUINO
@@ -142,11 +119,14 @@ void lang_driver_init(int argc, char **argv);
 void lang_driver_init();
 #endif
 void lang_driver_exit(int sig);
-void lang_driver_output_1(reg_t type, val_t value);
-void lang_driver_output_2(reg_t type, val_t value);
-void lang_driver_error(error_3bc_t error_code);
-val_t lang_driver_input(reg_t type, mem_t addres);
+void lang_driver_output_1(register_3bc_t type, data_3bc_t value);
+void lang_driver_output_2(register_3bc_t type, data_3bc_t value);
+void lang_driver_error(enum error_3bc_e error_code);
+data_3bc_t lang_driver_input(register_3bc_t type, address_3bc_t addres);
 bool lang_driver_strtol(const char* string, signed long int* value);
+bool lang_driver_strchar(const char* string, signed long int* value);
+bool lang_driver_strhash(const char* string, signed long int* value);
+bool lang_driver_strword(const char* string, signed long int* value);
 
 /** FILE: lang_interpreter.c **/
 char lang_interpreter_line(file_t* stream);
@@ -154,50 +134,48 @@ bool lang_interpreter_world(const char text_reg[6], int* reg);
 bool lang_interpreter_value(const char text_value[12], int* value);
 
 /** FILE: tape_aux.c **/
-val_t tape_aux_get(void);
-void tape_aux_set(val_t value);
-void tape_aux_free(void);
-val_t *tape_aux_ptr(void);
+data_3bc_t tape_aux_get(void);
+void tape_aux_set(data_3bc_t value);
 
 /** FILE: tape_memory.c **/
-val_t tape_memory_type_get(mem_t addres);
-val_t tape_memory_value_min_get(mem_t addres);
-val_t tape_memory_value_max_get(mem_t addres);
-void tape_memory_type_set(mem_t addres, val_t value);
-void tape_memory_value_min_set(mem_t addres, val_t value);
-void tape_memory_value_max_set(mem_t addres, val_t value);
-val_t tape_memory_get(mem_t addres);
-void tape_memory_set(mem_t addres, val_t value);
-void tape_memory_resize(mem_t addres);
-void tape_memory_free(mem_t addres);
-void tape_memory_init(void);
+struct memory_node_s* tape_memory_llrbt_create_node(address_3bc_t address);
+struct memory_node_s* tape_memory_llrbt_rotate_left(struct memory_node_s* node);
+struct memory_node_s* tape_memory_llrbt_rotate_right(struct memory_node_s* node);
+struct memory_node_s* tape_memory_llrbt_smallest_child(struct memory_node_s* node);
+struct memory_node_s* tape_memory_llrbt_access(address_3bc_t address);
+struct memory_node_s* tape_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node);
+struct memory_node_s* tape_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node);
+void tape_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2);
+void tape_memory_data_set(address_3bc_t address, data_3bc_t value);
+void tape_memory_vmax_set(address_3bc_t address, data_3bc_t value);
+void tape_memory_vmin_set(address_3bc_t address, data_3bc_t value);
+void tape_memory_conf_set(address_3bc_t address, data_3bc_t value);
+data_3bc_t tape_memory_data_get(address_3bc_t address);
+data_3bc_t tape_memory_vmax_get(address_3bc_t address);
+data_3bc_t tape_memory_vmin_get(address_3bc_t address);
+data_3bc_t tape_memory_data_get(address_3bc_t address);
+void tape_memory_lineup(struct memory_node_s* node);
+void tape_memory_free(address_3bc_t address);
 void tape_memory_destroy(void);
-void tape_memory_safe(mem_t addres);
-void tape_memory_reset(mem_t addres);
 
 /** FILE: tape_program.c **/
 void tape_program_resize(void);
 bool tape_program_exe(void);
-void tape_program_init(void);
 void tape_program_destroy(void);
-void tape_program_line_set(compass_t line);
-void tape_program_line_add(reg_t reg, mem_t mem, val_t val);
-void tape_program_label_add(compass_t line, compass_t label);
-compass_t tape_program_line_get();
-compass_t tape_program_line_end();
-void tape_program_target_label(compass_t label);
-void tape_program_target_line(compass_t line);
+void tape_program_line_add(register_3bc_t reg, address_3bc_t mem, data_3bc_t val);
+void tape_program_label_jump(label_3bc_t label);
+void tape_program_label_insert(label_3bc_t label, cpumode_3bc_t cpumode, struct line_node_s* line);
+struct label_node_s* tape_program_label_search(label_3bc_t label);
 bool tape_program_avaliable(void);
-reg_t tape_program_cpu_size(void);
 
 /** FILE: tape_router.c **/
-void tape_router_cpu_set(cch_t value);
-cch_t tape_router_cpu_get(void);
+void tape_router_cpu_set(cpumode_3bc_t value);
+cpumode_3bc_t tape_router_cpu_get(void);
 
 /** FILE: tape_sort.c **/
 void tape_sort_init();
 void tape_sort_destroy();
-void tape_sort_insert(mem_t addres);
+void tape_sort_insert(address_3bc_t addres);
 
 #ifdef __cplusplus
 }

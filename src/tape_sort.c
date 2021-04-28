@@ -1,7 +1,7 @@
 #include "3bc.h"
 
-mem_t* addresses_list;
-mem_t address_last;
+address_3bc_t* addresses_list;
+address_3bc_t address_last;
 
 void tape_sort_init()
 {
@@ -17,21 +17,21 @@ void tape_sort_destroy()
     }
 }
 
-void tape_sort_insert(mem_t addres)
+void tape_sort_insert(address_3bc_t addres)
 {
-    mem_t* new_tape;
-    mem_t index;
+    address_3bc_t* new_tape;
+    address_3bc_t index;
 
     /** prevent repeat address sort **/
     if (addresses_list != NULL) {
-        mem_t i;
+        address_3bc_t i;
         for(i = 0; i < address_last; i += 1) if (addresses_list[i] == addres) {
             return;
         }
     }
 
     /** expand list of addresses **/
-    new_tape = (mem_t*) realloc(addresses_list, sizeof (mem_t*) * (address_last += 1));
+    new_tape = (address_3bc_t*) realloc(addresses_list, sizeof (address_3bc_t*) * (address_last += 1));
 
     /** was not possible expand sort tape **/
     if (new_tape == NULL) {
@@ -46,10 +46,10 @@ void tape_sort_insert(mem_t addres)
     /** sort address **/
     while (index >= 1) {
         /** get values **/  
-        mem_t prev_addres = addresses_list[index - 1];
-        val_t prev_value = tape_memory_get(prev_addres);
-        mem_t addres = addresses_list[index];
-        val_t value = tape_memory_get(addres);
+        address_3bc_t prev_addres = addresses_list[index - 1];
+        data_3bc_t prev_value = tape_memory_data_get(prev_addres);
+        address_3bc_t addres = addresses_list[index];
+        data_3bc_t value = tape_memory_data_get(addres);
         
         /** finished order **/
         if (value >= prev_value) {
@@ -57,8 +57,8 @@ void tape_sort_insert(mem_t addres)
         }
 
         /** spin values **/
-        tape_memory_set(prev_addres, value);
-        tape_memory_set(addres, prev_value);
+        tape_memory_data_set(prev_addres, value);
+        tape_memory_data_set(addres, prev_value);
 
         /** next number **/
         index -= 1;

@@ -23,6 +23,7 @@
 
 /** headers **/
 #include "3bc_errors.h"
+#include "3bc_types.h"
 #include "3bc_header.h"
 #include "3bc_register.h"
 
@@ -36,7 +37,7 @@
 #include "cpu_jump.c"
 #include "cpu_memory.c"
 #include "cpu_string.c"
-#include "lang_line.c"
+#include "lang_bootstrap.c"
 #include "lang_driver.c"
 #include "lang_interpreter.c"
 #include "tape_aux.c"

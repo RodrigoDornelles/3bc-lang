@@ -1,247 +1,303 @@
 #include "3bc.h"
-#define _MEM3BC(obj)               ((*memory_pointers[addres].p).obj)
-#define _VALCONFIG(value, conf)    ((value&(conf))==(conf))
-#define _MEMCONFIG(conf)           ((((*memory_pointers[addres].p).configuration)&(conf)) == (conf))
 
-struct memory_s {
-    val_t value;
-    val_t v_min;
-    val_t v_max;
-    conf_t configuration;
-};
-
-struct pointer_s {
-    struct memory_s* p;
-    bool allocated;
-};
-
-static compass_t memory_end;
-struct pointer_s* memory_pointers;
-struct memory_s* memory_tape;
-
-/**
- * reset primitive state memory
- */
-void tape_memory_init()
+struct memory_node_s* tape_memory_llrbt_create_node(address_3bc_t address)
 {
+    /** utility function to create a node. **/
+    struct memory_node_s* new_node = (struct memory_node_s*) malloc(sizeof(struct memory_node_s));
+
     /** prevent wild pointers **/
-    memory_pointers = NULL;
-    memory_tape = NULL;
-    memory_end = 0;
+    new_node->left = NULL;
+    new_node->right = NULL;
+    new_node->conf = 0;
+    new_node->data = 0;
+    new_node->vmax = 0;
+    new_node->vmin = 0;
+    new_node->address = address;
+  
+    /** New Node which is created is always red in color. **/
+    new_node->color = LLRBT_RED;
+
+    return new_node;
 }
 
-/**
- * get memory address type configurations
- */
-val_t tape_memory_type_get(mem_t addres)
+struct memory_node_s* tape_memory_llrbt_rotate_left(struct memory_node_s* node)
 {
-    tape_memory_resize(addres);
-    tape_memory_safe(addres);
-
-    return _MEM3BC(configuration);
+    struct memory_node_s* child = node->right;
+    struct memory_node_s* child_left = child->left;
+  
+    child->left = node;
+    node->right = child_left;
+  
+    return child;
 }
 
-/**
- * set memory address range value minimal
- */
-val_t tape_memory_value_min_get(mem_t addres)
+struct memory_node_s* tape_memory_llrbt_rotate_right(struct memory_node_s* node)
 {
-    tape_memory_resize(addres);
-    tape_memory_safe(addres);
-
-    return _MEM3BC(v_min);
+    struct memory_node_s* child = node->left;
+    struct memory_node_s* child_right =  child->right;
+  
+    child->right = node;
+    node->left = child_right;
+      
+    return child; 
 }
 
-/**
- * set memory address range value maximum
- */
-val_t tape_memory_value_max_get(mem_t addres)
+struct memory_node_s* tape_memory_llrbt_smallest_child(struct memory_node_s* node)
 {
-    tape_memory_resize(addres);
-    tape_memory_safe(addres);
-
-    return _MEM3BC(v_max);
+    struct memory_node_s* current = node;
+ 
+    /* loop down to find the leftmost leaf */
+    while (current && current->left != NULL) {
+        current = current->left;
+    }
+ 
+    return current;
 }
 
-/**
- * set memory address type configurations
- */
-void tape_memory_type_set(mem_t addres, val_t value)
+struct memory_node_s* tape_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node)
 {
-    tape_memory_resize(addres);
-    tape_memory_safe(addres);
+    if (node == NULL)
+        return NULL;
+ 
+    /**
+     * If the key to be deleted is smaller than the root's key,
+     * then it lies in left subtree
+     */
+    if (node->address > address) {
+        node->left = tape_memory_llrbt_clear(address, node->left);
+    }
+ 
+    /**
+     * If the key to be deleted is greater than the root's key,
+     * then it lies in right subtree
+     */
+    else if (node->address < address) {
+        node->right = tape_memory_llrbt_clear(address, node->right);
+    }
+ 
+    /**
+     * if key is same as root's key, then This is the node to be deleted
+     */
+    else if (node->left == NULL) {
+        /** node with only one child or no child **/
+        struct memory_node_s* temp = node->right;
+        free(node);
+        return temp;
+    }
+    else if (node->right == NULL) {
+        /** node with only one child or no child **/
+        struct memory_node_s* temp = node->left;
+        free(node);
+        return temp;
+    }
+    else
+    {
+        /** node with two children:
+         * Get the inorder successor
+         * (smallest in the right subtree)
+         */
+        struct memory_node_s* temp = tape_memory_llrbt_smallest_child(node->right);
+ 
+        /** Copy the inorder successor's content to this node **/
+        node->address = temp->address;
+ 
+        /** Delete the inorder successor **/
+        node->right = tape_memory_llrbt_clear(temp->address, node->right);
+    }
+
+    return node;
+}
+
+struct memory_node_s* tape_memory_llrbt_access(address_3bc_t address)
+{
+    struct memory_node_s* node = APP_3BC->memory.root;
+
+    while (node != NULL && node->address != address) {
+        
+        if (node->address < address) {
+            node = node->right;
+        }
+
+        else if (node->address > address) {
+            node = node->left;
+        }
+    }
+
+    if (node == NULL) {
+        APP_3BC->memory.root = tape_memory_llrbt_insert(address, APP_3BC->memory.root);
+        return tape_memory_llrbt_access(address);
+    }
+
+    return node;
+}
+
+struct memory_node_s* tape_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node)
+{
+    /**
+     * NORMAL INSERTION BINARY TREE ALGORITHM
+     */
+    if (node == NULL) {
+        return tape_memory_llrbt_create_node(address);
+    }
+    /** address smaller than the parent **/
+    if (node->address > address) {
+        node->left = tape_memory_llrbt_insert(address, node->left);
+    }
+    /** address greater than the parent **/
+    else if (node->address < address) {
+        node->right = tape_memory_llrbt_insert(address, node->right);
+    }
+    /** address exists **/
+    else {
+        return node;
+    }
+    
+    /**
+     * case 1.
+     * when right child is Red but left child is
+     * Black or doesn't exist.
+     */
+    if (LLRBT_IS_RED(node->right) && !LLRBT_IS_RED(node->left))
+    {
+        /** left rotate the node to make it into valid structure. **/
+        node = tape_memory_llrbt_rotate_left(node);
+  
+        /** swap the colors as the child node should always be red **/
+        tape_memory_llrbt_swap_colors(node, node->left);
+    }
+      
+    /**
+     *  case 2
+     * when left child as well as left grand child in Red
+     */
+    if (LLRBT_IS_RED(node->left) && LLRBT_IS_RED(node->left->left))
+    {   
+        /** right rotate the current node to make it into a valid structure. **/
+        node = tape_memory_llrbt_rotate_right(node);
+        tape_memory_llrbt_swap_colors(node, node->right);
+    }
+      
+    /**
+     *  case 3
+     * when both left and right child are Red in color.
+     */
+    if (LLRBT_IS_RED(node->left) && LLRBT_IS_RED(node->right))
+    {
+        /** invert the color of node as well it's left and right child.**/
+        node->color ^= true;
+  
+        /** change the color to black. **/
+        node->left->color = LLRBT_BLACK;
+        node->right->color = LLRBT_BLACK; 
+    }
+  
+    return node;
+}
+
+void tape_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2)
+{
+    char color = node1->color;
+    node1->color = node2->color;
+    node2->color = color;
+}
+
+void tape_memory_data_set(address_3bc_t address, data_3bc_t value)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    node->data = value;
+    tape_memory_lineup(node);
+}
+
+void tape_memory_vmax_set(address_3bc_t address, data_3bc_t value)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    node->conf |= MEM_CONFIG_MAX_VALUE;
+    node->vmax = value;
+    tape_memory_lineup(node);
+}
+
+void tape_memory_vmin_set(address_3bc_t address, data_3bc_t value)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    node->conf |= MEM_CONFIG_MIN_VALUE;
+    node->vmin = value;
+    tape_memory_lineup(node);
+}
+
+void tape_memory_conf_set(address_3bc_t address, data_3bc_t value)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    node->conf = value;
+    tape_memory_lineup(node);
+}
+
+data_3bc_t tape_memory_data_get(address_3bc_t address)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    return node->data;
+}
+
+data_3bc_t tape_memory_vmax_get(address_3bc_t address)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    return node->vmax;
+}
+
+data_3bc_t tape_memory_vmin_get(address_3bc_t address)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    return node->vmin;
+}
+
+data_3bc_t tape_memory_conf_get(address_3bc_t address)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    return node->conf;
+}
+
+void tape_memory_lineup(struct memory_node_s* node)
+{
+    /** default configuration **/
+    if (node->conf == 0) {
+        return;
+    }
+
+    /** cache configuration **/
+    bool conf_normalize = (MEM_CONFIG_NORMALIZE == (node->conf & MEM_CONFIG_NORMALIZE));
+    bool conf_max_value = (MEM_CONFIG_MAX_VALUE == (node->conf & MEM_CONFIG_MAX_VALUE));
+    bool conf_min_value = (MEM_CONFIG_MIN_VALUE == (node->conf & MEM_CONFIG_MIN_VALUE));
+    bool conf_min_max = conf_max_value && conf_min_value;
 
     /** not allow normalize whitout clamp (limit max & min) **/
-    if (value & MEM_CONFIG_NORMALIZE &&  !_VALCONFIG(value, MEM_CONFIG_MIN_VALUE | MEM_CONFIG_MAX_VALUE)) {
+    if (conf_normalize && !conf_min_max) {
         lang_driver_error(ERROR_INVALID_MEMORY_CONFIG);
     }
-    
+
     /** verifiy valid value between max & min **/
-    if (_MEM3BC(v_min) > _MEM3BC(v_max) && _VALCONFIG(value, MEM_CONFIG_MIN_VALUE | MEM_CONFIG_MAX_VALUE)) {
+    if (node->vmin > node->vmax && conf_min_max) {
         lang_driver_error(ERROR_INVALID_MEMORY_CLAMP);
     }
-
-    /** update memory address type **/
-    _MEM3BC(configuration) = value;
-
-    /** force the memory address value correctly **/
-    tape_memory_set(addres, tape_memory_get(addres));
-}
-
-/**
- * set memory address range value minimal
- */
-void tape_memory_value_min_set(mem_t addres, val_t value)
-{
-    tape_memory_resize(addres);
-    tape_memory_safe(addres);
-
-    /** set min range memory address value **/
-    _MEM3BC(v_min) = value;
     
-    /** automatically changes the type to have a high pass filter **/
-    tape_memory_type_set(addres, _MEM3BC(configuration) | MEM_CONFIG_MIN_VALUE);
-
-    /** forces the memory address value between limits **/
-    tape_memory_set(addres, tape_memory_get(addres));
-}
-
-/**
- * set memory address range value maximum
- */
-void tape_memory_value_max_set(mem_t addres, val_t value)
-{
-    tape_memory_resize(addres);
-    tape_memory_safe(addres);
-
-    /** set max range memory address value **/
-    _MEM3BC(v_max) = value;
-
-    /** automatically changes the type to have a low pass filter **/
-    tape_memory_type_set(addres, _MEM3BC(configuration) | MEM_CONFIG_MAX_VALUE);
-
-    /** forces the memory address value between limits **/
-    tape_memory_set(addres, tape_memory_get(addres));
-}
-
-/**
- * returns memory address alocated value
- */
-val_t tape_memory_get(mem_t addres) 
-{
-    tape_memory_resize(addres);
-    tape_memory_safe(addres);
-    return (val_t) _MEM3BC(value);
-}
-
-/**
- * update memory address value definied
- */
-void tape_memory_set(mem_t addres, val_t value)
-{
-    tape_memory_resize(addres);
-    tape_memory_safe(addres);
-
     /** maximum without normalize **/
-    if(value > _MEM3BC(v_max) && _MEMCONFIG(MEM_CONFIG_MAX_VALUE) && !_MEMCONFIG(MEM_CONFIG_NORMALIZE)) {
-        value = _MEM3BC(v_max);
+    if(node->data > node->vmax && conf_max_value && !conf_normalize) {
+        node->data = node->vmax;
     }
     /** minimum without normalize **/
-    else if (value < _MEM3BC(v_min) && _MEMCONFIG(MEM_CONFIG_MIN_VALUE) && !_MEMCONFIG(MEM_CONFIG_NORMALIZE)) {
-        value = _MEM3BC(v_min);
+    else if (node->data < node->vmin && conf_min_value && !conf_normalize) {
+        node->data = node->vmin;
     }
     /** custom underflow/overflow **/
-    else if ((_MEM3BC(v_min) > value || value > _MEM3BC(v_max)) && _MEMCONFIG(MEM_CONFIG_NORMALIZE)) {
-        value = ((value + _MEM3BC(v_min) + 2) % (_MEM3BC(v_max) - _MEM3BC(v_min) + 1)) + _MEM3BC(v_min);
+    else if ((node->vmin > node->data || node->data > node->vmax) && conf_normalize) {
+        node->data = ((node->data + node->vmin + 2) % (node->vmax - node->vmin + 1)) + node->vmin;
     }
-
-    _MEM3BC(value) = value;
 }
 
-/**
- * expand the size of existing memory within the virtual machine,
- * abstraction of what would increase the size of the address tape
- */
-void tape_memory_resize(mem_t addres)
+void tape_memory_free(address_3bc_t address)
 {
-    /** verify that it is not necessary to expand memory **/
-    if (addres < memory_end) {
-        return;
-    }
-
-    /** expand tape memory **/
-    struct pointer_s* new_tape = (struct pointer_s*) realloc(memory_pointers, sizeof (struct pointer_s) * (addres + 1));
-
-    /** eliminate possible wild pointers **/
-    for (;memory_end <= addres; new_tape[memory_end++].allocated = false);
-
-    /** was not possible expand memory tape **/
-    if (new_tape == NULL) {
-        lang_driver_error(ERROR_TAPE_MEMORY);
-    }
-
-    /** take memory tape **/
-    memory_pointers = new_tape;
+    APP_3BC->memory.root = tape_memory_llrbt_clear(address, APP_3BC->memory.root);
 }
 
-/**
- * free memory in the address
- */
-void tape_memory_free(mem_t addres)
-{
-    /** prevent clean freed memory **/ 
-    if (memory_pointers[addres].allocated == false) {
-        return;
-    }
-
-    /** prevent data access before is no longer useful (security) **/
-    tape_memory_reset(addres);   
-        tape_memory_reset(addres);   
-    tape_memory_reset(addres);   
-
-    /** clean memory address **/
-    free(memory_pointers[addres].p);
-    memory_pointers[addres].allocated = false;
-}
-
-/**
- * free all memory allocated by the program during execution
- */
 void tape_memory_destroy()
 {
-    compass_t i, j;
-    
-    /** memory was not used **/
-    if (memory_end == 0) {
-        return;
-    }
-
-    /** clean out all memory alocated **/
-    for(i = 0, j = memory_end - 1; i < j; i++, tape_memory_free(i));
-    free(memory_pointers);
-}
-
-/**
- * prevents that memory is not physically allocated,
- * make sure there is always a blank if it is first called
- */
-void tape_memory_safe(mem_t addres)
-{
-    if (memory_pointers[addres].allocated == false) {
-        /** alloc physically **/
-        memory_pointers[addres].p = (struct memory_s*) malloc(sizeof (struct memory_s));
-        memory_pointers[addres].allocated = true;
-        tape_memory_reset(addres);
-    }
-}
-
-/**
- * initial memory configurations
- */
-void tape_memory_reset(mem_t addres)
-{
-    _MEM3BC(configuration) = 0;
-    _MEM3BC(v_min) = 0;
-    _MEM3BC(v_max) = 0;
-    _MEM3BC(value) = 0;
+    /** TODO: this **/
 }

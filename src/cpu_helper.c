@@ -1,9 +1,9 @@
 #include "3bc.h"
 
-static val_t average_sum;
-static val_t average_count;
+static data_3bc_t average_sum;
+static data_3bc_t average_count;
 static bool maxmin_init;
-static val_t maxmin_value;
+static data_3bc_t maxmin_value;
 
 void before_helper_average()
 {
