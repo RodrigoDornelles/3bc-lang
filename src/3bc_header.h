@@ -44,11 +44,9 @@ void cpu_helper_max(PARAMS_DEFINE);
 void cpu_helper_min(PARAMS_DEFINE);
 void before_helper_average(void);
 void before_helper_sort(void);
-void before_helper_max(void);
-void before_helper_min(void);
+void before_helper_maxmin(void);
 void after_helper_sort(void);
-void after_helper_max(void);
-void after_helper_min(void);
+void after_helper_maxmin(void);
 
 /** FILE: cpu_input.c **/
 void cpu_input_stri(PARAMS_DEFINE);
@@ -114,11 +112,12 @@ void arduino_serial_print(unsigned char serial, const char* string);
 void lang_driver_run(void);
 #ifdef _3BC_COMPUTER
 void lang_driver_init(int argc, char **argv);
+void lang_driver_exit(int sig);
 #endif
 #ifdef _3BC_ARDUINO
 void lang_driver_init();
+void lang_driver_exit();
 #endif
-void lang_driver_exit(int sig);
 void lang_driver_output_1(register_3bc_t type, data_3bc_t value);
 void lang_driver_output_2(register_3bc_t type, data_3bc_t value);
 void lang_driver_error(enum error_3bc_e error_code);

@@ -71,7 +71,13 @@ void lang_driver_init()
     #endif
 }
 
+
+#ifdef _3BC_COMPUTER
 void lang_driver_exit(int sig)
+#endif
+#ifdef _3BC_ARDUINO
+void lang_driver_exit()
+#endif
 {
     #ifdef _3BC_COMPUTER
     /** clear buffers **/
@@ -160,7 +166,7 @@ void lang_driver_error(enum error_3bc_e error_code)
     #ifdef _3BC_ARDUINO
     /** smaller log erros for economy rom memory **/
     static char error_code_string[32];
-    format(error_code_string, ("\n\n[3BC] Fatal error 0x%06X in line: %d"), error_code, error_line);
+    format(error_code_string, ("\n\n[3BC] Fatal error 0x%06X in line: %d"), (unsigned int)error_code, error_line);
     arduino_serial_print(1, error_code_string);
     #endif
 
@@ -205,7 +211,13 @@ void lang_driver_error(enum error_3bc_e error_code)
     }
     #endif
 
+    #ifdef _3BC_COMPUTER
     lang_driver_exit(SIGTERM);
+    #endif
+
+    #ifdef _3BC_ARDUINO
+    lang_driver_exit();
+    #endif
 }
 
 /**
