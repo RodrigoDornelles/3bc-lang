@@ -42,9 +42,70 @@ struct memory_node_s* tape_memory_llrbt_rotate_right(struct memory_node_s* node)
     return child; 
 }
 
-void tape_memory_llrbt_clear(address_3bc_t address)
+struct memory_node_s* tape_memory_llrbt_smallest_child(struct memory_node_s* node)
 {
+    struct memory_node_s* current = node;
+ 
+    /* loop down to find the leftmost leaf */
+    while (current && current->left != NULL) {
+        current = current->left;
+    }
+ 
+    return current;
+}
 
+struct memory_node_s* tape_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node)
+{
+    if (node == NULL)
+        return NULL;
+ 
+    /**
+     * If the key to be deleted is smaller than the root's key,
+     * then it lies in left subtree
+     */
+    if (node->address > address) {
+        node->left = tape_memory_llrbt_clear(address, node->left);
+    }
+ 
+    /**
+     * If the key to be deleted is greater than the root's key,
+     * then it lies in right subtree
+     */
+    else if (node->address < address) {
+        node->right = tape_memory_llrbt_clear(address, node->right);
+    }
+ 
+    /**
+     * if key is same as root's key, then This is the node to be deleted
+     */
+    else if (node->left == NULL) {
+        /** node with only one child or no child **/
+        struct memory_node_s* temp = node->right;
+        free(node);
+        return temp;
+    }
+    else if (node->right == NULL) {
+        /** node with only one child or no child **/
+        struct memory_node_s* temp = node->left;
+        free(node);
+        return temp;
+    }
+    else
+    {
+        /** node with two children:
+         * Get the inorder successor
+         * (smallest in the right subtree)
+         */
+        struct memory_node_s* temp = tape_memory_llrbt_smallest_child(node->right);
+ 
+        /** Copy the inorder successor's content to this node **/
+        node->address = temp->address;
+ 
+        /** Delete the inorder successor **/
+        node->right = tape_memory_llrbt_clear(temp->address, node->right);
+    }
+
+    return node;
 }
 
 struct memory_node_s* tape_memory_llrbt_access(address_3bc_t address)
@@ -150,6 +211,7 @@ void tape_memory_data_set(address_3bc_t address, data_3bc_t value)
 void tape_memory_vmax_set(address_3bc_t address, data_3bc_t value)
 {
     struct memory_node_s* node = tape_memory_llrbt_access(address);
+    node->conf |= MEM_CONFIG_MAX_VALUE;
     node->vmax = value;
     tape_memory_lineup(node);
 }
@@ -157,6 +219,7 @@ void tape_memory_vmax_set(address_3bc_t address, data_3bc_t value)
 void tape_memory_vmin_set(address_3bc_t address, data_3bc_t value)
 {
     struct memory_node_s* node = tape_memory_llrbt_access(address);
+    node->conf |= MEM_CONFIG_MIN_VALUE;
     node->vmin = value;
     tape_memory_lineup(node);
 }
@@ -200,11 +263,11 @@ void tape_memory_lineup(struct memory_node_s* node)
     }
 
     /** cache configuration **/
-    bool conf_normalize = (node->conf == (node->conf & MEM_CONFIG_NORMALIZE));
-    bool conf_max_value = (node->conf == (node->conf & MEM_CONFIG_MAX_VALUE));
-    bool conf_min_value = (node->conf == (node->conf & MEM_CONFIG_MIN_VALUE));
-    bool conf_min_max = conf_max_value || conf_min_value;
-    
+    bool conf_normalize = (MEM_CONFIG_NORMALIZE == (node->conf & MEM_CONFIG_NORMALIZE));
+    bool conf_max_value = (MEM_CONFIG_MAX_VALUE == (node->conf & MEM_CONFIG_MAX_VALUE));
+    bool conf_min_value = (MEM_CONFIG_MIN_VALUE == (node->conf & MEM_CONFIG_MIN_VALUE));
+    bool conf_min_max = conf_max_value && conf_min_value;
+
     /** not allow normalize whitout clamp (limit max & min) **/
     if (conf_normalize && !conf_min_max) {
         lang_driver_error(ERROR_INVALID_MEMORY_CONFIG);
@@ -231,7 +294,7 @@ void tape_memory_lineup(struct memory_node_s* node)
 
 void tape_memory_free(address_3bc_t address)
 {
-    /** TODO: this **/
+    APP_3BC->memory.root = tape_memory_llrbt_clear(address, APP_3BC->memory.root);
 }
 
 void tape_memory_destroy()
