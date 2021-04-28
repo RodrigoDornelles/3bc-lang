@@ -65,49 +65,61 @@ class TestFails < Minitest::Test
 
     def test_param_required_address
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 6\nfree 0 0")
-        assert_match /ERROR CODE\: (0x3BC010)/, stderr
+        assert_match /ERROR CODE\: (0x3BC00A)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
+    def test_param_blocked_value
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 6\nfree 1 1")
+        assert_match /ERROR CODE\: (0x3BC00B)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
+    def test_param_blocked_address
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 9\ngoto 1 1")
+        assert_match /ERROR CODE\: (0x3BC00C)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_number_no_digits
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 --")
-        assert_match /ERROR CODE\: (0x3BC013)/, stderr
+        assert_match /ERROR CODE\: (0x3BC00D)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_number_wrong_base
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 0o8")
-        assert_match /ERROR CODE\: (0x3BC016|0x3BC017|0x3BC018)/, stderr
+        assert_match /ERROR CODE\: (0x3BC010|0x3BC011|0x3BC012)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_number_dirty
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 2i")
-        assert_match /ERROR CODE\: (0x3BC018)/, stderr
+        assert_match /ERROR CODE\: (0x3BC012)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_invalid_memory_config
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 6\ntcfg 8 8")
-        assert_match /ERROR CODE\: (0x3BC023)/, stderr
+        assert_match /ERROR CODE\: (0x3BC017)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_invalid_memory_clamp
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 6\ntmin 1 2\ntmax 1 1")
-        assert_match /ERROR CODE\: (0x3BC0024)/, stderr
+        assert_match /ERROR CODE\: (0x3BC0018)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_void_helper_max_min
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 23\nmode 0 23")
-        assert_match /ERROR CODE\: (0x3BC025)/, stderr
+        assert_match /ERROR CODE\: (0x3BC019)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_no_such_file
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "none.3bc")
-        assert_match /ERROR CODE\: (0x3BC026)/, stderr
+        assert_match /ERROR CODE\: (0x3BC01A)/, stderr
         assert_equal 15, status.exitstatus
     end
 end
