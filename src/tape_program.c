@@ -159,7 +159,12 @@ bool tape_program_avaliable()
 
         /** cooming label **/
         if (label_node == NULL) {
-            return true;
+            return false;
+        }
+
+        /** cooming next step after jump **/
+        if (label_node->point->next == NULL) {
+            return false;
         }
     
         /** jump to point **/
