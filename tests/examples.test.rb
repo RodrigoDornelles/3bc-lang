@@ -46,7 +46,7 @@ class TestExample < Minitest::Test
         end
     end
 
-    def test_math_average
+    def test_math_sort
         for console in
         [
             {input:"123", output:"3x numbers: 123\nsort: 123\n"},
