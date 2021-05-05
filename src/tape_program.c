@@ -93,7 +93,8 @@ bool tape_program_exe()
 void tape_program_destroy()
 {
     struct line_node_s* node = APP_3BC->program.head;
-    for (struct line_node_s* prev; node != NULL; prev = node, node = node->next, free(prev));
+    struct line_node_s* prev;
+    for (;node != NULL; prev = node, node = node->next, free(prev));
 }
 
 /**
