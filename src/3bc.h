@@ -20,6 +20,9 @@
 #ifdef _3BC_PC_NOT_WINDOWS
 #include <termios.h>
 #endif
+#ifdef _3BC_PC_WINDOWS
+#include <conio.h>
+#endif
 
 /** headers **/
 #include "3bc_errors.h"
