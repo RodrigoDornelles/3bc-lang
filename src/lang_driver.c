@@ -81,7 +81,6 @@ void lang_driver_exit()
 {
     #ifdef _3BC_COMPUTER
     /** clear buffers **/
-    fflush(stdin);
     fflush(stderr);
     fflush(stdout);
     #endif
