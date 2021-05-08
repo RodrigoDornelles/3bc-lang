@@ -24,7 +24,8 @@ all:
 	##################################
 
 docs:
-	@bundle exec jekyll serve --watch --incremental
+	@rm -Rf _site/ 2>/dev/null; true
+	@bundle exec jekyll serve --watch --incremental --livereload
 	
 build:
 	@${CC} ${SOURCES} ${CFLAGS} ${LDFLAGS}
