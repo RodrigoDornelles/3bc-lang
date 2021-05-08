@@ -6,11 +6,16 @@ baseurl: "/3bc-lang" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 
 plugins:
+  - jekyll-optional-front-matter
+  - jekyll-titles-from-headings
+  - jekyll-github-metadata
+  - jekyll-default-layout
+  - jekyll-relative-links
   - jekyll-redirect-from
-  - jekyll-sitemap
+  - jekyll-readme-index
   - jekyll-seo-tag
+  - jekyll-sitemap
   - jekyll-feed
-  - github-pages
   - jemoji
 
 readme_index:
