@@ -40,10 +40,13 @@
             });
         </script>
 
-        <!-- CUSTOM ASSETS -->
-        <link rel="stylesheet" href="{{ '/docs/assets/style.css' | relative_url }}">
+        <!-- HIGHLIGHT JS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/styles/default.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
 
-        
+        <!-- CUSTOM ASSETS -->
+        <link rel="stylesheet" href="{{ '/docs/assets/style.css' | relative_url }}?{{ site.time | date: '%s%N' }}">
+
         {% seo %}
     </head>
     <body>
@@ -75,5 +78,7 @@
         <main class="container" style="margin: 10px auto;max-width: 800px; text-align: center;">
             {{ content }}
         </main>
-    </body>    
+    </body>
+    <!-- HIGHLIGHT JS -->
+    <script>hljs.highlightAll();</script>
 </html>
