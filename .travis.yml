@@ -1,6 +1,7 @@
 language: c
 
-branches.only:
+branches:
+  only:
   - master
 
 script:
