@@ -5,30 +5,35 @@ require 'minitest/autorun'
 class TestExample < Minitest::Test
     def test_hello_world
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/heloworld.3bc")
+        assert_equal "", stderr
         assert_equal "hello world!", stdout
         assert_equal 0, status
     end
 
     def test_input_login 
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/input_login.3bc", :stdin_data => "XXXXXXX")
+        assert_equal "", stderr
         assert_equal "\n[?] login: XXX\n[?] password: ***\n\n[!] press any key.\n", stdout
         assert_equal 0, status
     end
 
     def test_loop
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/loop.3bc")
+        assert_equal "", stderr
         assert_equal "HI!\nHI!\nHI!\n", stdout
         assert_equal 0, status
     end
 
     def test_invert_default
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/invert_default.3bc")
+        assert_equal "", stderr
         assert_equal "ABC CBA\n", stdout
         assert_equal 0, status
     end
 
     def test_invert_helper
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/invert_default.3bc")
+        assert_equal "", stderr
         assert_equal "ABC CBA\n", stdout
         assert_equal 0, status
     end
@@ -41,6 +46,7 @@ class TestExample < Minitest::Test
             {input:"198", output:"N1: 1\nN2: 9\nN3: 8\nA:6\n"}
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/math_average.3bc", :stdin_data => console[:input])
+        assert_equal "", stderr
         assert_equal console[:output], stdout
         assert_equal 0, status
         end
@@ -57,6 +63,7 @@ class TestExample < Minitest::Test
             {input:"213", output:"3x numbers: 213\nsort: 123\n"}
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/math_sortable.3bc", :stdin_data => console[:input])
+        assert_equal "", stderr
         assert_equal console[:output], stdout
         assert_equal 0, status
         end

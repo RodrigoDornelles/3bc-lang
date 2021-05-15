@@ -33,7 +33,6 @@ void tape_program_resize()
 {
     struct line_node_s* prev_line_node = APP_3BC->program.tail;
     struct line_node_s* new_line_node = (struct line_node_s*) malloc(sizeof (struct line_node_s));
-    line_3bc_t prev_line_number = prev_line_node != NULL? prev_line_node->line: 0;
 
     /** was not possible expand program **/
     if (new_line_node == NULL) {
@@ -57,6 +56,7 @@ void tape_program_resize()
     
     /** last line program **/
     APP_3BC->program.tail = new_line_node;
+    APP_3BC->program.tail->next = NULL;
     APP_3BC->program.tail->line = APP_3BC->program.last_line;
 }
 
