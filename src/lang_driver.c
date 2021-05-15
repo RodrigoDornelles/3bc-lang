@@ -12,6 +12,7 @@ case STRC: fprintf(file, "%c", (unsigned char) val); break;\
 case STRX: fprintf(file, "%x", (unsigned int) val); break;}
 
 #define print_error(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);break
+#define print_signal(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);exit(error_code)
 
 #ifdef _3BC_PC_NOT_WINDOWS
 struct termios term_old_attr;
@@ -37,6 +38,7 @@ void lang_driver_init()
      * Capture computer signals
      */
     signal(SIGINT, lang_driver_exit);
+    signal(SIGSEGV, lang_driver_error);
     
     if (argc <= 1) {
         program_file = stdin;
@@ -102,10 +104,6 @@ void lang_driver_exit()
     tape_program_destroy();
     tape_sort_destroy();
 
-    #ifdef _3BC_ARDUINO
-    while(1);
-    #endif
-
     #ifdef _3BC_COMPUTER
     exit(sig);
     #endif
@@ -152,30 +150,34 @@ void lang_driver_output_2(register_3bc_t type, data_3bc_t val)
     #endif
 }
 
-void lang_driver_error(enum error_3bc_e error_code)
+/**
+ * NOTE: params as int to better compatibility with function pointers.
+ */
+void lang_driver_error(int error_code)
 {
     /**
      * NOTE: if the current line does not exist,
      * it was because it was interpreting a line which failed.
      */
-    line_3bc_t error_line = APP_3BC->program.curr != NULL?
+    line_3bc_t error_line = APP_3BC->program.curr != NULL && error_code >= ERROR_CPU_ZERO?
         APP_3BC->program.curr->line:
         APP_3BC->program.last_line;
 
     #ifdef _3BC_ARDUINO
     /** smaller log erros for economy rom memory **/
     static char error_code_string[32];
-    format(error_code_string, ("\n\n[3BC] Fatal error 0x%06X in line: %d"), (unsigned int)error_code, error_line);
+    format(error_code_string, ("\n\n[3BC] Fatal error 0x%06X in line: %06d"), (unsigned int)error_code, error_line);
     arduino_serial_print(1, error_code_string);
     #endif
 
     #ifdef _3BC_COMPUTER
     fprintf(stderr, "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM");
-    fprintf(stderr, "\n> ERROR LINE: %d", error_line);
+    fprintf(stderr, "\n> ERROR LINE: %06d", error_line);
     fprintf(stderr, "\n> ERROR CODE: 0x%06X\n", error_code);
 
     switch(error_code)
     {
+        case SIGSEGV: print_error("SEGMENT FAULT");
         case ERROR_CPU_ZERO: print_error("CPU MODE IS NOT DEFINED"); 
         case ERROR_CPU_PROTECT: print_error("CPU MODE IS PROTECTED");
         case ERROR_CPU_RESERVED: print_error("CPU MODE IS RESERVED");
@@ -211,11 +213,14 @@ void lang_driver_error(enum error_3bc_e error_code)
     #endif
 
     #ifdef _3BC_COMPUTER
-    lang_driver_exit(SIGTERM);
+    if(error_code >= ERROR_CPU_ZERO){
+        lang_driver_exit(SIGTERM);
+    }
+    exit(error_code);
     #endif
 
     #ifdef _3BC_ARDUINO
-    lang_driver_exit();
+    while(1);
     #endif
 }
 
