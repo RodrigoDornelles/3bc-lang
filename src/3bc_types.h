@@ -1,6 +1,7 @@
 #include "3bc.h"
 
 /** PRIMITIVE TYPES **/
+typedef void (*function_3bc_t)(int, int);
 typedef unsigned short int line_3bc_t;
 typedef unsigned char cpumode_3bc_t;
 typedef unsigned char register_3bc_t;
