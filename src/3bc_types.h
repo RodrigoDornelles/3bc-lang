@@ -33,14 +33,17 @@ struct tty_3bc_s {
 
 /** AUXILIARY MEMORY **/
 union cache_l1_u {
-    data_3bc_t average_sum;
+    bool max_init;
+    bool min_init;
     bool maxmin_init;
+    unsigned short average_count;
 };
 
 union cache_l2_u {
-    unsigned int avarage_count;
     data_3bc_t max_value;
     data_3bc_t min_value;
+    data_3bc_t maxmin_value;
+    long int average_sum;
 };
 
 /** PROGRAM MEMORY **/
