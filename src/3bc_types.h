@@ -32,16 +32,15 @@ struct tty_3bc_s {
 };
 
 /** AUXILIARY MEMORY **/
-union aux_0_u {
+union cache_l1_u {
     data_3bc_t average_sum;
     bool maxmin_init;
 };
 
-union aux_1_u {
+union cache_l2_u {
     unsigned int avarage_count;
     data_3bc_t max_value;
     data_3bc_t min_value;
-
 };
 
 /** PROGRAM MEMORY **/
@@ -95,8 +94,9 @@ struct app_3bc_s {
     bool bootstrap;
     data_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
-    union aux_0_u cpu_aux0;
-    union aux_1_u cpu_aux1;
+    struct memory_node_s* cache_l0;
+    union cache_l1_u cache_l1;
+    union cache_l2_u cache_l2;
     struct tty_3bc_s tty_input;
     struct tty_3bc_s tty_debug;
     struct tty_3bc_s tty_output;
