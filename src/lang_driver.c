@@ -1,8 +1,4 @@
 #include "3bc.h"
-#ifdef _3BC_ARDUINO
-#include <Arduino.h>
-#include <avr/pgmspace.h>
-#endif
 
 #define print_file(file,type, val);\
 switch(type){\

@@ -1,6 +1,7 @@
 #include "3bc.h"
 
 /** PRIMITIVE TYPES **/
+typedef void (*function_3bc_t)(int, int);
 typedef unsigned short int line_3bc_t;
 typedef unsigned char cpumode_3bc_t;
 typedef unsigned char register_3bc_t;
@@ -31,16 +32,18 @@ struct tty_3bc_s {
 };
 
 /** AUXILIARY MEMORY **/
-union aux_0_u {
-    data_3bc_t average_sum;
+union cache_l1_u {
+    bool max_init;
+    bool min_init;
     bool maxmin_init;
+    unsigned short average_count;
 };
 
-union aux_1_u {
-    unsigned int avarage_count;
+union cache_l2_u {
     data_3bc_t max_value;
     data_3bc_t min_value;
-
+    data_3bc_t maxmin_value;
+    long int average_sum;
 };
 
 /** PROGRAM MEMORY **/
@@ -94,8 +97,9 @@ struct app_3bc_s {
     bool bootstrap;
     data_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
-    union aux_0_u cpu_aux0;
-    union aux_1_u cpu_aux1;
+    struct memory_node_s* cache_l0;
+    union cache_l1_u cache_l1;
+    union cache_l2_u cache_l2;
     struct tty_3bc_s tty_input;
     struct tty_3bc_s tty_debug;
     struct tty_3bc_s tty_output;

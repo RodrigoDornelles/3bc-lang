@@ -1,14 +1,9 @@
 #include "3bc.h"
 
-static data_3bc_t average_sum;
-static data_3bc_t average_count;
-static bool maxmin_init;
-static data_3bc_t maxmin_value;
-
 void before_helper_average()
 {
-    average_count = 0;
-    average_sum = 0;
+    APP_3BC->cache_l1.average_count = 0;
+    APP_3BC->cache_l2.average_sum = 0;
 }
 
 void before_helper_sort()
@@ -23,17 +18,17 @@ void after_helper_sort()
 
 void before_helper_maxmin()
 {
-    maxmin_init = false;
+    APP_3BC->cache_l1.maxmin_init = false;
 }
 
 void after_helper_maxmin()
 {
     /** values is empty **/
-    if(!maxmin_init) {
+    if(!APP_3BC->cache_l1.maxmin_init) {
         lang_driver_error(ERROR_VOID_HELPER_MAX_MIN);
     }
     /** update memory aux with better value **/
-    tape_aux_set(maxmin_value);
+    tape_aux_set(APP_3BC->cache_l2.maxmin_value);
 }
 
 /**
@@ -43,11 +38,11 @@ void cpu_helper_average(PARAMS_DEFINE)
 {   
     VALIDATE_NOT_DUALITY
     /** add number to average **/
-    average_sum += GET_ANY_PARAM;
-    average_count += 1;
+    APP_3BC->cache_l1.average_count += 1;
+    APP_3BC->cache_l2.average_sum += GET_ANY_PARAM;
 
     /** recalculate average **/
-    tape_aux_set(average_sum/average_count);
+    tape_aux_set(APP_3BC->cache_l2.average_sum/APP_3BC->cache_l1.average_count);
 }
 
 /**
@@ -67,11 +62,10 @@ void cpu_helper_max(PARAMS_DEFINE)
     VALIDATE_NOT_DUALITY
     AUX_USE_ANY_PARAM
     
-    if (!maxmin_init || maxmin_value < AUX) {
-        maxmin_value = AUX;
-        maxmin_init = true;
+    if (!APP_3BC->cache_l1.max_init || APP_3BC->cache_l1.max_init < AUX) {
+        APP_3BC->cache_l1.max_init = true;
+        APP_3BC->cache_l2.max_value = AUX;
     }
-
 }
 
 /**
@@ -82,9 +76,9 @@ void cpu_helper_min(PARAMS_DEFINE)
     VALIDATE_NOT_DUALITY
     AUX_USE_ANY_PARAM
     
-    if (!maxmin_init || maxmin_value > AUX) {
-        maxmin_value = AUX;
-        maxmin_init = true;
+    if (!APP_3BC->cache_l1.min_init || APP_3BC->cache_l2.min_value > AUX) {
+        APP_3BC->cache_l1.min_init = true;
+        APP_3BC->cache_l2.min_value = AUX;
     }
 
 }

@@ -112,6 +112,11 @@ struct memory_node_s* tape_memory_llrbt_access(address_3bc_t address)
 {
     struct memory_node_s* node = APP_3BC->memory.root;
 
+    /** consult cache level 0 reused address **/
+    if (APP_3BC->cache_l0 != NULL && APP_3BC->cache_l0->address == address) {
+        return APP_3BC->cache_l0;
+    }
+
     while (node != NULL && node->address != address) {
         
         if (node->address < address) {
@@ -128,7 +133,8 @@ struct memory_node_s* tape_memory_llrbt_access(address_3bc_t address)
         return tape_memory_llrbt_access(address);
     }
 
-    return node;
+    APP_3BC->cache_l0 = node;
+    return APP_3BC->cache_l0;
 }
 
 struct memory_node_s* tape_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node)
@@ -294,6 +300,12 @@ void tape_memory_lineup(struct memory_node_s* node)
 
 void tape_memory_free(address_3bc_t address)
 {
+    /** clear cache level 0 **/
+    if (APP_3BC->cache_l0 != NULL && APP_3BC->cache_l0->address == address) {
+        APP_3BC->cache_l0 = NULL;
+    }
+
+    /** clear memory node **/
     APP_3BC->memory.root = tape_memory_llrbt_clear(address, APP_3BC->memory.root);
 }
 

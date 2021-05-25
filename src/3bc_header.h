@@ -18,10 +18,6 @@ extern "C" {
 #define GET_ANY_PARAM           (addres?tape_memory_data_get(addres):value)
 #define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux_push(addres,0);else cpu_memory_aux_aloc(0,value);
 
-typedef unsigned int compass_t;
-typedef void (*reg_f)(PARAMS_DEFINE);
-typedef unsigned char conf_t;
-
 /** FILE: cpu_common.c **/
 void cpu_null(PARAMS_DEFINE);
 void cpu_mode(PARAMS_DEFINE);
