@@ -62,7 +62,7 @@ void cpu_helper_max(PARAMS_DEFINE)
     VALIDATE_NOT_DUALITY
     AUX_USE_ANY_PARAM
     
-    if (!APP_3BC->cache_l1.max_init || APP_3BC->cache_l1.max_init < AUX) {
+    if (!APP_3BC->cache_l1.max_init || APP_3BC->cache_l2.max_value < AUX) {
         APP_3BC->cache_l1.max_init = true;
         APP_3BC->cache_l2.max_value = AUX;
     }
@@ -80,5 +80,4 @@ void cpu_helper_min(PARAMS_DEFINE)
         APP_3BC->cache_l1.min_init = true;
         APP_3BC->cache_l2.min_value = AUX;
     }
-
 }
