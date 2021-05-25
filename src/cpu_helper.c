@@ -80,5 +80,4 @@ void cpu_helper_min(PARAMS_DEFINE)
         APP_3BC->cache_l1.min_init = true;
         APP_3BC->cache_l2.min_value = AUX;
     }
-
 }
