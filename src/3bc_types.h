@@ -8,10 +8,10 @@ typedef unsigned char register_3bc_t;
 typedef unsigned char address_3bc_t;
 typedef unsigned char label_3bc_t;
 typedef signed int data_3bc_t;
+typedef signed long data_aux_3bc_t;
 
 /** FILE/STREAM/INTERFACE TYPES **/
 typedef FILE file_t;
-typedef FILE stream_t;
 
 enum stream_type_e {
     STREAM_TYPE_SILENT = 0,
@@ -22,13 +22,13 @@ enum stream_type_e {
 };
 
 union stream_file_u {
-    file_t file;
-    stream_t stream;
+    file_t* file;
+    file_t* stream;
 };
 
 struct tty_3bc_s {   
     enum stream_type_e type;
-    union stream_file_u reference;
+    union stream_file_u io;
 };
 
 /** AUXILIARY MEMORY **/
@@ -95,7 +95,7 @@ struct memory_3bc_s {
 /** APLICATION **/
 struct app_3bc_s {
     bool bootstrap;
-    data_3bc_t mem_aux;
+    data_aux_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
     struct memory_node_s* cache_l0;
     union cache_l1_u cache_l1;
@@ -103,6 +103,8 @@ struct app_3bc_s {
     struct tty_3bc_s tty_input;
     struct tty_3bc_s tty_debug;
     struct tty_3bc_s tty_output;
+    struct tty_3bc_s tty_source;
+    struct tty_3bc_s tty_keylog;
     struct program_3bc_s program;
     struct memory_3bc_s memory;
 };

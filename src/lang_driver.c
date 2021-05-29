@@ -1,12 +1,5 @@
 #include "3bc.h"
 
-#define print_file(file,type, val);\
-switch(type){\
-case STRI: fprintf(file, "%lu", (unsigned long) val); break;\
-case STRO: fprintf(file, "%o", (unsigned int) val); break;\
-case STRC: fprintf(file, "%c", (unsigned char) val); break;\
-case STRX: fprintf(file, "%x", (unsigned int) val); break;}
-
 #define print_error(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);break
 #define print_signal(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);exit(error_code)
 
@@ -15,11 +8,9 @@ struct termios term_old_attr;
 struct termios term_new_attr;
 #endif
 
-file_t* program_file;
-
 void lang_driver_run()
 {
-    while(tape_program_avaliable()? tape_program_exe(): lang_interpreter_line(program_file));
+    while(tape_program_avaliable()? tape_program_exe(): lang_interpreter_line(APP_3BC->tty_source.io.stream));
 }
 
 #ifdef _3BC_COMPUTER
@@ -35,12 +26,23 @@ void lang_driver_init()
      */
     signal(SIGINT, lang_driver_exit);
     signal(SIGSEGV, lang_driver_error);
+
+    APP_3BC->tty_debug.type = STREAM_TYPE_COMPUTER_STD;
+    APP_3BC->tty_debug.io.stream = stderr;
+    
+    APP_3BC->tty_output.type = STREAM_TYPE_COMPUTER_STD;
+    APP_3BC->tty_output.io.stream = stdout;
+
+    APP_3BC->tty_keylog.type = STREAM_TYPE_COMPUTER_STD;
+    APP_3BC->tty_keylog.io.stream = stdout;
     
     if (argc <= 1) {
-        program_file = stdin;
+        APP_3BC->tty_source.type = STREAM_TYPE_COMPUTER_STD;
+        APP_3BC->tty_source.io.stream = stdin;
     }
     else {
-        program_file = fopen(argv[argc - 1], "r");
+        APP_3BC->tty_source.type = STREAM_TYPE_COMPUTER_FILE;
+        APP_3BC->tty_source.io.file = fopen(argv[argc - 1], "r");
     }
 
     #ifdef _3BC_PC_NOT_WINDOWS
@@ -59,7 +61,7 @@ void lang_driver_init()
     #endif
 
     /** file not found | forbidden **/
-    if (program_file == NULL) {
+    if (APP_3BC->tty_source.type == STREAM_TYPE_COMPUTER_FILE && APP_3BC->tty_source.io.file == NULL) {
         lang_driver_error(ERROR_OPEN_FILE);
     }
     #endif
@@ -90,8 +92,8 @@ void lang_driver_exit()
 
     #ifdef _3BC_COMPUTER
     /** close file (safe pointer) **/
-    if (program_file != stdin && program_file != NULL) {
-        fclose(program_file);
+    if (APP_3BC->tty_source.type == STREAM_TYPE_COMPUTER_FILE && APP_3BC->tty_source.io.file != NULL) {
+        fclose(APP_3BC->tty_source.io.file);
     }
     #endif
 
@@ -105,44 +107,46 @@ void lang_driver_exit()
     #endif
 }
 
-void lang_driver_output_1(register_3bc_t type, data_3bc_t val)
+void lang_driver_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
 {
-    #ifdef _3BC_COMPUTER
-    print_file(stdout, type, val);
-    #endif
+    char output[16];
 
-    #ifdef _3BC_ARDUINO
-    static char output[8];
     switch (type) {
         case STRC:
-            format(output, ("%c"), val);
+            snprintf(output, 16, "%c", abs(val));
             break;
         
         case STRX:
-            format(output, ("%x"), val);
+            snprintf(output, 16, "%x", abs(val));
             break;
 
         case STRI:
-            format(output, ("%d"), val);
+            snprintf(output, 16, "%d", abs(val));
             break;
 
         case STRO:
-            format(output, ("%o"), val);
+            snprintf(output, 16, "%o", abs(val));
             break;
     }
 
-    arduino_serial_print(1, output);
-    #endif
-}
+    #ifdef _3BC_COMPUTER
+    /** negative symbol **/
+    if (val < 0) {
+        lang_driver_output(tty, STRC, '-');
+    }
 
-void lang_driver_output_2(register_3bc_t type, data_3bc_t val)
-{
-    print_file(stderr, type, val);
+    /** stream standard c output **/
+    if (tty.type == STREAM_TYPE_COMPUTER_STD && tty.io.stream == stdout){
+        fprintf(stdout, "%s", output);
+    }
+    /** stream standard c error **/
+    else if (tty.type == STREAM_TYPE_COMPUTER_STD && tty.io.stream == stderr){
+        fprintf(stderr, "%s", output);
+    }
+    #endif
 
     #ifdef _3BC_ARDUINO
-    lang_driver_output_1(type, val);
-    /** @todo second serial output **/
-    /** arduino_serial_print(2, type, val); **/
+    arduino_serial_print(1, output);
     #endif
 }
 

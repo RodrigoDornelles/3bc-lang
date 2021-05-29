@@ -4,9 +4,6 @@
 #if defined(ARDUINO)
 #define _3BC_COMPACT
 #define _3BC_ARDUINO
-#ifndef format
-#define format(buffer, string, ...) snprintf(buffer, sizeof(string), string, __VA_ARGS__);
-#endif
 #else
 /**
  * @todo detect is separeted compiling for computer

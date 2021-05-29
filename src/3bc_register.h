@@ -18,13 +18,14 @@
 #define MODE_MATH_MOD           0x0F
 #define MODE_MATH_POWER         0x10
 #define MODE_MATH_ROOT          0x11
-#define MODE_MATH_PERCENTAGE    0x12
-#define MODE_MATH_ABS           0x13
+#define MODE_MATH_ABS           0x12
+#define MODE_MATH_ABS_NEGATIVE  0x13
 #define MODE_CUSTOM_2           0x14
 #define MODE_HELPER_AVARAGE     0x15
 #define MODE_HELPER_SORT        0x16
 #define MODE_HELPER_MAX         0x17
 #define MODE_HELPER_MIN         0x18
+#define MODE_MATH_PERCENTAGE    0x19
 
 #define NILL 0b000
 #define MODE 0b111
@@ -88,13 +89,14 @@ function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
         CPU_PACK1(MODE_MATH_MOD, cpu_math_mod)
         CPU_PACK1(MODE_MATH_POWER, cpu_math_power)
         CPU_PACK1(MODE_MATH_ROOT, cpu_math_root)
-        CPU_PACK1(MODE_MATH_PERCENTAGE, cpu_math_percentage)
         CPU_PACK1(MODE_MATH_ABS, cpu_math_abs)
+        CPU_PACK1(MODE_MATH_ABS_NEGATIVE, cpu_math_abs_negative)
         CPU_PACK_RESERVED(MODE_CUSTOM_2)
         CPU_PACK1(MODE_HELPER_AVARAGE, cpu_helper_average)
         CPU_PACK1(MODE_HELPER_SORT, cpu_helper_sort)
         CPU_PACK1(MODE_HELPER_MAX, cpu_helper_max)
         CPU_PACK1(MODE_HELPER_MIN, cpu_helper_min)
+        CPU_PACK1(MODE_MATH_PERCENTAGE, cpu_math_percentage)
     }
     #ifndef _3BC_COMPACT
     /** close array **/
