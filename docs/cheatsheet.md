@@ -21,13 +21,14 @@ CheatSheet
 | 15 | **[MODE_MATH_MOD](#mode-math-mod)** | basic mathematic rest of division  | `nill` `math` `mode` |
 | 16 | **[MODE_MATH_POWER](#mode-math-power)** | basic mathematic power | `nill` `math` `mode` |
 | 17 | **[MODE_MATH_ROOT](#mode-math-root)** | basic mathematic root | `nill` `math` `mode` |
-| 18 | **[MODE_MATH_PERCENTAGE](#mode-math-percentage)** | basic mathematic percentage | `nill` `math` `mode` |
-| 19 | **[MODE_MATH_ABS](#mode-math-abs)** | basic mathematic module | `nill` `math` `mode` |
+| 18 | **[MODE_MATH_ABS](#mode-math-abs)** | basic mathematic module | `nill` `math` `mode` |
+| 19 | **[MODE_MATH_NEGATIVE](#mode-math-abs)** | basic mathematic negative | `nill` `math` `mode` |
 | 20 | <br/> | reserved | <br/> |
 | 21 | **[MODE_HELPER_AVERAGE](#mode-helper-average)** | helper mathematic avarege | `nill` `math` `mode` |
 | 22 | **[MODE_HELPER_SORT](#mode-helper-sort)** | helper mathematic sort | `nill` `math` `mode` |
 | 23 | **[MODE_HELPER_MAX](#mode-helper-max)** | helper mathematic maximum  | `nill` `math` `mode` |
 | 24 | **[MODE_HELPER_MIN](#mode-helper-min)** | helper mathematic minimum | `nill` `math` `mode` |
+| 25 | **[MODE_HELPER_PERCENTAGE](#mode-math-percentage)** | helper basic mathematic percentage | `nill` `math` `mode` |
 
 # Architecture details  #
 
@@ -160,17 +161,18 @@ CheatSheet
 | :--: | :---: | :-: | :---------- |
 | `math` | 1 | 001 | root aux memory value |
 
-## MODE MATH PERCENTAGE ##
-
-| name | octal | bit | description |
-| ------ | - | --- | - |
-| `math` | 1 | 001 | percentage aux memory value |
-
 ## MODE MATH ABS ##
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
 | `math` | 1 | 001 | module positive aux memory value |
+
+## MODE MATH NEGATIVE ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | negative module aux memory value |
+
 
 ## MODE HELPER AVERAGE ##
 
@@ -195,3 +197,10 @@ CheatSheet
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
 | `math` | 1 | 001 | keep less number in aux memory |
+
+
+## MODE HELPER PERCENTAGE ##
+
+| name | octal | bit | description |
+| ------ | - | --- | - |
+| `math` | 1 | 001 | percentage aux memory value |

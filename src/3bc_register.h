@@ -90,13 +90,13 @@ function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
         CPU_PACK1(MODE_MATH_POWER, cpu_math_power)
         CPU_PACK1(MODE_MATH_ROOT, cpu_math_root)
         CPU_PACK1(MODE_MATH_ABS, cpu_math_abs)
-        CPU_PACK1(MODE_MATH_ABS_NEGATIVE, cpu_math_abs_negative)
+        CPU_PACK1(MODE_MATH_ABS_NEGATIVE, cpu_math_negative)
         CPU_PACK_RESERVED(MODE_CUSTOM_2)
         CPU_PACK1(MODE_HELPER_AVARAGE, cpu_helper_average)
         CPU_PACK1(MODE_HELPER_SORT, cpu_helper_sort)
         CPU_PACK1(MODE_HELPER_MAX, cpu_helper_max)
         CPU_PACK1(MODE_HELPER_MIN, cpu_helper_min)
-        CPU_PACK1(MODE_MATH_PERCENTAGE, cpu_math_percentage)
+        CPU_PACK1(MODE_MATH_PERCENTAGE, cpu_helper_percentage)
     }
     #ifndef _3BC_COMPACT
     /** close array **/

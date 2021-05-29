@@ -141,6 +141,20 @@ class TestCpu < Minitest::Test
         assert_equal 0, status
     end
 
+    def test_mode_18
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 8\naloc 0 -9\nmode 0 18\nmath 0 0\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill")
+        assert_equal "", stderr
+        assert_equal "9", stdout
+        assert_equal 0, status
+    end
+
+    def test_mode_19
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 8\naloc 0 9\nmode 0 19\nmath 0 0\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill")
+        assert_equal "", stderr
+        assert_equal "-9", stdout
+        assert_equal 0, status
+    end
+
     def test_mode_21
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 21\nmath 0 3\nmath 0 6\nmath 0 9\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill")
          assert_equal "", stderr
@@ -159,6 +173,13 @@ class TestCpu < Minitest::Test
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 24\nmath 0 6\nmath 0 3\nmath 0 9\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill")
         assert_equal "", stderr
         assert_equal "3", stdout
+        assert_equal 0, status
+    end
+
+    def test_mode_25
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 8\naloc 0 100\nmode 0 25\nmath 0 69\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill\nmode 0 25\nmath 0 609\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill\nmode 0 25\nmath 0 100\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill")
+        assert_equal "", stderr
+        assert_equal "69420420", stdout
         assert_equal 0, status
     end
 end 

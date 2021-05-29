@@ -38,6 +38,7 @@ void cpu_helper_average(PARAMS_DEFINE);
 void cpu_helper_sort(PARAMS_DEFINE);
 void cpu_helper_max(PARAMS_DEFINE);
 void cpu_helper_min(PARAMS_DEFINE);
+void cpu_helper_percentage(PARAMS_DEFINE);
 void before_helper_average(void);
 void before_helper_sort(void);
 void before_helper_maxmin(void);
@@ -66,9 +67,8 @@ void cpu_math_div(PARAMS_DEFINE);
 void cpu_math_mod(PARAMS_DEFINE);
 void cpu_math_power(PARAMS_DEFINE);
 void cpu_math_root(PARAMS_DEFINE);
-void cpu_math_percentage(PARAMS_DEFINE);
 void cpu_math_abs(PARAMS_DEFINE);
-void cpu_math_abs_negative(PARAMS_DEFINE);
+void cpu_math_negative(PARAMS_DEFINE);
 
 /** FILE: cpu_jump.c **/
 void cpu_jump_goto(PARAMS_DEFINE);
