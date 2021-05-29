@@ -38,6 +38,7 @@ void cpu_helper_average(PARAMS_DEFINE);
 void cpu_helper_sort(PARAMS_DEFINE);
 void cpu_helper_max(PARAMS_DEFINE);
 void cpu_helper_min(PARAMS_DEFINE);
+void cpu_helper_percentage(PARAMS_DEFINE);
 void before_helper_average(void);
 void before_helper_sort(void);
 void before_helper_maxmin(void);
@@ -66,8 +67,8 @@ void cpu_math_div(PARAMS_DEFINE);
 void cpu_math_mod(PARAMS_DEFINE);
 void cpu_math_power(PARAMS_DEFINE);
 void cpu_math_root(PARAMS_DEFINE);
-void cpu_math_percentage(PARAMS_DEFINE);
 void cpu_math_abs(PARAMS_DEFINE);
+void cpu_math_negative(PARAMS_DEFINE);
 
 /** FILE: cpu_jump.c **/
 void cpu_jump_goto(PARAMS_DEFINE);
@@ -114,8 +115,7 @@ void lang_driver_exit(int sig);
 void lang_driver_init();
 void lang_driver_exit();
 #endif
-void lang_driver_output_1(register_3bc_t type, data_3bc_t value);
-void lang_driver_output_2(register_3bc_t type, data_3bc_t value);
+void lang_driver_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t value);
 void lang_driver_error(int error_code);
 data_3bc_t lang_driver_input(register_3bc_t type, address_3bc_t addres);
 bool lang_driver_strtol(const char* string, signed long int* value);
@@ -129,8 +129,8 @@ bool lang_interpreter_world(const char text_reg[6], int* reg);
 bool lang_interpreter_value(const char text_value[12], int* value);
 
 /** FILE: tape_aux.c **/
-data_3bc_t tape_aux_get(void);
-void tape_aux_set(data_3bc_t value);
+data_aux_3bc_t tape_aux_get(void);
+void tape_aux_set(data_aux_3bc_t value);
 
 /** FILE: tape_memory.c **/
 struct memory_node_s* tape_memory_llrbt_create_node(address_3bc_t address);

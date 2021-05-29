@@ -81,3 +81,9 @@ void cpu_helper_min(PARAMS_DEFINE)
         APP_3BC->cache_l2.min_value = AUX;
     }
 }
+
+void cpu_helper_percentage(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_DUALITY
+    tape_aux_set((data_aux_3bc_t) round((((double) GET_ANY_PARAM)/100.0) * AUX));
+}
