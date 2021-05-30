@@ -122,6 +122,7 @@ bool lang_driver_strtol(const char* string, signed long int* value);
 bool lang_driver_strchar(const char* string, signed long int* value);
 bool lang_driver_strhash(const char* string, signed long int* value);
 bool lang_driver_strword(const char* string, signed long int* value);
+int lang_driver_skip(void);
 
 /** FILE: lang_interpreter.c **/
 char lang_interpreter_line(file_t* stream);
