@@ -28,7 +28,7 @@ CheatSheet
 | 22 | **[MODE_HELPER_SORT](#mode-helper-sort)** | helper mathematic sort | `nill` `math` `mode` |
 | 23 | **[MODE_HELPER_MAX](#mode-helper-max)** | helper mathematic maximum  | `nill` `math` `mode` |
 | 24 | **[MODE_HELPER_MIN](#mode-helper-min)** | helper mathematic minimum | `nill` `math` `mode` |
-| 25 | **[MODE_HELPER_PERCENTAGE](#mode-math-percentage)** | helper basic mathematic percentage | `nill` `math` `mode` |
+| 25 | **[MODE_HELPER_PERCENTAGE](#mode-math-percentage)** | helper mathematic percentage | `nill` `math` `mode` |
 
 # Architecture details  #
 
