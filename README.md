@@ -75,14 +75,19 @@ $
  - [X] VM Memory Allocation 
  - [X] VM Input characters
  - [X] VM Memory Allocation 
+ - [ ] VM Memory Pointers
  - [X] VM Mathematic Basics
+ - [ ] VM Mathematic Boolean
  - [X] VM Labels
  - [X] VM Conditional Jumps
- - [X] Textual Interpreter just in time
- - [ ] Textual Interpreter to C transpiled
- - [ ] Textual Interpreter to binary
+ - [X] Compiler just in time
+ - [ ] Compiler to binary
+ - [ ] Transpiler to C
+ - [ ] Complete documentation
  - [ ] Programming IDE
  - [ ] Arduino Framework support
+ - [ ] Web Assembly support
+ - [ ] Modules Support
  - [ ] Includes support
  - [ ] Bindings support
 
