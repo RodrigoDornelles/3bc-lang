@@ -184,4 +184,59 @@ class TestCpu < Minitest::Test
         assert_equal "69420420", stdout
         assert_equal 0, status
     end
+
+    def test_mode_26
+        for console in
+        [
+            {input:"mode 0 26\nnb02 0 0b110\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill", output:"3"}, #TODO: base bin output
+            {input:"mode 0 26\nnb08 0 0o137\nmode 0 8\npull 'r' nill\nmode 0 2\nstro 'r' nill", output:"731"},
+            {input:"mode 0 26\nnb10 0 0d369\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill", output:"963"},
+            {input:"mode 0 26\nnb16 0 0xABC\nmode 0 8\npull 'r' nill\nmode 0 2\nstrx 'r' nill", output:"cba"},
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console[:input])
+        assert_equal console[:output], stdout
+        assert_equal 0, status
+        end
+    end
+
+    def test_mode_27
+        console_input = [
+            "mode 0 27\nmath 0 1\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 27\nmath 0 2\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 27\nmath 0 4\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 27\nmath 0 8\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 27\nmath 0 16\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 27\nmath 0 32\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 27\nmath 0 64\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 27\nmath 0 128\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill"
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input.join("\n"))
+        assert_equal "01234567", stdout
+        assert_equal 0, status
+    end
+
+    def test_mode_28
+        console_input = [
+            "mode 0 28\nmath 0 1\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 28\nmath 0 10\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 28\nmath 0 100\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill"
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input.join("\n"))
+        assert_equal "012", stdout
+        assert_equal 0, status
+    end
+
+    def test_mode_29
+        for console in
+        [
+            {input:"mode 0 29\nnb02 0 0b1\nnb02 0 0b0\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill", output:"2"}, #TODO: base bin output
+            {input:"mode 0 29\nnb08 0 0o7\nnb08 0 0o6\nmode 0 8\npull 'r' nill\nmode 0 2\nstro 'r' nill", output:"76"},
+            {input:"mode 0 29\nnb10 0 0d9\nnb10 0 0d8\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill", output:"98"},
+            {input:"mode 0 29\nnb16 0 0xF\nnb16 0 0xA\nmode 0 8\npull 'r' nill\nmode 0 2\nstrx 'r' nill", output:"fa"},
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console[:input])
+        assert_equal console[:output], stdout
+        assert_equal 0, status
+        end
+    end
 end 

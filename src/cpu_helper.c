@@ -87,3 +87,66 @@ void cpu_helper_percentage(PARAMS_DEFINE)
     VALIDATE_NOT_DUALITY
     tape_aux_set((data_aux_3bc_t) round((((double) GET_ANY_PARAM)/100.0) * AUX));
 }
+
+void cpu_helper_reverse(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_DUALITY
+    data_aux_3bc_t initial = GET_ANY_PARAM;
+    data_aux_3bc_t final = 0;
+    char base;
+
+    if (reg == NB02) {
+        base = 2;
+    }
+    else if (reg == NB08) {
+        base = 8;
+    }
+    else if (reg == NB10) {
+        base = 10;
+    }
+    else if (reg == NB16) {
+        base = 16;
+    }
+
+    do {
+        final *= base;
+        final += (initial % base);
+        initial /= base;
+    }
+    while(initial % base);
+    
+    tape_aux_set(final);
+}
+
+
+void cpu_helper_log2(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_DUALITY
+    tape_aux_set((data_aux_3bc_t) round(log2((double) GET_ANY_PARAM)));
+}
+
+void cpu_helper_log10(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_DUALITY
+    tape_aux_set((data_aux_3bc_t) round(log10((double) GET_ANY_PARAM)));
+}
+
+void cpu_helper_mul_add(PARAMS_DEFINE)
+{
+    char base = 0;
+
+    if (reg == NB02) {
+        base = 2;
+    }
+    else if (reg == NB08) {
+        base = 8;
+    }
+    else if (reg == NB10) {
+        base = 10;
+    }
+    else if (reg == NB16) {
+        base = 16;
+    }
+
+    tape_aux_set((AUX * base) + GET_ANY_PARAM);
+}

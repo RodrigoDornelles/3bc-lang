@@ -10,7 +10,7 @@ CheatSheet
 | 4 | **[MODE_INPUT_SILENT](#mode-input-silent)** | console input keyboard (silent) | `nill` `stri` `strc` `stro` `strx` `mode` |
 | 5 | **[MODE_INPUT_PASSWORD](#mode-input-password)** | console input keyboard (password) | `nill` `stri` `strc` `stro` `strx` `mode` |
 | 6 | **[MODE_MEMORY](#mode-memory)** | main memory controller | `nill` `free` `aloc` `tcfg` `tmin` `tmax` `mode` |
-| 7| <br/> | not use | <br/> |
+| 7 | <br/> | reserved | <br/> |
 | 8 | **[MODE_MEMORY_AUX](#mode-memory-aux)** | aux memory controller | `nill` `free` `aloc` `pull` `push` `mode` |
 | 9 | **[MODE_JUMP](#mode-jump)** | logical jumps between labels | `nill` `goto` `fgto` `zgto` `pgto` `ngto` `mode` |
 | 10 | <br/> | reserved | <br/> |
@@ -28,7 +28,12 @@ CheatSheet
 | 22 | **[MODE_HELPER_SORT](#mode-helper-sort)** | helper mathematic sort | `nill` `math` `mode` |
 | 23 | **[MODE_HELPER_MAX](#mode-helper-max)** | helper mathematic maximum  | `nill` `math` `mode` |
 | 24 | **[MODE_HELPER_MIN](#mode-helper-min)** | helper mathematic minimum | `nill` `math` `mode` |
-| 25 | **[MODE_HELPER_PERCENTAGE](#mode-math-percentage)** | helper basic mathematic percentage | `nill` `math` `mode` |
+| 25 | **[MODE_HELPER_PERCENTAGE](#mode-helper-percentage)** | helper mathematic percentage | `nill` `math` `mode` |
+| 26 | **[MODE_HELPER_REVERSE](#mode-helper-reverse)** | helper base reverse | `nill` `nb02` `nb08` `nb10` `nb16` `mode` |
+| 27 | **[MODE_HELPER_LOG2](#mode-helper-log-base-2)** | helper log base 2 | `nill` `math` `mode` |
+| 28 | **[MODE_HELPER_LOG10](#mode-helper-log-base-10)** | helper log base 10 | `nill` `math` `mode` |
+| 29     | **[MODE_HELPER_MUL_ADD](#mode-helper-mul-add)** | multiply by base and add acumulator | `nill` `nb02` `nb08` `nb10` `nb16` `mode` |
+| 30 | <br/> | reserved | <br/> |
 
 # Architecture details  #
 
@@ -204,3 +209,33 @@ CheatSheet
 | name | octal | bit | description |
 | ------ | - | --- | - |
 | `math` | 1 | 001 | percentage aux memory value |
+
+## MODE HELPER REVERSE ##
+
+| name | octal | bit | description |
+| ------ | - | --- | - |
+| `nb02` | 1 | 001 | base 2 reverse number |
+| `nb08` | 1 | 010 | base 8 reverse number |
+| `nb10` | 1 | 011 | base 10 reverse number |
+| `nb16` | 1 | 100 | base 16 reverse number |
+
+## MODE HELPER LOG BASE 2 ##
+
+| name | octal | bit | description |
+| ------ | - | --- | - |
+| `math` | 1 | 001 | base 2 logarithm |
+
+## MODE HELPER LOG BASE 10 ##
+
+| name | octal | bit | description |
+| ------ | - | --- | - |
+| `math` | 1 | 001 | base 10 logarithm |
+
+## MODE HELPER MUL ADD ##
+
+| name | octal | bit | description |
+| ------ | - | --- | - |
+| `nb02` | 1 | 001 | multiply by 2 and accumulate operation |
+| `nb08` | 2 | 010 | multiply by 8 and accumulate operation |
+| `nb10` | 3 | 011 | multiply by 10 and accumulate operation |
+| `nb16` | 4 | 100 | multiply by 16 and accumulate operation |

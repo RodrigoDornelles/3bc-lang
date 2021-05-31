@@ -432,7 +432,25 @@ bool lang_driver_strword(const char* string, signed long int* value)
     {
         PARSER_PACK('n', 'i', 'l', 'l', value, NILL);
         PARSER_PACK('f', 'u', 'l', 'l', value, SHRT_MAX);
+        PARSER_PACK('s', 'k', 'i', 'p', value, lang_driver_skip());
     }
 
     return false;
+}
+
+/**
+ * algorithm of djb2 hash to string "skip" + count every two calls
+ */
+int lang_driver_skip()
+{
+    static int counter = 0;
+    unsigned long hash = 15376; /* hash to skip */
+    int c = (counter++) / 2; /** count after 2 calls **/
+
+    do {
+        hash = ((hash << 5) + hash) + (c % 10) + '0';
+        c /= 10;
+    } while (c > 0);
+
+    return hash % SHRT_MAX;
 }

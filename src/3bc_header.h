@@ -8,7 +8,7 @@
  */
 extern "C" {
 #endif
-#define PARAMS_DEFINE           int addres, int value
+#define PARAMS_DEFINE           int reg, int addres, int value
 #define PARAMS_USE              addres,value
 #define VALIDATE_NOT_DUALITY    if(addres!=0&&value!=0)lang_driver_error(ERROR_PARAM_DUALITY);
 #define VALIDATE_NOT_ADRESS     if(addres!=0)lang_driver_error(ERROR_PARAM_BLOCKED_ADDRESS);
@@ -16,7 +16,7 @@ extern "C" {
 #define REQUIRED_ADDRESS        if(addres==0)lang_driver_error(ERROR_PARAM_REQUIRE_ADDRESS);
 #define REQUIRED_VALUE          if(value==0)lang_driver_error(ERROR_PARAM_REQUIRE_VALUE);
 #define GET_ANY_PARAM           (addres?tape_memory_data_get(addres):value)
-#define AUX_USE_ANY_PARAM       if(addres)cpu_memory_aux_push(addres,0);else cpu_memory_aux_aloc(0,value);
+#define AUX_USE_ANY_PARAM       tape_aux_set(addres?tape_memory_data_get(addres):value);
 
 /** FILE: cpu_common.c **/
 void cpu_null(PARAMS_DEFINE);
@@ -39,6 +39,10 @@ void cpu_helper_sort(PARAMS_DEFINE);
 void cpu_helper_max(PARAMS_DEFINE);
 void cpu_helper_min(PARAMS_DEFINE);
 void cpu_helper_percentage(PARAMS_DEFINE);
+void cpu_helper_reverse(PARAMS_DEFINE);
+void cpu_helper_log2(PARAMS_DEFINE);
+void cpu_helper_log10(PARAMS_DEFINE);
+void cpu_helper_mul_add(PARAMS_DEFINE);
 void before_helper_average(void);
 void before_helper_sort(void);
 void before_helper_maxmin(void);
@@ -122,6 +126,7 @@ bool lang_driver_strtol(const char* string, signed long int* value);
 bool lang_driver_strchar(const char* string, signed long int* value);
 bool lang_driver_strhash(const char* string, signed long int* value);
 bool lang_driver_strword(const char* string, signed long int* value);
+int lang_driver_skip(void);
 
 /** FILE: lang_interpreter.c **/
 char lang_interpreter_line(file_t* stream);

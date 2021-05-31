@@ -93,6 +93,11 @@ bool lang_interpreter_world(const char text_reg[6], int* reg)
         PARSER_PACK('p', 'g', 't', 'o', reg, SPIN, PGTO, TMAX);
         PARSER_PACK('n', 'g', 't', 'o', reg, NGTO, TMIN);
 
+        PARSER_PACK('n', 'b', '0', '2', reg, NB02);
+        PARSER_PACK('n', 'b', '0', '8', reg, NB08);
+        PARSER_PACK('n', 'b', '1', '0', reg, NB10);
+        PARSER_PACK('n', 'b', '1', '6', reg, NB16);
+
         PARSER_PACK('m', 'a', 't', 'h', reg, MATH);
     }
 
