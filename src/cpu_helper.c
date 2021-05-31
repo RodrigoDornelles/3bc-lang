@@ -96,8 +96,7 @@ void cpu_helper_reverse(PARAMS_DEFINE)
     char base;
 
     if (reg == NB02) {
-        tape_aux_set(~AUX);
-        return;
+        base = 2;
     }
     else if (reg == NB08) {
         base = 8;
