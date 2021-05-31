@@ -76,6 +76,8 @@ bool tape_program_exe()
      * Perform physical function
      */
     (instruction)(
+        /** param for function: register_3bc_t reg **/
+        APP_3BC->program.curr->column.reg,
         /** param for function: address_3bc_t addres **/
         APP_3BC->program.curr->column.adr,
         /** param for function: data_3bc_t value **/

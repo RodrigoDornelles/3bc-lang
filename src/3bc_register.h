@@ -25,7 +25,12 @@
 #define MODE_HELPER_SORT        (22)
 #define MODE_HELPER_MAX         (23)
 #define MODE_HELPER_MIN         (24)
-#define MODE_MATH_PERCENTAGE    (25)
+#define MODE_HELPER_PERCENTAGE  (25)
+#define MODE_HELPER_REVERSE     (26)
+#define MODE_HELPER_LOG2        (27)
+#define MODE_HELPER_LOG10       (28)
+#define MODE_HELPER_MUL_ADD     (29)
+#define MODE_CUSTOM_3           (30)
 
 #define NILL 0b000
 #define MODE 0b111
@@ -34,20 +39,24 @@
 #define FREE 0b001
 #define MATH 0b001
 #define GOTO 0b001
+#define NB02 0b001
 
 #define STRC 0b010
 #define ALOC 0b010
 #define FGTO 0b010
+#define NB08 0b010
 
 #define STRO 0b011 
 #define TCFG 0b011
 #define PULL 0b011  
 #define ZGTO 0b011
+#define NB10 0B011
 
 #define STRX 0b100
 #define PGTO 0b100
 #define TMAX 0b100
 #define SPIN 0b100
+#define NB16 0b100
 
 #define TMIN 0b101
 #define NGTO 0b101
@@ -96,7 +105,12 @@ function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
         CPU_PACK1(MODE_HELPER_SORT, cpu_helper_sort)
         CPU_PACK1(MODE_HELPER_MAX, cpu_helper_max)
         CPU_PACK1(MODE_HELPER_MIN, cpu_helper_min)
-        CPU_PACK1(MODE_MATH_PERCENTAGE, cpu_helper_percentage)
+        CPU_PACK1(MODE_HELPER_PERCENTAGE, cpu_helper_percentage)
+        CPU_PACK4(MODE_HELPER_REVERSE, cpu_helper_reverse, cpu_helper_reverse, cpu_helper_reverse, cpu_helper_reverse)
+        CPU_PACK1(MODE_HELPER_LOG2, cpu_helper_log2)
+        CPU_PACK1(MODE_HELPER_LOG10, cpu_helper_log10)
+        CPU_PACK4(MODE_HELPER_MUL_ADD, cpu_helper_mul_add, cpu_helper_mul_add, cpu_helper_mul_add, cpu_helper_mul_add)
+        CPU_PACK_RESERVED(MODE_CUSTOM_3)
     }
     #ifndef _3BC_COMPACT
     /** close array **/
