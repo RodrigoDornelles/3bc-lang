@@ -3,6 +3,13 @@ require 'minitest/spec'
 require 'minitest/autorun'
 
 class TestExample < Minitest::Test
+    def test_fibonacci
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/fibonacci.3bc", :stdin_data => 9)
+        assert_equal "", stderr
+        assert_equal "FIB:9\n0\n1\n1\n2\n3\n5\n8\n13\n21", stdout
+        assert_equal 0, status
+    end
+
     def test_hello_world
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/heloworld.3bc")
         assert_equal "", stderr
