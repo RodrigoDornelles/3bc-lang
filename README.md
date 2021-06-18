@@ -70,24 +70,21 @@ $
 
 ## Ambient Roadmap ##
 
- - [X] VM Memory auxiliary
  - [X] VM Output characters
- - [X] VM Memory Allocation 
  - [X] VM Input characters
  - [X] VM Memory Allocation 
- - [ ] VM Memory Pointers
+ - [X] VM Memory Auxiliary
+ - [X] VM Memory Pointers
  - [X] VM Mathematic Basics
  - [ ] VM Mathematic Boolean
- - [X] VM Labels
- - [X] VM Conditional Jumps
+ - [X] VM Labels and conditional jumps
  - [X] Compiler just in time
- - [ ] Compiler to binary
+ - [ ] Compiler to bytecode
  - [ ] Transpiler to C
- - [ ] Complete documentation
+ - [ ] Documentation
  - [ ] Programming IDE
  - [ ] Arduino Framework support
  - [ ] Web Assembly support
- - [ ] Modules Support
  - [ ] Includes support
  - [ ] Bindings support
 
