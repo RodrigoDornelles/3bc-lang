@@ -90,7 +90,7 @@ $
 
 ## List of early developers ##
 
-Hall of fame with everyone who dedicated to **just learning a program with 3bc lang**, this list is open until the day that version **0.1** will be released.
+Hall of fame with everyone who dedicated to **just learning 3bc language**, this list is open until the day that version **0.1** will be released.
 
 | **1º** | ![avatar](https://avatars.githubusercontent.com/rodrigodornelles?size=32) | **[Rodrigo Dornelles](https://github.com/rodrigodornelles)** | **26 November 2020** |
 | :-: | :-: | :-- | :--: |
