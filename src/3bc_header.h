@@ -43,6 +43,7 @@ void cpu_helper_reverse(PARAMS_DEFINE);
 void cpu_helper_log2(PARAMS_DEFINE);
 void cpu_helper_log10(PARAMS_DEFINE);
 void cpu_helper_mul_add(PARAMS_DEFINE);
+void cpu_helper_sign(PARAMS_DEFINE);
 void before_helper_average(void);
 void before_helper_sort(void);
 void before_helper_maxmin(void);
