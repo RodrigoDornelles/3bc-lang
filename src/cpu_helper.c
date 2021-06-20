@@ -150,3 +150,19 @@ void cpu_helper_mul_add(PARAMS_DEFINE)
 
     tape_aux_set((AUX * base) + GET_ANY_PARAM);
 }
+
+void cpu_helper_sign(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_DUALITY
+    AUX_USE_ANY_PARAM
+
+    if (AUX > 0) {
+        tape_aux_set(+1);
+    }
+    else if (AUX < 0) {
+        tape_aux_set(-1);
+    }
+    else {
+        tape_aux_set(0);
+    }
+}

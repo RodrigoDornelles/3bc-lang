@@ -68,6 +68,17 @@ class TestCpu < Minitest::Test
         assert_equal 0, status
     end
 
+    def test_mode_7
+        console_input = [
+            "mode 0 6\naloc 'p' 'a'\naloc 'a' 2\naloc 'b' 3\nmode 0 7\npush 'p' nill",
+            "mode 0 6\naloc 'p' 'b'\nmode 0 7\nspin 'p' nill",
+            "mode 0 6\naloc 'p' 'a'\nmode 0 7\npull 'p' nill\nmode 0 2\nstri 'a' nill\nstri 'b' nill"
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input.join("\n"))
+        assert_equal "32", stdout
+        assert_equal 0, status
+    end
+
     def test_mode_8
         console_input = [
             "mode 0 8\naloc 0 1\npull 1 0\nfree 0 0\npull 2 0\naloc 0 8\npull 3 0\naloc 0 4\nspin 3 0\npull 4 0",
@@ -161,6 +172,17 @@ class TestCpu < Minitest::Test
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 21\nmath 0 3\nmath 0 6\nmath 0 9\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill")
          assert_equal "", stderr
         assert_equal "6", stdout
+        assert_equal 0, status
+    end
+
+    def test_mode_22
+        console_input = [
+            "mode 0 22\nmath 0 -9\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 22\nmath 0 0\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 22\nmath 0 9\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill"
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input.join("\n"))
+        assert_equal "-101", stdout
         assert_equal 0, status
     end
 

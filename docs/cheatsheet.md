@@ -10,7 +10,7 @@ CheatSheet
 | 4 | **[MODE_INPUT_SILENT](#mode-input-silent)** | console input keyboard (silent) | `nill` `stri` `strc` `stro` `strx` `mode` |
 | 5 | **[MODE_INPUT_PASSWORD](#mode-input-password)** | console input keyboard (password) | `nill` `stri` `strc` `stro` `strx` `mode` |
 | 6 | **[MODE_MEMORY](#mode-memory)** | main memory controller | `nill` `free` `aloc` `tcfg` `tmin` `tmax` `mode` |
-| 7 | <br/> | reserved | <br/> |
+| 7 | **[MODE_MEMORY_PTR](#mode-memory-ptr)** | pointers memory controller | `nill` `free` `aloc` `pull` `push` `mode` |
 | 8 | **[MODE_MEMORY_AUX](#mode-memory-aux)** | aux memory controller | `nill` `free` `aloc` `pull` `push` `mode` |
 | 9 | **[MODE_JUMP](#mode-jump)** | logical jumps between labels | `nill` `goto` `fgto` `zgto` `pgto` `ngto` `mode` |
 | 10 | <br/> | reserved | <br/> |
@@ -25,7 +25,7 @@ CheatSheet
 | 19 | **[MODE_MATH_NEGATIVE](#mode-math-abs)** | basic mathematic negative | `nill` `math` `mode` |
 | 20 | <br/> | reserved | <br/> |
 | 21 | **[MODE_HELPER_AVERAGE](#mode-helper-average)** | helper mathematic avarege | `nill` `math` `mode` |
-| 22 | **[MODE_HELPER_SORT](#mode-helper-sort)** | helper mathematic sort | `nill` `math` `mode` |
+| 18 | **[MODE_HELPER_SIGN](#mode-helper-sign)** | helper mathematic sign | `nill` `math` `mode` |
 | 23 | **[MODE_HELPER_MAX](#mode-helper-max)** | helper mathematic maximum  | `nill` `math` `mode` |
 | 24 | **[MODE_HELPER_MIN](#mode-helper-min)** | helper mathematic minimum | `nill` `math` `mode` |
 | 25 | **[MODE_HELPER_PERCENTAGE](#mode-helper-percentage)** | helper mathematic percentage | `nill` `math` `mode` |
@@ -34,6 +34,7 @@ CheatSheet
 | 28 | **[MODE_HELPER_LOG10](#mode-helper-log-base-10)** | helper log base 10 | `nill` `math` `mode` |
 | 29     | **[MODE_HELPER_MUL_ADD](#mode-helper-mul-add)** | multiply by base and add acumulator | `nill` `nb02` `nb08` `nb10` `nb16` `mode` |
 | 30 | <br/> | reserved | <br/> |
+| 31 | **[MODE_MEMORY_SORT](#mode-helper-sort)** | helper memory sort | `nill` `math` `mode` |
 
 # Architecture details  #
 
@@ -54,7 +55,6 @@ CheatSheet
 | `strc` | 2 | 010 | log ascii character |
 | `stro` | 3 | 011 | log literal number in octal |
 | `strx` | 4 | 100 | log literal number in hexadecimal |
-| | 5 | 101 | log literal number (unsigned) |
 
 ## MODE STRING ##
 
@@ -64,7 +64,6 @@ CheatSheet
 | `strc` | 2 | 010 | put ascii character |
 | `stro` | 3 | 011 | put literal number in octal |
 | `strx` | 4 | 100 | put literal number in hexadecimal |
-| | 5 | 101 | put literal number (unsigned) |
 
 ## MODE INPUT ##
 
@@ -102,6 +101,17 @@ CheatSheet
 | `tcfg` | 3 | 011 | set config memory type |
 | `tmax` | 4 | 100 | set max value in memory |
 | `tmin` | 5 | 101 | set min value in memory |
+
+## MODE MEMORY PTR ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `free` | 1 | 001 | realese memory in pointer |
+| `aloc` | 2 | 010 | set a value in pointer |
+| `pull` | 3 | 011 | pull aux memory to address pointer memory (ptr <- aux) |
+| `spin` | 4 | 100 | inverse values inner memory pointer and aux (ptr <-> aux) |
+| `push` | 5 | 101 | push aux memory to pointer memory (ptr -> aux) |
+
 
 ## MODE MEMORY AUX ##
 
@@ -185,11 +195,11 @@ CheatSheet
 | :--: | :---: | :-: | :---------- |
 | `math` | 1 | 001 | avarange values received and storage in the aux memory |
 
-## MODE HELPER SORT ##
+## MODE HELPER SIGN ##
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
-| `math` | 1 | 001 | sort memory address values |
+| `math` | 1 | 001 | verify number sign and storage in aux memory (-1, 0, 1) |
 
 ## MODE HELPER MAX ##
 
@@ -239,3 +249,9 @@ CheatSheet
 | `nb08` | 2 | 010 | multiply by 8 and accumulate operation |
 | `nb10` | 3 | 011 | multiply by 10 and accumulate operation |
 | `nb16` | 4 | 100 | multiply by 16 and accumulate operation |
+
+## MODE MEMORY SORT ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | sort memory address values |

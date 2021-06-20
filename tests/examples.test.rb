@@ -75,4 +75,11 @@ class TestExample < Minitest::Test
         assert_equal 0, status
         end
     end
+
+    def test_pointers
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/pointers.3bc")
+        assert_equal "", stderr
+        assert_equal "7", stdout
+        assert_equal 0, status
+    end
 end

@@ -70,30 +70,27 @@ $
 
 ## Ambient Roadmap ##
 
- - [X] VM Memory auxiliary
  - [X] VM Output characters
- - [X] VM Memory Allocation 
  - [X] VM Input characters
  - [X] VM Memory Allocation 
- - [ ] VM Memory Pointers
+ - [X] VM Memory Auxiliary
+ - [X] VM Memory Pointers
  - [X] VM Mathematic Basics
  - [ ] VM Mathematic Boolean
- - [X] VM Labels
- - [X] VM Conditional Jumps
+ - [X] VM Labels and conditional jumps
  - [X] Compiler just in time
- - [ ] Compiler to binary
+ - [ ] Compiler to bytecode
  - [ ] Transpiler to C
- - [ ] Complete documentation
+ - [ ] Documentation
  - [ ] Programming IDE
  - [ ] Arduino Framework support
  - [ ] Web Assembly support
- - [ ] Modules Support
  - [ ] Includes support
  - [ ] Bindings support
 
 ## List of early developers ##
 
-Hall of fame with everyone who dedicated to **just learning a program with 3bc lang**, this list is open until the day that version **0.1** will be released.
+Hall of fame with everyone who dedicated to **just learning 3bc language**, this list is open until the day that version **0.1** will be released.
 
 | **1º** | ![avatar](https://avatars.githubusercontent.com/rodrigodornelles?size=32) | **[Rodrigo Dornelles](https://github.com/rodrigodornelles)** | **26 November 2020** |
 | :-: | :-: | :-- | :--: |
