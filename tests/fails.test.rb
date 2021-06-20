@@ -9,11 +9,13 @@ class TestFails < Minitest::Test
         assert_equal 15, status.exitstatus
     end
 
+=begin DECREPTED
     def test_cpu_protected
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 7\nstrc 0 0")
         assert_match /ERROR CODE\: (0x3BC001)/, stderr
         assert_equal 15, status.exitstatus
     end
+=end
 
     def test_cpu_reserved
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 10\nstrc 0 0")

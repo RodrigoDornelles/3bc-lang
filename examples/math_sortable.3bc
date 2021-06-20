@@ -17,7 +17,7 @@ stri 0x01 nill
 stri 0x02 nill
 stri 0x03 nill
 
-mode nill 0x16
+mode nill 0d31
 math 0x01 nill
 math 0x02 nill
 math 0x03 nill
