@@ -164,6 +164,17 @@ class TestCpu < Minitest::Test
         assert_equal 0, status
     end
 
+    def test_mode_22
+        console_input = [
+            "mode 0 22\nmath 0 -9\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 22\nmath 0 0\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill",
+            "mode 0 22\nmath 0 9\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill"
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input.join("\n"))
+        assert_equal "-101", stdout
+        assert_equal 0, status
+    end
+
     def test_mode_23
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 23\nmath 0 6\nmath 0 9\nmath 0 3\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill")
         assert_equal "", stderr
