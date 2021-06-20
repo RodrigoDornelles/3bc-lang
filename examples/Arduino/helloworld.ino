@@ -2,7 +2,7 @@
 
 void setup() {
   lang_driver_init();
-  lang_line(MODE, NILL, 0x02);
+  lang_line(MODE, NILL, 2);
   lang_line(STRC, NILL, 'H');
   lang_line(STRC, NILL, 'e');
   lang_line(STRC, NILL, 'l');
