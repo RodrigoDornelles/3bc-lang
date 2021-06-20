@@ -151,6 +151,15 @@ void lang_driver_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t va
 }
 
 /**
+ * TODO: remove
+ */
+int lang_driver_error2(int error_code)
+{
+    lang_driver_error(error_code);
+    return 0;
+}
+
+/**
  * NOTE: params as int to better compatibility with function pointers.
  */
 void lang_driver_error(int error_code)
@@ -208,8 +217,9 @@ void lang_driver_error(int error_code)
         case ERROR_LONG_LINE: print_error("EXCEED LINE COLUMN LIMIT");
         case ERROR_CHAR_SCAPE: print_error("INVALID CHARACTER ESCAPE");
         case ERROR_CHAR_SIZE: print_error("INVALID CHARACTER SIZE");
+        case ERROR_NULL_POINTER: print_error("NULL POINTER EXCEPTION");
         default: print_error("UNKNOWN ERROR");
-    }
+    }   
     #endif
 
     #ifdef _3BC_COMPUTER
