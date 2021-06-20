@@ -60,7 +60,8 @@ void cpu_memory_ptr_spin(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     data_3bc_t aux_old = AUX;
-    tape_aux_set(tape_memory_data_get(tape_memory_data_get(addres)));
+    addres = tape_memory_data_get(addres);
+    tape_aux_set(tape_memory_data_get(addres));
     tape_memory_data_set(addres, aux_old);
 }
 
