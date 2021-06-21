@@ -17,6 +17,7 @@ extern "C" {
 #define REQUIRED_VALUE          if(value==0)lang_driver_error(ERROR_PARAM_REQUIRE_VALUE);
 #define GET_ANY_PARAM           (addres?tape_memory_data_get(addres):value)
 #define AUX_USE_ANY_PARAM       tape_aux_set(addres?tape_memory_data_get(addres):value);
+#define POINTER(a)              tape_memory_data_get(a)?tape_memory_data_get(a):lang_driver_error2(ERROR_NULL_POINTER)
 
 /** FILE: cpu_common.c **/
 void cpu_null(PARAMS_DEFINE);
@@ -127,6 +128,7 @@ void lang_driver_exit();
 #endif
 void lang_driver_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t value);
 void lang_driver_error(int error_code);
+int lang_driver_error2(int error_code);
 data_3bc_t lang_driver_input(register_3bc_t type, address_3bc_t addres);
 bool lang_driver_strtol(const char* string, signed long int* value);
 bool lang_driver_strchar(const char* string, signed long int* value);
