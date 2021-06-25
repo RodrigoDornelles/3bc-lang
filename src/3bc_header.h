@@ -24,7 +24,6 @@ void cpu_mode(PARAMS_DEFINE);
 void cpu_not_mode(PARAMS_DEFINE);
 void cpu_not_exist(PARAMS_DEFINE);
 void cpu_mode_reserved(PARAMS_DEFINE);
-void cpu_mode_protected(PARAMS_DEFINE);
 
 /** FILE: cpu_debug.c **/
 void cpu_debug_stri(PARAMS_DEFINE);

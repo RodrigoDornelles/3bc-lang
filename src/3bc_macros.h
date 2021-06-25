@@ -58,7 +58,6 @@
 #ifdef _3BC_COMPACT
 #define CPU_PACK_ZEROMODE(mode)     case(mode):switch(reg){default:return(&cpu_not_mode);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);}
 #define CPU_PACK_RESERVED(mode)     case(mode):switch(reg){default:return(&cpu_mode_reserved);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);}
-#define CPU_PACK_PROTECTED(mode)    case(mode):switch(reg){default:return(&cpu_mode_protected);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);}
 #define CPU_PACK1(mode,a)           case(mode):switch(reg){default:return(&cpu_not_exist);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);case(0b001):return(&a);}
 #define CPU_PACK2(mode,a,b)         case(mode):switch(reg){default:return(&cpu_not_exist);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);case(0b001):return(&a);case(0b010):return(&b);}
 #define CPU_PACK3(mode,a,b,c)       case(mode):switch(reg){default:return(&cpu_not_exist);case(0b000):return(&cpu_null);case(0b111):return(&cpu_mode);case(0b001):return(&a);case(0b010):return(&b);case(0b011):return(&c);}
@@ -68,7 +67,6 @@
 #else 
 #define CPU_PACK_ZEROMODE(mode)     {&cpu_null,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_not_mode,&cpu_mode},
 #define CPU_PACK_RESERVED(mode)     {&cpu_null,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode_reserved,&cpu_mode},
-#define CPU_PACK_PROTECTED(mode)    {&cpu_null,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode_protected,&cpu_mode},
 #define CPU_PACK1(mode,a)           {&cpu_null,&a,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_mode},
 #define CPU_PACK2(mode,a,b)         {&cpu_null,&a,&b,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_mode},
 #define CPU_PACK3(mode,a,b,c)       {&cpu_null,&a,&b,&c,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_mode},
