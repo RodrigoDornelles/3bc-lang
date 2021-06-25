@@ -50,7 +50,7 @@
 #define PARSER_UNPACK(c)                (tolower(c[0])+tolower(c[1])+tolower(c[2])+tolower(c[3]))
 #define PARSER_PACK(c1,c2,c3,c4,v,r,...)  case(c1+c2+c3+c4):*v=r;return(true)
 #define LLRBT_IS_RED(n)                 (n==NULL?false:n->color==LLRBT_RED)
-
+#define POINTER(a)                      (tape_memory_pointer(a))
 
 /**
  * INSTRUCTIONS PACK MACROS

@@ -313,3 +313,14 @@ void tape_memory_destroy()
 {
     /** TODO: this **/
 }
+
+address_3bc_t tape_memory_pointer(address_3bc_t address)
+{
+    register address_3bc_t ptr = tape_memory_data_get(address);
+
+    if (ptr == NILL) {
+        lang_driver_error(ERROR_NULL_POINTER);
+    }
+
+    return ptr;
+}

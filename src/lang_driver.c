@@ -151,15 +151,6 @@ void lang_driver_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t va
 }
 
 /**
- * TODO: remove
- */
-int lang_driver_error2(int error_code)
-{
-    lang_driver_error(error_code);
-    return 0;
-}
-
-/**
  * NOTE: params as int to better compatibility with function pointers.
  */
 void lang_driver_error(int error_code)
