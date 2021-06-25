@@ -151,15 +151,6 @@ void lang_driver_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t va
 }
 
 /**
- * TODO: remove
- */
-int lang_driver_error2(int error_code)
-{
-    lang_driver_error(error_code);
-    return 0;
-}
-
-/**
  * NOTE: params as int to better compatibility with function pointers.
  */
 void lang_driver_error(int error_code)
@@ -312,12 +303,12 @@ bool lang_driver_strtol(const char* string, signed long int* value)
     /** custom base with sign **/
     if(decode[0] == '-' && decode[1] == '0' && !isdigit(2) && decode[2] != '\0'){
         type = tolower(decode[2]);
-        memmove(&decode[2], &decode[3], strlen(decode) - 2);
+        memmove(&decode[2], &decode[3], sizeof(decode) - 2);
     }
     /** custom base whiout sign **/
     else if(decode[0] == '0' && !isdigit(1) && decode[1] != '\0') {
         type = tolower(decode[1]);
-        memmove(&decode[1], &decode[2], strlen(decode) - 1);
+        memmove(&decode[1], &decode[2], sizeof(decode) - 1);
     }
     /** decimal base **/
     else {

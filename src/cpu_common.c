@@ -24,8 +24,3 @@ void cpu_mode_reserved(PARAMS_DEFINE)
 {
     lang_driver_error(ERROR_CPU_RESERVED);
 }
-
-void cpu_mode_protected(PARAMS_DEFINE)
-{
-    lang_driver_error(ERROR_CPU_PROTECT);
-}
