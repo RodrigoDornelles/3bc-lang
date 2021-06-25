@@ -37,13 +37,13 @@ After downloading the binary on the [releases](#https://github.com/RodrigoDornel
 ### example: `helloworld.3bc` ###
 
 ```RUBY
-mode nill 0x2
+mode nill 0d2
 strc nill 'h'
 strc nill 'e'
 strc nill 'l'
 strc nill 'l'
 strc nill 'o'
-strc nill 0x20
+strc nill ' '
 strc nill 'w'
 strc nill 'o'
 strc nill 'r'
