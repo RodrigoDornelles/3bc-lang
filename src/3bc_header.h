@@ -136,6 +136,19 @@ void driver_power_safe_exit();
 void lang_driver_run();
 void driver_program_error(int error_code);
 
+/** FILE: interpreter_compiler.c **/
+bool interpreter_compiler(file_t* stream);
+
+/** FILE: interpreter_parser.c **/
+bool interpreter_parser_strtol(const char* string, signed long int* value);
+bool interpreter_parser_strchar(const char* string, signed long int* value);
+bool interpreter_parser_strhash(const char* string, signed long int* value);
+int interpreter_parser_skip();
+
+/** FILE: interpreter_syntax.c **/
+bool interpreter_syntax_registers(const char* string, signed long int* value);
+bool interpreter_syntax_constants(const char* string, signed long int* value);
+
 /** FILE: tape_aux.c **/
 data_aux_3bc_t tape_aux_get(void);
 void tape_aux_set(data_aux_3bc_t value);
@@ -152,6 +165,7 @@ void tape_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_no
 void tape_memory_destroy(void);
 
 /** FILE: tape_program.c **/
+bool tape_program_exe();
 void tape_program_resize(void);
 void tape_program_destroy(void);
 void tape_program_line_add(register_3bc_t reg, address_3bc_t mem, data_3bc_t val);

@@ -1,9 +1,9 @@
-
+#include "3bc.h"
 
 /**
  * convert string in any numeric base
  */
-bool lang_driver_strtol(const char* string, signed long int* value)
+bool interpreter_parser_strtol(const char* string, signed long int* value)
 {
     static char decode[32];
     static char* endptr;
@@ -88,7 +88,7 @@ bool lang_driver_strtol(const char* string, signed long int* value)
     return true;
 }
 
-bool lang_driver_strchar(const char* string, signed long int* value)
+bool interpreter_parser_strchar(const char* string, signed long int* value)
 {
     /** not init with (') **/
     if (string[0] != 0x27) {
@@ -127,9 +127,9 @@ bool lang_driver_strchar(const char* string, signed long int* value)
     return true;
 }
 
-bool lang_driver_strhash(const char* string, signed long int* value)
+bool interpreter_parser_strhash(const char* string, signed long int* value)
 {
-    unsigned long hash = 5381;
+    register unsigned long hash = 5381;
     int c;
 
     /** is not hash **/
@@ -144,15 +144,13 @@ bool lang_driver_strhash(const char* string, signed long int* value)
     return true;
 }
 
-
-
 /**
  * algorithm of djb2 hash to string "skip" + count every two calls
  */
-int lang_driver_skip()
+int interpreter_parser_skip()
 {
     static int counter = 0;
-    unsigned long hash = 15376; /* hash to skip */
+    register unsigned long hash = 15376; /* hash to skip */
     int c = (counter++) / 2; /** count after 2 calls **/
 
     do {

@@ -5,7 +5,7 @@
 
 void lang_driver_run()
 {
-    while(tape_program_avaliable()? tape_program_exe(): lang_interpreter_line(APP_3BC->tty_source.io.stream));
+    while(tape_program_avaliable()? tape_program_exe(): interpreter_compiler(APP_3BC->tty_source.io.stream));
 }
 
 /**

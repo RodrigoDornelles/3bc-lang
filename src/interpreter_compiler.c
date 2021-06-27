@@ -10,7 +10,7 @@
  * -> the character after limit has different from nul, that line was crossed.
  * -> text_line has the size (limit + 3) to respect text limit (line + 1).
  */
-char lang_interpreter_line(file_t* stream)
+bool interpreter_compiler(file_t* stream)
 {
     static char text_line[LINE_LIMIT + 3];
     static char text_reg[6], text_mem[12], text_val[12];
@@ -50,38 +50,19 @@ char lang_interpreter_line(file_t* stream)
     }
 
     /** parse string to register and validate **/
-    if (!lang_interpreter_world(text_reg, (int*) &reg)){
+    if (!interpreter_syntax_registers(text_reg, (long int*) &reg)){
         driver_program_error(ERROR_INVALID_REGISTER);
     }
     /** parse string to address and validate **/
-    if (!lang_interpreter_value(text_mem, (int*) &mem)){
+    if (!interpreter_syntax_constants(text_mem, (long int*) &mem)){
         driver_program_error(ERROR_INVALID_ADDRESS);
     }
     /** parse string to constant and validate **/
-    if (!lang_interpreter_value(text_val, (int*) &val)){
+    if (!interpreter_syntax_constants(text_val, (long int*) &val)){
         driver_program_error(ERROR_INVALID_CONSTANT);
     }
     
     /** add new line **/
-    lang_line(reg, mem, val);
+    tape_program_line_add(reg, mem, val);
     return 1;
-}
-
-
-bool lang_interpreter_value(const char text_value[12], int* value)
-{
-    if (lang_driver_strtol(text_value, (signed long int*) value)){
-        return true;
-    }
-    else if (lang_driver_strchar(text_value, (signed long int*) value)){
-        return true;    
-    }
-    else if (lang_driver_strhash(text_value, (signed long int*) value)) {
-        return true;
-    }
-    else if (lang_driver_strword(text_value, (signed long int*) value)) {
-        return true;
-    }
-
-    return false;
 }

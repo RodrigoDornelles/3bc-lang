@@ -49,7 +49,7 @@
 #include "driver_program.c"
 #include "interpreter_compiler.c"
 #include "interpreter_parser.c"
-#include "interpreter_sintax.c"
+#include "interpreter_syntax.c"
 #include "tape_aux.c"
 #include "tape_memory.c"
 #include "tape_program.c"
