@@ -8,15 +8,6 @@
  */
 extern "C" {
 #endif
-#define PARAMS_DEFINE           int reg, int addres, int value
-#define PARAMS_USE              addres,value
-#define VALIDATE_NOT_DUALITY    if(addres!=0&&value!=0)lang_driver_error(ERROR_PARAM_DUALITY);
-#define VALIDATE_NOT_ADRESS     if(addres!=0)lang_driver_error(ERROR_PARAM_BLOCKED_ADDRESS);
-#define VALIDATE_NOT_VALUES     if(value!=0)lang_driver_error(ERROR_PARAM_BLOCKED_VALUE);
-#define REQUIRED_ADDRESS        if(addres==0)lang_driver_error(ERROR_PARAM_REQUIRE_ADDRESS);
-#define REQUIRED_VALUE          if(value==0)lang_driver_error(ERROR_PARAM_REQUIRE_VALUE);
-#define GET_ANY_PARAM           (addres?tape_memory_data_get(addres):value)
-#define AUX_USE_ANY_PARAM       tape_aux_set(addres?tape_memory_data_get(addres):value);
 
 /** FILE: cpu_common.c **/
 void cpu_null(PARAMS_DEFINE);
@@ -181,7 +172,7 @@ cpumode_3bc_t tape_router_cpu_get(void);
 /** FILE: tape_sort.c **/
 void tape_sort_init();
 void tape_sort_destroy();
-void tape_sort_insert(address_3bc_t addres);
+void tape_sort_insert(address_3bc_t address);
 
 #ifdef __cplusplus
 }

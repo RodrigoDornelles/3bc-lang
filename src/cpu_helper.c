@@ -51,7 +51,7 @@ void cpu_helper_average(PARAMS_DEFINE)
 void cpu_helper_sort(PARAMS_DEFINE)
 {   
     VALIDATE_NOT_VALUES
-    tape_sort_insert(addres);
+    tape_sort_insert(address);
 }
 
 /**

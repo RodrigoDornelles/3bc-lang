@@ -39,6 +39,10 @@
 #endif
 #endif
 
+#ifndef GET_ANY_PARAM
+#define GET_ANY_PARAM               (address?tape_memory_data_get(address):value)
+#endif 
+
 #define MEM_CONFIG_MAX_VALUE        (0b0010)
 #define MEM_CONFIG_MIN_VALUE        (0b0100)
 #define MEM_CONFIG_NORMALIZE        (0b1000)
@@ -51,6 +55,16 @@
 #define PARSER_PACK(c1,c2,c3,c4,v,r,...)  case(c1+c2+c3+c4):*v=r;return(true)
 #define LLRBT_IS_RED(n)                 (n==NULL?false:n->color==LLRBT_RED)
 
+/**
+ * PARAMTERS MACROS
+ */
+#define PARAMS_DEFINE                   int reg, int address, int value
+#define VALIDATE_NOT_DUALITY            if(address!=0&&value!=0)lang_driver_error(ERROR_PARAM_DUALITY);
+#define VALIDATE_NOT_ADRESS             if(address!=0)lang_driver_error(ERROR_PARAM_BLOCKED_ADDRESS);
+#define VALIDATE_NOT_VALUES             if(value!=0)lang_driver_error(ERROR_PARAM_BLOCKED_VALUE);
+#define REQUIRED_ADDRESS                if(address==0)lang_driver_error(ERROR_PARAM_REQUIRE_ADDRESS);
+#define REQUIRED_VALUE                  if(value==0)lang_driver_error(ERROR_PARAM_REQUIRE_VALUE);
+#define AUX_USE_ANY_PARAM               tape_aux_set(GET_ANY_PARAM);
 
 /**
  * INSTRUCTIONS PACK MACROS
