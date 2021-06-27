@@ -116,9 +116,9 @@ void lang_driver_exit(int sig);
 void lang_driver_init();
 void lang_driver_exit();
 #endif
-void lang_driver_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t value);
+void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t value);
 void lang_driver_error(int error_code);
-data_3bc_t lang_driver_input(register_3bc_t type, address_3bc_t addres);
+data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres);
 bool lang_driver_strtol(const char* string, signed long int* value);
 bool lang_driver_strchar(const char* string, signed long int* value);
 bool lang_driver_strhash(const char* string, signed long int* value);

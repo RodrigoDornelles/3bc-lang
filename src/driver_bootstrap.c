@@ -1,6 +1,6 @@
 #include "3bc.h"
 
-struct app_3bc_s* lang_bootstrap()
+struct app_3bc_s* driver_bootstrap()
 {
     static struct app_3bc_s instance;
 

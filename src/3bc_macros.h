@@ -24,7 +24,7 @@
 #define LLRBT_RED                   (true)
 
 #ifndef APP_3BC
-#define APP_3BC                     (lang_bootstrap())
+#define APP_3BC                     (driver_bootstrap())
 #endif
 
 #ifndef AUX
@@ -50,10 +50,26 @@
 /**
  * FUNCTIONS MACROS
  */
-#define lang_line(a,b,c)                tape_program_line_add(a,b,c)
 #define PARSER_UNPACK(c)                (tolower(c[0])+tolower(c[1])+tolower(c[2])+tolower(c[3]))
 #define PARSER_PACK(c1,c2,c3,c4,v,r,...)  case(c1+c2+c3+c4):*v=r;return(true)
 #define LLRBT_IS_RED(n)                 (n==NULL?false:n->color==LLRBT_RED)
+
+/**
+ * LEGACY COMPATIBILITY MACROS
+ */
+#define lang_line                tape_program_line_add
+#define lang_driver_init         driver_power_init
+#define lang_driver_exit         driver_power_exit
+#define lang_driver_run          driver_program_run
+
+/**
+ * C/C++ COMPATIBILITY MACROS
+ */
+#ifdef inline
+#define optional_inline          inline
+#else 
+#define optional_inline
+#endif
 
 /**
  * PARAMTERS MACROS
