@@ -15,7 +15,6 @@ void cpu_mode(PARAMS_DEFINE);
 void cpu_not_mode(PARAMS_DEFINE);
 void cpu_not_exist(PARAMS_DEFINE);
 void cpu_mode_reserved(PARAMS_DEFINE);
-void cpu_mode_protected(PARAMS_DEFINE);
 
 /** FILE: cpu_debug.c **/
 void cpu_debug_stri(PARAMS_DEFINE);
@@ -97,38 +96,45 @@ void cpu_string_stro(PARAMS_DEFINE);
 void cpu_string_strx(PARAMS_DEFINE);
 void cpu_string_stru(PARAMS_DEFINE);
 
-/** FILE: lang_boostrap.c **/
-struct app_3bc_s* lang_bootstrap(void);
-
 /** FILE: lang_plus.cpp **/
 #ifdef _3BC_ARDUINO
 void arduino_serial_begin(void);
 void arduino_serial_print(unsigned char serial, const char* string);
 #endif
 
-/** FILE: lang_driver.c **/
-void lang_driver_run(void);
-#ifdef _3BC_COMPUTER
-void lang_driver_init(int argc, char **argv);
-void lang_driver_exit(int sig);
-#endif
-#ifdef _3BC_ARDUINO
-void lang_driver_init();
-void lang_driver_exit();
-#endif
-void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t value);
-void lang_driver_error(int error_code);
+/** FILE: driver_io.c **/
+optional_inline driver_io_init(void);
+optional_inline driver_io_exit(void);
 data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres);
-bool lang_driver_strtol(const char* string, signed long int* value);
-bool lang_driver_strchar(const char* string, signed long int* value);
-bool lang_driver_strhash(const char* string, signed long int* value);
-bool lang_driver_strword(const char* string, signed long int* value);
-int lang_driver_skip(void);
+void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
 
-/** FILE: lang_interpreter.c **/
-char lang_interpreter_line(file_t* stream);
-bool lang_interpreter_world(const char text_reg[6], int* reg);
-bool lang_interpreter_value(const char text_value[12], int* value);
+/** FILE: driver_memory.c **/
+void driver_memory_data_set(address_3bc_t address, data_3bc_t value);
+void driver_memory_vmax_set(address_3bc_t address, data_3bc_t value);
+void driver_memory_vmin_set(address_3bc_t address, data_3bc_t value);
+void driver_memory_conf_set(address_3bc_t address, data_3bc_t value);
+data_3bc_t driver_memory_data_get(address_3bc_t address);
+data_3bc_t driver_memory_vmax_get(address_3bc_t address);
+data_3bc_t driver_memory_vmin_get(address_3bc_t address);
+data_3bc_t driver_memory_conf_get(address_3bc_t address);
+address_3bc_t driver_memory_pointer(address_3bc_t address);
+void driver_memory_lineup(struct memory_node_s* node);
+void tape_memory_free(address_3bc_t address);
+
+/** FILE: driver_power.c **/
+#ifdef _3BC_COMPUTER
+void driver_power_init(int argc, char **argv);
+void driver_power_exit(int sig);
+void driver_power_safe_exit(int sig);
+#else
+void driver_power_init();
+void driver_power_exit();
+void driver_power_safe_exit();
+#endif
+
+/** FILE: driver_program.c **/
+void lang_driver_run();
+void driver_program_error(int error_code);
 
 /** FILE: tape_aux.c **/
 data_aux_3bc_t tape_aux_get(void);
@@ -143,21 +149,10 @@ struct memory_node_s* tape_memory_llrbt_access(address_3bc_t address);
 struct memory_node_s* tape_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node);
 struct memory_node_s* tape_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node);
 void tape_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2);
-void tape_memory_data_set(address_3bc_t address, data_3bc_t value);
-void tape_memory_vmax_set(address_3bc_t address, data_3bc_t value);
-void tape_memory_vmin_set(address_3bc_t address, data_3bc_t value);
-void tape_memory_conf_set(address_3bc_t address, data_3bc_t value);
-data_3bc_t tape_memory_data_get(address_3bc_t address);
-data_3bc_t tape_memory_vmax_get(address_3bc_t address);
-data_3bc_t tape_memory_vmin_get(address_3bc_t address);
-data_3bc_t tape_memory_data_get(address_3bc_t address);
-void tape_memory_lineup(struct memory_node_s* node);
-void tape_memory_free(address_3bc_t address);
 void tape_memory_destroy(void);
 
 /** FILE: tape_program.c **/
 void tape_program_resize(void);
-bool tape_program_exe(void);
 void tape_program_destroy(void);
 void tape_program_line_add(register_3bc_t reg, address_3bc_t mem, data_3bc_t val);
 void tape_program_label_jump(label_3bc_t label);

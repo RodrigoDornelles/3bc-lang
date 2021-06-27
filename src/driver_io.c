@@ -5,7 +5,7 @@ struct termios term_old_attr;
 struct termios term_new_attr;
 #endif
 
-optional_inline void driver_init()
+optional_inline driver_io_init()
 {
     #ifdef _3BC_PC_NOT_WINDOWS
     /**
@@ -27,7 +27,7 @@ optional_inline void driver_init()
     #endif
 }
 
-optional_inline void lang_driver_exit()
+optional_inline driver_io_exit()
 {
     #ifdef _3BC_COMPUTER
     /** clear buffers **/
@@ -87,11 +87,11 @@ data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
         }
 
         /** validade input inner memory clamp limits **/
-        if ((tape_memory_data_get(addres) & MEM_CONFIG_MIN_VALUE) == MEM_CONFIG_MIN_VALUE) {
-            invalid |= tape_memory_vmin_get(addres) > value;
+        if ((driver_memory_data_get(addres) & MEM_CONFIG_MIN_VALUE) == MEM_CONFIG_MIN_VALUE) {
+            invalid |= driver_memory_vmin_get(addres) > value;
         }
-        if ((tape_memory_data_get(addres) & MEM_CONFIG_MAX_VALUE) == MEM_CONFIG_MAX_VALUE) {
-            invalid |= tape_memory_vmax_get(addres) < value;
+        if ((driver_memory_data_get(addres) & MEM_CONFIG_MAX_VALUE) == MEM_CONFIG_MAX_VALUE) {
+            invalid |= driver_memory_vmax_get(addres) < value;
         }
     
     }
@@ -103,7 +103,7 @@ data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
 /**
  * stream texts to outputs
  */
-void driver_iot_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
+void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
 {
     char output[16];
 
@@ -128,7 +128,7 @@ void driver_iot_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
     #ifdef _3BC_COMPUTER
     /** negative symbol **/
     if (val < 0) {
-        driver_iot_output(tty, STRC, '-');
+        driver_io_output(tty, STRC, '-');
     }
 
     /** stream standard c output **/

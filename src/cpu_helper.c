@@ -25,7 +25,7 @@ void after_helper_maxmin()
 {
     /** values is empty **/
     if(!APP_3BC->cache_l1.maxmin_init) {
-        lang_driver_error(ERROR_VOID_HELPER_MAX_MIN);
+        driver_program_error(ERROR_VOID_HELPER_MAX_MIN);
     }
     /** update memory aux with better value **/
     tape_aux_set(APP_3BC->cache_l2.maxmin_value);

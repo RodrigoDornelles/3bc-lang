@@ -11,7 +11,7 @@ void lang_driver_run()
 /**
  * NOTE: params as int to better compatibility with function pointers.
  */
-void lang_driver_error(int error_code)
+void driver_program_error(int error_code)
 {
     /**
      * NOTE: if the current line does not exist,
@@ -72,9 +72,9 @@ void lang_driver_error(int error_code)
 
     #ifdef _3BC_COMPUTER
     if(error_code >= ERROR_CPU_ZERO){
-        lang_driver_exit(SIGTERM);
+        driver_power_exit(SIGTERM);
     }
-    exit(error_code);
+    driver_power_safe_exit(error_code);
     #endif
 
     #ifdef _3BC_ARDUINO

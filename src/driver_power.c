@@ -1,20 +1,17 @@
 #include "3bc.h"
 
-
-
 #ifdef _3BC_COMPUTER
-void lang_driver_init(int argc, char **argv)
-#endif
-#ifdef _3BC_ARDUINO
-void lang_driver_init()
+void driver_power_init(int argc, char **argv)
+#else
+void driver_power_init()
 #endif
 {
     #ifdef _3BC_COMPUTER
     /**
      * Capture computer signals
      */
-    signal(SIGINT, lang_driver_exit);
-    signal(SIGSEGV, lang_driver_error);
+    signal(SIGINT, driver_power_exit);
+    signal(SIGSEGV, driver_program_error);
 
     APP_3BC->tty_debug.type = STREAM_TYPE_COMPUTER_STD;
     APP_3BC->tty_debug.io.stream = stderr;
@@ -34,10 +31,9 @@ void lang_driver_init()
         APP_3BC->tty_source.io.file = fopen(argv[argc - 1], "r");
     }
 
-
     /** file not found | forbidden **/
     if (APP_3BC->tty_source.type == STREAM_TYPE_COMPUTER_FILE && APP_3BC->tty_source.io.file == NULL) {
-        lang_driver_error(ERROR_OPEN_FILE);
+        driver_program_error(ERROR_OPEN_FILE);
     }
     #endif
 
@@ -45,12 +41,15 @@ void lang_driver_init()
 }
 
 
+/**
+ * UNSAFE SHUTDOWNS
+ */
 #ifdef _3BC_COMPUTER
-void lang_driver_exit(int sig)
+void driver_power_exit(int sig)
+#else
+void driver_power_exit()
 #endif
-#ifdef _3BC_ARDUINO
-void lang_driver_exit()
-#endif
+
 {
     #ifdef _3BC_COMPUTER
     /** close file (safe pointer) **/
@@ -60,11 +59,24 @@ void lang_driver_exit()
     #endif
 
     /** deallocate occupied memory **/
-    driver_io_exit();
     tape_memory_destroy();
     tape_program_destroy();
     tape_sort_destroy();
 
+    driver_power_safe_exit(sig);
+}
+
+/**
+ * SAFETY SHUTDOWNS
+ */
+#ifdef _3BC_COMPUTER
+void driver_power_safe_exit(int sig)
+#else
+void driver_power_safe_exit()
+#endif 
+{
+    driver_io_exit();
+    
     #ifdef _3BC_COMPUTER
     exit(sig);
     #endif

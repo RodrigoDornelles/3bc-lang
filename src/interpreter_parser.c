@@ -60,29 +60,29 @@ bool lang_driver_strtol(const char* string, signed long int* value)
 
         default:
             /** base invalid **/
-            lang_driver_error(ERROR_NUMBER_WRONG_BASE); 
+            driver_program_error(ERROR_NUMBER_WRONG_BASE); 
     }
 
     if (decode == endptr){
-        lang_driver_error(ERROR_NUMBER_NO_DIGITS);
+        driver_program_error(ERROR_NUMBER_NO_DIGITS);
     }
     else if (errno == ERANGE && *value == LONG_MIN){
-        lang_driver_error(ERROR_NUMBER_UNDERFLOW);
+        driver_program_error(ERROR_NUMBER_UNDERFLOW);
     }
     else if (errno == ERANGE && *value == LONG_MAX){
-        lang_driver_error(ERROR_NUMBER_OVERFLOW);
+        driver_program_error(ERROR_NUMBER_OVERFLOW);
     }
     #ifdef EINVAL
     /** not in all c99 implementations **/
     else if (errno == EINVAL){ 
-        lang_driver_error(ERROR_NUMBER_WRONG_BASE); 
+        driver_program_error(ERROR_NUMBER_WRONG_BASE); 
     }
     #endif
     else if (errno != 0 && *value == 0){
-        lang_driver_error(ERROR_NUMBER_UNKOWN);    
+        driver_program_error(ERROR_NUMBER_UNKOWN);    
     }
     else if (errno == 0 && *endptr != 0){
-        lang_driver_error(ERROR_NUMBER_DIRTY);    
+        driver_program_error(ERROR_NUMBER_DIRTY);    
     }
 
     return true;
@@ -97,7 +97,7 @@ bool lang_driver_strchar(const char* string, signed long int* value)
 
     /** not ends with (') **/
     if (string[2] != 0x27 && string[3] != 0x27) {
-        lang_driver_error(ERROR_CHAR_SIZE);
+        driver_program_error(ERROR_CHAR_SIZE);
     }
 
     /** single char **/
@@ -108,7 +108,7 @@ bool lang_driver_strchar(const char* string, signed long int* value)
 
     /** not scape **/
     if (string[1] != '\\') {
-        lang_driver_error(ERROR_CHAR_SIZE);
+        driver_program_error(ERROR_CHAR_SIZE);
     }
 
     /** scape controll char **/
@@ -121,7 +121,7 @@ bool lang_driver_strchar(const char* string, signed long int* value)
         case 'n': *value = 0x0A; break;
         case '\'': *value = 0x27; break;
         case '\\': *value = 0x5c; break;
-        default: lang_driver_error(ERROR_CHAR_SCAPE);
+        default: driver_program_error(ERROR_CHAR_SCAPE);
     }
 
     return true;

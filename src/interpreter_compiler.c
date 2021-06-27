@@ -33,7 +33,7 @@ char lang_interpreter_line(file_t* stream)
 
     /** line soo long **/
     if (text_line[LINE_LIMIT + 1] != 0) {
-        lang_driver_error(ERROR_LONG_LINE);
+        driver_program_error(ERROR_LONG_LINE);
     }
     /** ignore comments **/
     for (i = 0; i < sizeof(text_line); i++) if (text_line[i] == '#') {
@@ -51,15 +51,15 @@ char lang_interpreter_line(file_t* stream)
 
     /** parse string to register and validate **/
     if (!lang_interpreter_world(text_reg, (int*) &reg)){
-        lang_driver_error(ERROR_INVALID_REGISTER);
+        driver_program_error(ERROR_INVALID_REGISTER);
     }
     /** parse string to address and validate **/
     if (!lang_interpreter_value(text_mem, (int*) &mem)){
-        lang_driver_error(ERROR_INVALID_ADDRESS);
+        driver_program_error(ERROR_INVALID_ADDRESS);
     }
     /** parse string to constant and validate **/
     if (!lang_interpreter_value(text_val, (int*) &val)){
-        lang_driver_error(ERROR_INVALID_CONSTANT);
+        driver_program_error(ERROR_INVALID_CONSTANT);
     }
     
     /** add new line **/
