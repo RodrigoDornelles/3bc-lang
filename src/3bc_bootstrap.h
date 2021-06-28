@@ -1,6 +1,9 @@
 #include "3bc.h"
 
-struct app_3bc_s* lang_bootstrap()
+/**
+ * MACRO: APP_3BC
+ */
+struct app_3bc_s* bootstrap_3bc()
 {
     static struct app_3bc_s instance;
 

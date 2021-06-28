@@ -76,7 +76,7 @@ function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
     switch (mode)
     {
         /** prevent enter in invalid cpu mode **/
-        default: lang_driver_error(ERROR_INVALID_CPU);
+        default: driver_program_error(ERROR_INVALID_CPU);
     #else
         const static function_3bc_t _instructions[][8] = {
     #endif
@@ -119,11 +119,11 @@ function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
     ;
     /** out of bounds cpu mode **/
     if (mode < 0 || mode >= (sizeof(_instructions)/sizeof(_instructions[0]))) {
-       lang_driver_error(ERROR_INVALID_CPU);
+       driver_program_error(ERROR_INVALID_CPU);
     }
     /** out of bounds cpu register **/
     if (reg < 0 || reg >= 8) {
-        lang_driver_error(ERROR_INVALID_REGISTER);
+        driver_program_error(ERROR_INVALID_REGISTER);
     }
     return _instructions[mode][reg];
     #endif

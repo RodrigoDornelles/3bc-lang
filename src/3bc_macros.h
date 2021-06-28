@@ -24,7 +24,8 @@
 #define LLRBT_RED                   (true)
 
 #ifndef APP_3BC
-#define APP_3BC                     (lang_bootstrap())
+#define _3BC_APP_UNIQUE
+#define APP_3BC                     (bootstrap_3bc())
 #endif
 
 #ifndef AUX
@@ -39,6 +40,10 @@
 #endif
 #endif
 
+#ifndef GET_ANY_PARAM
+#define GET_ANY_PARAM               (address?driver_memory_data_get(address):value)
+#endif 
+
 #define MEM_CONFIG_MAX_VALUE        (0b0010)
 #define MEM_CONFIG_MIN_VALUE        (0b0100)
 #define MEM_CONFIG_NORMALIZE        (0b1000)
@@ -46,11 +51,38 @@
 /**
  * FUNCTIONS MACROS
  */
-#define lang_line(a,b,c)                tape_program_line_add(a,b,c)
 #define PARSER_UNPACK(c)                (tolower(c[0])+tolower(c[1])+tolower(c[2])+tolower(c[3]))
 #define PARSER_PACK(c1,c2,c3,c4,v,r,...)  case(c1+c2+c3+c4):*v=r;return(true)
 #define LLRBT_IS_RED(n)                 (n==NULL?false:n->color==LLRBT_RED)
-#define POINTER(a)                      (tape_memory_pointer(a))
+#define POINTER(a)                      (driver_memory_pointer(a))
+
+/**
+ * LEGACY COMPATIBILITY MACROS
+ */
+#define lang_line                tape_program_line_add
+#define lang_driver_init         driver_power_init
+#define lang_driver_exit         driver_power_exit
+#define lang_driver_run          driver_program_run
+
+/**
+ * C/C++ COMPATIBILITY MACROS
+ */
+#ifdef inline
+#define optional_inline          inline void
+#else 
+#define optional_inline          void
+#endif
+
+/**
+ * PARAMTERS MACROS
+ */
+#define PARAMS_DEFINE                   int reg, int address, int value
+#define VALIDATE_NOT_DUALITY            if(address!=0&&value!=0)driver_program_error(ERROR_PARAM_DUALITY);
+#define VALIDATE_NOT_ADRESS             if(address!=0)driver_program_error(ERROR_PARAM_BLOCKED_ADDRESS);
+#define VALIDATE_NOT_VALUES             if(value!=0)driver_program_error(ERROR_PARAM_BLOCKED_VALUE);
+#define REQUIRED_ADDRESS                if(address==0)driver_program_error(ERROR_PARAM_REQUIRE_ADDRESS);
+#define REQUIRED_VALUE                  if(value==0)driver_program_error(ERROR_PARAM_REQUIRE_VALUE);
+#define AUX_USE_ANY_PARAM               tape_aux_set(GET_ANY_PARAM);
 
 /**
  * INSTRUCTIONS PACK MACROS
