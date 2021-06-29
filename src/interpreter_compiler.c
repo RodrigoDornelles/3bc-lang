@@ -12,12 +12,8 @@
  */
 bool interpreter_compiler(file_t* stream)
 {
-    char* text_reg = NULL;
-    char* text_mem = NULL;
-    char* text_val = NULL;
-    register_3bc_t reg;
-    address_3bc_t mem;
-    data_3bc_t val;
+    char *text_reg, *text_mem, *text_val = NULL;
+    signed long int reg, mem, val;
 
     /** more 1 line read **/
     APP_3BC->program.last_line += 1;
@@ -38,15 +34,15 @@ bool interpreter_compiler(file_t* stream)
     }
 
     /** parse string to register and validate **/
-    if (!interpreter_syntax_registers(text_reg, (long int*) &reg)){
+    if (!interpreter_syntax_registers(text_reg, &reg)){
         driver_program_error(ERROR_INVALID_REGISTER);
     }
     /** parse string to address and validate **/
-    if (!interpreter_syntax_constants(text_mem, (long int*) &mem)){
+    if (!interpreter_syntax_constants(text_mem, &mem)){
         driver_program_error(ERROR_INVALID_ADDRESS);
     }
     /** parse string to constant and validate **/
-    if (!interpreter_syntax_constants(text_val, (long int*) &val)){
+    if (!interpreter_syntax_constants(text_val, &val)){
         driver_program_error(ERROR_INVALID_CONSTANT);
     }
     
@@ -56,6 +52,11 @@ bool interpreter_compiler(file_t* stream)
     free(text_val);
 
     /** add new line **/
-    tape_program_line_add(reg, mem, val);
+    tape_program_line_add(
+        (register_3bc_t) reg,
+        (address_3bc_t) mem,
+        (data_3bc_t) val
+    );
+
     return 1;
 }

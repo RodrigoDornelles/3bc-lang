@@ -63,9 +63,10 @@ void driver_program_error(int error_code)
         case ERROR_INVALID_MEMORY_CLAMP:  print_error("INVALID MEMORY TYPE CLAMP");
         case ERROR_VOID_HELPER_MAX_MIN: print_error("MAX/MIN CANNOT BE EMPTY");
         case ERROR_OPEN_FILE: print_error("CANNOT OPEN FILE");
-        case ERROR_COLUMNS: print_error("WRONG NUMBER OF COLUMNS");
+        case ERROR_LONG_LINE: print_error("EXCEED LINE COLUMN LIMIT");
         case ERROR_CHAR_SCAPE: print_error("INVALID CHARACTER ESCAPE");
         case ERROR_CHAR_SIZE: print_error("INVALID CHARACTER SIZE");
+        case ERROR_COLUMNS: print_error("WRONG NUMBER OF COLUMNS");
         default: print_error("UNKNOWN ERROR");
     }
     #endif

@@ -18,7 +18,7 @@ bool interpreter_tokens(file_t* stream, char** reg, char** mem, char** val)
         /** create column **/
         {
             unsigned char lenght = 1;
-            char* string = malloc(lenght * sizeof(char) + 1);
+            char* string = (char*) malloc(lenght * sizeof(char) + 1);
             string[0] = c;
             columns += 1;
 
@@ -27,12 +27,21 @@ bool interpreter_tokens(file_t* stream, char** reg, char** mem, char** val)
                 && c != '\n' && !feof(stream)
                 && strchr("\t#;, ", c) == NULL)
             {
-                string = realloc(string, ++lenght * sizeof(char) + 1);
+                /** expand string **/
+                char* new_buffer = (char*) realloc(string, ++lenght * sizeof(char) + 1);
+                
+                /** insufficient memory to read a large line **/
+                if (new_buffer == NULL) {
+                    driver_program_error(ERROR_LONG_LINE);
+                }
+
+                /** add character **/
+                string = new_buffer;
                 string[lenght - 1] = c;
                 string[lenght] = '\0';
             }
 
-            /** reference string to column pointer **/
+            /** write string in the column pointer reference **/
             switch (columns) 
             {
                 case 1:
