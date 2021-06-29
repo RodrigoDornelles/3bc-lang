@@ -50,6 +50,7 @@
 #include "interpreter_compiler.c"
 #include "interpreter_parser.c"
 #include "interpreter_syntax.c"
+#include "interpreter_tokens.c"
 #include "tape_aux.c"
 #include "tape_memory.c"
 #include "tape_program.c"

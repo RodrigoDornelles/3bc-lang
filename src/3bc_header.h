@@ -149,6 +149,9 @@ int interpreter_parser_skip();
 bool interpreter_syntax_registers(const char* string, signed long int* value);
 bool interpreter_syntax_constants(const char* string, signed long int* value);
 
+/** FILE: interpreter_tokens.c **/
+bool interpreter_tokens(file_t* stream, char** reg, char** mem, char** val);
+
 /** FILE: tape_aux.c **/
 data_aux_3bc_t tape_aux_get(void);
 void tape_aux_set(data_aux_3bc_t value);
