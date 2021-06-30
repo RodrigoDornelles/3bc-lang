@@ -29,7 +29,6 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
         {
             bool is_hash = false;
             bool is_char = false;
-            bool is_scape = false;
             unsigned char lenght = 1;
             char* string = (char*) malloc(lenght * sizeof(char) + 1);
             string[0] = c;
@@ -45,7 +44,7 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
                 && (strchr("\t#; ,", c) == NULL || is_hash || is_char))
             {
                 /** detect is scape **/
-                is_scape = (is_hash || is_char) && c == '\\';
+                bool is_scape = (is_hash || is_char) && c == '\\';
 
                 /** expand string **/
                 char* new_buffer = (char*) realloc(string, ++lenght * sizeof(char) + 1);
