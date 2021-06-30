@@ -1,7 +1,5 @@
 #include "3bc.h"
 
-#define SKIP_3BC_COMMENT if(c=='#'){for(;c!='\n'&&c!='\0'&&c!=-1;c=fgetc(stream));}
-
 bool interpreter_tokens(file_t* stream, char** reg, char** mem, char** val)
 {
     unsigned int columns = 0;
@@ -17,7 +15,10 @@ bool interpreter_tokens(file_t* stream, char** reg, char** mem, char** val)
         /** scan character **/
         c = fgetc(stream);
 
-        SKIP_3BC_COMMENT
+        /** skip comment **/
+        if(c=='#'){
+            for(;c!= '\n' && c != '\0'&& c !=- 1; c=fgetc(stream));
+        }
 
         /** skip spacing | end of file **/
         if (strchr("\t#;, ", c) != NULL || feof(stream) || c == '\n') {
@@ -26,16 +27,26 @@ bool interpreter_tokens(file_t* stream, char** reg, char** mem, char** val)
 
         /** create column **/
         {
+            bool is_hash = false;
+            bool is_char = false;
+            bool is_scape = false;
             unsigned char lenght = 1;
             char* string = (char*) malloc(lenght * sizeof(char) + 1);
             string[0] = c;
             columns += 1;
 
+            /** init char or hash **/
+            is_char |= c == '\'' && !is_hash;
+            is_hash |= c == '"' && !is_char;
+
             /** scan column string **/
             while ((c = fgetc(stream)) != '\0'
                 && c != '\n' && !feof(stream)
-                && strchr("\t#;, ", c) == NULL)
+                && (strchr("\t#; ,", c) == NULL || is_hash || is_char))
             {
+                /** detect is scape **/
+                is_scape = (is_hash || is_char) && c == '\\';
+
                 /** expand string **/
                 char* new_buffer = (char*) realloc(string, ++lenght * sizeof(char) + 1);
                 
@@ -48,6 +59,11 @@ bool interpreter_tokens(file_t* stream, char** reg, char** mem, char** val)
                 string = new_buffer;
                 string[lenght - 1] = c;
                 string[lenght] = '\0';
+
+                /** end of char or hash **/
+                is_char = is_char && !is_scape && c != '\'';
+                is_hash = is_hash && !is_scape && c != '"';
+                is_scape = false;
             }
 
             /** write string in the column pointer reference **/

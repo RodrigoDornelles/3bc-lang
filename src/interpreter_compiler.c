@@ -12,7 +12,7 @@
  */
 bool interpreter_compiler(file_t* stream)
 {
-    char *text_reg, *text_mem, *text_val = NULL;
+    char *text_reg, *text_mem, *text_val;
     signed long int reg, mem, val;
 
     /** more 1 line read **/
