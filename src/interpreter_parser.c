@@ -18,12 +18,12 @@ bool interpreter_parser_strtol(const char* string, signed long int* value)
     strcpy(decode, string);
 
     /** custom base with sign **/
-    if(decode[0] == '-' && decode[1] == '0' && !isdigit(2) && decode[2] != '\0'){
+    if(decode[0] == '-' && decode[1] == '0' && !isdigit(decode[2]) && decode[2] != '\0'){
         type = tolower(decode[2]);
         memmove(&decode[2], &decode[3], strlen(decode) - 2);
     }
     /** custom base whiout sign **/
-    else if(decode[0] == '0' && !isdigit(1) && decode[1] != '\0') {
+    else if(decode[0] == '0' && !isdigit(decode[1]) && decode[1] != '\0') {
         type = tolower(decode[1]);
         memmove(&decode[1], &decode[2], strlen(decode) - 1);
     }
