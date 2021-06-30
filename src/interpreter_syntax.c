@@ -34,7 +34,7 @@ bool interpreter_syntax_registers(const char* string, signed long int* value)
     }
 
     /** passing register as numerical (octo, bin) **/
-    if(interpreter_parser_strtol(string, value)){
+    if(interpreter_parser_strtol(string, value)) {
         return true;
     }
 

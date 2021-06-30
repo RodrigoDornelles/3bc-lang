@@ -102,7 +102,6 @@
 #define log2(l)                 (log(l)/log(2))
 #endif
 
-#if defined(inline) && !defined(_3BC_SCU)
 #define optional_inline          inline void
 #else 
 #define optional_inline          void
