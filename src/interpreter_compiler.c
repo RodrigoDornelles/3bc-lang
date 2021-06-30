@@ -22,17 +22,14 @@ bool interpreter_compiler(file_t* stream)
     if(feof(stream)) {
         return 0;
     }
-
     /** scan more 1 line**/
     if (!interpreter_tokens(stream, &text_reg, &text_mem, &text_val)) {
         driver_program_error(ERROR_COLUMNS);
     }
-
     /** blank line **/
     if (text_reg == NULL) {
         return 1;
     }
-
     /** parse string to register and validate **/
     if (!interpreter_syntax_registers(text_reg, &reg)){
         driver_program_error(ERROR_INVALID_REGISTER);

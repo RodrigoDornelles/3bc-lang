@@ -5,13 +5,18 @@ bool interpreter_tokens(file_t* stream, char** reg, char** mem, char** val)
     unsigned int columns = 0;
     char c;
 
+    /** reset strings **/
+    *reg = NULL;
+    *mem = NULL;
+    *val = NULL;
+
     /** read line **/
     do {
         /** scan character **/
         c = fgetc(stream);
 
         /** skip spacing | end of file **/
-        if (strchr("\t#;, ", c) != NULL || feof(stream)) {
+        if (strchr("\t#;, ", c) != NULL || feof(stream) || c == '\n') {
             continue;
         }
         
