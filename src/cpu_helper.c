@@ -93,7 +93,7 @@ void cpu_helper_reverse(PARAMS_DEFINE)
     VALIDATE_NOT_DUALITY
     data_aux_3bc_t initial = GET_ANY_PARAM;
     data_aux_3bc_t final = 0;
-    char base;
+    char base = 0;
 
     if (reg == NB02) {
         base = 2;

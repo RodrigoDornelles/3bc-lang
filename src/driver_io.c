@@ -46,7 +46,7 @@ optional_inline driver_io_exit()
  */
 data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
 {
-    unsigned int value;
+    signed int value;
     char c[2] = "\0";
     bool invalid;
     

@@ -20,7 +20,7 @@ void driver_program_error(enum error_3bc_e error_code)
 
     #ifdef _3BC_ARDUINO
     /** smaller log erros for economy rom memory **/
-    static char error_code_string[48];
+    char error_code_string[48];
     snprintf(error_code_string,  48, "\n\n[3BC] Fatal error 0x%06X in line: %d", error_code, error_line);
     arduino_serial_print(1, error_code_string);
     #endif

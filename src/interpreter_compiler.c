@@ -39,11 +39,7 @@ bool interpreter_compiler(struct tty_3bc_s tty)
     free(text_val);
 
     /** add new line **/
-    tape_program_line_add(
-        (register_3bc_t) reg,
-        (address_3bc_t) mem,
-        (data_3bc_t) val
-    );
+    tape_program_line_add(reg, mem, val);
 
     return 1;
 }

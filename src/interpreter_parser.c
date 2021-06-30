@@ -5,9 +5,9 @@
  */
 bool interpreter_parser_strtol(const char* string, signed long int* value)
 {
-    static char decode[32];
-    static char* endptr;
-    static char type;
+    char* endptr = NULL;
+    char decode[32];
+    char type;
     
     /** verify valid number **/
     if (string[0] != '-' && !isdigit(string[0])){

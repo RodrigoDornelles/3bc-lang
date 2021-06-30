@@ -30,7 +30,7 @@ void cpu_jump_pgto(PARAMS_DEFINE)
 {
     REQUIRED_VALUE
     VALIDATE_NOT_ADRESS
-    if ( 0 < (signed int) (AUX) ) {
+    if ( 0 < AUX) {
         APP_3BC->program.label_target = value;
     }
 }
@@ -39,7 +39,7 @@ void cpu_jump_ngto(PARAMS_DEFINE)
 {
     REQUIRED_VALUE
     VALIDATE_NOT_ADRESS
-    if ( 0 > (signed int) (AUX) ) {
+    if ( 0 > AUX) {
         APP_3BC->program.label_target = value;
     }
 }
