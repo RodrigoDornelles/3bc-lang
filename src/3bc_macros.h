@@ -3,7 +3,9 @@
  */
 
 /** Atmel AVR **/
-#if defined(__AVR_ATmega8__)
+#if defined(ARDUINO_ARCH_AVR)
+#define _3BC_AVR
+#elif defined(__AVR_ATmega8__)
 #define _3BC_AVR
 #elif defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny25__)
 #define _3BC_AVR
