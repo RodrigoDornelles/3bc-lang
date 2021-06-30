@@ -1,5 +1,7 @@
 #include "3bc.h"
 
+#define SKIP_3BC_COMMENT if(c=='#'){for(;c!='\n'&&c!='\0'&&c!=-1;c=fgetc(stream));}
+
 bool interpreter_tokens(file_t* stream, char** reg, char** mem, char** val)
 {
     unsigned int columns = 0;
@@ -15,11 +17,13 @@ bool interpreter_tokens(file_t* stream, char** reg, char** mem, char** val)
         /** scan character **/
         c = fgetc(stream);
 
+        SKIP_3BC_COMMENT
+
         /** skip spacing | end of file **/
         if (strchr("\t#;, ", c) != NULL || feof(stream) || c == '\n') {
             continue;
         }
-        
+
         /** create column **/
         {
             unsigned char lenght = 1;
