@@ -10,8 +10,8 @@ void driver_power_init()
     /**
      * Capture computer signals
      */
-    signal(SIGINT, driver_power_exit);
-    signal(SIGSEGV, driver_program_error);
+    signal(SIGINT, driver_io_signal);
+    signal(SIGSEGV, driver_io_signal);
 
     APP_3BC->tty_debug.type = STREAM_TYPE_COMPUTER_STD;
     APP_3BC->tty_debug.io.stream = stderr;
@@ -63,7 +63,11 @@ void driver_power_exit()
     tape_program_destroy();
     tape_sort_destroy();
 
+    #ifdef _3BC_COMPUTER
     driver_power_safe_exit(sig);
+    #else
+    driver_power_safe_exit();
+    #endif 
 }
 
 /**

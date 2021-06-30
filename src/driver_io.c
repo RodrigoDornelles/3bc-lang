@@ -145,3 +145,17 @@ void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
     arduino_serial_print(1, output);
     #endif
 }
+
+#ifdef _3BC_COMPUTER
+void driver_io_signal(int sig)
+{
+    switch (sig)
+    {
+        case SIGINT:
+            driver_power_exit(sig);
+        
+        case SIGSEGV:
+            driver_program_error((enum error_3bc_e) sig);
+    }
+}
+#endif

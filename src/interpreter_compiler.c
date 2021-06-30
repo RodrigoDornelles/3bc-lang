@@ -1,16 +1,6 @@
+#include "3bc.h"
 
-#define LINE_LIMIT 29
-
-/** 
- * Textually parse an instruction line
- * 
- * 
- * NOTE:
- * -> the line size the actual interpretation is (limit + 1) seeing the line break.
- * -> the character after limit has different from nul, that line was crossed.
- * -> text_line has the size (limit + 3) to respect text limit (line + 1).
- */
-bool interpreter_compiler(file_t* stream)
+bool interpreter_compiler(struct tty_3bc_s tty)
 {
     char *text_reg, *text_mem, *text_val;
     signed long int reg, mem, val;
@@ -19,11 +9,11 @@ bool interpreter_compiler(file_t* stream)
     APP_3BC->program.last_line += 1;
 
     /** when end stream close it **/
-    if(feof(stream)) {
+    if(feof(tty.io.stream)) {
         return 0;
     }
     /** scan more 1 line**/
-    if (!interpreter_tokens(stream, &text_reg, &text_mem, &text_val)) {
+    if (!interpreter_tokens(tty, &text_reg, &text_mem, &text_val)) {
         driver_program_error(ERROR_COLUMNS);
     }
     /** blank line **/

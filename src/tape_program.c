@@ -1,4 +1,4 @@
-#define _3BC_REQUIRE_INSTRUCTIONS
+#define _3BC_SCU_FIX
 #include "3bc.h"
 
 /**
