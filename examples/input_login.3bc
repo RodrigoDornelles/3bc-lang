@@ -1,4 +1,4 @@
-mode nill 0x02
+mode nill 0d02
 strc nill 0x0A
 strc nill '['
 strc nill '?'
@@ -12,12 +12,12 @@ strc nill 'n'
 strc nill ':'
 strc nill 0x20
 
-mode nill 0x03
+mode nill 0d03
 strc 0x01 nill
 strc 0x02 nill
 strc 0x03 nill
 
-mode nill 0x02
+mode nill 0d02
 strc nill 0x0A
 strc nill '['
 strc nill '?'
@@ -34,12 +34,12 @@ strc nill 'd'
 strc nill ':'
 strc nill 0x20
 
-mode nill 0x05
+mode nill 0d05
 strc 0x04 nill
 strc 0x05 nill
 strc 0x06 nill
 
-mode nill 0x02
+mode nill 0d02
 strc nill 0x0A
 strc nill 0x0A
 strc nill '['
@@ -62,5 +62,5 @@ strc nill 'y'
 strc nill '.'
 strc nill 0x0A
 
-mode nill 0x4
+mode nill 0d4
 strc full 0

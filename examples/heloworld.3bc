@@ -1,4 +1,4 @@
-mode nill 0x2
+mode nill 0d2
 strc nill 'h'
 strc nill 'e'
 strc nill 'l'

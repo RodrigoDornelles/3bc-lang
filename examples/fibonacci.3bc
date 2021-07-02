@@ -1,0 +1,55 @@
+# PRINT STREAM "FIB:"
+MODE    NILL    0d02
+STRC    NILL    'F'
+STRC    NILL    'I'
+STRC    NILL    'B'
+STRC    NILL    ':'
+
+# INPUT VAR "FIB:"
+MODE    NILL    0d03
+STRI    "FIB:"   NILL
+
+# FUNCTION "FIB_FUNC"
+# PRINT VAR "NEXT"
+MODE    NILL    2
+NILL    NILL    "FIB_FUNC"
+STRC    NILL    '\n'
+STRI    "NEXT"  NILL
+
+# "NEXT" = "NEXT" + "PREV"
+MODE    NILL    0d08
+PUSH    "NEXT"  NILL
+MODE    NILL    0d11
+MATH    "PREV"  NILL
+MODE    NILL    0d08
+PULL    "NEXT"  NILL
+
+# "PREV" = "PREV" - "NEXT"
+MODE    NILL    0d08
+PUSH    "NEXT"  NILL
+MODE    NILL    0d12
+MATH    "PREV"  NILL
+MODE    NILL    0d08
+PULL    "PREV"  NILL
+
+# IF "NEXT" == 0
+# "NEXT" = 1
+MODE    NILL    0d08
+PUSH    "NEXT"  NILL
+MODE    NILL    0d09
+PGTO    NILL    SKIP
+MODE    NILL    0d06
+ALOC    "NEXT"  1
+NILL    NILL    SKIP
+
+# "FIB:" = "FIB:" - 1
+# IF "FIB:" > 0
+# CALL "FIB_FUNC" RECURSIVE
+MODE    NILL    0d08
+PUSH    "FIB:"  NILL
+MODE    NILL    0d12
+MATH    NILL    1
+MODE    NILL    0d08
+PULL    "FIB:"  NILL
+MODE    NILL    0d09
+PGTO    NILL    "FIB_FUNC"
