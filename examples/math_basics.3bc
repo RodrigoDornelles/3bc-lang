@@ -14,6 +14,18 @@ ALOC    'a'     5
 ALOC    'b'     2
 
 ###########################################
+# equivalent to print (f'a, b = {a}, {b}')
+MODE    NILL    0x02    # MODE_STRING
+STRC    NILL    'a'
+STRC    NILL    ','
+STRC    NILL    'b'
+STRC    NILL    '='
+STRI    'a'     NILL
+STRC    NILL    ','
+STRI    'b'     NILL
+STRC    NILL    0xA
+
+###########################################
 # equivalent to sum (a + b)
 MODE    NILL    0x08    # MODE_MEM_AUX
 PUSH    'a'     NILL

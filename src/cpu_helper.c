@@ -25,7 +25,7 @@ void after_helper_maxmin()
 {
     /** values is empty **/
     if(!APP_3BC->cache_l1.maxmin_init) {
-        lang_driver_error(ERROR_VOID_HELPER_MAX_MIN);
+        driver_program_error(ERROR_VOID_HELPER_MAX_MIN);
     }
     /** update memory aux with better value **/
     tape_aux_set(APP_3BC->cache_l2.maxmin_value);
@@ -51,7 +51,7 @@ void cpu_helper_average(PARAMS_DEFINE)
 void cpu_helper_sort(PARAMS_DEFINE)
 {   
     VALIDATE_NOT_VALUES
-    tape_sort_insert(addres);
+    tape_sort_insert(address);
 }
 
 /**
@@ -93,7 +93,7 @@ void cpu_helper_reverse(PARAMS_DEFINE)
     VALIDATE_NOT_DUALITY
     data_aux_3bc_t initial = GET_ANY_PARAM;
     data_aux_3bc_t final = 0;
-    char base;
+    char base = 0;
 
     if (reg == NB02) {
         base = 2;

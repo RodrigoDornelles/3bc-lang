@@ -12,20 +12,15 @@ void cpu_mode(PARAMS_DEFINE)
 
 void cpu_not_mode(PARAMS_DEFINE)
 {
-    lang_driver_error(ERROR_CPU_ZERO);
+    driver_program_error(ERROR_CPU_ZERO);
 }
 
 void cpu_not_exist(PARAMS_DEFINE)
 {
-    lang_driver_error(ERROR_INVALID_REGISTER);
+    driver_program_error(ERROR_INVALID_REGISTER);
 }
 
 void cpu_mode_reserved(PARAMS_DEFINE)
 {
-    lang_driver_error(ERROR_CPU_RESERVED);
-}
-
-void cpu_mode_protected(PARAMS_DEFINE)
-{
-    lang_driver_error(ERROR_CPU_PROTECT);
+    driver_program_error(ERROR_CPU_RESERVED);
 }

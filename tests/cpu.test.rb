@@ -94,7 +94,7 @@ class TestCpu < Minitest::Test
         [
             {input:"mode 0 9\ngoto 0 1\nmode 0 2\nstrc 0 'H'\nnill nill 1\nstrc 0 'o'\nstrc 0 'l'\nstrc 0 'a'\n", output:"ola"},
             {input:"mode 0 8\naloc 0 1\nmode 0 9\nfgto 0 1\nzgto 0 2\nmode 0 2\nstri 0 0\n0 0 1\nstri 0 1\n0 0 2\nstri 0 2", output:"12"},
-            {input:"mode 0 9\nfgto 0 1\nzgto 0 2\nmode 0 2\n0 0 1\nstri 0 0 1\n0 0 2\nstri 0 2", output:"2"},
+            {input:"mode 0 9\nfgto 0 1\nzgto 0 2\nmode 0 2\n0 0 1\nstri 0 0\n0 0 2\nstri 0 2", output:"2"},
             {input:"mode 0 8\naloc 0 1\nmode 0 9\npgto 0 1\ngoto 0 2\nmode 0 2\nstri 0 0\n0 0 1\nstri 0 1\n0 0 2\nstri 0 2", output:"12"},
             {input:"mode 0 8\naloc 0 -1\nmode 0 9\nngto 0 1\ngoto 0 2\nmode 0 2\nstri 0 0\n0 0 1\nstri 0 1\n0 0 2\nstri 0 2", output:"12"},
         ]

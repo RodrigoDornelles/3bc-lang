@@ -1,15 +1,15 @@
 #include "3bc.h"
 
-#define MODE_EMPUTY             (00)
-#define MODE_DEBUG              (01)
-#define MODE_STRING             (02)
-#define MODE_INPUT              (03)
-#define MODE_INPUT_SILENT       (04)
-#define MODE_INPUT_PASSWORD     (05)
-#define MODE_MEMORY             (06)
-#define MODE_MEMORY_PTR         (07)
-#define MODE_MEMORY_AUX         (08)
-#define MODE_JUMP               (09)
+#define MODE_EMPUTY             (0)
+#define MODE_DEBUG              (1)
+#define MODE_STRING             (2)
+#define MODE_INPUT              (3)
+#define MODE_INPUT_SILENT       (4)
+#define MODE_INPUT_PASSWORD     (5)
+#define MODE_MEMORY             (6)
+#define MODE_MEMORY_PTR         (7)
+#define MODE_MEMORY_AUX         (8)
+#define MODE_JUMP               (9)
 #define MODE_CUSTOM_1           (10)
 #define MODE_MATH_SUM           (11)
 #define MODE_MATH_SUB           (12)
@@ -69,14 +69,14 @@
  * 
  * (required for avr compiler in arduino ide)
  */
-#ifdef _3BC_REQUIRE_INSTRUCTIONS
+#ifdef _3BC_SCU_FIX
 function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
 {
     #ifdef _3BC_COMPACT
     switch (mode)
     {
         /** prevent enter in invalid cpu mode **/
-        default: lang_driver_error(ERROR_INVALID_CPU);
+        default: driver_program_error(ERROR_INVALID_CPU);
     #else
         const static function_3bc_t _instructions[][8] = {
     #endif
@@ -119,11 +119,11 @@ function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
     ;
     /** out of bounds cpu mode **/
     if (mode < 0 || mode >= (sizeof(_instructions)/sizeof(_instructions[0]))) {
-       lang_driver_error(ERROR_INVALID_CPU);
+       driver_program_error(ERROR_INVALID_CPU);
     }
     /** out of bounds cpu register **/
     if (reg < 0 || reg >= 8) {
-        lang_driver_error(ERROR_INVALID_REGISTER);
+        driver_program_error(ERROR_INVALID_REGISTER);
     }
     return _instructions[mode][reg];
     #endif

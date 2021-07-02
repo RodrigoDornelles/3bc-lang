@@ -29,9 +29,12 @@
 #include "3bc_types.h"
 #include "3bc_header.h"
 #include "3bc_register.h"
+#ifdef _3BC_APP_UNIQUE
+#include "3bc_bootstrap.h"
+#endif
 
 /** program **/
-#ifdef _3BC_COMPUTER
+#ifndef _3BC_SCU
 #include "cpu_common.c"
 #include "cpu_debug.c"
 #include "cpu_helper.c"
@@ -40,9 +43,14 @@
 #include "cpu_jump.c"
 #include "cpu_memory.c"
 #include "cpu_string.c"
-#include "lang_bootstrap.c"
-#include "lang_driver.c"
-#include "lang_interpreter.c"
+#include "driver_io.c"
+#include "driver_memory.c"
+#include "driver_power.c"
+#include "driver_program.c"
+#include "interpreter_compiler.c"
+#include "interpreter_parser.c"
+#include "interpreter_syntax.c"
+#include "interpreter_tokens.c"
 #include "tape_aux.c"
 #include "tape_memory.c"
 #include "tape_program.c"
