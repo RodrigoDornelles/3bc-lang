@@ -34,7 +34,7 @@
 #endif
 
 /** program **/
-#ifdef _3BC_COMPUTER
+#ifndef _3BC_SCU
 #include "cpu_common.c"
 #include "cpu_debug.c"
 #include "cpu_helper.c"
@@ -50,6 +50,7 @@
 #include "interpreter_compiler.c"
 #include "interpreter_parser.c"
 #include "interpreter_syntax.c"
+#include "interpreter_tokens.c"
 #include "tape_aux.c"
 #include "tape_memory.c"
 #include "tape_program.c"

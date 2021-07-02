@@ -52,6 +52,13 @@ class TestExample < Minitest::Test
         end
     end
 
+    def test_math_basics
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/math_basics.3bc")
+        assert_equal "", stderr
+        assert_equal "a,b=5,2\na+b=7\na-b=3\na*b=10\na/b=2\n", stdout
+        assert_equal 0, status
+    end
+
     def test_math_sort
         for console in
         [

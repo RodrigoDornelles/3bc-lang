@@ -46,7 +46,7 @@ optional_inline driver_io_exit()
  */
 data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
 {
-    unsigned int value;
+    signed int value;
     char c[2] = "\0";
     bool invalid;
     
@@ -145,3 +145,17 @@ void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
     arduino_serial_print(1, output);
     #endif
 }
+
+#ifdef _3BC_COMPUTER
+void driver_io_signal(int sig)
+{
+    switch (sig)
+    {
+        case SIGINT:
+            driver_power_exit(sig);
+        
+        case SIGSEGV:
+            driver_program_error((enum error_3bc_e) sig);
+    }
+}
+#endif

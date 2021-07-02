@@ -1,14 +1,45 @@
 /**
- * MACROS ENVIRONMENT (PLATAFORM DETECT)
+ * MACROS ENVIRONMENT (DETECT PLATAFORM/ARCHITECTURE)
+ */
+
+/** Atmel AVR **/
+#if defined(ARDUINO_ARCH_AVR)
+#define _3BC_AVR
+#elif defined(__AVR_ATmega8__)
+#define _3BC_AVR
+#elif defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny25__)
+#define _3BC_AVR
+#elif defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny45__)
+#define _3BC_AVR
+#elif defined(__AVR_ATtiny84__) || defined(__AVR_ATtiny85__)
+#define _3BC_AVR
+#elif defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__) 
+#define _3BC_AVR
+#elif defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__) || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__)
+#define _3BC_AVR
+#elif defined(__AVR_ATmega1280__) ||  defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__)
+#define _3BC_AVR
+#elif defined(__AVR_ATmega2560__)
+#define _3BC_AVR
+#endif
+
+/**
+ * PLATAFORM: ARDUINO
+ *
+ * NOTE: _3BC_SCU allows arduino IDE compilation in parts.
+ * NOTE: _3BC_COMPACT reduces more than 60% the use of ram memory.
  */
 #if defined(ARDUINO)
+#define _3BC_SCU
 #define _3BC_COMPACT
 #define _3BC_ARDUINO
 #else
 /**
- * @todo detect is separeted compiling for computer
+ * PLATAFORM: COMPUTER
  */
-#define _3BC_REQUIRE_INSTRUCTIONS
+#ifndef _3BC_SCU
+#define _3BC_SCU_FIX
+#endif
 #define _3BC_COMPUTER
 #ifdef _WIN32
 #define _3BC_PC_WINDOWS
@@ -67,7 +98,11 @@
 /**
  * C/C++ COMPATIBILITY MACROS
  */
-#ifdef inline
+#ifdef _3BC_AVR
+#define log2(l)                 (log(l)/log(2))
+#endif
+
+#if defined(inline) && !defined(_3BC_SCU)
 #define optional_inline          inline void
 #else 
 #define optional_inline          void

@@ -30,8 +30,8 @@ void cpu_helper_max(PARAMS_DEFINE);
 void cpu_helper_min(PARAMS_DEFINE);
 void cpu_helper_percentage(PARAMS_DEFINE);
 void cpu_helper_reverse(PARAMS_DEFINE);
-void cpu_helper_log2(PARAMS_DEFINE);
 void cpu_helper_log10(PARAMS_DEFINE);
+void cpu_helper_log2(PARAMS_DEFINE);
 void cpu_helper_mul_add(PARAMS_DEFINE);
 void cpu_helper_sign(PARAMS_DEFINE);
 void before_helper_average(void);
@@ -107,6 +107,9 @@ optional_inline driver_io_init(void);
 optional_inline driver_io_exit(void);
 data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres);
 void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
+#ifdef _3BC_COMPUTER
+void driver_io_signal(int sig);
+#endif
 
 /** FILE: driver_memory.c **/
 void driver_memory_data_set(address_3bc_t address, data_3bc_t value);
@@ -134,10 +137,10 @@ void driver_power_safe_exit();
 
 /** FILE: driver_program.c **/
 void lang_driver_run();
-void driver_program_error(int error_code);
+void driver_program_error(enum error_3bc_e error_code);
 
 /** FILE: interpreter_compiler.c **/
-bool interpreter_compiler(file_t* stream);
+bool interpreter_compiler(struct tty_3bc_s tty);
 
 /** FILE: interpreter_parser.c **/
 bool interpreter_parser_strtol(const char* string, signed long int* value);
@@ -148,6 +151,9 @@ int interpreter_parser_skip();
 /** FILE: interpreter_syntax.c **/
 bool interpreter_syntax_registers(const char* string, signed long int* value);
 bool interpreter_syntax_constants(const char* string, signed long int* value);
+
+/** FILE: interpreter_tokens.c **/
+bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val);
 
 /** FILE: tape_aux.c **/
 data_aux_3bc_t tape_aux_get(void);

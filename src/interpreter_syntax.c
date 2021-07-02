@@ -34,7 +34,7 @@ bool interpreter_syntax_registers(const char* string, signed long int* value)
     }
 
     /** passing register as numerical (octo, bin) **/
-    if(interpreter_parser_strtol(string, (signed long int *) value)){
+    if(interpreter_parser_strtol(string, value)){
         return true;
     }
 
@@ -50,13 +50,13 @@ bool interpreter_syntax_constants(const char* string, signed long int* value)
         PARSER_PACK('s', 'k', 'i', 'p', value, interpreter_parser_skip());
     }
 
-    if (interpreter_parser_strtol(string, (signed long int*) value)){
+    if (interpreter_parser_strtol(string, value)){
         return true;
     }
-    else if (interpreter_parser_strchar(string, (signed long int*) value)){
+    else if (interpreter_parser_strchar(string, value)){
         return true;    
     }
-    else if (interpreter_parser_strhash(string, (signed long int*) value)) {
+    else if (interpreter_parser_strhash(string, value)) {
         return true;
     }
 

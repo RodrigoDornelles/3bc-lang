@@ -134,4 +134,14 @@ class TestFails < Minitest::Test
         assert_equal 15, status.exitstatus
         end
     end
+
+    def test_columns
+        for console_input in [
+            "nill", "nill nill", "nill nill nill nill"
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
+        assert_match /ERROR CODE\: (0x3BC01F)/, stderr
+        assert_equal 15, status.exitstatus
+        end
+    end
 end

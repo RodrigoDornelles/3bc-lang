@@ -5,13 +5,10 @@
 
 void lang_driver_run()
 {
-    while(tape_program_avaliable()? tape_program_exe(): interpreter_compiler(APP_3BC->tty_source.io.stream));
+    while(tape_program_avaliable()? tape_program_exe(): interpreter_compiler(APP_3BC->tty_source));
 }
 
-/**
- * NOTE: params as int to better compatibility with function pointers.
- */
-void driver_program_error(int error_code)
+void driver_program_error(enum error_3bc_e error_code)
 {
     /**
      * NOTE: if the current line does not exist,
@@ -23,7 +20,7 @@ void driver_program_error(int error_code)
 
     #ifdef _3BC_ARDUINO
     /** smaller log erros for economy rom memory **/
-    static char error_code_string[48];
+    char error_code_string[48];
     snprintf(error_code_string,  48, "\n\n[3BC] Fatal error 0x%06X in line: %d", error_code, error_line);
     arduino_serial_print(1, error_code_string);
     #endif
@@ -33,7 +30,7 @@ void driver_program_error(int error_code)
     fprintf(stderr, "\n> ERROR LINE: %06d", error_line);
     fprintf(stderr, "\n> ERROR CODE: 0x%06X\n", error_code);
 
-    switch(error_code)
+    switch((long) (error_code))
     {
         case SIGSEGV: print_error("SEGMENT FAULT");
         case ERROR_CPU_ZERO: print_error("CPU MODE IS NOT DEFINED"); 
@@ -66,6 +63,7 @@ void driver_program_error(int error_code)
         case ERROR_LONG_LINE: print_error("EXCEED LINE COLUMN LIMIT");
         case ERROR_CHAR_SCAPE: print_error("INVALID CHARACTER ESCAPE");
         case ERROR_CHAR_SIZE: print_error("INVALID CHARACTER SIZE");
+        case ERROR_COLUMNS: print_error("WRONG NUMBER OF COLUMNS");
         default: print_error("UNKNOWN ERROR");
     }
     #endif
@@ -75,6 +73,8 @@ void driver_program_error(int error_code)
         driver_power_exit(SIGTERM);
     }
     driver_power_safe_exit(error_code);
+    #else
+    driver_power_exit();
     #endif
 
     #ifdef _3BC_ARDUINO
