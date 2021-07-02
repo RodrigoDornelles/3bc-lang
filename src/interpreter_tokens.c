@@ -32,6 +32,7 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
             unsigned char lenght = 1;
             char* string = (char*) malloc(lenght * sizeof(char) + 1);
             string[0] = c;
+            string[1] = '\0';
             columns += 1;
 
             /** init char or hash **/
