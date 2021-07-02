@@ -3,7 +3,7 @@
 bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val)
 {
     unsigned int columns = 0;
-    char c;
+    char c = '\0';
 
     /** reset strings **/
     *reg = NULL;
@@ -13,15 +13,15 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
     /** read line **/
     do {
         /** scan character **/
-        c = fgetc(tty.io.stream);
+        c = (c != '#' && c != ';')? fgetc(tty.io.stream): '#';
 
         /** skip comment **/
-        if(c=='#'){
-            for(;c!= '\n' && c != '\0'&& c !=- 1; c=fgetc(tty.io.stream));
+        if(strchr("#;", c) != NULL){
+            for(;c!= '\n' && c != '\0' && c != EOF; c=fgetc(tty.io.stream));
         }
 
         /** skip spacing | end of file **/
-        if (strchr("\t#;, ", c) != NULL || feof(tty.io.stream) || c == '\n') {
+        if (strchr("\t,. ", c) != NULL || feof(tty.io.stream) || c == '\n') {
             continue;
         }
 
@@ -42,7 +42,7 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
             /** scan column string **/
             while ((c = fgetc(tty.io.stream)) != '\0'
                 && c != '\n' && !feof(tty.io.stream)
-                && (strchr("\t#; ,", c) == NULL || is_hash || is_char))
+                && (strchr("\t#;,. ", c) == NULL || is_hash || is_char))
             {
                 /** detect is scape **/
                 bool is_scape = (is_hash || is_char) && c == '\\';
@@ -83,7 +83,7 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
             }
         } 
     }
-    while (!feof(tty.io.stream) && c != '\0' && c != '\n' && strchr("#;", c) == NULL);
+    while (!feof(tty.io.stream) && c != '\0' && c != '\n' && c != ',');
 
     /** validate number of columns **/
     return columns == 3 || columns == 0;
