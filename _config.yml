@@ -3,7 +3,7 @@ description: >-
   Low level language, tiny virtual machine that works on computers and microcontrollers.
   (Friendly Punched cards)
 baseurl: "/"
-url: "3bc-lang.org"
+url: "https://3bc-lang.org"
 
 plugins:
   - jekyll-optional-front-matter
