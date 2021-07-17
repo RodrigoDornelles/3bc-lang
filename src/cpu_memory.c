@@ -13,19 +13,25 @@ void cpu_memory_aloc(PARAMS_DEFINE)
     driver_memory_data_set(address, value);
 }
 
-void cpu_memory_tcfg(PARAMS_DEFINE)
+void cpu_memory_mcfg(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     driver_memory_conf_set(address, value);
 }
 
-void cpu_memory_tmin(PARAMS_DEFINE)
+void cpu_memory_muse(PARAMS_DEFINE)
+{
+    REQUIRED_ADDRESS
+    driver_memory_conf_set(address, driver_memory_conf_get(address) | value);
+}
+
+void cpu_memory_mmin(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     driver_memory_vmin_set(address, value);
 }
 
-void cpu_memory_tmax(PARAMS_DEFINE)
+void cpu_memory_mmax(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     driver_memory_vmax_set(address, value);

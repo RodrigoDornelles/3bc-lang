@@ -139,5 +139,5 @@
 #define CPU_PACK3(mode,a,b,c)       {&cpu_null,&a,&b,&c,&cpu_not_exist,&cpu_not_exist,&cpu_not_exist,&cpu_mode},
 #define CPU_PACK4(mode,a,b,c,d)     {&cpu_null,&a,&b,&c,&d,&cpu_not_exist,&cpu_not_exist,&cpu_mode},
 #define CPU_PACK5(mode,a,b,c,d,e)   {&cpu_null,&a,&b,&c,&d,&e,&cpu_not_exist,&cpu_mode},
-#define CPU_PACK6(mode,a,b,c,d,e,f) {&cpu_null,&a,&b,&c,&d,&e,&cpu_mode},
+#define CPU_PACK6(mode,a,b,c,d,e,f) {&cpu_null,&a,&b,&c,&d,&e,&f,&cpu_mode},
 #endif

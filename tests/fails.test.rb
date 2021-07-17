@@ -102,13 +102,13 @@ class TestFails < Minitest::Test
     end
 
     def test_invalid_memory_config
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 6\ntcfg 8 8")
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 6\nmcfg 8 8")
         assert_match /ERROR CODE\: (0x3BC017)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_invalid_memory_clamp
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 6\ntmin 1 2\ntmax 1 1")
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 6\nmmin 1 2\nmmax 1 1")
         assert_match /ERROR CODE\: (0x3BC018)/, stderr
         assert_equal 15, status.exitstatus
     end
