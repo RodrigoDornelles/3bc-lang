@@ -23,6 +23,10 @@
 #ifdef _3BC_PC_WINDOWS
 #include <conio.h>
 #endif
+#ifdef _3BC_ARDUINO
+#include <Arduino.h>
+#endif
+
 
 /** headers **/
 #include "3bc_errors.h"
@@ -59,6 +63,7 @@
 #ifdef __cplusplus
 /** 
  * when require C++ adpatations
+ * TODO: remove
  */
 #include "lang_plus.cpp"
 #endif

@@ -75,9 +75,14 @@
 #define GET_ANY_PARAM               (address?driver_memory_data_get(address):value)
 #endif 
 
-#define MEM_CONFIG_MAX_VALUE        (0b0010)
-#define MEM_CONFIG_MIN_VALUE        (0b0100)
-#define MEM_CONFIG_NORMALIZE        (0b1000)
+#define MEM_CONFIG_RESERVED         (0b00000001) /** unused for a while **/
+#define MEM_CONFIG_MAX_VALUE        (0b00000010) /** exists maximum value **/
+#define MEM_CONFIG_MIN_VALUE        (0b00000100) /** exists minimum value **/
+#define MEM_CONFIG_NORMALIZE        (0b00001000) /** transform clamp to map **/
+#define MEM_CONFIG_GPIO_SEND        (0b00010000) /** digital output **/
+#define MEM_CONFIG_GPIO_READ        (0b00100000) /** digital input **/
+#define MEM_CONFIG_GPIO_PULL        (0b01000000) /** pullup input **/
+#define MEM_CONFIG_GPIO_ANAL        (0b10000000) /** analogic/pwd **/
 
 /**
  * FUNCTIONS MACROS

@@ -33,6 +33,10 @@ void driver_memory_conf_set(address_3bc_t address, data_3bc_t value)
 data_3bc_t driver_memory_data_get(address_3bc_t address)
 {
     struct memory_node_s* node = tape_memory_llrbt_access(address);
+
+    /** read gpios if necessary **/
+    driver_memory_gpio(node);
+
     return node->data;
 }
 
@@ -73,6 +77,59 @@ address_3bc_t driver_memory_pointer(address_3bc_t address)
     return ptr;
 }
 
+void driver_memory_gpio(struct memory_node_s* node) 
+{
+    /** default configuration **/
+    if (node->conf == 0) {
+        return;
+    }
+
+    /** not using gpio mode **/
+    if ((node->conf & (MEM_CONFIG_GPIO_SEND | MEM_CONFIG_GPIO_READ)) == 0) {
+        return;
+    }
+
+    /**
+     * I hate to do two inline conditional branches (if),
+     * it makes me feel like a bad code writer,
+     * but this is for optimization purposes,
+     * so I shouldn't be so dirty!
+     */
+    if (MEM_CONFIG_GPIO_SEND == (node->conf & MEM_CONFIG_GPIO_SEND)) {
+        /** analogic output pwm **/
+        if (MEM_CONFIG_GPIO_ANAL == (node->conf & MEM_CONFIG_GPIO_ANAL)) {
+            #ifdef _3BC_ARDUINO
+            analogWrite(node->address, node->data);
+            #endif
+        }
+        /** digital output **/
+        else {
+            #ifdef _3BC_ARDUINO
+            digitalWrite(node->address, node->data);
+            #endif
+        }
+    } 
+    else {
+        /** analogic input **/
+        if (MEM_CONFIG_GPIO_ANAL == (node->conf & MEM_CONFIG_GPIO_ANAL)) {
+            #ifdef _3BC_ARDUINO
+            /** 
+             * analogicRead returng values between 0 and 1024
+             * abstract precision to go from 0 to 255.
+             */
+            node->data = analogRead(node->address) / 4;
+            #endif
+        }
+        /** digital input **/
+        else {
+            #ifdef _3BC_ARDUINO
+            node->data = digitalRead(node->address);
+            #endif
+        }
+        /** refresh data inner limits **/
+        driver_memory_reload(node);
+    }
+}
 
 void driver_memory_lineup(struct memory_node_s* node)
 {
@@ -82,27 +139,82 @@ void driver_memory_lineup(struct memory_node_s* node)
     }
 
     /** cache configuration **/
-    bool conf_normalize = (MEM_CONFIG_NORMALIZE == (node->conf & MEM_CONFIG_NORMALIZE));
-    bool conf_max_value = (MEM_CONFIG_MAX_VALUE == (node->conf & MEM_CONFIG_MAX_VALUE));
-    bool conf_min_value = (MEM_CONFIG_MIN_VALUE == (node->conf & MEM_CONFIG_MIN_VALUE));
-    bool conf_min_max = conf_max_value && conf_min_value;
+    register bool conf_normalize = (MEM_CONFIG_NORMALIZE == (node->conf & MEM_CONFIG_NORMALIZE));
+    register bool conf_max_value = (MEM_CONFIG_MAX_VALUE == (node->conf & MEM_CONFIG_MAX_VALUE));
+    register bool conf_min_value = (MEM_CONFIG_MIN_VALUE == (node->conf & MEM_CONFIG_MIN_VALUE));
+    register bool conf_gpio_send = (MEM_CONFIG_GPIO_SEND == (node->conf & MEM_CONFIG_GPIO_SEND));
+    register bool conf_gpio_read = (MEM_CONFIG_GPIO_READ == (node->conf & MEM_CONFIG_GPIO_READ));
+    register bool conf_gpio_anal = (MEM_CONFIG_GPIO_ANAL == (node->conf & MEM_CONFIG_GPIO_ANAL));
+    register bool conf_gpio_pull = (MEM_CONFIG_GPIO_PULL == (node->conf & MEM_CONFIG_GPIO_PULL));
+    register bool conf_gpio_analogic_write = conf_gpio_anal && conf_gpio_read;
+    register bool conf_gpio_analogic_read = conf_gpio_anal && conf_gpio_send;
+    register bool conf_gpio_pullup = conf_gpio_pull && conf_gpio_read;
+    register bool conf_min_max = conf_max_value && conf_min_value;
 
+    /** not allow pullup and analogic some times **/
+    if (conf_gpio_pull && conf_gpio_anal) {
+        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+    }
+    /** not allow pullup and output some times **/
+    if (conf_gpio_pull && conf_gpio_send) {
+        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+    }
+    /** not allow input and output some times **/
+    if (conf_gpio_send && conf_gpio_read) {
+        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+    }
+    /** analogic required input or output **/
+    if (conf_gpio_anal && !(conf_gpio_send || conf_gpio_read)) {
+        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+    }
     /** not allow normalize whitout clamp (limit max & min) **/
     if (conf_normalize && !conf_min_max) {
         driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
     }
-
     /** verifiy valid value between max & min **/
     if (node->vmin > node->vmax && conf_min_max) {
         driver_program_error(ERROR_INVALID_MEMORY_CLAMP);
     }
-    
+
+    #ifdef _3BC_ARDUINO
+    /** digital|analogic output **/
+    if(conf_gpio_send) {
+        pinMode(node->address, OUTPUT);
+    }
+    /** digitial input pull up **/
+    else if (conf_gpio_pullup) {
+        pinMode(node->address, INPUT_PULLUP);
+    }
+    /** digitial input **/
+    else if (conf_gpio_read) {
+        pinMode(node->address, INPUT);
+    }
+    #endif 
+
+    /** flush gpio data **/
+    driver_memory_gpio(node);
+
+    /** refresh data inner limits **/
+    driver_memory_reload(node);
+}
+
+
+void driver_memory_reload(struct memory_node_s* node)
+{
+    /** not using limiters mode **/
+    if ((node->conf & (MEM_CONFIG_MAX_VALUE | MEM_CONFIG_MIN_VALUE)) == 0) {
+        return;
+    }
+
+    /** cache normalize configuration **/
+    register bool conf_normalize = (MEM_CONFIG_NORMALIZE == (node->conf & MEM_CONFIG_NORMALIZE));
+
     /** maximum without normalize **/
-    if(node->data > node->vmax && conf_max_value && !conf_normalize) {
+    if(node->data > node->vmax && !conf_normalize && MEM_CONFIG_MAX_VALUE == (node->conf & MEM_CONFIG_MAX_VALUE)) {
         node->data = node->vmax;
     }
     /** minimum without normalize **/
-    else if (node->data < node->vmin && conf_min_value && !conf_normalize) {
+    else if (node->data < node->vmin && !conf_normalize && MEM_CONFIG_MIN_VALUE == (node->conf & MEM_CONFIG_MIN_VALUE)) {
         node->data = node->vmin;
     }
     /** custom underflow/overflow **/
@@ -111,7 +223,7 @@ void driver_memory_lineup(struct memory_node_s* node)
     }
 }
 
-void tape_memory_free(address_3bc_t address)
+void driver_memory_free(address_3bc_t address)
 {
     /** clear cache level 0 **/
     if (APP_3BC->cache_l0 != NULL && APP_3BC->cache_l0->address == address) {

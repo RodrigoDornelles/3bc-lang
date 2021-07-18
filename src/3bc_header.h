@@ -122,8 +122,10 @@ data_3bc_t driver_memory_vmax_get(address_3bc_t address);
 data_3bc_t driver_memory_vmin_get(address_3bc_t address);
 data_3bc_t driver_memory_conf_get(address_3bc_t address);
 address_3bc_t driver_memory_pointer(address_3bc_t address);
+void driver_memory_gpio(struct memory_node_s* node);
 void driver_memory_lineup(struct memory_node_s* node);
-void tape_memory_free(address_3bc_t address);
+void driver_memory_reload(struct memory_node_s* node);
+void driver_memory_free(address_3bc_t address);
 
 /** FILE: driver_power.c **/
 #ifdef _3BC_COMPUTER

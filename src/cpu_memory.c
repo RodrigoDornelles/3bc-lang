@@ -4,7 +4,7 @@ void cpu_memory_free(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     VALIDATE_NOT_VALUES
-    tape_memory_free(address);
+    driver_memory_free(address);
 }
 
 void cpu_memory_aloc(PARAMS_DEFINE)
@@ -41,7 +41,7 @@ void cpu_memory_ptr_free(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     VALIDATE_NOT_VALUES
-    tape_memory_free(POINTER(address));
+    driver_memory_free(POINTER(address));
 }
 
 void cpu_memory_ptr_aloc(PARAMS_DEFINE)
