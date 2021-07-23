@@ -1,20 +1,32 @@
 ---
 title: Download
 description: Get the last version of 3BC Language now!
+click_here: https://3bc-lang.org/download
 ---
 
-<br/><br/>
-![3BC LANGUAGE LOGO ><](/images/logo-3bc-mid.png)
-<br/><br/><br/>
-
-<!-- SHOW ON GITHUB {% if false %}-->
-
- * click here: <https://3bc-lang.org/download>
-
-<!-- SHOW ON GITHUB {% endif %}-->
-
 <!-- HIDE ON GITHUB {{ '--' | append: '>' }}
+
 {% assign release = site.github.releases | first %}
+
+<section class="row">
+
+<div class="col s12 m6" markdown="1">
+
+![3BC LANGUAGE LOGO ><](/images/logo-3bc-mid.png)
+
+</div>
+
+<div class="col s12 m6" markdown="1">
+
+## Download last version!
+
+ * **Version:** {{ release.name }}
+ * **Date published:** {{ release.created_at | date_to_long_string }}
+ * **For more details:** [click here!]({{ '/docs/changelogs' | relative_url | append: '#' | append: release.name }})
+  
+</div>
+
+</section>
 
 <section class="row">
 {% for asset in release.assets %}
