@@ -133,7 +133,7 @@ bool interpreter_parser_strhash(const char* string, signed long int* value)
     int c;
 
     /** is not hash **/
-    if (string[0] != '"') {
+    if (string[0] != ':') {
         return false;
     }
 

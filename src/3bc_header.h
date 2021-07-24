@@ -75,9 +75,10 @@ void cpu_jump_ngto(PARAMS_DEFINE);
 /** FILE: cpu_memory.c **/
 void cpu_memory_free(PARAMS_DEFINE);
 void cpu_memory_aloc(PARAMS_DEFINE);
-void cpu_memory_tcfg(PARAMS_DEFINE);
-void cpu_memory_tmin(PARAMS_DEFINE);
-void cpu_memory_tmax(PARAMS_DEFINE);
+void cpu_memory_mcfg(PARAMS_DEFINE);
+void cpu_memory_muse(PARAMS_DEFINE);
+void cpu_memory_mmin(PARAMS_DEFINE);
+void cpu_memory_mmax(PARAMS_DEFINE);
 void cpu_memory_ptr_free(PARAMS_DEFINE);
 void cpu_memory_ptr_aloc(PARAMS_DEFINE);
 void cpu_memory_ptr_pull(PARAMS_DEFINE);
@@ -121,8 +122,10 @@ data_3bc_t driver_memory_vmax_get(address_3bc_t address);
 data_3bc_t driver_memory_vmin_get(address_3bc_t address);
 data_3bc_t driver_memory_conf_get(address_3bc_t address);
 address_3bc_t driver_memory_pointer(address_3bc_t address);
+void driver_memory_gpio(struct memory_node_s* node);
 void driver_memory_lineup(struct memory_node_s* node);
-void tape_memory_free(address_3bc_t address);
+void driver_memory_reload(struct memory_node_s* node);
+void driver_memory_free(address_3bc_t address);
 
 /** FILE: driver_power.c **/
 #ifdef _3BC_COMPUTER

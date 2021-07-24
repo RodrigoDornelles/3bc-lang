@@ -17,13 +17,16 @@ bool interpreter_syntax_registers(const char* string, signed long int* value)
         PARSER_PACK('a', 'l', 'o', 'c', value, ALOC);
         PARSER_PACK('p', 'u', 'l', 'l', value, PULL);
         PARSER_PACK('p', 'u', 's', 'h', value, PUSH);
-        PARSER_PACK('t', 'c', 'f', 'g', value, TCFG);
+
+        PARSER_PACK('m', 'c', 'f', 'g', value, MCFG);
+        PARSER_PACK('m', 'm', 'a', 'x', value, MMAX);
+        PARSER_PACK('m', 'm', 'i', 'n', value, MMIN);
 
         PARSER_PACK('g', 'o', 't', 'o', value, GOTO);
         PARSER_PACK('f', 'g', 't', 'o', value, FGTO);
         PARSER_PACK('z', 'g', 't', 'o', value, ZGTO);
-        PARSER_PACK('p', 'g', 't', 'o', value, SPIN, PGTO, TMAX);
-        PARSER_PACK('n', 'g', 't', 'o', value, NGTO, TMIN);
+        PARSER_PACK('p', 'g', 't', 'o', value, SPIN, PGTO, MUSE);
+        PARSER_PACK('n', 'g', 't', 'o', value, NGTO);
 
         PARSER_PACK('n', 'b', '0', '2', value, NB02);
         PARSER_PACK('n', 'b', '0', '8', value, NB08);

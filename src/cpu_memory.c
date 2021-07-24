@@ -4,7 +4,7 @@ void cpu_memory_free(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     VALIDATE_NOT_VALUES
-    tape_memory_free(address);
+    driver_memory_free(address);
 }
 
 void cpu_memory_aloc(PARAMS_DEFINE)
@@ -13,19 +13,25 @@ void cpu_memory_aloc(PARAMS_DEFINE)
     driver_memory_data_set(address, value);
 }
 
-void cpu_memory_tcfg(PARAMS_DEFINE)
+void cpu_memory_mcfg(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     driver_memory_conf_set(address, value);
 }
 
-void cpu_memory_tmin(PARAMS_DEFINE)
+void cpu_memory_muse(PARAMS_DEFINE)
+{
+    REQUIRED_ADDRESS
+    driver_memory_conf_set(address, driver_memory_conf_get(address) | value);
+}
+
+void cpu_memory_mmin(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     driver_memory_vmin_set(address, value);
 }
 
-void cpu_memory_tmax(PARAMS_DEFINE)
+void cpu_memory_mmax(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     driver_memory_vmax_set(address, value);
@@ -35,7 +41,7 @@ void cpu_memory_ptr_free(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     VALIDATE_NOT_VALUES
-    tape_memory_free(POINTER(address));
+    driver_memory_free(POINTER(address));
 }
 
 void cpu_memory_ptr_aloc(PARAMS_DEFINE)
