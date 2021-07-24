@@ -15,6 +15,9 @@ Changelogs
 <!-- HIDE ON GITHUB {{ '--' | append: '>' }}
 {% for release in site.github.releases %}
 
+{{ release.name }}
+------------------
+
 {{ release.body }}
 
 <section class="row">
