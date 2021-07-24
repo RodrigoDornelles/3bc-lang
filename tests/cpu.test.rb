@@ -64,9 +64,11 @@ class TestCpu < Minitest::Test
             "mode.0.6,mmin.1.11,mmax.1.13,mcfg.1.0b1110,aloc.1.23,mode.0.2,stri.1.0,mode.0.6,free.1.0",
             "mode.0.6,muse.1.16,muse.1.128,aloc.1.0xFF,mode.0.2,stri.1.0,mode.0.6,free.1.0",
             "mode.0.6,muse.1.16,aloc.1.0xFF,mode.0.2,stri.1.0,mode.0.6,free.1.0",
+            "mode.0.6,muse.1.32,muse.1.128,aloc.1.0xFF,mode.0.2,stri.1.0,mode.0.6,free.1.0",
+            "mode.0.6,muse.1.32,aloc.1.0xFF,mode.0.2,stri.1.0,mode.0.6,free.1.0",
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input.join("\n"))
-        assert_equal "18888881311121311131112131113111213112551", stdout
+        assert_equal "1888888131112131113111213111311121311255100", stdout
         assert_equal 0, status
     end
 
