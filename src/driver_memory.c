@@ -104,6 +104,9 @@ void driver_memory_gpio(struct memory_node_s* node)
         }
         /** digital output **/
         else {
+            /** before conversor **/
+            node->data = node->data <= 0? 0: 1;
+
             #ifdef _3BC_ARDUINO
             digitalWrite(node->address, node->data);
             #endif
@@ -125,6 +128,9 @@ void driver_memory_gpio(struct memory_node_s* node)
             #ifdef _3BC_ARDUINO
             node->data = digitalRead(node->address);
             #endif
+
+            /** after conversor **/
+            node->data = node->data <= 0? 0: 1;
         }
         /** refresh data inner limits **/
         driver_memory_reload(node);
