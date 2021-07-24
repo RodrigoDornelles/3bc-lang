@@ -27,7 +27,6 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
 
         /** create column **/
         {
-            bool is_hash = false;
             bool is_char = false;
             unsigned char lenght = 1;
             char* string = (char*) malloc(lenght * sizeof(char) + 1);
@@ -36,16 +35,15 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
             columns += 1;
 
             /** init char or hash **/
-            is_char |= c == '\'' && !is_hash;
-            is_hash |= c == '"' && !is_char;
+            is_char |= c == '\'';
 
             /** scan column string **/
             while ((c = fgetc(tty.io.stream)) != '\0'
                 && c != '\n' && !feof(tty.io.stream)
-                && (strchr("\t#;,. ", c) == NULL || is_hash || is_char))
+                && (strchr("\t#;,. ", c) == NULL || is_char))
             {
                 /** detect is scape **/
-                bool is_scape = (is_hash || is_char) && c == '\\';
+                bool is_scape = (is_char) && c == '\\';
 
                 /** expand string **/
                 char* new_buffer = (char*) realloc(string, ++lenght * sizeof(char) + 1);
@@ -62,7 +60,6 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
 
                 /** end of char or hash **/
                 is_char = is_char && !is_scape && c != '\'';
-                is_hash = is_hash && !is_scape && c != '"';
                 is_scape = false;
             }
 
