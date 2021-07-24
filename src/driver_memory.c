@@ -121,16 +121,19 @@ void driver_memory_gpio(struct memory_node_s* node)
              * abstract precision to go from 0 to 255.
              */
             node->data = analogRead(node->address) / 4;
+            #else
+            /** when gpio is not implemented **/
+            node->data = 0;
             #endif
         }
         /** digital input **/
         else {
             #ifdef _3BC_ARDUINO
             node->data = digitalRead(node->address);
+            #else 
+            /** when gpio is not implemented **/
+            node->data = 0;
             #endif
-
-            /** after conversor **/
-            node->data = node->data <= 0? 0: 1;
         }
         /** refresh data inner limits **/
         driver_memory_reload(node);
