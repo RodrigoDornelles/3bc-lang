@@ -18,7 +18,7 @@ bool interpreter_syntax_registers(const char* string, signed long int* value)
         PARSER_PACK('p', 'u', 'l', 'l', value, PULL);
         PARSER_PACK('p', 'u', 's', 'h', value, PUSH);
 
-        PARSER_PACK('m', 'c', 'f', 'g', value, MCFG);
+        PARSER_PACK('m', 'o', 'f', 'f', value, MOFF);
         PARSER_PACK('m', 'm', 'a', 'x', value, MMAX);
         PARSER_PACK('m', 'm', 'i', 'n', value, MMIN);
 
