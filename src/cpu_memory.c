@@ -13,15 +13,17 @@ void cpu_memory_aloc(PARAMS_DEFINE)
     driver_memory_data_set(address, value);
 }
 
-void cpu_memory_mcfg(PARAMS_DEFINE)
+void cpu_memory_moff(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    driver_memory_conf_set(address, value);
+    /** config remove mask (and not) */
+    driver_memory_conf_set(address, driver_memory_conf_get(address) &~ value);
 }
 
 void cpu_memory_muse(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
+    /** config append mask (or) */
     driver_memory_conf_set(address, driver_memory_conf_get(address) | value);
 }
 

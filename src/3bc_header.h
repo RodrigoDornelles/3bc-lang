@@ -75,7 +75,7 @@ void cpu_jump_ngto(PARAMS_DEFINE);
 /** FILE: cpu_memory.c **/
 void cpu_memory_free(PARAMS_DEFINE);
 void cpu_memory_aloc(PARAMS_DEFINE);
-void cpu_memory_mcfg(PARAMS_DEFINE);
+void cpu_memory_moff(PARAMS_DEFINE);
 void cpu_memory_muse(PARAMS_DEFINE);
 void cpu_memory_mmin(PARAMS_DEFINE);
 void cpu_memory_mmax(PARAMS_DEFINE);
