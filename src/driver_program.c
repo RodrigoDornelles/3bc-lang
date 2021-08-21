@@ -68,7 +68,7 @@ void driver_program_error(enum error_3bc_e error_code)
     }
     #endif
 
-    #ifdef _3BC_COMPUTER
+    #if defined(_3BC_COMPUTER)
     if(error_code >= ERROR_CPU_ZERO){
         driver_power_exit(SIGTERM);
     }
@@ -77,7 +77,8 @@ void driver_program_error(enum error_3bc_e error_code)
     driver_power_exit();
     #endif
 
-    #ifdef _3BC_ARDUINO
+    #if defined(_3BC_ARDUINO)
+    /** TODO: some thing? **/
     while(1);
     #endif
 }

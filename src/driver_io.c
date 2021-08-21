@@ -1,13 +1,13 @@
 #include "3bc.h"
 
-#ifdef _3BC_PC_NOT_WINDOWS
+#if defined(_3BC_PC_NOT_WINDOWS)
 struct termios term_old_attr;
 struct termios term_new_attr;
 #endif
 
 optional_inline driver_io_init()
 {
-    #ifdef _3BC_PC_NOT_WINDOWS
+    #if defined(_3BC_PC_NOT_WINDOWS)
     /**
      * Turn possible terminal uncannonical mode 
      * without conio.h in linux/unix builds
@@ -22,20 +22,20 @@ optional_inline driver_io_init()
     term_new_attr.c_cc[VMIN] = 1;
     #endif
 
-    #ifdef _3BC_ARDUINO
+    #if defined(_3BC_ARDUINO)
     arduino_serial_begin();
     #endif
 }
 
 optional_inline driver_io_exit()
 {
-    #ifdef _3BC_COMPUTER
+    #if defined(_3BC_COMPUTER)
     /** clear buffers **/
     fflush(stderr);
     fflush(stdout);
     #endif
     
-    #ifdef _3BC_PC_NOT_WINDOWS
+    #if defined(_3BC_PC_NOT_WINDOWS)
     /** reset terminal to default mode (linux/unix) **/
     tcsetattr(STDIN_FILENO, TCSANOW, &term_old_attr);
     #endif
@@ -54,13 +54,11 @@ data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
         invalid = false;
 
         /** capture input **/
-        #ifdef _3BC_PC_NOT_WINDOWS
+        #if defined(_3BC_PC_NOT_WINDOWS)
         tcsetattr(STDIN_FILENO,TCSANOW, &term_new_attr);
         c[0] = getchar();
         tcsetattr(STDIN_FILENO,TCSANOW, &term_old_attr);
-        #endif 
-
-        #ifdef _3BC_PC_WINDOWS
+        #elif defined(_3BC_PC_WINDOWS)
         /** exclusive function of the conio.h library **/
         c[0] = getch();
         #endif
@@ -125,7 +123,7 @@ void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
             break;
     }
 
-    #ifdef _3BC_COMPUTER
+    #if defined(_3BC_COMPUTER)
     /** negative symbol **/
     if (val < 0) {
         driver_io_output(tty, STRC, '-');
@@ -141,12 +139,12 @@ void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
     }
     #endif
 
-    #ifdef _3BC_ARDUINO
+    #if defined(_3BC_ARDUINO)
     arduino_serial_print(1, output);
     #endif
 }
 
-#ifdef _3BC_COMPUTER
+#if defined(_3BC_COMPUTER)
 void driver_io_signal(int sig)
 {
     switch (sig)

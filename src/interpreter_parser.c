@@ -72,7 +72,7 @@ bool interpreter_parser_strtol(const char* string, signed long int* value)
     else if (errno == ERANGE && *value == LONG_MAX){
         driver_program_error(ERROR_NUMBER_OVERFLOW);
     }
-    #ifdef EINVAL
+    #if defined(EINVAL)
     /** not in all c99 implementations **/
     else if (errno == EINVAL){ 
         driver_program_error(ERROR_NUMBER_WRONG_BASE); 
