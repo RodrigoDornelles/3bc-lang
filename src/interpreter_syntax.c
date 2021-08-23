@@ -8,6 +8,7 @@ bool interpreter_syntax_registers(const char* string, signed long int* value)
         PARSER_PACK('n', 'i', 'l', 'l', value, NILL);
         PARSER_PACK('m', 'o', 'd', 'e', value, MODE);
 
+        PARSER_PACK('s', 't', 'r', 'b', value, STRB);
         PARSER_PACK('s', 't', 'r', 'i', value, STRI);
         PARSER_PACK('s', 't', 'r', 'c', value, STRC);
         PARSER_PACK('s', 't', 'r', 'o', value, STRO);

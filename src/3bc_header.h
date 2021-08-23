@@ -17,6 +17,7 @@ void cpu_not_exist(PARAMS_DEFINE);
 void cpu_mode_reserved(PARAMS_DEFINE);
 
 /** FILE: cpu_debug.c **/
+void cpu_debug_strb(PARAMS_DEFINE);
 void cpu_debug_stri(PARAMS_DEFINE);
 void cpu_debug_strc(PARAMS_DEFINE);
 void cpu_debug_stro(PARAMS_DEFINE);
@@ -41,14 +42,17 @@ void after_helper_sort(void);
 void after_helper_maxmin(void);
 
 /** FILE: cpu_input.c **/
+void cpu_input_strb(PARAMS_DEFINE);
 void cpu_input_stri(PARAMS_DEFINE);
 void cpu_input_strc(PARAMS_DEFINE);
 void cpu_input_stro(PARAMS_DEFINE);
 void cpu_input_strx(PARAMS_DEFINE);
+void cpu_input_silent_strb(PARAMS_DEFINE);
 void cpu_input_silent_stri(PARAMS_DEFINE);
 void cpu_input_silent_strc(PARAMS_DEFINE);
 void cpu_input_silent_stro(PARAMS_DEFINE);
 void cpu_input_silent_strx(PARAMS_DEFINE);
+void cpu_input_password_strb(PARAMS_DEFINE);
 void cpu_input_password_stri(PARAMS_DEFINE);
 void cpu_input_password_strc(PARAMS_DEFINE);
 void cpu_input_password_stro(PARAMS_DEFINE);
@@ -91,6 +95,7 @@ void cpu_memory_aux_push(PARAMS_DEFINE);
 void cpu_memory_aux_spin(PARAMS_DEFINE);
 
 /** FILE: cpu_string.c **/
+void cpu_string_strb(PARAMS_DEFINE);
 void cpu_string_stri(PARAMS_DEFINE);
 void cpu_string_strc(PARAMS_DEFINE);
 void cpu_string_stro(PARAMS_DEFINE);
