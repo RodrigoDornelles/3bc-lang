@@ -27,7 +27,6 @@
 #include <Arduino.h>
 #endif
 
-
 /** headers **/
 #include "3bc_errors.h"
 #include "3bc_types.h"
@@ -60,12 +59,5 @@
 #include "tape_program.c"
 #include "tape_router.c"
 #include "tape_sort.c"
-#ifdef __cplusplus
-/** 
- * when require C++ adpatations
- * TODO: remove
- */
-#include "lang_plus.cpp"
-#endif
 #endif
 #endif

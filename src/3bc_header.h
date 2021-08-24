@@ -102,12 +102,6 @@ void cpu_string_stro(PARAMS_DEFINE);
 void cpu_string_strx(PARAMS_DEFINE);
 void cpu_string_stru(PARAMS_DEFINE);
 
-/** FILE: lang_plus.cpp **/
-#ifdef _3BC_ARDUINO
-void arduino_serial_begin(void);
-void arduino_serial_print(unsigned char serial, const char* string);
-#endif
-
 /** FILE: driver_io.c **/
 optional_inline driver_io_init(void);
 optional_inline driver_io_exit(void);
@@ -144,7 +138,7 @@ void driver_power_safe_exit();
 #endif
 
 /** FILE: driver_program.c **/
-void lang_driver_run();
+void driver_program_run();
 void driver_program_error(enum error_3bc_e error_code);
 
 /** FILE: interpreter_compiler.c **/

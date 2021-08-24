@@ -2,8 +2,7 @@
 
 int main(int argc, char **argv)
 {
-    lang_driver_init(argc, argv);
-
+    lang_init(argc, argv);
     /** 
      * put transpiled program here.
      * @example:
@@ -23,7 +22,6 @@ int main(int argc, char **argv)
     lang_line(STRC, NILL, '\n');
      */
 
-    lang_driver_run();
-    lang_driver_exit(0);
-    return 0;
+    lang_run();
+    lang_exit(0);
 }

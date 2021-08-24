@@ -21,10 +21,6 @@ optional_inline driver_io_init()
     term_new_attr.c_cc[VTIME] = 0;
     term_new_attr.c_cc[VMIN] = 1;
     #endif
-
-    #if defined(_3BC_ARDUINO)
-    arduino_serial_begin();
-    #endif
 }
 
 optional_inline driver_io_exit()
@@ -164,18 +160,16 @@ void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
 
     #if defined(_3BC_COMPUTER)
     /** stream standard c output **/
-    if (tty.type == STREAM_TYPE_COMPUTER_STD && tty.io.stream == stdout){
-        fprintf(stdout, "%s", output);
-    }
-    /** stream standard c error **/
-    else if (tty.type == STREAM_TYPE_COMPUTER_STD && tty.io.stream == stderr){
-        fprintf(stderr, "%s", output);
+    if (tty.type == STREAM_TYPE_COMPUTER_STD){
+        fprintf(tty.io.stream, "%s", output);
+        return;
     }
     #endif
 
-    #if defined(_3BC_ARDUINO)
-    arduino_serial_print(1, output);
-    #endif
+    if (tty.type == STREAM_TYPE_FUNCTION_CALL) {
+        tty.io.lambda(output);
+        return;
+    }
 }
 
 #if defined(_3BC_COMPUTER)

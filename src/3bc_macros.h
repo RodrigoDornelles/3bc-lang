@@ -93,14 +93,6 @@
 #define POINTER(a)                      (driver_memory_pointer(a))
 
 /**
- * LEGACY COMPATIBILITY MACROS
- */
-#define lang_line                tape_program_line_add
-#define lang_driver_init         driver_power_init
-#define lang_driver_exit         driver_power_exit
-#define lang_driver_run          driver_program_run
-
-/**
  * C/C++ COMPATIBILITY MACROS
  */
 #ifdef _3BC_AVR

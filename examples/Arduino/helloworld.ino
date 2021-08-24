@@ -1,7 +1,14 @@
 #include <3bc.h>
 
-void setup() {
-  lang_driver_init();
+void setup()
+{ 
+  Serial.begin(9600);
+  
+  lang_io_call(tty_output, [](char* output){
+    Serial.write(output);    
+  });
+  
+  lang_init();
   lang_line(MODE, NILL, 2);
   lang_line(STRC, NILL, 'H');
   lang_line(STRC, NILL, 'e');
@@ -16,8 +23,8 @@ void setup() {
   lang_line(STRC, NILL, 'd');
   lang_line(STRC, NILL, '!');
   lang_line(STRC, NILL, '\n');
-  lang_driver_run();
-  lang_driver_exit(0);
+  lang_run();
+  lang_exit();
 }
 
 void loop() {}
