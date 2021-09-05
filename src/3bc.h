@@ -4,7 +4,7 @@
 /** prepare **/
 #include "3bc_macros.h"
 
-/** libaries **/
+/** libraries **/
 #include <math.h>
 #include <ctype.h>
 #include <stdio.h>
