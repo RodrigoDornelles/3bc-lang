@@ -4,16 +4,16 @@ require 'minitest/autorun'
 
 class TestCpu < Minitest::Test
     def test_mode_1
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 1\nstri 0 0i9\nstrc 0 'a'\nstro 0 0o7\nstrx 0 0xA")
-        assert_equal "9a7a", stderr
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 1\nstrb 0 0b1\nstri 0 0i9\nstrc 0 'a'\nstro 0 0o7\nstrx 0 0xA")
+        assert_equal "19a7a", stderr
         assert_equal "", stdout
         assert_equal 0, status
     end
 
     def test_mode_2
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 2\nstri 0 0d9\nstrc 0 'a'\nstro 0 0o7\nstrx 0 0xA")
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 2\nstrb 0 0b1\nstri 0 0d9\nstrc 0 'a'\nstro 0 0o7\nstrx 0 0xA")
         assert_equal "", stderr
-        assert_equal "9a7a", stdout
+        assert_equal "19a7a", stdout
         assert_equal 0, status
     end
 
@@ -256,7 +256,7 @@ class TestCpu < Minitest::Test
     def test_mode_29
         for console in
         [
-            {input:"mode 0 29\nnb02 0 0b1\nnb02 0 0b0\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill", output:"2"}, #TODO: base bin output
+            {input:"mode 0 29\nnb02 0 0b1\nnb02 0 0b0\nmode 0 8\npull 'r' nill\nmode 0 2\nstrb 'r' nill", output:"10"},
             {input:"mode 0 29\nnb08 0 0o7\nnb08 0 0o6\nmode 0 8\npull 'r' nill\nmode 0 2\nstro 'r' nill", output:"76"},
             {input:"mode 0 29\nnb10 0 0d9\nnb10 0 0d8\nmode 0 8\npull 'r' nill\nmode 0 2\nstri 'r' nill", output:"98"},
             {input:"mode 0 29\nnb16 0 0xF\nnb16 0 0xA\nmode 0 8\npull 'r' nill\nmode 0 2\nstrx 'r' nill", output:"fa"},
