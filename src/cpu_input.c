@@ -80,7 +80,7 @@ void cpu_input_password_strb(PARAMS_DEFINE)
     VALIDATE_NOT_VALUES
     tape_aux_set(driver_io_input(STRB, address));
     driver_memory_data_set(address, AUX);
-    driver_io_output(APP_3BC->tty_keylog, STRB, '*');
+    driver_io_output(APP_3BC->tty_keylog, STRC, '*');
 }
 
 void cpu_input_password_stri(PARAMS_DEFINE)

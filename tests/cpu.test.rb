@@ -18,23 +18,23 @@ class TestCpu < Minitest::Test
     end
 
     def test_mode_3
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 3\nstri 1 0\n1\nstrc 2 0\n2\nstro 3 0\n3\nstrx 4 0\n4\nmode 0 2\nstri 1 0\nstrc 2 0\nstro 3 0\nstrx 4 0")
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 3\nstrb 1 0\n1\nstro 2 0\n2\nstri 3 0\n3\nstrx 4 0\n4strc 5 0\n5\nmode 0 2\nstrb 1 0\nstro 2 0\nstri 3 0\nstrx 4 0\nstrc 5 0")
         assert_equal "", stderr
-        assert_equal "12341234", stdout
+        assert_equal "1234512345", stdout
         assert_equal 0, status
     end
 
     def test_mode_4
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 4\nstri 1 0\n1\nstrc 2 0\n2\nstro 3 0\n3\nstrx 4 0\n4\nmode 0 2\nstri 1 0\nstrc 2 0\nstro 3 0\nstrx 4 0")
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 4\nstrb 1 0\n1\nstro 2 0\n2\nstri 3 0\n3\nstrx 4 0\n4strc 5 0\n5\nmode 0 2\nstrb 1 0\nstro 2 0\nstri 3 0\nstrx 4 0\nstrc 5 0")
         assert_equal "", stderr
-        assert_equal "1234", stdout
+        assert_equal "12345", stdout
         assert_equal 0, status
     end
 
     def test_mode_5
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 5\nstri 1 0\n1\nstrc 2 0\n2\nstro 3 0\n3\nstrx 4 0\n4\nmode 0 2\nstri 1 0\nstrc 2 0\nstro 3 0\nstrx 4 0")
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 5\nstrb 1 0\n1\nstro 2 0\n2\nstri 3 0\n3\nstrx 4 0\n4strc 5 0\n5\nmode 0 2\nstrb 1 0\nstro 2 0\nstri 3 0\nstrx 4 0\nstrc 5 0")
         assert_equal "", stderr
-        assert_equal "****1234", stdout
+        assert_equal "*****12345", stdout
         assert_equal 0, status
     end
 
