@@ -50,7 +50,9 @@ data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
         invalid = false;
 
         /** capture input **/
-        #if defined(_3BC_PC_NOT_WINDOWS)
+        #if defined(_3BC_PC_1970)
+        c[0] = cgetc();
+        #elif defined(_3BC_PC_NOT_WINDOWS)
         tcsetattr(STDIN_FILENO,TCSANOW, &term_new_attr);
         c[0] = getchar();
         tcsetattr(STDIN_FILENO,TCSANOW, &term_old_attr);
