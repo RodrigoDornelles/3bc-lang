@@ -5,7 +5,9 @@
 #include "3bc_macros.h"
 
 /** libaries **/
+#ifndef _3BC_MOS6502
 #include <math.h>
+#endif
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
