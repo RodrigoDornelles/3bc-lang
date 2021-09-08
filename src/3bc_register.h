@@ -36,18 +36,18 @@
 #define NILL 0b000
 #define MODE 0b111
 
-#define STRI 0b001
+#define STRB 0b001
 #define FREE 0b001
 #define MATH 0b001
 #define GOTO 0b001
 #define NB02 0b001
 
-#define STRC 0b010
+#define STRO 0b010
 #define ALOC 0b010
 #define FGTO 0b010
 #define NB08 0b010
 
-#define STRO 0b011 
+#define STRI 0b011 
 #define MOFF 0b011
 #define PULL 0b011  
 #define ZGTO 0b011
@@ -59,6 +59,7 @@
 #define SPIN 0b100
 #define NB16 0b100
 
+#define STRC 0b101
 #define MMAX 0b101
 #define NGTO 0b101
 #define PUSH 0b101
@@ -83,11 +84,11 @@ function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
     #endif
         /** CPU MODES ADD REGISTER PACKAGES **/
         CPU_PACK_ZEROMODE(MODE_EMPUTY)
-        CPU_PACK4(MODE_DEBUG, cpu_debug_stri, cpu_debug_strc, cpu_debug_stro, cpu_debug_strx)
-        CPU_PACK4(MODE_STRING, cpu_string_stri, cpu_string_strc, cpu_string_stro, cpu_string_strx)
-        CPU_PACK4(MODE_INPUT, cpu_input_stri, cpu_input_strc, cpu_input_stro, cpu_input_strx)
-        CPU_PACK4(MODE_INPUT_SILENT, cpu_input_silent_stri, cpu_input_silent_strc, cpu_input_silent_stro, cpu_input_silent_strx)
-        CPU_PACK4(MODE_INPUT_PASSWORD, cpu_input_password_stri, cpu_input_password_strc, cpu_input_password_stro, cpu_input_password_strx)
+        CPU_PACK5(MODE_DEBUG, cpu_debug_strb, cpu_debug_stro, cpu_debug_stri, cpu_debug_strx, cpu_debug_strc)
+        CPU_PACK5(MODE_STRING, cpu_string_strb, cpu_string_stro, cpu_string_stri, cpu_string_strx, cpu_string_strc)
+        CPU_PACK5(MODE_INPUT, cpu_input_strb, cpu_input_stro, cpu_input_stri, cpu_input_strx, cpu_input_strc)
+        CPU_PACK5(MODE_INPUT_SILENT, cpu_input_silent_strb, cpu_input_silent_stro, cpu_input_silent_stri, cpu_input_silent_strx, cpu_input_silent_strc)
+        CPU_PACK5(MODE_INPUT_PASSWORD, cpu_input_password_strb, cpu_input_password_stro, cpu_input_password_stri, cpu_input_password_strx, cpu_input_password_strc)
         CPU_PACK6(MODE_MEMORY, cpu_memory_free, cpu_memory_aloc, cpu_memory_moff, cpu_memory_muse, cpu_memory_mmax, cpu_memory_mmin)
         CPU_PACK5(MODE_MEMORY_PTR, cpu_memory_ptr_free, cpu_memory_ptr_aloc, cpu_memory_ptr_pull, cpu_memory_ptr_spin, cpu_memory_ptr_push)
         CPU_PACK5(MODE_MEMORY_AUX, cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_spin, cpu_memory_aux_push)

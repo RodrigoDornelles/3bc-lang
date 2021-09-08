@@ -104,13 +104,17 @@ void tape_program_destroy()
  */
 void tape_program_label_insert(label_3bc_t label, cpumode_3bc_t cpumode, struct line_node_s* line)
 {
+    unsigned char hash;
+    struct label_node_s* new_node; 
+    struct label_node_s* last_node; 
+
     /** label already exists **/
     if (tape_program_label_search(label) != NULL) {
         driver_program_error(ERROR_INVALID_LABEL);
     }
 
-    struct label_node_s* new_node = (struct label_node_s*) malloc(sizeof(struct label_node_s));
-    unsigned char hash = label % LABEL_HASH_SIZE;
+    new_node = (struct label_node_s*) malloc(sizeof(struct label_node_s));
+    hash = label % LABEL_HASH_SIZE;
 
     /** was not possible expand labels **/
     if (new_node == NULL) {
@@ -127,7 +131,7 @@ void tape_program_label_insert(label_3bc_t label, cpumode_3bc_t cpumode, struct 
         return;
     }
 
-    struct label_node_s* last_node = APP_3BC->program.label_table[hash];
+    last_node = APP_3BC->program.label_table[hash];
     for (;last_node->next != NULL; last_node = last_node->next);
     last_node->next = new_node;
 }

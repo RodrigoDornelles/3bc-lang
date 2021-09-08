@@ -1,12 +1,12 @@
 #include "3bc.h"
 
-#ifdef _3BC_COMPUTER
+#if defined(_3BC_COMPUTER)
 void driver_power_init(int argc, char **argv)
 #else
 void driver_power_init()
 #endif
 {
-    #ifdef _3BC_COMPUTER
+    #if defined(_3BC_COMPUTER)
     /**
      * Capture computer signals
      */
@@ -44,14 +44,14 @@ void driver_power_init()
 /**
  * UNSAFE SHUTDOWNS
  */
-#ifdef _3BC_COMPUTER
+#if defined(_3BC_COMPUTER)
 void driver_power_exit(int sig)
 #else
 void driver_power_exit()
 #endif
 
 {
-    #ifdef _3BC_COMPUTER
+    #if defined(_3BC_COMPUTER)
     /** close file (safe pointer) **/
     if (APP_3BC->tty_source.type == STREAM_TYPE_COMPUTER_FILE && APP_3BC->tty_source.io.file != NULL) {
         fclose(APP_3BC->tty_source.io.file);
@@ -63,7 +63,7 @@ void driver_power_exit()
     tape_program_destroy();
     tape_sort_destroy();
 
-    #ifdef _3BC_COMPUTER
+    #if defined(_3BC_COMPUTER)
     driver_power_safe_exit(sig);
     #else
     driver_power_safe_exit();
@@ -73,7 +73,7 @@ void driver_power_exit()
 /**
  * SAFETY SHUTDOWNS
  */
-#ifdef _3BC_COMPUTER
+#if defined (_3BC_COMPUTER)
 void driver_power_safe_exit(int sig)
 #else
 void driver_power_safe_exit()
@@ -81,7 +81,7 @@ void driver_power_safe_exit()
 {
     driver_io_exit();
     
-    #ifdef _3BC_COMPUTER
+    #if defined(_3BC_COMPUTER)
     exit(sig);
     #endif
 }

@@ -24,6 +24,13 @@ class TestExample < Minitest::Test
         assert_equal 0, status
     end
 
+    def test_loop_do_while
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/loop_do_while.3bc", :stdin_data => "t1yYn")
+        assert_equal "", stderr
+        assert_equal "\nREPEAT? [y/n]\nREPEAT? [y/n]\nREPEAT? [y/n]\nREPEAT? [y/n]", stdout
+        assert_equal 0, status
+    end
+
     def test_loop
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/loop.3bc")
         assert_equal "", stderr

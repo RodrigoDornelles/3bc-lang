@@ -3,11 +3,15 @@
 #define print_error(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);break
 #define print_signal(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);exit(error_code)
 
-void lang_driver_run()
+void driver_program_run()
 {
     while(tape_program_avaliable()? tape_program_exe(): interpreter_compiler(APP_3BC->tty_source));
 }
 
+/**
+ * TODO: use tty_error
+ * TODO: use _3BC_COMPACT
+ */
 void driver_program_error(enum error_3bc_e error_code)
 {
     /**
@@ -22,7 +26,6 @@ void driver_program_error(enum error_3bc_e error_code)
     /** smaller log erros for economy rom memory **/
     char error_code_string[48];
     snprintf(error_code_string,  48, "\n\n[3BC] Fatal error 0x%06X in line: %d", error_code, error_line);
-    arduino_serial_print(1, error_code_string);
     #endif
 
     #ifdef _3BC_COMPUTER
@@ -64,11 +67,12 @@ void driver_program_error(enum error_3bc_e error_code)
         case ERROR_CHAR_SCAPE: print_error("INVALID CHARACTER ESCAPE");
         case ERROR_CHAR_SIZE: print_error("INVALID CHARACTER SIZE");
         case ERROR_COLUMNS: print_error("WRONG NUMBER OF COLUMNS");
+        case ERROR_UNSUPPORTED: print_error("UNSUPPORTED FEATURE");
         default: print_error("UNKNOWN ERROR");
     }
     #endif
 
-    #ifdef _3BC_COMPUTER
+    #if defined(_3BC_COMPUTER)
     if(error_code >= ERROR_CPU_ZERO){
         driver_power_exit(SIGTERM);
     }
@@ -77,7 +81,8 @@ void driver_program_error(enum error_3bc_e error_code)
     driver_power_exit();
     #endif
 
-    #ifdef _3BC_ARDUINO
+    #if defined(_3BC_ARDUINO)
+    /** TODO: some thing? **/
     while(1);
     #endif
 }

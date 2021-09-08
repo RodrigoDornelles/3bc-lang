@@ -8,6 +8,7 @@ bool interpreter_syntax_registers(const char* string, signed long int* value)
         PARSER_PACK('n', 'i', 'l', 'l', value, NILL);
         PARSER_PACK('m', 'o', 'd', 'e', value, MODE);
 
+        PARSER_PACK('s', 't', 'r', 'b', value, STRB);
         PARSER_PACK('s', 't', 'r', 'i', value, STRI);
         PARSER_PACK('s', 't', 'r', 'c', value, STRC);
         PARSER_PACK('s', 't', 'r', 'o', value, STRO);
@@ -25,7 +26,8 @@ bool interpreter_syntax_registers(const char* string, signed long int* value)
         PARSER_PACK('g', 'o', 't', 'o', value, GOTO);
         PARSER_PACK('f', 'g', 't', 'o', value, FGTO);
         PARSER_PACK('z', 'g', 't', 'o', value, ZGTO);
-        PARSER_PACK('p', 'g', 't', 'o', value, SPIN, PGTO, MUSE);
+        /** COLISIONS: SPIN, PGTO, MUSE **/
+        PARSER_PACK('p', 'g', 't', 'o', value, PGTO); 
         PARSER_PACK('n', 'g', 't', 'o', value, NGTO);
 
         PARSER_PACK('n', 'b', '0', '2', value, NB02);

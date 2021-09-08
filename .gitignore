@@ -12,6 +12,7 @@ bin/
 *.out
 main
 *.o
+*.s
 3bc
 
 # Jekyll files

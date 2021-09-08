@@ -4,8 +4,10 @@
 /** prepare **/
 #include "3bc_macros.h"
 
-/** libraries **/
+/** libaries **/
+#if !defined(_3BC_MOS6502)
 #include <math.h>
+#endif
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,31 +16,30 @@
 #include <errno.h>
 #include <limits.h>
 #include <string.h>
-#ifdef _3BC_COMPUTER
+#if defined(_3BC_COMPUTER)
 #include <signal.h>
 #endif
-#ifdef _3BC_PC_NOT_WINDOWS
+#if defined(_3BC_PC_NOT_WINDOWS)
 #include <termios.h>
 #endif
-#ifdef _3BC_PC_WINDOWS
+#if defined(_3BC_PC_WINDOWS) || defined(_3BC_PC_1970)
 #include <conio.h>
 #endif
-#ifdef _3BC_ARDUINO
+#if defined(_3BC_ARDUINO)
 #include <Arduino.h>
 #endif
-
 
 /** headers **/
 #include "3bc_errors.h"
 #include "3bc_types.h"
 #include "3bc_header.h"
 #include "3bc_register.h"
-#ifdef _3BC_APP_UNIQUE
+#if defined(_3BC_APP_UNIQUE)
 #include "3bc_bootstrap.h"
 #endif
 
 /** program **/
-#ifndef _3BC_SCU
+#if !defined(_3BC_SCU)
 #include "cpu_common.c"
 #include "cpu_debug.c"
 #include "cpu_helper.c"
@@ -60,12 +61,5 @@
 #include "tape_program.c"
 #include "tape_router.c"
 #include "tape_sort.c"
-#ifdef __cplusplus
-/** 
- * when require C++ adpatations
- * TODO: remove
- */
-#include "lang_plus.cpp"
-#endif
 #endif
 #endif

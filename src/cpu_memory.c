@@ -67,10 +67,12 @@ void cpu_memory_ptr_push(PARAMS_DEFINE)
 void cpu_memory_ptr_spin(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
-    data_3bc_t aux_old = AUX;
-    address = POINTER(address);
-    tape_aux_set(driver_memory_data_get(address));
-    driver_memory_data_set(address, aux_old);
+    {
+        data_3bc_t aux_old = AUX;
+        address = POINTER(address);
+        tape_aux_set(driver_memory_data_get(address));
+        driver_memory_data_set(address, aux_old);
+    }
 }
 
 void cpu_memory_aux_free(PARAMS_DEFINE)
@@ -104,7 +106,9 @@ void cpu_memory_aux_push(PARAMS_DEFINE)
 void cpu_memory_aux_spin(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
-    data_3bc_t aux_old = AUX;
-    tape_aux_set(driver_memory_data_get(address));
-    driver_memory_data_set(address, aux_old);
+    {
+        data_3bc_t aux_old = AUX;
+        tape_aux_set(driver_memory_data_get(address));
+        driver_memory_data_set(address, aux_old);
+    }
 }

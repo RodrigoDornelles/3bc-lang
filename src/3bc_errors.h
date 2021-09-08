@@ -31,4 +31,5 @@ enum error_3bc_e {
     ERROR_CHAR_SIZE,
     ERROR_NULL_POINTER,
     ERROR_COLUMNS,
+    ERROR_UNSUPPORTED
 };

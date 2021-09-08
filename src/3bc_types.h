@@ -18,12 +18,14 @@ enum stream_type_e {
     STREAM_TYPE_ARDUINO_SERIAL,
     STREAM_TYPE_ARDUINO_FILE,
     STREAM_TYPE_COMPUTER_STD,
-    STREAM_TYPE_COMPUTER_FILE
+    STREAM_TYPE_COMPUTER_FILE,
+    STREAM_TYPE_FUNCTION_CALL
 };
 
 union stream_file_u {
     file_t* file;
     file_t* stream;
+    void (*lambda)(char*);
 };
 
 struct tty_3bc_s {   

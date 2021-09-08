@@ -23,6 +23,10 @@
 #define _3BC_AVR
 #endif
 
+#if defined(__CC65_STD__) || defined(__CC65_STD_CC65__)
+#define _3BC_MOS6502
+#endif
+
 /**
  * PLATAFORM: ARDUINO
  *
@@ -33,19 +37,30 @@
 #define _3BC_SCU
 #define _3BC_COMPACT
 #define _3BC_ARDUINO
-#else
 /**
- * PLATAFORM: COMPUTER
+ * PLATAFORM: OLD COMPUTER
  */
-#ifndef _3BC_SCU
-#define _3BC_SCU_FIX
-#endif
+#elif defined(_3BC_MOS6502)
+#define _3BC_COMPACT
 #define _3BC_COMPUTER
-#ifdef _WIN32
+#define _3BC_PC_1970
+/**
+ * PLATAFORM: MODERN COMPUTER
+ */
+#else
+#define _3BC_COMPUTER
+#if defined(_WIN32)
 #define _3BC_PC_WINDOWS
 #else 
 #define _3BC_PC_NOT_WINDOWS
 #endif
+#endif
+
+/**
+ * PARTITIONED COMPILATION
+ */
+#ifndef _3BC_SCU
+#define _3BC_SCU_FIX
 #endif
 
 /**
@@ -88,17 +103,9 @@
  * FUNCTIONS MACROS
  */
 #define PARSER_UNPACK(c)                (tolower(c[0])+tolower(c[1])+tolower(c[2])+tolower(c[3]))
-#define PARSER_PACK(c1,c2,c3,c4,v,r,...)  case(c1+c2+c3+c4):*v=r;return(true)
+#define PARSER_PACK(c1,c2,c3,c4,v,r)    case(c1+c2+c3+c4):*v=r;return(true)
 #define LLRBT_IS_RED(n)                 (n==NULL?false:n->color==LLRBT_RED)
 #define POINTER(a)                      (driver_memory_pointer(a))
-
-/**
- * LEGACY COMPATIBILITY MACROS
- */
-#define lang_line                tape_program_line_add
-#define lang_driver_init         driver_power_init
-#define lang_driver_exit         driver_power_exit
-#define lang_driver_run          driver_program_run
 
 /**
  * C/C++ COMPATIBILITY MACROS

@@ -147,64 +147,66 @@ void driver_memory_lineup(struct memory_node_s* node)
         return;
     }
 
-    /** cache configuration **/
-    register bool conf_normalize = (MEM_CONFIG_NORMALIZE == (node->conf & MEM_CONFIG_NORMALIZE));
-    register bool conf_max_value = (MEM_CONFIG_MAX_VALUE == (node->conf & MEM_CONFIG_MAX_VALUE));
-    register bool conf_min_value = (MEM_CONFIG_MIN_VALUE == (node->conf & MEM_CONFIG_MIN_VALUE));
-    register bool conf_gpio_send = (MEM_CONFIG_GPIO_SEND == (node->conf & MEM_CONFIG_GPIO_SEND));
-    register bool conf_gpio_read = (MEM_CONFIG_GPIO_READ == (node->conf & MEM_CONFIG_GPIO_READ));
-    register bool conf_gpio_anal = (MEM_CONFIG_GPIO_ANAL == (node->conf & MEM_CONFIG_GPIO_ANAL));
-    register bool conf_gpio_pull = (MEM_CONFIG_GPIO_PULL == (node->conf & MEM_CONFIG_GPIO_PULL));
-    register bool conf_gpio_analogic_write = conf_gpio_anal && conf_gpio_read;
-    register bool conf_gpio_analogic_read = conf_gpio_anal && conf_gpio_send;
-    register bool conf_gpio_pullup = conf_gpio_pull && conf_gpio_read;
-    register bool conf_min_max = conf_max_value && conf_min_value;
+    {
+        /** cache configuration **/
+        register bool conf_normalize = (MEM_CONFIG_NORMALIZE == (node->conf & MEM_CONFIG_NORMALIZE));
+        register bool conf_max_value = (MEM_CONFIG_MAX_VALUE == (node->conf & MEM_CONFIG_MAX_VALUE));
+        register bool conf_min_value = (MEM_CONFIG_MIN_VALUE == (node->conf & MEM_CONFIG_MIN_VALUE));
+        register bool conf_gpio_send = (MEM_CONFIG_GPIO_SEND == (node->conf & MEM_CONFIG_GPIO_SEND));
+        register bool conf_gpio_read = (MEM_CONFIG_GPIO_READ == (node->conf & MEM_CONFIG_GPIO_READ));
+        register bool conf_gpio_anal = (MEM_CONFIG_GPIO_ANAL == (node->conf & MEM_CONFIG_GPIO_ANAL));
+        register bool conf_gpio_pull = (MEM_CONFIG_GPIO_PULL == (node->conf & MEM_CONFIG_GPIO_PULL));
+        register bool conf_gpio_analogic_write = conf_gpio_anal && conf_gpio_read;
+        register bool conf_gpio_analogic_read = conf_gpio_anal && conf_gpio_send;
+        register bool conf_gpio_pullup = conf_gpio_pull && conf_gpio_read;
+        register bool conf_min_max = conf_max_value && conf_min_value;
 
-    /** not allow pullup and analogic some times **/
-    if (conf_gpio_pull && conf_gpio_anal) {
-        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
-    }
-    /** not allow pullup and output some times **/
-    if (conf_gpio_pull && conf_gpio_send) {
-        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
-    }
-    /** not allow input and output some times **/
-    if (conf_gpio_send && conf_gpio_read) {
-        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
-    }
-    /** analogic required input or output **/
-    if (conf_gpio_anal && !(conf_gpio_send || conf_gpio_read)) {
-        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
-    }
-    /** not allow normalize whitout clamp (limit max & min) **/
-    if (conf_normalize && !conf_min_max) {
-        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
-    }
-    /** verifiy valid value between max & min **/
-    if (node->vmin > node->vmax && conf_min_max) {
-        driver_program_error(ERROR_INVALID_MEMORY_CLAMP);
-    }
+        /** not allow pullup and analogic some times **/
+        if (conf_gpio_pull && conf_gpio_anal) {
+            driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+        }
+        /** not allow pullup and output some times **/
+        if (conf_gpio_pull && conf_gpio_send) {
+            driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+        }
+        /** not allow input and output some times **/
+        if (conf_gpio_send && conf_gpio_read) {
+            driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+        }
+        /** analogic required input or output **/
+        if (conf_gpio_anal && !(conf_gpio_send || conf_gpio_read)) {
+            driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+        }
+        /** not allow normalize whitout clamp (limit max & min) **/
+        if (conf_normalize && !conf_min_max) {
+            driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+        }
+        /** verifiy valid value between max & min **/
+        if (node->vmin > node->vmax && conf_min_max) {
+            driver_program_error(ERROR_INVALID_MEMORY_CLAMP);
+        }
 
-    #ifdef _3BC_ARDUINO
-    /** digital|analogic output **/
-    if(conf_gpio_send) {
-        pinMode(node->address, OUTPUT);
-    }
-    /** digitial input pull up **/
-    else if (conf_gpio_pullup) {
-        pinMode(node->address, INPUT_PULLUP);
-    }
-    /** digitial input **/
-    else if (conf_gpio_read) {
-        pinMode(node->address, INPUT);
-    }
-    #endif 
+        #ifdef _3BC_ARDUINO
+        /** digital|analogic output **/
+        if(conf_gpio_send) {
+            pinMode(node->address, OUTPUT);
+        }
+        /** digitial input pull up **/
+        else if (conf_gpio_pullup) {
+            pinMode(node->address, INPUT_PULLUP);
+        }
+        /** digitial input **/
+        else if (conf_gpio_read) {
+            pinMode(node->address, INPUT);
+        }
+        #endif 
 
-    /** flush gpio data **/
-    driver_memory_gpio(node);
+        /** flush gpio data **/
+        driver_memory_gpio(node);
 
-    /** refresh data inner limits **/
-    driver_memory_reload(node);
+        /** refresh data inner limits **/
+        driver_memory_reload(node);
+    }
 }
 
 
@@ -215,20 +217,22 @@ void driver_memory_reload(struct memory_node_s* node)
         return;
     }
 
-    /** cache normalize configuration **/
-    register bool conf_normalize = (MEM_CONFIG_NORMALIZE == (node->conf & MEM_CONFIG_NORMALIZE));
+    {
+        /** cache normalize configuration **/
+        register bool conf_normalize = (MEM_CONFIG_NORMALIZE == (node->conf & MEM_CONFIG_NORMALIZE));
 
-    /** maximum without normalize **/
-    if(node->data > node->vmax && !conf_normalize && MEM_CONFIG_MAX_VALUE == (node->conf & MEM_CONFIG_MAX_VALUE)) {
-        node->data = node->vmax;
-    }
-    /** minimum without normalize **/
-    else if (node->data < node->vmin && !conf_normalize && MEM_CONFIG_MIN_VALUE == (node->conf & MEM_CONFIG_MIN_VALUE)) {
-        node->data = node->vmin;
-    }
-    /** custom underflow/overflow **/
-    else if ((node->vmin > node->data || node->data > node->vmax) && conf_normalize) {
-        node->data = ((node->data + node->vmin + 2) % (node->vmax - node->vmin + 1)) + node->vmin;
+        /** maximum without normalize **/
+        if(node->data > node->vmax && !conf_normalize && MEM_CONFIG_MAX_VALUE == (node->conf & MEM_CONFIG_MAX_VALUE)) {
+            node->data = node->vmax;
+        }
+        /** minimum without normalize **/
+        else if (node->data < node->vmin && !conf_normalize && MEM_CONFIG_MIN_VALUE == (node->conf & MEM_CONFIG_MIN_VALUE)) {
+            node->data = node->vmin;
+        }
+        /** custom underflow/overflow **/
+        else if ((node->vmin > node->data || node->data > node->vmax) && conf_normalize) {
+            node->data = ((node->data + node->vmin + 2) % (node->vmax - node->vmin + 1)) + node->vmin;
+        }
     }
 }
 
