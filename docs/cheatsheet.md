@@ -4,11 +4,11 @@ CheatSheet
 | Mode | Name | Description | Instructions |
 | :--: | :--: | :---------- | :----------- |
 | 0 | <br/> | not use | `nill` `mode` |
-| 1 | **[MODE_DEBUG](#mode-debug)** | depuration put char | `nill` `stri` `strc` `stro` `strx` `mode` |
-| 2 | **[MODE_STRING](#mode-string)** | console put char | `nill` `stri` `strc` `stro` `strx` `mode` |
-| 3 | **[MODE_INPUT](#mode-input)** | console input keyboard | `nill` `stri` `strc` `stro` `strx` `mode` |
-| 4 | **[MODE_INPUT_SILENT](#mode-input-silent)** | console input keyboard (silent) | `nill` `stri` `strc` `stro` `strx` `mode` |
-| 5 | **[MODE_INPUT_PASSWORD](#mode-input-password)** | console input keyboard (password) | `nill` `stri` `strc` `stro` `strx` `mode` |
+| 1 | **[MODE_DEBUG](#mode-debug)** | depuration put char | `nill` `strb` `stro` `stri` `strx` `strc` `mode` |
+| 2 | **[MODE_STRING](#mode-string)** | console put char | `nill` `strb` `stro` `stri` `strx` `strc` `mode` |
+| 3 | **[MODE_INPUT](#mode-input)** | console input keyboard | `nill` `strb` `stro` `stri` `strx` `strc` `mode` |
+| 4 | **[MODE_INPUT_SILENT](#mode-input-silent)** | console input keyboard (silent) | `nill` `strb` `stro` `stri` `strx` `strc` `mode` |
+| 5 | **[MODE_INPUT_PASSWORD](#mode-input-password)** | console input keyboard (password) | `nill` `strb` `stro` `stri` `strx` `strc` `mode` |
 | 6 | **[MODE_MEMORY](#mode-memory)** | main memory controller | `nill` `free` `aloc` `moff` `muse` `mmax` `tmin` `mode` |
 | 7 | **[MODE_MEMORY_PTR](#mode-memory-ptr)** | pointers memory controller | `nill` `free` `aloc` `pull` `push` `mode` |
 | 8 | **[MODE_MEMORY_AUX](#mode-memory-aux)** | aux memory controller | `nill` `free` `aloc` `pull` `push` `mode` |
@@ -32,7 +32,7 @@ CheatSheet
 | 26 | **[MODE_HELPER_REVERSE](#mode-helper-reverse)** | helper base reverse | `nill` `nb02` `nb08` `nb10` `nb16` `mode` |
 | 27 | **[MODE_HELPER_LOG2](#mode-helper-log-base-2)** | helper log base 2 | `nill` `math` `mode` |
 | 28 | **[MODE_HELPER_LOG10](#mode-helper-log-base-10)** | helper log base 10 | `nill` `math` `mode` |
-| 29     | **[MODE_HELPER_MUL_ADD](#mode-helper-mul-add)** | multiply by base and add acumulator | `nill` `nb02` `nb08` `nb10` `nb16` `mode` |
+| 29 | **[MODE_HELPER_MUL_ADD](#mode-helper-mul-add)** | multiply by base and add acumulator | `nill` `nb02` `nb08` `nb10` `nb16` `mode` |
 | 30 | <br/> | reserved | <br/> |
 | 31 | **[MODE_MEMORY_SORT](#mode-helper-sort)** | helper memory sort | `nill` `math` `mode` |
 
@@ -51,46 +51,51 @@ CheatSheet
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
-| `stri` | 1 | 001 | log literal number |
-| `strc` | 2 | 010 | log ascii character |
-| `stro` | 3 | 011 | log literal number in octal |
-| `strx` | 4 | 100 | log literal number in hexadecimal |
+| `strb` | 1 | 001 | log number as binary |
+| `stro` | 2 | 010 | log number as octal |
+| `stri` | 3 | 011 | log number as decimal |
+| `strx` | 4 | 100 | log number as hexadecimal |
+| `strc` | 5 | 101 | log ascii character |
 
 ## MODE STRING ##
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
-| `stri` | 1 | 001 | put literal number |
-| `strc` | 2 | 010 | put ascii character |
-| `stro` | 3 | 011 | put literal number in octal |
-| `strx` | 4 | 100 | put literal number in hexadecimal |
+| `strb` | 1 | 001 | put number as binary |
+| `stro` | 2 | 010 | put number as octal |
+| `stri` | 3 | 011 | put number as decimal |
+| `strx` | 4 | 100 | put number as hexadecimal |
+| `strc` | 5 | 101 | put ascii character |
 
 ## MODE INPUT ##
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
-| `stri` | 1 | 001 | input literal number |
-| `strc` | 2 | 010 | input ascii character |
-| `stro` | 3 | 011 | input literal number in octal |
-| `strx` | 4 | 100 | input literal number in hexadecimal |
+| `strb` | 1 | 001 | input number as binary |
+| `stro` | 2 | 010 | input number as octal |
+| `stri` | 3 | 011 | input number as decimal |
+| `strx` | 4 | 100 | input number as hexadecimal |
+| `strc` | 5 | 101 | input ascii character |
 
 ## MODE INPUT SILENT ##
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
-| `stri` | 1 | 001 | input literal number |
-| `strc` | 2 | 010 | input ascii character |
-| `stro` | 3 | 011 | input literal number in octal |
-| `strx` | 4 | 100 | input literal number in hexadecimal |
+| `strb` | 1 | 001 | input number as binary |
+| `stro` | 2 | 010 | input number as octal |
+| `stri` | 3 | 011 | input number as decimal |
+| `strx` | 4 | 100 | input number as hexadecimal |
+| `strc` | 5 | 101 | input ascii character |
 
 ## MODE INPUT PASSWORD ##
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
-| `stri` | 1 | 001 | input literal number |
-| `strc` | 2 | 010 | input ascii character |
-| `stro` | 3 | 011 | input literal number in octal |
-| `strx` | 4 | 100 | input literal number in hexadecimal |
+| `strb` | 1 | 001 | input number as binary |
+| `stro` | 2 | 010 | input number as octal |
+| `stri` | 3 | 011 | input number as decimal |
+| `strx` | 4 | 100 | input number as hexadecimal |
+| `strc` | 5 | 101 | input ascii character |
 
 ## MODE MEMORY ##
 
