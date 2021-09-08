@@ -34,13 +34,21 @@ void cpu_math_mod(PARAMS_DEFINE)
 void cpu_math_power(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
+    #if defined(_3BC_MOS6502)
+    driver_program_error(ERROR_UNSUPPORTED);
+    #else 
     tape_aux_set((data_aux_3bc_t) pow((double) (AUX), (double) (GET_ANY_PARAM)));
+    #endif
 }
 
 void cpu_math_root(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
+    #if defined(_3BC_MOS6502)
+    driver_program_error(ERROR_UNSUPPORTED);
+    #else 
     tape_aux_set((data_aux_3bc_t) pow((double) (AUX), (1 / (double) (GET_ANY_PARAM))));
+    #endif
 }
 
 void cpu_math_abs(PARAMS_DEFINE)

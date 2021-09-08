@@ -67,6 +67,7 @@ void driver_program_error(enum error_3bc_e error_code)
         case ERROR_CHAR_SCAPE: print_error("INVALID CHARACTER ESCAPE");
         case ERROR_CHAR_SIZE: print_error("INVALID CHARACTER SIZE");
         case ERROR_COLUMNS: print_error("WRONG NUMBER OF COLUMNS");
+        case ERROR_UNSUPPORTED: print_error("UNSUPPORTED FEATURE");
         default: print_error("UNKNOWN ERROR");
     }
     #endif

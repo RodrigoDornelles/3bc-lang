@@ -23,6 +23,10 @@
 #define _3BC_AVR
 #endif
 
+#if defined(__CC65_STD__) || defined(__CC65_STD_CC65__)
+#define _3BC_MOS6502
+#endif
+
 /**
  * PLATAFORM: ARDUINO
  *

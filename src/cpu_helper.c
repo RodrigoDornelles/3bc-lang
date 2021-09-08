@@ -85,7 +85,11 @@ void cpu_helper_min(PARAMS_DEFINE)
 void cpu_helper_percentage(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
+    #if defined(_3BC_MOS6502)
+    driver_program_error(ERROR_UNSUPPORTED);
+    #else 
     tape_aux_set((data_aux_3bc_t) round((((double) GET_ANY_PARAM)/100.0) * AUX));
+    #endif
 }
 
 void cpu_helper_reverse(PARAMS_DEFINE)
@@ -122,13 +126,21 @@ void cpu_helper_reverse(PARAMS_DEFINE)
 void cpu_helper_log2(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
+    #if defined(_3BC_MOS6502)
+    driver_program_error(ERROR_UNSUPPORTED);
+    #else 
     tape_aux_set((data_aux_3bc_t) round(log2((double) GET_ANY_PARAM)));
+    #endif
 }
 
 void cpu_helper_log10(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
+    #if defined(_3BC_MOS6502)
+    driver_program_error(ERROR_UNSUPPORTED);
+    #else 
     tape_aux_set((data_aux_3bc_t) round(log10((double) GET_ANY_PARAM)));
+    #endif
 }
 
 void cpu_helper_mul_add(PARAMS_DEFINE)
