@@ -113,7 +113,7 @@ void tape_program_label_insert(label_3bc_t label, cpumode_3bc_t cpumode, struct 
         driver_program_error(ERROR_INVALID_LABEL);
     }
 
-    new_node = (struct label_node_s*) malloc(sizeof(new_node));
+    new_node = (struct label_node_s*) malloc(sizeof(struct label_node_s));
     hash = label % LABEL_HASH_SIZE;
 
     /** was not possible expand labels **/
