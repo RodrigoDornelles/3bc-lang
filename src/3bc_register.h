@@ -31,7 +31,6 @@
 #define MODE_HELPER_LOG10       (28)
 #define MODE_HELPER_MUL_ADD     (29)
 #define MODE_CUSTOM_3           (30)
-#define MODE_MEMORY_SORT        (31)
 
 #define NILL 0b000
 #define MODE 0b111
@@ -114,7 +113,6 @@ function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
         CPU_PACK1(MODE_HELPER_LOG10, cpu_helper_log10)
         CPU_PACK4(MODE_HELPER_MUL_ADD, cpu_helper_mul_add, cpu_helper_mul_add, cpu_helper_mul_add, cpu_helper_mul_add)
         CPU_PACK_RESERVED(MODE_CUSTOM_3)
-        CPU_PACK1(MODE_MEMORY_SORT, cpu_helper_sort)
     }
     #ifndef _3BC_COMPACT
     /** close array **/

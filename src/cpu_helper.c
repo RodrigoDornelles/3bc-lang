@@ -6,16 +6,6 @@ void before_helper_average()
     APP_3BC->cache_l2.average_sum = 0;
 }
 
-void before_helper_sort()
-{
-    tape_sort_init();
-}
-
-void after_helper_sort()
-{
-    tape_sort_destroy();
-}
-
 void before_helper_maxmin()
 {
     APP_3BC->cache_l1.maxmin_init = false;
@@ -43,15 +33,6 @@ void cpu_helper_average(PARAMS_DEFINE)
 
     /** recalculate average **/
     tape_aux_set(APP_3BC->cache_l2.average_sum/APP_3BC->cache_l1.average_count);
-}
-
-/**
- * Insert Sort Algorithm
- */
-void cpu_helper_sort(PARAMS_DEFINE)
-{   
-    VALIDATE_NOT_VALUES
-    tape_sort_insert(address);
 }
 
 /**

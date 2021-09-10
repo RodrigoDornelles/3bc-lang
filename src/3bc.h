@@ -60,6 +60,5 @@
 #include "tape_memory.c"
 #include "tape_program.c"
 #include "tape_router.c"
-#include "tape_sort.c"
 #endif
 #endif
