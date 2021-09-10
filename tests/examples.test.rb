@@ -73,23 +73,6 @@ class TestExample < Minitest::Test
         assert_equal 0, status
     end
 
-    def test_math_sort
-        for console in
-        [
-            {input:"123", output:"3x numbers: 123\nsort: 123\n"},
-            {input:"321", output:"3x numbers: 321\nsort: 123\n"},
-            {input:"312", output:"3x numbers: 312\nsort: 123\n"},
-            {input:"231", output:"3x numbers: 231\nsort: 123\n"},
-            {input:"132", output:"3x numbers: 132\nsort: 123\n"},
-            {input:"213", output:"3x numbers: 213\nsort: 123\n"}
-        ]
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/math_sortable.3bc", :stdin_data => console[:input])
-        assert_equal "", stderr
-        assert_equal console[:output], stdout
-        assert_equal 0, status
-        end
-    end
-
     def test_pointers
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/pointers.3bc")
         assert_equal "", stderr

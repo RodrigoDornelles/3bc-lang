@@ -26,7 +26,6 @@ void cpu_debug_stru(PARAMS_DEFINE);
 
 /** FILE: cpu_helper.c **/
 void cpu_helper_average(PARAMS_DEFINE);
-void cpu_helper_sort(PARAMS_DEFINE);
 void cpu_helper_max(PARAMS_DEFINE);
 void cpu_helper_min(PARAMS_DEFINE);
 void cpu_helper_percentage(PARAMS_DEFINE);
@@ -36,9 +35,7 @@ void cpu_helper_log2(PARAMS_DEFINE);
 void cpu_helper_mul_add(PARAMS_DEFINE);
 void cpu_helper_sign(PARAMS_DEFINE);
 void before_helper_average(void);
-void before_helper_sort(void);
 void before_helper_maxmin(void);
-void after_helper_sort(void);
 void after_helper_maxmin(void);
 
 /** FILE: cpu_input.c **/
@@ -185,11 +182,6 @@ bool tape_program_avaliable(void);
 /** FILE: tape_router.c **/
 void tape_router_cpu_set(cpumode_3bc_t value);
 cpumode_3bc_t tape_router_cpu_get(void);
-
-/** FILE: tape_sort.c **/
-void tape_sort_init();
-void tape_sort_destroy();
-void tape_sort_insert(address_3bc_t address);
 
 #ifdef __cplusplus
 }

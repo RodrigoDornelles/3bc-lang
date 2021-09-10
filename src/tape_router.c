@@ -7,10 +7,6 @@ void tape_router_cpu_set(cpumode_3bc_t value)
 {
     /** after cpu mode change **/
     switch (APP_3BC->cpu_mode) {
-        case MODE_MEMORY_SORT:
-            after_helper_sort();
-            break;
-
         case MODE_HELPER_MAX:
         case MODE_HELPER_MIN:
             after_helper_maxmin();
@@ -25,10 +21,6 @@ void tape_router_cpu_set(cpumode_3bc_t value)
     switch (value) {
         case MODE_HELPER_AVARAGE:
             before_helper_average();
-            break;
-
-        case MODE_MEMORY_SORT:
-            before_helper_sort();
             break;
 
         case MODE_HELPER_MAX:

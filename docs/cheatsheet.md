@@ -33,8 +33,6 @@ CheatSheet
 | 27 | **[MODE_HELPER_LOG2](#mode-helper-log-base-2)** | helper log base 2 | `nill` `math` `mode` |
 | 28 | **[MODE_HELPER_LOG10](#mode-helper-log-base-10)** | helper log base 10 | `nill` `math` `mode` |
 | 29 | **[MODE_HELPER_MUL_ADD](#mode-helper-mul-add)** | multiply by base and add acumulator | `nill` `nb02` `nb08` `nb10` `nb16` `mode` |
-| 30 | <br/> | reserved | <br/> |
-| 31 | **[MODE_MEMORY_SORT](#mode-helper-sort)** | helper memory sort | `nill` `math` `mode` |
 
 # Architecture details  #
 
@@ -255,9 +253,3 @@ CheatSheet
 | `nb08` | 2 | 010 | multiply by 8 and accumulate operation |
 | `nb10` | 3 | 011 | multiply by 10 and accumulate operation |
 | `nb16` | 4 | 100 | multiply by 16 and accumulate operation |
-
-## MODE MEMORY SORT ##
-
-| name | octal | bit | description |
-| :--: | :---: | :-: | :---------- |
-| `math` | 1 | 001 | sort memory address values |

@@ -61,7 +61,6 @@ void driver_power_exit()
     /** deallocate occupied memory **/
     tape_memory_destroy();
     tape_program_destroy();
-    tape_sort_destroy();
 
     #if defined(_3BC_COMPUTER)
     driver_power_safe_exit(sig);
