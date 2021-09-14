@@ -12,7 +12,7 @@ Personal Computers
 | :----- | :---------: | :-----: | :-----: | :------: |
 | Windows | amd64 | :ok: | :ok:  | :ok:  |
 | Windows | i386 | :ok:  | :ok: | :ok: |
-| GNU Linux | amd64 |:ok:  | :ok: | :ok: |
+| GNU Linux | amd64 | :ok:  | :ok: | :ok: |
 | GNU Linux | arm | :ok:  | :ok: | :ok: |
 | GNU Linux | i386 | :ok: | :ok: | :ok: |
 | Mac OS X | amd |
