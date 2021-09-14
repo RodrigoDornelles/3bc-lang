@@ -7,6 +7,7 @@ Platform Support List
 
 Personal Computers
 ------------------
+
 | system | architeture | working | running | released |
 | :----- | :---------: | :-----: | :-----: | :------: |
 | Windows | amd64 | :ok: | :ok:  | :ok:  |
@@ -23,6 +24,7 @@ Personal Computers
 
 Web Browser 
 -----------
+
 | system | architeture | working | running | released |
 | :----- | :---------: | :-----: | :-----: | :------: |
 | Browser | emscripten | :ok: |
@@ -30,6 +32,7 @@ Web Browser
 
 Embedded Systems
 ----------------
+
 | system | architeture | working | running | released |
 | :----- | :---------: | :-----: | :-----: | :------: |
 | Arduino | avr | :ok: | :ok: |
@@ -39,6 +42,7 @@ Embedded Systems
 
 Legacy Systems
 --------------
+
 | system | architeture | working | running | released |
 | :----- | :---------: | :-----: | :-----: | :------: |
 | Microsoft DOS | i386 |
