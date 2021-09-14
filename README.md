@@ -24,6 +24,8 @@
 * **[Tutorial :brazil:](docs/tutorial-pt-br.md)**
 * **[Cheatsheet](docs/cheatsheet.md)**
 * **[Changelogs](docs/changelogs.md)**
+* **[Platform Support](support.md)**
+* **[Download last version](download.md)**
 * **[Ambient Roadmap](#ambient-roadmap)**
 * **[How to "Hello World"](#how-to-hello-world)**
 * **[List of early developers](#list-of-early-developers)**
