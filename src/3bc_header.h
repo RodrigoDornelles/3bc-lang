@@ -9,6 +9,17 @@
 extern "C" {
 #endif
 
+/** FILE: cpu_bool.c **/
+void cpu_bool_not(PARAMS_DEFINE);
+void cpu_bool_and(PARAMS_DEFINE);
+void cpu_bool_or(PARAMS_DEFINE);
+void cpu_bool_xor(PARAMS_DEFINE);
+void cpu_bool_nand(PARAMS_DEFINE);
+void cpu_bool_nor(PARAMS_DEFINE);
+void cpu_bool_xnor(PARAMS_DEFINE);
+void cpu_bool_and_not(PARAMS_DEFINE);
+void cpu_bool_or_not(PARAMS_DEFINE);
+
 /** FILE: cpu_common.c **/
 void cpu_null(PARAMS_DEFINE);
 void cpu_mode(PARAMS_DEFINE);

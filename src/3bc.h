@@ -40,6 +40,7 @@
 
 /** program **/
 #if !defined(_3BC_SCU)
+#include "cpu_bool.c"
 #include "cpu_common.c"
 #include "cpu_debug.c"
 #include "cpu_helper.c"

@@ -266,4 +266,123 @@ class TestCpu < Minitest::Test
         assert_equal 0, status
         end
     end
+
+    def test_mode_31
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.31,math.0.0,mode.0.8,pull.1.0,mode.0.31,math.0.8,mode.0.8,pull.2.0,mode.0.2,stri.1.0,stri.2.0")
+        assert_equal "", stderr
+        assert_equal "10", stdout
+        assert_equal 0, status
+    end
+
+    def test_mode_32
+        for console in
+        [
+            {input:"mode.0.8,aloc.0.0,mode.0.32,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.1,mode.0.32,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.0,mode.0.32,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.1,mode.0.32,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console[:input])
+        assert_equal console[:output], stdout
+        assert_equal 0, status
+        end
+    end
+
+    def test_mode_33
+        for console in
+        [
+            {input:"mode.0.8,aloc.0.0,mode.0.33,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.1,mode.0.33,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.0,mode.0.33,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.1,mode.0.33,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console[:input])
+        assert_equal console[:output], stdout
+        assert_equal 0, status
+        end
+    end
+
+    def test_mode_34
+        for console in
+        [
+            {input:"mode.0.8,aloc.0.0,mode.0.34,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.1,mode.0.34,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.0,mode.0.34,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.1,mode.0.34,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console[:input])
+        assert_equal console[:output], stdout
+        assert_equal 0, status
+        end
+    end
+
+    def test_mode_35
+        for console in
+        [
+            {input:"mode.0.8,aloc.0.0,mode.0.35,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.1,mode.0.35,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.0,mode.0.35,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.1,mode.0.35,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console[:input])
+        assert_equal console[:output], stdout
+        assert_equal 0, status
+        end
+    end
+
+    def test_mode_36
+        for console in
+        [
+            {input:"mode.0.8,aloc.0.0,mode.0.36,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.1,mode.0.36,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.0,mode.0.36,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.1,mode.0.36,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console[:input])
+        assert_equal console[:output], stdout
+        assert_equal 0, status
+        end
+    end
+
+    def test_mode_37
+        for console in
+        [
+            {input:"mode.0.8,aloc.0.0,mode.0.37,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.1,mode.0.37,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.0,mode.0.37,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.1,mode.0.37,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console[:input])
+        assert_equal console[:output], stdout
+        assert_equal 0, status
+        end
+    end
+
+    def test_mode_38
+        for console in
+        [
+            {input:"mode.0.8,aloc.0.0,mode.0.38,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.1,mode.0.38,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.0,mode.0.38,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.1,mode.0.38,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console[:input])
+        assert_equal console[:output], stdout
+        assert_equal 0, status
+        end
+    end
+
+    def test_mode_39
+        for console in
+        [
+            {input:"mode.0.8,aloc.0.0,mode.0.39,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.1,mode.0.39,math.0.0,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+            {input:"mode.0.8,aloc.0.0,mode.0.39,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"0"},
+            {input:"mode.0.8,aloc.0.1,mode.0.39,math.0.1,mode.0.8,pull.'r'.0,mode.0.2,stri.'r'.0", output:"1"},
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console[:input])
+        assert_equal console[:output], stdout
+        assert_equal 0, status
+        end
+    end
 end 
