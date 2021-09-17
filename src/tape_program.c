@@ -36,7 +36,7 @@ void tape_program_resize()
 
     /** was not possible expand program **/
     if (new_line_node == NULL) {
-        driver_program_error(ERROR_TAPE_PROGRAM);
+        driver_program_error(ERROR_OUT_OF_MEMORY);
     }
     
     /** first line program **/
@@ -118,7 +118,7 @@ void tape_program_label_insert(label_3bc_t label, cpumode_3bc_t cpumode, struct 
 
     /** was not possible expand labels **/
     if (new_node == NULL) {
-        driver_program_error(ERROR_TAPE_LABEL);
+        driver_program_error(ERROR_OUT_OF_MEMORY);
     }
 
     new_node->label = label;

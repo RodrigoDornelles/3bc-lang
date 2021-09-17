@@ -1,0 +1,31 @@
+# goto entry point
+MODE NILL 0d9
+GOTO NILL :main
+
+# procedure print world
+MODE NILL 0d2 
+NILL NILL :world 
+STRC NILL 'W'
+STRC NILL 'o'
+STRC NILL 'r'
+STRC NILL 'l'
+STRC NILL 'd'
+MODE NILL 0d42
+STOP NILL NILL
+
+# procedure print hello
+MODE NILL 0d2
+NILL NILL :hello 
+STRC NILL 'H'
+STRC NILL 'e'
+STRC NILL 'l'
+STRC NILL 'l'
+STRC NILL 'o'
+MODE NILL 0d42
+STOP NILL NILL
+
+# entry point
+MODE NILL 0d42
+NILL NILL :main
+CALL NILL :hello
+CALL NILL :world

@@ -34,8 +34,11 @@ bool interpreter_syntax_registers(const char* string, signed long int* value)
         PARSER_PACK('n', 'b', '0', '8', value, NB08);
         PARSER_PACK('n', 'b', '1', '0', value, NB10);
         PARSER_PACK('n', 'b', '1', '6', value, NB16);
-
+        /** COLISIONS: MATH, TAIL **/
         PARSER_PACK('m', 'a', 't', 'h', value, MATH);
+
+        PARSER_PACK('s', 't', 'o', 'p', value, STOP);
+        PARSER_PACK('c', 'a', 'l', 'l', value, CALL);
     }
 
     /** passing register as numerical (octo, bin) **/

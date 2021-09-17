@@ -41,6 +41,7 @@
 #define MODE_BOOLEAN_AND_NOT    (38)
 #define MODE_BOOLEAN_OR_NOT     (39)
 #define MODE_CUSTOM_4           (40)
+#define MODE_PROCEDURE          (42)
 
 #define NILL 0b000
 #define MODE 0b111
@@ -50,17 +51,20 @@
 #define MATH 0b001
 #define GOTO 0b001
 #define NB02 0b001
+#define TAIL 0b001
 
 #define STRO 0b010
 #define ALOC 0b010
 #define FGTO 0b010
 #define NB08 0b010
+#define STOP 0b010
 
 #define STRI 0b011 
 #define MOFF 0b011
 #define PULL 0b011  
 #define ZGTO 0b011
 #define NB10 0B011
+#define CALL 0b011
 
 #define STRX 0b100
 #define PGTO 0b100
@@ -133,6 +137,8 @@ function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
         CPU_PACK1(MODE_BOOLEAN_AND_NOT, cpu_bool_and_not)
         CPU_PACK1(MODE_BOOLEAN_OR_NOT, cpu_bool_or_not)
         CPU_PACK_RESERVED(MODE_CUSTOM_4)
+        CPU_PACK_RESERVED(41)
+        CPU_PACK3(MODE_PROCEDURE, cpu_procedure_tail, cpu_procedure_stop, cpu_procedure_call)
     }
     #ifndef _3BC_COMPACT
     /** close array **/

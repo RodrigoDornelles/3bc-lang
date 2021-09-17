@@ -33,6 +33,13 @@ struct tty_3bc_s {
     union stream_file_u io;
 };
 
+/** DS PROCEDURE LIFO **/
+struct procedure_3bc_s {
+    label_3bc_t label;
+    struct line_node_s* remember;
+    struct procedure_3bc_s* prev;
+};
+
 /** AUXILIARY MEMORY **/
 union cache_l1_u {
     bool max_init;
@@ -76,6 +83,7 @@ struct program_3bc_s {
     struct line_node_s* head;
     struct line_node_s* tail;
     struct label_node_s* label_table[LABEL_HASH_SIZE];
+    struct procedure_3bc_s* stack;
 };
 
 /** MEMORY PRIMARY **/
