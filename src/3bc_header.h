@@ -103,9 +103,17 @@ void cpu_memory_aux_push(PARAMS_DEFINE);
 void cpu_memory_aux_spin(PARAMS_DEFINE);
 
 /** FILE: cpu_procedure.c **/
-void cpu_procedure_tail(PARAMS_DEFINE);
-void cpu_procedure_stop(PARAMS_DEFINE);
 void cpu_procedure_call(PARAMS_DEFINE);
+void cpu_procedure_ret_back(PARAMS_DEFINE);
+void cpu_procedure_ret_frst(PARAMS_DEFINE);
+void cpu_procedure_ret_zrst(PARAMS_DEFINE);
+void cpu_procedure_ret_prst(PARAMS_DEFINE);
+void cpu_procedure_ret_nrst(PARAMS_DEFINE);
+void cpu_procedure_ret_tco_back(PARAMS_DEFINE);
+void cpu_procedure_ret_tco_frst(PARAMS_DEFINE);
+void cpu_procedure_ret_tco_zrst(PARAMS_DEFINE);
+void cpu_procedure_ret_tco_prst(PARAMS_DEFINE);
+void cpu_procedure_ret_tco_nrst(PARAMS_DEFINE);
 
 /** FILE: cpu_string.c **/
 void cpu_string_strb(PARAMS_DEFINE);
