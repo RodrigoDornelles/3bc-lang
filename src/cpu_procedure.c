@@ -8,7 +8,7 @@ void cpu_procedure_call(PARAMS_DEFINE)
     APP_3BC->program.label_target = value;
 }
 
-void cpu_procedure_ret_back(PARAMS_DEFINE)
+void cpu_procedure_back(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     VALIDATE_NOT_ADRESS
@@ -16,7 +16,7 @@ void cpu_procedure_ret_back(PARAMS_DEFINE)
     tape_router_cpu_set(MODE_PROCEDURE);
 }
 
-void cpu_procedure_ret_frst(PARAMS_DEFINE)
+void cpu_procedure_fret(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     VALIDATE_NOT_ADRESS
@@ -26,7 +26,7 @@ void cpu_procedure_ret_frst(PARAMS_DEFINE)
     }
 }
 
-void cpu_procedure_ret_zrst(PARAMS_DEFINE)
+void cpu_procedure_zret(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     VALIDATE_NOT_ADRESS
@@ -36,7 +36,7 @@ void cpu_procedure_ret_zrst(PARAMS_DEFINE)
     }
 }
 
-void cpu_procedure_ret_prst(PARAMS_DEFINE)
+void cpu_procedure_pret(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     VALIDATE_NOT_ADRESS
@@ -46,7 +46,7 @@ void cpu_procedure_ret_prst(PARAMS_DEFINE)
     }
 }
 
-void cpu_procedure_ret_nrst(PARAMS_DEFINE)
+void cpu_procedure_nret(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     VALIDATE_NOT_ADRESS
@@ -56,7 +56,7 @@ void cpu_procedure_ret_nrst(PARAMS_DEFINE)
     }
 }
 
-void cpu_procedure_ret_tco_back(PARAMS_DEFINE)
+void cpu_procedure_tco_back(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
     REQUIRED_VALUE
@@ -64,7 +64,7 @@ void cpu_procedure_ret_tco_back(PARAMS_DEFINE)
     tape_router_cpu_set(MODE_PROCEDURE);
 }
 
-void cpu_procedure_ret_tco_frst(PARAMS_DEFINE)
+void cpu_procedure_tco_fret(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     REQUIRED_VALUE
@@ -74,7 +74,7 @@ void cpu_procedure_ret_tco_frst(PARAMS_DEFINE)
     }
 }
 
-void cpu_procedure_ret_tco_zrst(PARAMS_DEFINE)
+void cpu_procedure_tco_zret(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     REQUIRED_VALUE
@@ -84,7 +84,7 @@ void cpu_procedure_ret_tco_zrst(PARAMS_DEFINE)
     }
 }
 
-void cpu_procedure_ret_tco_prst(PARAMS_DEFINE)
+void cpu_procedure_tco_pret(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     REQUIRED_VALUE
@@ -94,7 +94,7 @@ void cpu_procedure_ret_tco_prst(PARAMS_DEFINE)
     }
 }
 
-void cpu_procedure_ret_tco_nrst(PARAMS_DEFINE)
+void cpu_procedure_tco_nret(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
     REQUIRED_VALUE

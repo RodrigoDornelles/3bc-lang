@@ -35,14 +35,14 @@ bool interpreter_syntax_registers(const char* string, signed long int* value)
         PARSER_PACK('n', 'b', '0', '8', value, NB08);
         PARSER_PACK('n', 'b', '1', '0', value, NB10);
         PARSER_PACK('n', 'b', '1', '6', value, NB16);
-        /** COLISIONS: MATH, TAIL **/
+
         PARSER_PACK('m', 'a', 't', 'h', value, MATH);
 
         PARSER_PACK('c', 'a', 'l', 'l', value, CALL);
-        PARSER_PACK('f', 'r', 's', 't', value, FRST);
-        PARSER_PACK('z', 'r', 's', 't', value, ZRST);
-        PARSER_PACK('p', 'r', 's', 't', value, PRST);
-        PARSER_PACK('n', 'r', 's', 't', value, NRST);
+        PARSER_PACK('f', 'r', 'e', 't', value, FRET);
+        PARSER_PACK('z', 'r', 'e', 't', value, ZRET);
+        PARSER_PACK('p', 'r', 'e', 't', value, PRET);
+        PARSER_PACK('n', 'r', 'e', 't', value, NRET);
         PARSER_PACK('b', 'a', 'c', 'k', value, BACK);
     }
 
