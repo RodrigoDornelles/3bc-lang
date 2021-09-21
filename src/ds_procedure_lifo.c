@@ -17,11 +17,13 @@ void ds_procedure_lifo_push(struct line_node_s* line_node, label_3bc_t label)
 
 struct line_node_s* ds_procedure_lifo_burst(label_3bc_t label)
 {
+    struct line_node_s* line_node;
+
     while (APP_3BC->program.stack == NULL || APP_3BC->program.stack->label != label) {
-        ds_procedure_lifo_pop();
+        line_node = ds_procedure_lifo_pop();
     }
 
-    return APP_3BC->program.stack->remember;
+    return line_node;
 }
 
 struct line_node_s* ds_procedure_lifo_pop()
