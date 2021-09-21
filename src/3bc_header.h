@@ -105,6 +105,10 @@ void cpu_memory_aux_spin(PARAMS_DEFINE);
 /** FILE: cpu_procedure.c **/
 void cpu_procedure_call(PARAMS_DEFINE);
 void cpu_procedure_back(PARAMS_DEFINE);
+void cpu_procedure_fcal(PARAMS_DEFINE);
+void cpu_procedure_zcal(PARAMS_DEFINE);
+void cpu_procedure_pcal(PARAMS_DEFINE);
+void cpu_procedure_ncal(PARAMS_DEFINE);
 void cpu_procedure_fret(PARAMS_DEFINE);
 void cpu_procedure_zret(PARAMS_DEFINE);
 void cpu_procedure_pret(PARAMS_DEFINE);

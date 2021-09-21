@@ -16,6 +16,46 @@ void cpu_procedure_back(PARAMS_DEFINE)
     tape_router_cpu_set(MODE_PROCEDURE);
 }
 
+void cpu_procedure_fcal(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_VALUES
+    REQUIRED_VALUE
+    if (AUX != 0) {
+        ds_procedure_lifo_push(APP_3BC->program.curr, value);
+        APP_3BC->program.label_target = value;
+    }
+}
+
+void cpu_procedure_zcal(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_VALUES
+    REQUIRED_VALUE
+    if (AUX == 0) {
+        ds_procedure_lifo_push(APP_3BC->program.curr, value);
+        APP_3BC->program.label_target = value;
+    }
+}
+
+void cpu_procedure_pcal(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_VALUES
+    REQUIRED_VALUE
+    if (AUX > 0) {
+        ds_procedure_lifo_push(APP_3BC->program.curr, value);
+        APP_3BC->program.label_target = value;
+    }
+}
+
+void cpu_procedure_ncal(PARAMS_DEFINE)
+{
+    VALIDATE_NOT_VALUES
+    REQUIRED_VALUE
+    if (AUX < 0) {
+        ds_procedure_lifo_push(APP_3BC->program.curr, value);
+        APP_3BC->program.label_target = value;
+    }
+}
+
 void cpu_procedure_fret(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES

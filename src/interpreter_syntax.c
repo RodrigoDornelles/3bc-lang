@@ -39,6 +39,11 @@ bool interpreter_syntax_registers(const char* string, signed long int* value)
         PARSER_PACK('m', 'a', 't', 'h', value, MATH);
 
         PARSER_PACK('c', 'a', 'l', 'l', value, CALL);
+        PARSER_PACK('f', 'c', 'a', 'l', value, FCAL);
+        PARSER_PACK('z', 'c', 'a', 'l', value, ZCAL);
+        PARSER_PACK('p', 'c', 'a', 'l', value, PCAL);
+        PARSER_PACK('n', 'c', 'a', 'l', value, NCAL);
+
         PARSER_PACK('f', 'r', 'e', 't', value, FRET);
         PARSER_PACK('z', 'r', 'e', 't', value, ZRET);
         PARSER_PACK('p', 'r', 'e', 't', value, PRET);
