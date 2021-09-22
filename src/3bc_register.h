@@ -41,6 +41,9 @@
 #define MODE_BOOLEAN_AND_NOT    (38)
 #define MODE_BOOLEAN_OR_NOT     (39)
 #define MODE_CUSTOM_4           (40)
+#define MODE_PROCEDURE_RET      (41)
+#define MODE_PROCEDURE          (42)
+#define MODE_PROCEDURE_TCO_RET  (43)
 
 #define NILL 0b000
 #define MODE 0b111
@@ -50,28 +53,39 @@
 #define MATH 0b001
 #define GOTO 0b001
 #define NB02 0b001
+#define CALL 0b001
+#define BACK 0b001
 
 #define STRO 0b010
 #define ALOC 0b010
 #define FGTO 0b010
 #define NB08 0b010
+#define STOP 0b010
+#define FRET 0b010
+#define FCAL 0b010
 
 #define STRI 0b011 
 #define MOFF 0b011
 #define PULL 0b011  
 #define ZGTO 0b011
 #define NB10 0B011
+#define ZRET 0b011
+#define ZCAL 0b011
 
 #define STRX 0b100
 #define PGTO 0b100
 #define MUSE 0b100
 #define SPIN 0b100
 #define NB16 0b100
+#define PRET 0b100
+#define PCAL 0b100
 
 #define STRC 0b101
 #define MMAX 0b101
 #define NGTO 0b101
 #define PUSH 0b101
+#define NRET 0b101
+#define NCAL 0b101
 
 #define MMIN 0b110
 /**
@@ -133,6 +147,9 @@ function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
         CPU_PACK1(MODE_BOOLEAN_AND_NOT, cpu_bool_and_not)
         CPU_PACK1(MODE_BOOLEAN_OR_NOT, cpu_bool_or_not)
         CPU_PACK_RESERVED(MODE_CUSTOM_4)
+        CPU_PACK5(MODE_PROCEDURE_RET, cpu_procedure_back, cpu_procedure_fret, cpu_procedure_zret, cpu_procedure_pret, cpu_procedure_nret)
+        CPU_PACK5(MODE_PROCEDURE, cpu_procedure_call, cpu_procedure_fcal, cpu_procedure_zcal, cpu_procedure_pcal, cpu_procedure_ncal)
+        CPU_PACK5(MODE_PROCEDURE_TCO_RET, cpu_procedure_tco_back, cpu_procedure_tco_fret, cpu_procedure_tco_zret, cpu_procedure_tco_pret, cpu_procedure_tco_nret)
     }
     #ifndef _3BC_COMPACT
     /** close array **/

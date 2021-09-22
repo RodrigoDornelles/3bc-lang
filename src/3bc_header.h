@@ -102,6 +102,23 @@ void cpu_memory_aux_pull(PARAMS_DEFINE);
 void cpu_memory_aux_push(PARAMS_DEFINE);
 void cpu_memory_aux_spin(PARAMS_DEFINE);
 
+/** FILE: cpu_procedure.c **/
+void cpu_procedure_call(PARAMS_DEFINE);
+void cpu_procedure_back(PARAMS_DEFINE);
+void cpu_procedure_fcal(PARAMS_DEFINE);
+void cpu_procedure_zcal(PARAMS_DEFINE);
+void cpu_procedure_pcal(PARAMS_DEFINE);
+void cpu_procedure_ncal(PARAMS_DEFINE);
+void cpu_procedure_fret(PARAMS_DEFINE);
+void cpu_procedure_zret(PARAMS_DEFINE);
+void cpu_procedure_pret(PARAMS_DEFINE);
+void cpu_procedure_nret(PARAMS_DEFINE);
+void cpu_procedure_tco_back(PARAMS_DEFINE);
+void cpu_procedure_tco_fret(PARAMS_DEFINE);
+void cpu_procedure_tco_zret(PARAMS_DEFINE);
+void cpu_procedure_tco_pret(PARAMS_DEFINE);
+void cpu_procedure_tco_nret(PARAMS_DEFINE);
+
 /** FILE: cpu_string.c **/
 void cpu_string_strb(PARAMS_DEFINE);
 void cpu_string_stri(PARAMS_DEFINE);
@@ -148,6 +165,11 @@ void driver_power_safe_exit();
 /** FILE: driver_program.c **/
 void driver_program_run();
 void driver_program_error(enum error_3bc_e error_code);
+
+/** FILE: ds_procedure_lifo.c **/
+void ds_procedure_lifo_push(struct line_node_s* line_node, label_3bc_t label);
+struct line_node_s* ds_procedure_lifo_burst(label_3bc_t label);
+struct line_node_s* ds_procedure_lifo_pop();
 
 /** FILE: interpreter_compiler.c **/
 bool interpreter_compiler(struct tty_3bc_s tty);
