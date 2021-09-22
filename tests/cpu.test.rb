@@ -388,11 +388,11 @@ class TestCpu < Minitest::Test
 
     def test_mode_41
         for console_input in [
-            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.2,nill.0.:procedure,stri.0.4,mode.0.41,back.0.0,mode.0.42,nill.0.:entry,call.0.:procedure,mode.0.2,stri.0.2",
-            "mode.0.8,aloc.0.1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.41,nill.0.:procedure,zret.0.0,mode.0.2,stri.0.4,mode.0.41,fret.0.0,mode.0.42,nill.0.:entry,call.0.:procedure,mode.0.2,stri.0.2",
-            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.41,nill.0.:procedure,fret.0.0,pret.0.0,nret.0.0,mode.0.2,stri.0.4,mode.0.41,zret.0.0,mode.0.42,nill.0.:entry,call.0.:procedure,mode.0.2,stri.0.2",
-            "mode.0.8,aloc.0.1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.41,nill.0.:procedure,zret.0.0,nret.0.0,mode.0.2,stri.0.4,mode.0.41,pret.0.0,mode.0.42,nill.0.:entry,call.0.:procedure,mode.0.2,stri.0.2",
-            "mode.0.8,aloc.0.-1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.41,nill.0.:procedure,zret.0.0,pret.0.0,mode.0.2,stri.0.4,mode.0.41,nret.0.0,mode.0.42,nill.0.:entry,call.0.:procedure,mode.0.2,stri.0.2"
+            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.2,nill.0.:procedure,stri.0.4,mode.0.41,back.0.0,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure,mode.0.2,stri.0.2",
+            "mode.0.8,aloc.0.1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.41,nill.0.:procedure,zret.0.0,mode.0.2,stri.0.4,mode.0.41,fret.0.0,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure,mode.0.2,stri.0.2",
+            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.41,nill.0.:procedure,fret.0.0,pret.0.0,nret.0.0,mode.0.2,stri.0.4,mode.0.41,zret.0.0,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure,mode.0.2,stri.0.2",
+            "mode.0.8,aloc.0.1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.41,nill.0.:procedure,zret.0.0,nret.0.0,mode.0.2,stri.0.4,mode.0.41,pret.0.0,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure,mode.0.2,stri.0.2",
+            "mode.0.8,aloc.0.-1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.41,nill.0.:procedure,zret.0.0,pret.0.0,mode.0.2,stri.0.4,mode.0.41,nret.0.0,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure,mode.0.2,stri.0.2"
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
         assert_equal "42", stdout
@@ -402,11 +402,11 @@ class TestCpu < Minitest::Test
 
     def test_mode_42 
         for console_input in [
-            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.2,nill.0.:procedure2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure1,stri.0.4,mode.0.42,call.0.:procedure2,mode.0.41,back.0.0,mode.0.42,nill.0.:entry,call.0.:procedure1",
-            "mode.0.8,aloc.0.1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.2,nill.0.:procedure2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure1,stri.0.4,stri.0.2,mode.0.41,back.0.0,mode.0.42,nill.0.:entry,zcal.0.:procedure2,fcal.0.:procedure1",
-            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.2,nill.0.:procedure2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure1,stri.0.4,stri.0.2,mode.0.41,back.0.0,mode.0.42,nill.0.:entry,fcal.0.:procedure2,pcal.0.:procedure2,ncal.0.:procedure2,zcal.0.:procedure1",
-            "mode.0.8,aloc.0.1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.2,nill.0.:procedure2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure1,stri.0.4,stri.0.2,mode.0.41,back.0.0,mode.0.42,nill.0.:entry,zcal.0.:procedure2,ncal.0.:procedure2,pcal.0.:procedure1",
-            "mode.0.8,aloc.0.-1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.2,nill.0.:procedure2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure1,stri.0.4,stri.0.2,mode.0.41,back.0.0,mode.0.42,nill.0.:entry,zcal.0.:procedure2,pcal.0.:procedure2,ncal.0.:procedure1",
+            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.2,nill.0.:procedure2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure1,stri.0.4,mode.0.42,call.0.:procedure2,mode.0.41,back.0.0,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure1",
+            "mode.0.8,aloc.0.1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.2,nill.0.:procedure2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure1,stri.0.4,stri.0.2,mode.0.41,back.0.0,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,zcal.0.:procedure2,fcal.0.:procedure1",
+            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.2,nill.0.:procedure2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure1,stri.0.4,stri.0.2,mode.0.41,back.0.0,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,fcal.0.:procedure2,pcal.0.:procedure2,ncal.0.:procedure2,zcal.0.:procedure1",
+            "mode.0.8,aloc.0.1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.2,nill.0.:procedure2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure1,stri.0.4,stri.0.2,mode.0.41,back.0.0,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,zcal.0.:procedure2,ncal.0.:procedure2,pcal.0.:procedure1",
+            "mode.0.8,aloc.0.-1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.2,nill.0.:procedure2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure1,stri.0.4,stri.0.2,mode.0.41,back.0.0,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,zcal.0.:procedure2,pcal.0.:procedure2,ncal.0.:procedure1",
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
         assert_equal "42", stdout
@@ -416,11 +416,11 @@ class TestCpu < Minitest::Test
 
     def test_mode_43
         for console_input in [
-            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.42,nill.0.:procedure1,zcal.0.:procedure2,mode.0.2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure2,stri.0.4,mode.0.8,aloc.0.1,mode.0.43,back.0.:procedure1,mode.0.42,nill.0.:entry,call.0.:procedure1",
-            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.42,nill.0.:procedure1,zcal.0.:procedure2,mode.0.2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure2,stri.0.4,mode.0.8,aloc.0.1,mode.0.43,fret.0.:procedure1,mode.0.42,nill.0.:entry,call.0.:procedure1",
-            "mode.0.8,aloc.0.1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.42,nill.0.:procedure1,fcal.0.:procedure2,mode.0.2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure2,stri.0.4,mode.0.8,free.0.0,mode.0.43,zcal.0.:procedure1,mode.0.42,nill.0.:entry,call.0.:procedure1",
-            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.42,nill.0.:procedure1,zcal.0.:procedure2,mode.0.2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure2,stri.0.4,mode.0.8,aloc.0.1,mode.0.43,pret.0.:procedure1,mode.0.42,nill.0.:entry,call.0.:procedure1",
-            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.4,mode.0.42,nill.0.:procedure1,zcal.0.:procedure2,mode.0.2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure2,stri.0.4,mode.0.8,aloc.0.-1,mode.0.43,zret.0.:procedure1,mode.0.42,nill.0.:entry,call.0.:procedure1",
+            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.42,nill.0.:procedure1,zcal.0.:procedure2,mode.0.2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure2,stri.0.4,mode.0.8,aloc.0.1,mode.0.43,back.0.:procedure1,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure1",
+            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.42,nill.0.:procedure1,zcal.0.:procedure2,mode.0.2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure2,stri.0.4,mode.0.8,aloc.0.1,mode.0.43,fret.0.:procedure1,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure1",
+            "mode.0.8,aloc.0.1,mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.42,nill.0.:procedure1,fcal.0.:procedure2,mode.0.2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure2,stri.0.4,mode.0.8,free.0.0,mode.0.43,zcal.0.:procedure1,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure1",
+            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.42,nill.0.:procedure1,zcal.0.:procedure2,mode.0.2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure2,stri.0.4,mode.0.8,aloc.0.1,mode.0.43,pret.0.:procedure1,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure1",
+            "mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.42,nill.0.:procedure1,zcal.0.:procedure2,mode.0.2,stri.0.2,mode.0.41,back.0.0,mode.0.2,nill.0.:procedure2,stri.0.4,mode.0.8,aloc.0.-1,mode.0.43,nret.0.:procedure1,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure1",
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
         assert_equal "42", stdout
