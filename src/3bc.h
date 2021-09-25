@@ -19,7 +19,7 @@
 #if defined(_3BC_COMPUTER)
 #include <signal.h>
 #endif
-#if defined(_3BC_PC_NOT_WINDOWS)
+#if defined(_3BC_PC_UNIX)
 #include <termios.h>
 #endif
 #if defined(_3BC_PC_WINDOWS) || defined(_3BC_PC_1970)

@@ -52,7 +52,7 @@
 #if defined(_WIN32)
 #define _3BC_PC_WINDOWS
 #else 
-#define _3BC_PC_NOT_WINDOWS
+#define _3BC_PC_UNIX
 #endif
 #endif
 

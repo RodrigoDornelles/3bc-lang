@@ -1,13 +1,13 @@
 #include "3bc.h"
 
-#if defined(_3BC_PC_NOT_WINDOWS)
+#if defined(_3BC_PC_UNIX)
 struct termios term_old_attr;
 struct termios term_new_attr;
 #endif
 
 optional_inline driver_io_init()
 {
-    #if defined(_3BC_PC_NOT_WINDOWS)
+    #if defined(_3BC_PC_UNIX)
     /**
      * Turn possible terminal uncannonical mode 
      * without conio.h in linux/unix builds
@@ -31,7 +31,7 @@ optional_inline driver_io_exit()
     fflush(stdout);
     #endif
     
-    #if defined(_3BC_PC_NOT_WINDOWS)
+    #if defined(_3BC_PC_UNIX)
     /** reset terminal to default mode (linux/unix) **/
     tcsetattr(STDIN_FILENO, TCSANOW, &term_old_attr);
     #endif
@@ -52,7 +52,7 @@ data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
         /** capture input **/
         #if defined(_3BC_PC_1970)
         c[0] = cgetc();
-        #elif defined(_3BC_PC_NOT_WINDOWS)
+        #elif defined(_3BC_PC_UNIX)
         tcsetattr(STDIN_FILENO,TCSANOW, &term_new_attr);
         c[0] = getchar();
         tcsetattr(STDIN_FILENO,TCSANOW, &term_old_attr);
