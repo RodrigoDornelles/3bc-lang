@@ -200,14 +200,14 @@ void ds_memory_llrbt_vmin_set(address_3bc_t address, data_3bc_t vmin);
 void ds_memory_llrbt_vmax_set(address_3bc_t address, data_3bc_t vmax);
 void ds_memory_llrbt_conf_set(address_3bc_t address, data_3bc_t conf);
 /** TODO: rename **/
-struct memory_node_s* tape_memory_llrbt_create_node(address_3bc_t address);
-struct memory_node_s* tape_memory_llrbt_rotate_left(struct memory_node_s* node);
-struct memory_node_s* tape_memory_llrbt_rotate_right(struct memory_node_s* node);
-struct memory_node_s* tape_memory_llrbt_smallest_child(struct memory_node_s* node);
-struct memory_node_s* tape_memory_llrbt_access(address_3bc_t address);
-struct memory_node_s* tape_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node);
-struct memory_node_s* tape_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node);
-void tape_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2);
+struct memory_node_s* ds_memory_llrbt_create_node(address_3bc_t address);
+struct memory_node_s* ds_memory_llrbt_rotate_left(struct memory_node_s* node);
+struct memory_node_s* ds_memory_llrbt_rotate_right(struct memory_node_s* node);
+struct memory_node_s* ds_memory_llrbt_smallest_child(struct memory_node_s* node);
+struct memory_node_s* ds_memory_llrbt_access(address_3bc_t address);
+struct memory_node_s* ds_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node);
+struct memory_node_s* ds_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node);
+void ds_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2);
 void tape_memory_destroy(void);
 
 /** FILE: tape_program.c **/

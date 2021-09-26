@@ -166,5 +166,5 @@ void driver_memory_free(address_3bc_t address)
     }
 
     /** clear memory node **/
-    APP_3BC->memory.root = tape_memory_llrbt_clear(address, APP_3BC->memory.root);
+    APP_3BC->memory.root = ds_memory_llrbt_clear(address, APP_3BC->memory.root);
 }
