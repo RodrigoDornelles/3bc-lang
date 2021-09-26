@@ -7,6 +7,7 @@ typedef unsigned char cpumode_3bc_t;
 typedef unsigned char register_3bc_t;
 typedef unsigned char address_3bc_t;
 typedef unsigned char label_3bc_t;
+typedef unsigned char memory_conf_t;
 typedef signed int data_3bc_t;
 typedef signed long data_aux_3bc_t;
 
@@ -89,7 +90,7 @@ struct program_3bc_s {
 /** MEMORY PRIMARY **/
 struct memory_node_s {
     bool color;
-    char conf;
+    memory_conf_t conf;
     data_3bc_t data;
     data_3bc_t vmax;
     data_3bc_t vmin;

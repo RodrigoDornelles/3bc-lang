@@ -1,5 +1,53 @@
 #include "3bc.h"
 
+data_3bc_t ds_memory_llrbt_data_get(address_3bc_t address)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    return node->data;   
+}
+
+data_3bc_t ds_memory_llrbt_vmin_get(address_3bc_t address)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    return node->vmin;   
+}
+
+data_3bc_t ds_memory_llrbt_vmax_get(address_3bc_t address)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    return node->vmax;   
+}
+
+data_3bc_t ds_memory_llrbt_conf_get(address_3bc_t address)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    return node->conf;   
+}
+
+void ds_memory_llrbt_data_set(address_3bc_t address, data_3bc_t value)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    node->data = value;   
+}
+
+void ds_memory_llrbt_vmin_set(address_3bc_t address, data_3bc_t vmin)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    node->vmin = vmin;   
+}
+
+void ds_memory_llrbt_vmax_set(address_3bc_t address, data_3bc_t vmax)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    node->vmax = vmax;   
+}
+
+void ds_memory_llrbt_conf_set(address_3bc_t address, data_3bc_t conf)
+{
+    struct memory_node_s* node = tape_memory_llrbt_access(address);
+    node->conf = conf;   
+}
+
 struct memory_node_s* tape_memory_llrbt_create_node(address_3bc_t address)
 {
     /** utility function to create a node. **/
