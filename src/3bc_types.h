@@ -15,7 +15,8 @@ typedef signed long data_aux_3bc_t;
 typedef FILE file_t;
 
 enum stream_type_e {
-    STREAM_TYPE_SILENT = 0,
+    STREAM_TYPE_NONE = 0,
+    STREAM_TYPE_SILENT,
     STREAM_TYPE_ARDUINO_SERIAL,
     STREAM_TYPE_ARDUINO_FILE,
     STREAM_TYPE_COMPUTER_STD,

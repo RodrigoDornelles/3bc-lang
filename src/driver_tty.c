@@ -179,4 +179,7 @@ void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
         tty.io.lambda(output);
         return;
     }
+    else if (tty.type == STREAM_TYPE_NONE) {
+        driver_program_error(ERROR_NONE_TTY);
+    }
 }
