@@ -172,8 +172,10 @@ void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
         return;
     }
     #endif
-
-    if (tty.type == STREAM_TYPE_FUNCTION_CALL) {
+    if (tty.type == STREAM_TYPE_CLONE_TTY) {
+        driver_tty_output(*tty.io.tty, type, val);
+    }
+    else if (tty.type == STREAM_TYPE_FUNCTION_CALL) {
         tty.io.lambda(output);
         return;
     }
