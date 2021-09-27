@@ -102,6 +102,11 @@ class TestFails < Minitest::Test
         assert_equal 15, status.exitstatus
     end
 =end
+    def test_invalid_return
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.41,back.0.0")
+        assert_match /ERROR CODE\: (0x3BC012)/, stderr
+        assert_equal 15, status.exitstatus
+    end
 
     def test_division_by_zero
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.14,math.0.0")
