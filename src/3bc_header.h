@@ -136,6 +136,11 @@ void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
 void driver_tty_signal(int sig);
 #endif
 
+/** FILE: driver_.c **/
+void driver_gpio_setup(memory_conf_t conf, address_3bc_t pin);
+void driver_gpio_output(memory_conf_t conf, address_3bc_t pin, data_3bc_t data);
+data_3bc_t driver_gpio_input(memory_conf_t conf, address_3bc_t pin, data_3bc_t default_data);
+
 /** FILE: driver_memory.c **/
 void driver_memory_data_set(address_3bc_t address, data_3bc_t value);
 void driver_memory_vmax_set(address_3bc_t address, data_3bc_t vmax);
