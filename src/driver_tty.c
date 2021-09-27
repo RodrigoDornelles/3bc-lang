@@ -5,7 +5,7 @@ struct termios term_old_attr;
 struct termios term_new_attr;
 #endif
 
-optional_inline void driver_io_init()
+optional_inline void driver_tty_init()
 {
     #if defined(_3BC_PC_UNIX)
     /**
@@ -23,7 +23,7 @@ optional_inline void driver_io_init()
     #endif
 }
 
-optional_inline void driver_io_exit()
+optional_inline void driver_tty_exit()
 {
     #if defined(_3BC_COMPUTER)
     /** clear buffers **/
@@ -40,7 +40,7 @@ optional_inline void driver_io_exit()
 /**
  * detect keyboard input
  */
-data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
+data_3bc_t driver_tty_input(register_3bc_t type, address_3bc_t addres)
 {
     signed int value;
     char c[2] = "\0";
@@ -111,7 +111,7 @@ data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
 /**
  * stream texts to outputs
  */
-void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
+void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
 {
     /** the size of the buffer is according to the memory */
     char output[sizeof(data_3bc_t) * 8 + 1];
@@ -119,7 +119,7 @@ void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
     /** print negative symbol **/
     if (val < 0 && type != STRC) {
         val = abs(val);
-        driver_io_output(tty, STRC, '-');
+        driver_tty_output(tty, STRC, '-');
     }
 
     switch (type) {
@@ -178,17 +178,3 @@ void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
         return;
     }
 }
-
-#if defined(_3BC_COMPUTER)
-void driver_io_signal(int sig)
-{
-    switch (sig)
-    {
-        case SIGINT:
-            driver_power_exit(sig);
-        
-        case SIGSEGV:
-            driver_program_error((enum error_3bc_e) sig);
-    }
-}
-#endif

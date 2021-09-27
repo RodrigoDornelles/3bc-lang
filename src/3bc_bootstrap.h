@@ -41,6 +41,16 @@ struct app_3bc_s* bootstrap_3bc()
         instance.memory.vmin_set = &ds_memory_llrbt_vmin_set;
         instance.memory.vmax_set = &ds_memory_llrbt_vmax_set;
         instance.memory.conf_set = &ds_memory_llrbt_conf_set;
+        #if defined(_3BC_COMPUTER)
+        instance.tty_source.type = STREAM_TYPE_COMPUTER_STD;
+        instance.tty_source.io.file = stdin;
+        instance.tty_debug.type = STREAM_TYPE_COMPUTER_STD;
+        instance.tty_debug.io.stream = stderr;
+        instance.tty_output.type = STREAM_TYPE_COMPUTER_STD;
+        instance.tty_output.io.stream = stdout;
+        instance.tty_keylog.type = STREAM_TYPE_COMPUTER_STD;
+        instance.tty_keylog.io.stream = stdout;
+        #endif
     }
 
     return &instance;

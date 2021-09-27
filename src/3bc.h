@@ -50,7 +50,7 @@
 #include "cpu_memory.c"
 #include "cpu_procedure.c"
 #include "cpu_string.c"
-#include "driver_io.c"
+#include "driver_tty.c"
 #include "driver_gpio.c"
 #include "driver_memory.c"
 #include "driver_power.c"

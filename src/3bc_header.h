@@ -127,13 +127,13 @@ void cpu_string_stro(PARAMS_DEFINE);
 void cpu_string_strx(PARAMS_DEFINE);
 void cpu_string_stru(PARAMS_DEFINE);
 
-/** FILE: driver_io.c **/
-optional_inline void driver_io_init(void);
-optional_inline void driver_io_exit(void);
-data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres);
-void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
+/** FILE: driver_tty.c **/
+optional_inline void driver_tty_init(void);
+optional_inline void driver_tty_exit(void);
+data_3bc_t driver_tty_input(register_3bc_t type, address_3bc_t addres);
+void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
 #ifdef _3BC_COMPUTER
-void driver_io_signal(int sig);
+void driver_tty_signal(int sig);
 #endif
 
 /** FILE: driver_memory.c **/
@@ -154,6 +154,7 @@ void driver_memory_free(address_3bc_t address);
 #ifdef _3BC_COMPUTER
 void driver_power_init(int argc, char **argv);
 void driver_power_exit(int sig);
+void driver_power_signal(int sig);
 void driver_power_safe_exit(int sig);
 #else
 void driver_power_init();
