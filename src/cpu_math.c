@@ -22,7 +22,13 @@ void cpu_math_mul(PARAMS_DEFINE)
 void cpu_math_div(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    tape_aux_set(AUX / GET_ANY_PARAM);
+    {
+        register data_3bc_t divisor = GET_ANY_PARAM;
+        if (divisor == 0) {
+            driver_program_error(ERROR_DIVISION_BY_ZERO);
+        }
+        tape_aux_set(AUX/divisor);
+    }    
 }
 
 void cpu_math_mod(PARAMS_DEFINE)
