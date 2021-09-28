@@ -52,6 +52,7 @@ void driver_memory_conf_set(address_3bc_t address, data_3bc_t conf)
     data_3bc_t vmax = APP_3BC->memory.vmax_get(address);
     data_3bc_t value = APP_3BC->memory.data_get(address);
 
+    driver_gpio_setup(conf, address);
     driver_memory_validate(conf, vmin, vmax);
     value = driver_memory_normalize(conf, value, vmin, vmax);
 
