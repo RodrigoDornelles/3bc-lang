@@ -89,6 +89,18 @@ class TestFails < Minitest::Test
         assert_equal 15, status.exitstatus
     end
 
+    def test_number_underflow
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.2,strx.0.-0xFFFFFFFFFFFFFFFF")
+        assert_match /ERROR CODE\: (0x3BC00E)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
+    def test_number_overflow
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.2,strx.0.0xFFFFFFFFFFFFFFFF")
+        assert_match /ERROR CODE\: (0x3BC00F)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+    
     def test_number_wrong_base
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 0o8")
         assert_match /ERROR CODE\: (0x3BC010|0x3BC011)/, stderr
