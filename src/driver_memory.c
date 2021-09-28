@@ -101,7 +101,7 @@ address_3bc_t driver_memory_pointer(address_3bc_t address)
      * JAVA PROGRAMMER BE LIKE
      * omg i'm scared with null pointer!
      */
-    if (ptr <= NILL) {
+    if (ptr == NILL) {
         /** also apply to microsoft java devs (aka C#) */
         driver_program_error(ERROR_NULL_POINTER);
     }

@@ -27,7 +27,9 @@ void cpu_math_div(PARAMS_DEFINE)
         if (divisor == 0) {
             driver_program_error(ERROR_DIVISION_BY_ZERO);
         }
-        tape_aux_set(AUX/divisor);
+        else {
+            tape_aux_set(AUX/divisor);
+        }
     }    
 }
 
