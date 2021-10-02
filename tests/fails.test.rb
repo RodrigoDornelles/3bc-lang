@@ -3,6 +3,12 @@ require 'minitest/spec'
 require 'minitest/autorun'
 
 class TestFails < Minitest::Test
+    def test_seg_fault
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "7.0.10,1.0.11")
+        assert_match /ERROR CODE\: (0x00000B)/, stderr
+        assert_equal 11, status.exitstatus
+    end
+
     def test_cpu_zero
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "strc 0 0")
         assert_match /ERROR CODE\: (0x3BC000)/, stderr

@@ -39,7 +39,7 @@ tests-clear:
 
 tests-build:
 	@echo " > building..."
-	@${CXX} -Wno-deprecated -coverage ${SOURCES} ${CFLAGS} ${LDFLAGS} -o 3bc.test.bin
+	@${CXX} -Wno-deprecated -coverage unit.c ${CFLAGS} ${LDFLAGS} -o 3bc.test.bin
 
 tests-unit:
 	@echo " > run units tests..."

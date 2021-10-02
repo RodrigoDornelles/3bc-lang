@@ -9,7 +9,7 @@ void ds_fpg_array_func_set(cpumode_3bc_t cpu_mode, register_3bc_t reg, function_
     
     /** expand array of functions **/
     if (custom_funcs == NULL || last_func <= atual_func){
-        function_3bc_t* new_array = realloc(custom_funcs, sizeof(function_3bc_t) * atual_func + 1);
+        function_3bc_t* new_array = (function_3bc_t*) realloc(custom_funcs, sizeof(function_3bc_t) * atual_func + 1);
         
         if (new_array == NULL) {
             driver_program_error(ERROR_OUT_OF_MEMORY);
