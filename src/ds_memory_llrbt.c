@@ -1,6 +1,54 @@
 #include "3bc.h"
 
-struct memory_node_s* tape_memory_llrbt_create_node(address_3bc_t address)
+data_3bc_t ds_memory_llrbt_data_get(address_3bc_t address)
+{
+    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    return node->data;   
+}
+
+data_3bc_t ds_memory_llrbt_vmin_get(address_3bc_t address)
+{
+    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    return node->vmin;   
+}
+
+data_3bc_t ds_memory_llrbt_vmax_get(address_3bc_t address)
+{
+    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    return node->vmax;   
+}
+
+data_3bc_t ds_memory_llrbt_conf_get(address_3bc_t address)
+{
+    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    return node->conf;   
+}
+
+void ds_memory_llrbt_data_set(address_3bc_t address, data_3bc_t value)
+{
+    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    node->data = value;   
+}
+
+void ds_memory_llrbt_vmin_set(address_3bc_t address, data_3bc_t vmin)
+{
+    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    node->vmin = vmin;   
+}
+
+void ds_memory_llrbt_vmax_set(address_3bc_t address, data_3bc_t vmax)
+{
+    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    node->vmax = vmax;   
+}
+
+void ds_memory_llrbt_conf_set(address_3bc_t address, data_3bc_t conf)
+{
+    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    node->conf = conf;   
+}
+
+struct memory_node_s* ds_memory_llrbt_create_node(address_3bc_t address)
 {
     /** utility function to create a node. **/
     struct memory_node_s* new_node = (struct memory_node_s*) malloc(sizeof(struct memory_node_s));
@@ -20,7 +68,7 @@ struct memory_node_s* tape_memory_llrbt_create_node(address_3bc_t address)
     return new_node;
 }
 
-struct memory_node_s* tape_memory_llrbt_rotate_left(struct memory_node_s* node)
+struct memory_node_s* ds_memory_llrbt_rotate_left(struct memory_node_s* node)
 {
     struct memory_node_s* child = node->right;
     struct memory_node_s* child_left = child->left;
@@ -31,7 +79,7 @@ struct memory_node_s* tape_memory_llrbt_rotate_left(struct memory_node_s* node)
     return child;
 }
 
-struct memory_node_s* tape_memory_llrbt_rotate_right(struct memory_node_s* node)
+struct memory_node_s* ds_memory_llrbt_rotate_right(struct memory_node_s* node)
 {
     struct memory_node_s* child = node->left;
     struct memory_node_s* child_right =  child->right;
@@ -42,7 +90,7 @@ struct memory_node_s* tape_memory_llrbt_rotate_right(struct memory_node_s* node)
     return child; 
 }
 
-struct memory_node_s* tape_memory_llrbt_smallest_child(struct memory_node_s* node)
+struct memory_node_s* ds_memory_llrbt_smallest_child(struct memory_node_s* node)
 {
     struct memory_node_s* current = node;
  
@@ -54,7 +102,7 @@ struct memory_node_s* tape_memory_llrbt_smallest_child(struct memory_node_s* nod
     return current;
 }
 
-struct memory_node_s* tape_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node)
+struct memory_node_s* ds_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node)
 {
     if (node == NULL)
         return NULL;
@@ -64,7 +112,7 @@ struct memory_node_s* tape_memory_llrbt_clear(address_3bc_t address, struct memo
      * then it lies in left subtree
      */
     if (node->address > address) {
-        node->left = tape_memory_llrbt_clear(address, node->left);
+        node->left = ds_memory_llrbt_clear(address, node->left);
     }
  
     /**
@@ -72,7 +120,7 @@ struct memory_node_s* tape_memory_llrbt_clear(address_3bc_t address, struct memo
      * then it lies in right subtree
      */
     else if (node->address < address) {
-        node->right = tape_memory_llrbt_clear(address, node->right);
+        node->right = ds_memory_llrbt_clear(address, node->right);
     }
  
     /**
@@ -96,19 +144,19 @@ struct memory_node_s* tape_memory_llrbt_clear(address_3bc_t address, struct memo
          * Get the inorder successor
          * (smallest in the right subtree)
          */
-        struct memory_node_s* temp = tape_memory_llrbt_smallest_child(node->right);
+        struct memory_node_s* temp = ds_memory_llrbt_smallest_child(node->right);
  
         /** Copy the inorder successor's content to this node **/
         node->address = temp->address;
  
         /** Delete the inorder successor **/
-        node->right = tape_memory_llrbt_clear(temp->address, node->right);
+        node->right = ds_memory_llrbt_clear(temp->address, node->right);
     }
 
     return node;
 }
 
-struct memory_node_s* tape_memory_llrbt_access(address_3bc_t address)
+struct memory_node_s* ds_memory_llrbt_access(address_3bc_t address)
 {
     struct memory_node_s* node = APP_3BC->memory.root;
 
@@ -129,29 +177,29 @@ struct memory_node_s* tape_memory_llrbt_access(address_3bc_t address)
     }
 
     if (node == NULL) {
-        APP_3BC->memory.root = tape_memory_llrbt_insert(address, APP_3BC->memory.root);
-        return tape_memory_llrbt_access(address);
+        APP_3BC->memory.root = ds_memory_llrbt_insert(address, APP_3BC->memory.root);
+        return ds_memory_llrbt_access(address);
     }
 
     APP_3BC->cache_l0 = node;
     return APP_3BC->cache_l0;
 }
 
-struct memory_node_s* tape_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node)
+struct memory_node_s* ds_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node)
 {
     /**
      * NORMAL INSERTION BINARY TREE ALGORITHM
      */
     if (node == NULL) {
-        return tape_memory_llrbt_create_node(address);
+        return ds_memory_llrbt_create_node(address);
     }
     /** address smaller than the parent **/
     if (node->address > address) {
-        node->left = tape_memory_llrbt_insert(address, node->left);
+        node->left = ds_memory_llrbt_insert(address, node->left);
     }
     /** address greater than the parent **/
     else if (node->address < address) {
-        node->right = tape_memory_llrbt_insert(address, node->right);
+        node->right = ds_memory_llrbt_insert(address, node->right);
     }
     /** address exists **/
     else {
@@ -166,10 +214,10 @@ struct memory_node_s* tape_memory_llrbt_insert(address_3bc_t address, struct mem
     if (LLRBT_IS_RED(node->right) && !LLRBT_IS_RED(node->left))
     {
         /** left rotate the node to make it into valid structure. **/
-        node = tape_memory_llrbt_rotate_left(node);
+        node = ds_memory_llrbt_rotate_left(node);
   
         /** swap the colors as the child node should always be red **/
-        tape_memory_llrbt_swap_colors(node, node->left);
+        ds_memory_llrbt_swap_colors(node, node->left);
     }
       
     /**
@@ -179,8 +227,8 @@ struct memory_node_s* tape_memory_llrbt_insert(address_3bc_t address, struct mem
     if (LLRBT_IS_RED(node->left) && LLRBT_IS_RED(node->left->left))
     {   
         /** right rotate the current node to make it into a valid structure. **/
-        node = tape_memory_llrbt_rotate_right(node);
-        tape_memory_llrbt_swap_colors(node, node->right);
+        node = ds_memory_llrbt_rotate_right(node);
+        ds_memory_llrbt_swap_colors(node, node->right);
     }
       
     /**
@@ -200,7 +248,7 @@ struct memory_node_s* tape_memory_llrbt_insert(address_3bc_t address, struct mem
     return node;
 }
 
-void tape_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2)
+void ds_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2)
 {
     char color = node1->color;
     node1->color = node2->color;

@@ -1,13 +1,13 @@
 #include "3bc.h"
 
-#if defined(_3BC_PC_NOT_WINDOWS)
+#if defined(_3BC_PC_UNIX)
 struct termios term_old_attr;
 struct termios term_new_attr;
 #endif
 
-optional_inline driver_io_init()
+optional_inline void driver_tty_init()
 {
-    #if defined(_3BC_PC_NOT_WINDOWS)
+    #if defined(_3BC_PC_UNIX)
     /**
      * Turn possible terminal uncannonical mode 
      * without conio.h in linux/unix builds
@@ -23,7 +23,7 @@ optional_inline driver_io_init()
     #endif
 }
 
-optional_inline driver_io_exit()
+optional_inline void driver_tty_exit()
 {
     #if defined(_3BC_COMPUTER)
     /** clear buffers **/
@@ -31,7 +31,7 @@ optional_inline driver_io_exit()
     fflush(stdout);
     #endif
     
-    #if defined(_3BC_PC_NOT_WINDOWS)
+    #if defined(_3BC_PC_UNIX)
     /** reset terminal to default mode (linux/unix) **/
     tcsetattr(STDIN_FILENO, TCSANOW, &term_old_attr);
     #endif
@@ -40,7 +40,7 @@ optional_inline driver_io_exit()
 /**
  * detect keyboard input
  */
-data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
+data_3bc_t driver_tty_input(register_3bc_t type, address_3bc_t addres)
 {
     signed int value;
     char c[2] = "\0";
@@ -52,7 +52,7 @@ data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
         /** capture input **/
         #if defined(_3BC_PC_1970)
         c[0] = cgetc();
-        #elif defined(_3BC_PC_NOT_WINDOWS)
+        #elif defined(_3BC_PC_UNIX)
         tcsetattr(STDIN_FILENO,TCSANOW, &term_new_attr);
         c[0] = getchar();
         tcsetattr(STDIN_FILENO,TCSANOW, &term_old_attr);
@@ -111,7 +111,7 @@ data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres)
 /**
  * stream texts to outputs
  */
-void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
+void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
 {
     /** the size of the buffer is according to the memory */
     char output[sizeof(data_3bc_t) * 8 + 1];
@@ -119,7 +119,7 @@ void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
     /** print negative symbol **/
     if (val < 0 && type != STRC) {
         val = abs(val);
-        driver_io_output(tty, STRC, '-');
+        driver_tty_output(tty, STRC, '-');
     }
 
     switch (type) {
@@ -172,23 +172,14 @@ void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
         return;
     }
     #endif
-
-    if (tty.type == STREAM_TYPE_FUNCTION_CALL) {
+    if (tty.type == STREAM_TYPE_CLONE_TTY) {
+        driver_tty_output(*tty.io.tty, type, val);
+    }
+    else if (tty.type == STREAM_TYPE_FUNCTION_CALL) {
         tty.io.lambda(output);
         return;
     }
-}
-
-#if defined(_3BC_COMPUTER)
-void driver_io_signal(int sig)
-{
-    switch (sig)
-    {
-        case SIGINT:
-            driver_power_exit(sig);
-        
-        case SIGSEGV:
-            driver_program_error((enum error_3bc_e) sig);
+    else if (tty.type == STREAM_TYPE_NONE) {
+        driver_program_error(ERROR_NONE_TTY);
     }
 }
-#endif

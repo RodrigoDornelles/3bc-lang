@@ -127,34 +127,39 @@ void cpu_string_stro(PARAMS_DEFINE);
 void cpu_string_strx(PARAMS_DEFINE);
 void cpu_string_stru(PARAMS_DEFINE);
 
-/** FILE: driver_io.c **/
-optional_inline driver_io_init(void);
-optional_inline driver_io_exit(void);
-data_3bc_t driver_io_input(register_3bc_t type, address_3bc_t addres);
-void driver_io_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
+/** FILE: driver_tty.c **/
+optional_inline void driver_tty_init(void);
+optional_inline void driver_tty_exit(void);
+data_3bc_t driver_tty_input(register_3bc_t type, address_3bc_t addres);
+void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
 #ifdef _3BC_COMPUTER
-void driver_io_signal(int sig);
+void driver_tty_signal(int sig);
 #endif
+
+/** FILE: driver_.c **/
+void driver_gpio_setup(memory_conf_t conf, address_3bc_t pin);
+void driver_gpio_output(memory_conf_t conf, address_3bc_t pin, data_3bc_t data);
+data_3bc_t driver_gpio_input(memory_conf_t conf, address_3bc_t pin, data_3bc_t default_data);
 
 /** FILE: driver_memory.c **/
 void driver_memory_data_set(address_3bc_t address, data_3bc_t value);
-void driver_memory_vmax_set(address_3bc_t address, data_3bc_t value);
-void driver_memory_vmin_set(address_3bc_t address, data_3bc_t value);
-void driver_memory_conf_set(address_3bc_t address, data_3bc_t value);
+void driver_memory_vmax_set(address_3bc_t address, data_3bc_t vmax);
+void driver_memory_vmin_set(address_3bc_t address, data_3bc_t vmin);
+void driver_memory_conf_set(address_3bc_t address, data_3bc_t conf);
 data_3bc_t driver_memory_data_get(address_3bc_t address);
-data_3bc_t driver_memory_vmax_get(address_3bc_t address);
-data_3bc_t driver_memory_vmin_get(address_3bc_t address);
-data_3bc_t driver_memory_conf_get(address_3bc_t address);
+optional_inline data_3bc_t driver_memory_vmax_get(address_3bc_t address);
+optional_inline data_3bc_t driver_memory_vmin_get(address_3bc_t address);
+optional_inline data_3bc_t driver_memory_conf_get(address_3bc_t address);
 address_3bc_t driver_memory_pointer(address_3bc_t address);
-void driver_memory_gpio(struct memory_node_s* node);
-void driver_memory_lineup(struct memory_node_s* node);
-void driver_memory_reload(struct memory_node_s* node);
+void driver_memory_validate(memory_conf_t conf, data_3bc_t vmin, data_3bc_t vmax);
+data_3bc_t driver_memory_normalize(memory_conf_t conf, data_3bc_t value, data_3bc_t vmin, data_3bc_t vmax);
 void driver_memory_free(address_3bc_t address);
 
 /** FILE: driver_power.c **/
 #ifdef _3BC_COMPUTER
 void driver_power_init(int argc, char **argv);
 void driver_power_exit(int sig);
+void driver_power_signal(int sig);
 void driver_power_safe_exit(int sig);
 #else
 void driver_power_init();
@@ -191,15 +196,30 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
 data_aux_3bc_t tape_aux_get(void);
 void tape_aux_set(data_aux_3bc_t value);
 
-/** FILE: tape_memory.c **/
-struct memory_node_s* tape_memory_llrbt_create_node(address_3bc_t address);
-struct memory_node_s* tape_memory_llrbt_rotate_left(struct memory_node_s* node);
-struct memory_node_s* tape_memory_llrbt_rotate_right(struct memory_node_s* node);
-struct memory_node_s* tape_memory_llrbt_smallest_child(struct memory_node_s* node);
-struct memory_node_s* tape_memory_llrbt_access(address_3bc_t address);
-struct memory_node_s* tape_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node);
-struct memory_node_s* tape_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node);
-void tape_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2);
+/** FILE: ds_fpga_array.c **/
+#if defined(_3BC_ENABLE_CUSTOM)
+void ds_fpg_array_func_set(cpumode_3bc_t cpu_mode, register_3bc_t reg, function_3bc_t lambda);
+void ds_fpg_array_func_call(cpumode_3bc_t cpu_mode, register_3bc_t reg, address_3bc_t address, data_3bc_t value);
+#endif
+
+/** FILE: ds_memory_llrbt.c **/
+data_3bc_t ds_memory_llrbt_data_get(address_3bc_t address);
+data_3bc_t ds_memory_llrbt_vmin_get(address_3bc_t address);
+data_3bc_t ds_memory_llrbt_vmax_get(address_3bc_t address);
+data_3bc_t ds_memory_llrbt_conf_get(address_3bc_t address);
+void ds_memory_llrbt_data_set(address_3bc_t address, data_3bc_t value);
+void ds_memory_llrbt_vmin_set(address_3bc_t address, data_3bc_t vmin);
+void ds_memory_llrbt_vmax_set(address_3bc_t address, data_3bc_t vmax);
+void ds_memory_llrbt_conf_set(address_3bc_t address, data_3bc_t conf);
+/** TODO: rename **/
+struct memory_node_s* ds_memory_llrbt_create_node(address_3bc_t address);
+struct memory_node_s* ds_memory_llrbt_rotate_left(struct memory_node_s* node);
+struct memory_node_s* ds_memory_llrbt_rotate_right(struct memory_node_s* node);
+struct memory_node_s* ds_memory_llrbt_smallest_child(struct memory_node_s* node);
+struct memory_node_s* ds_memory_llrbt_access(address_3bc_t address);
+struct memory_node_s* ds_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node);
+struct memory_node_s* ds_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node);
+void ds_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2);
 void tape_memory_destroy(void);
 
 /** FILE: tape_program.c **/

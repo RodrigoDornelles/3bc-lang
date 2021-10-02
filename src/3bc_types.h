@@ -7,6 +7,7 @@ typedef unsigned char cpumode_3bc_t;
 typedef unsigned char register_3bc_t;
 typedef unsigned char address_3bc_t;
 typedef unsigned char label_3bc_t;
+typedef unsigned char memory_conf_t;
 typedef signed int data_3bc_t;
 typedef signed long data_aux_3bc_t;
 
@@ -14,18 +15,21 @@ typedef signed long data_aux_3bc_t;
 typedef FILE file_t;
 
 enum stream_type_e {
-    STREAM_TYPE_SILENT = 0,
+    STREAM_TYPE_NONE = 0,
+    STREAM_TYPE_SILENT,
     STREAM_TYPE_ARDUINO_SERIAL,
     STREAM_TYPE_ARDUINO_FILE,
     STREAM_TYPE_COMPUTER_STD,
     STREAM_TYPE_COMPUTER_FILE,
-    STREAM_TYPE_FUNCTION_CALL
+    STREAM_TYPE_FUNCTION_CALL,
+    STREAM_TYPE_CLONE_TTY
 };
 
 union stream_file_u {
     file_t* file;
     file_t* stream;
     void (*lambda)(char*);
+    struct tty_3bc_s* tty;
 };
 
 struct tty_3bc_s {   
@@ -89,7 +93,7 @@ struct program_3bc_s {
 /** MEMORY PRIMARY **/
 struct memory_node_s {
     bool color;
-    char conf;
+    memory_conf_t conf;
     data_3bc_t data;
     data_3bc_t vmax;
     data_3bc_t vmin;
@@ -100,6 +104,14 @@ struct memory_node_s {
 
 struct memory_3bc_s {
     struct memory_node_s* root;
+    data_3bc_t (*data_get)(address_3bc_t);
+    data_3bc_t (*vmin_get)(address_3bc_t);
+    data_3bc_t (*vmax_get)(address_3bc_t);
+    data_3bc_t (*conf_get)(address_3bc_t);
+    void (*data_set)(address_3bc_t, data_3bc_t);
+    void (*vmin_set)(address_3bc_t, data_3bc_t);
+    void (*vmax_set)(address_3bc_t, data_3bc_t);
+    void (*conf_set)(address_3bc_t, data_3bc_t);
 };
 
 /** APLICATION **/

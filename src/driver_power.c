@@ -10,23 +10,10 @@ void driver_power_init()
     /**
      * Capture computer signals
      */
-    signal(SIGINT, driver_io_signal);
-    signal(SIGSEGV, driver_io_signal);
+    signal(SIGINT, driver_power_signal);
+    signal(SIGSEGV, driver_power_signal);
 
-    APP_3BC->tty_debug.type = STREAM_TYPE_COMPUTER_STD;
-    APP_3BC->tty_debug.io.stream = stderr;
-    
-    APP_3BC->tty_output.type = STREAM_TYPE_COMPUTER_STD;
-    APP_3BC->tty_output.io.stream = stdout;
-
-    APP_3BC->tty_keylog.type = STREAM_TYPE_COMPUTER_STD;
-    APP_3BC->tty_keylog.io.stream = stdout;
-    
-    if (argc <= 1) {
-        APP_3BC->tty_source.type = STREAM_TYPE_COMPUTER_STD;
-        APP_3BC->tty_source.io.stream = stdin;
-    }
-    else {
+    if (argc > 1) {
         APP_3BC->tty_source.type = STREAM_TYPE_COMPUTER_FILE;
         APP_3BC->tty_source.io.file = fopen(argv[argc - 1], "r");
     }
@@ -37,9 +24,22 @@ void driver_power_init()
     }
     #endif
 
-    driver_io_init();
+    driver_tty_init();
 }
 
+#if defined(_3BC_COMPUTER)
+void driver_power_signal(int sig)
+{
+    switch (sig)
+    {
+        case SIGINT:
+            driver_power_exit(sig);
+        
+        case SIGSEGV:
+            driver_program_error((enum error_3bc_e) sig);
+    }
+}
+#endif
 
 /**
  * UNSAFE SHUTDOWNS
@@ -78,7 +78,7 @@ void driver_power_safe_exit(int sig)
 void driver_power_safe_exit()
 #endif 
 {
-    driver_io_exit();
+    driver_tty_exit();
     
     #if defined(_3BC_COMPUTER)
     exit(sig);

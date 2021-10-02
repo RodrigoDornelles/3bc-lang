@@ -22,5 +22,9 @@ void cpu_not_exist(PARAMS_DEFINE)
 
 void cpu_mode_reserved(PARAMS_DEFINE)
 {
+    #if defined(_3BC_ENABLE_CUSTOM)
+    ds_fpg_array_func_call(APP_3BC->cpu_mode, reg, address, value);
+    #else
     driver_program_error(ERROR_CPU_RESERVED);
+    #endif
 }

@@ -55,9 +55,9 @@ void driver_program_error(enum error_3bc_e error_code)
         case ERROR_NUMBER_WRONG_BASE: print_error("NUMBER WRONG BASE");
         case ERROR_NUMBER_UNKOWN: print_error("NUMBER UNKNOWN");
         case ERROR_INVALID_RETURN: print_error("INVALID PROCEDURE RETURN");
-        case ERROR_TAPE_LABEL: print_error("FAILURE TO EXPAND THE LABEL LIST");
+        case ERROR_DIVISION_BY_ZERO: print_error("DIVISION BY ZERO");
         case ERROR_OUT_OF_MEMORY: print_error("OUT OF MEMORY");
-        case ERROR_TAPE_PROGRAM: print_error("FAILURE TO EXPAND THE PROGRAM");
+        case ERROR_NONE_TTY: print_error("NONE TTY");
         case ERROR_TAPE_SORT: print_error("FAILURE TO EXPAND THE SORT");
         case ERROR_INVALID_MEMORY_CONFIG: print_error("INVALID MEMORY TYPE CONFIG");
         case ERROR_INVALID_MEMORY_CLAMP:  print_error("INVALID MEMORY TYPE CLAMP");

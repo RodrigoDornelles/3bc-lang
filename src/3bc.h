@@ -19,7 +19,7 @@
 #if defined(_3BC_COMPUTER)
 #include <signal.h>
 #endif
-#if defined(_3BC_PC_NOT_WINDOWS)
+#if defined(_3BC_PC_UNIX)
 #include <termios.h>
 #endif
 #if defined(_3BC_PC_WINDOWS) || defined(_3BC_PC_1970)
@@ -50,17 +50,21 @@
 #include "cpu_memory.c"
 #include "cpu_procedure.c"
 #include "cpu_string.c"
-#include "driver_io.c"
+#include "driver_tty.c"
+#include "driver_gpio.c"
 #include "driver_memory.c"
 #include "driver_power.c"
 #include "driver_program.c"
+#if defined(_3BC_ENABLE_CUSTOM)
+#include "ds_fpga_array.c"
+#endif
+#include "ds_memory_llrbt.c"
 #include "ds_procedure_lifo.c"
 #include "interpreter_compiler.c"
 #include "interpreter_parser.c"
 #include "interpreter_syntax.c"
 #include "interpreter_tokens.c"
 #include "tape_aux.c"
-#include "tape_memory.c"
 #include "tape_program.c"
 #include "tape_router.c"
 #endif

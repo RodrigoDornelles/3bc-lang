@@ -52,7 +52,7 @@
 #if defined(_WIN32)
 #define _3BC_PC_WINDOWS
 #else 
-#define _3BC_PC_NOT_WINDOWS
+#define _3BC_PC_UNIX
 #endif
 #endif
 
@@ -102,10 +102,11 @@
 /**
  * FUNCTIONS MACROS
  */
-#define PARSER_UNPACK(c)                (tolower(c[0])|tolower(c[1])<<8|tolower(c[2])<<16|tolower(c[3])<<24)
-#define PARSER_PACK(c1,c2,c3,c4,v,r)    case(c1|c2<<8|c3<<16|c4<<24):*v=r;return(true)
+#define PARSER_UNPACK(c)                (tolower(c[0])|tolower(c[1])<<8|(long)tolower(c[2])<<16|(long)tolower(c[3])<<24)
+#define PARSER_PACK(c1,c2,c3,c4,v,r)    case(c1|c2<<8|(long)c3<<16|(long)c4<<24):*v=r;return(true)
 #define LLRBT_IS_RED(n)                 (n==NULL?false:n->color==LLRBT_RED)
 #define POINTER(a)                      (driver_memory_pointer(a))
+#define BITFIELD_HAS(a,b)               ((b)==((a)&(b)))
 
 /**
  * C/C++ COMPATIBILITY MACROS
@@ -115,9 +116,9 @@
 #endif
 
 #if defined(inline) && !defined(_3BC_SCU)
-#define optional_inline          inline void
+#define optional_inline         inline
 #else 
-#define optional_inline          void
+#define optional_inline
 #endif
 
 /**
