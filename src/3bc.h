@@ -55,6 +55,9 @@
 #include "driver_memory.c"
 #include "driver_power.c"
 #include "driver_program.c"
+#if defined(_3BC_ENABLE_CUSTOM)
+#include "ds_fpga_array.c"
+#endif
 #include "ds_memory_llrbt.c"
 #include "ds_procedure_lifo.c"
 #include "interpreter_compiler.c"

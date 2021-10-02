@@ -196,7 +196,13 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
 data_aux_3bc_t tape_aux_get(void);
 void tape_aux_set(data_aux_3bc_t value);
 
-/** FILE: tape_memory.c **/
+/** FILE: ds_fpga_array.c **/
+#if defined(_3BC_ENABLE_CUSTOM)
+void ds_fpg_array_func_set(cpumode_3bc_t cpu_mode, register_3bc_t reg, function_3bc_t lambda);
+void ds_fpg_array_func_call(cpumode_3bc_t cpu_mode, register_3bc_t reg, address_3bc_t address, data_3bc_t value);
+#endif
+
+/** FILE: ds_memory_llrbt.c **/
 data_3bc_t ds_memory_llrbt_data_get(address_3bc_t address);
 data_3bc_t ds_memory_llrbt_vmin_get(address_3bc_t address);
 data_3bc_t ds_memory_llrbt_vmax_get(address_3bc_t address);
