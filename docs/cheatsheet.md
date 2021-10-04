@@ -386,11 +386,11 @@ CheatSheet
 | 1 | 0 | 1 |
 | 1 | 1 | 0 |
 
-## MODE BOOL OR ##
+## MODE BOOL OR NOT ##
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
-| `math` | 1 | 001 | boolean or |
+| `math` | 1 | 001 | boolean or not |
 
 * **truth table**
 
