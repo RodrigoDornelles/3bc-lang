@@ -78,10 +78,9 @@ $
  - [X] VM Memory Auxiliary
  - [X] VM Memory Pointers
  - [X] VM Mathematic Basics
- - [ ] VM Mathematic Boolean
+ - [X] VM Mathematic Boolean
  - [X] VM Labels and conditional jumps
- - [X] Compiler just in time
- - [ ] Compiler to bytecode
+ - [X] VM Procedure calls
  - [ ] Transpiler to C
  - [ ] Documentation
  - [ ] Programming IDE
