@@ -400,3 +400,35 @@ CheatSheet
 | 0 | 1 | 0 |
 | 1 | 0 | 1 |
 | 1 | 1 | 1 |
+
+## MODE PROCEDURE_RET ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `call` | 1 | 001 | return from procedure unconditionally |
+| `fcal` | 2 | 010 | return from procedure if aux memory is fill |
+| `zcal` | 3 | 011 | return from procedure if aux memory is empty |
+| `pcal` | 4 | 100 | return from procedure if aux memory is positive |
+| `ncal` | 5 | 101 | return from procedure if aux memory is negative |
+
+## MODE PROCEDURE ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `call` | 1 | 001 | call label procedure unconditionally |
+| `fcal` | 2 | 010 | call label procedure if aux memory is fill |
+| `zcal` | 3 | 011 | call label procedure if aux memory is empty |
+| `pcal` | 4 | 100 | call label procedure if aux memory is positive |
+| `ncal` | 5 | 101 | call label procedure if aux memory is negative |
+
+## MODE PROCEDURE_RET_TCO ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `call` | 1 | 001 | return from procedure at label unconditionally |
+| `fcal` | 2 | 010 | return from procedure at label if aux memory is fill |
+| `zcal` | 3 | 011 | return from procedure at label if aux memory is empty |
+| `pcal` | 4 | 100 | return from procedure at label if aux memory is positive |
+| `ncal` | 5 | 101 | return from procedure at label if aux memory is negative |
+
+ * **NOTE**: _this cpu mode should be used for **Tail Call Optimization**, or else to make explicit when procedures will be terminated passing a label._
