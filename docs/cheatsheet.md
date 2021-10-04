@@ -267,3 +267,136 @@ CheatSheet
 | `nb08` | 2 | 010 | multiply by 8 and accumulate operation |
 | `nb10` | 3 | 011 | multiply by 10 and accumulate operation |
 | `nb16` | 4 | 100 | multiply by 16 and accumulate operation |
+
+## MODE BOOL NOT ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean not |
+
+* **truth table**
+
+| aux | !aux |
+| :-: | :-: |
+| 0 | 1 |
+| 1 | 0 |
+
+## MODE BOOL AND ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean and |
+
+* **truth table**
+
+| aux | math | aux * math |
+| :-: | :--: | :--------: |
+| 0 | 0 | 0 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 1 |
+
+## MODE BOOL OR ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean or |
+
+* **truth table**
+
+| aux | math | aux + math |
+| :-: | :--: | :--------: |
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 1 |
+
+## MODE BOOL XOR ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean xor |
+
+* **truth table**
+
+| aux | math | aux (+) math |
+| :-: | :--: | :----------: |
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
+## MODE BOOL NAND ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean nand |
+
+* **truth table**
+
+| aux | math | !(aux * math) |
+| :-: | :--: | :-----------: |
+| 0 | 0 | 1 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
+## MODE BOOL NOR ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean nor |
+
+* **truth table**
+
+| aux | math | !(aux + math) |
+| :-: | :--: | :-----------: |
+| 0 | 0 | 1 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 0 |
+
+## MODE BOOL XNOR ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean xnor |
+
+* **truth table**
+
+| aux | math | !(aux (+) math) |
+| :-: | :--: | :-----------: |
+| 0 | 0 | 1 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 1 |
+
+## MODE BOOL AND NOT ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean and not |
+
+* **truth table**
+
+| aux | math | aux * !math |
+| :-: | :--: | :--------: |
+| 0 | 0 | 0 |
+| 0 | 1 | 0 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
+## MODE BOOL OR ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean or |
+
+* **truth table**
+
+| aux | math | aux + !math |
+| :-: | :--: | :--------: |
+| 0 | 0 | 1 |
+| 0 | 1 | 0 |
+| 1 | 0 | 1 |
+| 1 | 1 | 1 |
