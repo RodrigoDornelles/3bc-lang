@@ -16,6 +16,10 @@ References
 
 * [Backes André](https://programacaodescomplicada.wordpress.com/) (2013) _[ED] Aula 106 - Árvore Rubro Negra Caída para a Esquerda (LLRB)_<br/><https://www.youtube.com/watch?v=TYBTOay_i3g>
 
+### Tests ###
+
+* [Otavio Lemos](https://otaviolemos.github.io/) (2021) _162 - Pirâmide ou Troféu de Testes? | theWiseDev Testing_<br/><https://www.youtube.com/watch?v=LsV_d9y317E>
+
 ## Extra subjects ##
 
 ### Compilers & Interpreters ###
