@@ -98,7 +98,14 @@
 function_3bc_t instructions(cpumode_3bc_t mode, register_3bc_t reg)
 {
     #ifdef _3BC_COMPACT
-    switch (mode)
+    if (reg == 0) {
+        return &cpu_null;
+    }
+    else if (reg == 7) {
+        return &cpu_mode;
+    }
+
+    switch ((mode * 7) + reg)
     {
         /** prevent enter in invalid cpu mode **/
         default: driver_program_error(ERROR_INVALID_CPU);
