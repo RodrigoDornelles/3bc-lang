@@ -30,7 +30,7 @@ class TestFails < Minitest::Test
     end
 
     def test_invalid_register
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 11\naloc 0 0")
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "baaz 0 0")
         assert_match /ERROR CODE\: (0x3BC003)/, stderr
         assert_equal 15, status.exitstatus
     end
