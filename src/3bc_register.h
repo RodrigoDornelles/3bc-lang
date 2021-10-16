@@ -98,10 +98,10 @@
 void instructions(cpumode_3bc_t mode, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
 {
     if (reg == 0) {
-        return cpu_null(0,0,0);
+        cpu_null(0,0,0);
     }
     else if (reg == 7) {
-        return cpu_mode(reg, address, value);
+        cpu_mode(reg, address, value);
     }
     /** CPU MODES ADD REGISTER PACKAGES **/
     else switch ((mode * 7) + reg)
