@@ -10,8 +10,8 @@ CheatSheet
 | 4 | **[MODE_INPUT_SILENT](#mode-input-silent)** | console input keyboard (silent) | `nill` `strb` `stro` `stri` `strx` `strc` `mode` |
 | 5 | **[MODE_INPUT_PASSWORD](#mode-input-password)** | console input keyboard (password) | `nill` `strb` `stro` `stri` `strx` `strc` `mode` |
 | 6 | **[MODE_MEMORY](#mode-memory)** | main memory controller | `nill` `free` `aloc` `moff` `muse` `mmax` `tmin` `mode` |
-| 7 | **[MODE_MEMORY_PTR](#mode-memory-ptr)** | pointers memory controller | `nill` `free` `aloc` `pull` `push` `mode` |
-| 8 | **[MODE_MEMORY_AUX](#mode-memory-aux)** | aux memory controller | `nill` `free` `aloc` `pull` `push` `mode` |
+| 7 | **[MODE_MEMORY_PTR](#mode-memory-ptr)** | pointers memory controller | `nill` `free` `aloc` `pull` `spin` `push` `mode` |
+| 8 | **[MODE_MEMORY_AUX](#mode-memory-aux)** | aux memory controller | `nill` `free` `aloc` `pull` `spin` `push` `mode` |
 | 9 | **[MODE_JUMP](#mode-jump)** | logical jumps between labels | `nill` `goto` `fgto` `zgto` `pgto` `ngto` `mode` |
 | 10 | <br/> | reserved | <br/> |
 | 11 | **[MODE_MATH_SUM](#mode-math-sum)** | basic mathematic sum  | `nill` `math` `mode` |
@@ -33,6 +33,20 @@ CheatSheet
 | 27 | **[MODE_HELPER_LOG2](#mode-helper-log-base-2)** | helper log base 2 | `nill` `math` `mode` |
 | 28 | **[MODE_HELPER_LOG10](#mode-helper-log-base-10)** | helper log base 10 | `nill` `math` `mode` |
 | 29 | **[MODE_HELPER_MUL_ADD](#mode-helper-mul-add)** | multiply by base and add acumulator | `nill` `nb02` `nb08` `nb10` `nb16` `mode` |
+| 30 | <br/> | reserved | <br/> |
+| 11 | **[MODE_BOOL_NOT](#mode-bool-not)** | boolean not | `nill` `math` `mode` |
+| 12 | **[MODE_BOOL_AND](#mode-bool-and)** | boolean and | `nill` `math` `mode` |
+| 13 | **[MODE_BOOL_OR](#mode-bool-or)** | boolean or | `nill` `math` `mode` |
+| 14 | **[MODE_BOOL_XOR](#mode-bool-xor)** | boolean xor | `nill` `math` `mode` |
+| 15 | **[MODE_BOOL_NAND](#mode-bool-nand)** | boolean nand  | `nill` `math` `mode` |
+| 16 | **[MODE_BOOL_NOR](#mode-bool-nor)** | boolean nor | `nill` `math` `mode` |
+| 17 | **[MODE_BOOL_XNOR](#mode-bool-xnor)** | boolean xnor | `nill` `math` `mode` |
+| 18 | **[MODE_BOOL_AND_NOT](#mode-bool-and-not)** | boolean and not | `nill` `math` `mode` |
+| 19 | **[MODE_BOOL_OR_NOT](#mode-bool-or-not)** | boolean or not | `nill` `math` `mode` |
+| 40 | <br/> | reserved | <br/> |
+| 41 | **[MODE_PROCEDURE_RET](#mode-procedure-ret)** | procedure return | `nill` `back` `fret` `zret` `pret` `nret` `mode` |
+| 42 | **[MODE_PROCEDURE](#mode-procedure)** | procedure call | `nill` `call` `fcal` `zcal` `pcal` `ncal` `mode` |
+| 43 | **[MODE_PROCEDURE_TCO_RET ](#mode-procedure-tco-ret)** | procedure return with tco | `nill` `back` `fret` `zret` `pret` `nret` `mode` |
 
 # Architecture details  #
 
@@ -253,3 +267,168 @@ CheatSheet
 | `nb08` | 2 | 010 | multiply by 8 and accumulate operation |
 | `nb10` | 3 | 011 | multiply by 10 and accumulate operation |
 | `nb16` | 4 | 100 | multiply by 16 and accumulate operation |
+
+## MODE BOOL NOT ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean not |
+
+* **truth table**
+
+| aux | !aux |
+| :-: | :-: |
+| 0 | 1 |
+| 1 | 0 |
+
+## MODE BOOL AND ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean and |
+
+* **truth table**
+
+| aux | math | aux * math |
+| :-: | :--: | :--------: |
+| 0 | 0 | 0 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 1 |
+
+## MODE BOOL OR ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean or |
+
+* **truth table**
+
+| aux | math | aux + math |
+| :-: | :--: | :--------: |
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 1 |
+
+## MODE BOOL XOR ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean xor |
+
+* **truth table**
+
+| aux | math | aux (+) math |
+| :-: | :--: | :----------: |
+| 0 | 0 | 0 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
+## MODE BOOL NAND ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean nand |
+
+* **truth table**
+
+| aux | math | !(aux * math) |
+| :-: | :--: | :-----------: |
+| 0 | 0 | 1 |
+| 0 | 1 | 1 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
+## MODE BOOL NOR ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean nor |
+
+* **truth table**
+
+| aux | math | !(aux + math) |
+| :-: | :--: | :-----------: |
+| 0 | 0 | 1 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 0 |
+
+## MODE BOOL XNOR ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean xnor |
+
+* **truth table**
+
+| aux | math | !(aux (+) math) |
+| :-: | :--: | :-----------: |
+| 0 | 0 | 1 |
+| 0 | 1 | 0 |
+| 1 | 0 | 0 |
+| 1 | 1 | 1 |
+
+## MODE BOOL AND NOT ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean and not |
+
+* **truth table**
+
+| aux | math | aux * !math |
+| :-: | :--: | :--------: |
+| 0 | 0 | 0 |
+| 0 | 1 | 0 |
+| 1 | 0 | 1 |
+| 1 | 1 | 0 |
+
+## MODE BOOL OR NOT ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `math` | 1 | 001 | boolean or not |
+
+* **truth table**
+
+| aux | math | aux + !math |
+| :-: | :--: | :--------: |
+| 0 | 0 | 1 |
+| 0 | 1 | 0 |
+| 1 | 0 | 1 |
+| 1 | 1 | 1 |
+
+## MODE PROCEDURE_RET ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `call` | 1 | 001 | return from procedure unconditionally |
+| `fcal` | 2 | 010 | return from procedure if aux memory is fill |
+| `zcal` | 3 | 011 | return from procedure if aux memory is empty |
+| `pcal` | 4 | 100 | return from procedure if aux memory is positive |
+| `ncal` | 5 | 101 | return from procedure if aux memory is negative |
+
+## MODE PROCEDURE ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `call` | 1 | 001 | call label procedure unconditionally |
+| `fcal` | 2 | 010 | call label procedure if aux memory is fill |
+| `zcal` | 3 | 011 | call label procedure if aux memory is empty |
+| `pcal` | 4 | 100 | call label procedure if aux memory is positive |
+| `ncal` | 5 | 101 | call label procedure if aux memory is negative |
+
+## MODE PROCEDURE_RET_TCO ##
+
+| name | octal | bit | description |
+| :--: | :---: | :-: | :---------- |
+| `call` | 1 | 001 | return from procedure at label unconditionally |
+| `fcal` | 2 | 010 | return from procedure at label if aux memory is fill |
+| `zcal` | 3 | 011 | return from procedure at label if aux memory is empty |
+| `pcal` | 4 | 100 | return from procedure at label if aux memory is positive |
+| `ncal` | 5 | 101 | return from procedure at label if aux memory is negative |
+
+ * **NOTE**: _this cpu mode should be used for **Tail Call Optimization**, or else to make explicit when procedures will be terminated passing a label._
