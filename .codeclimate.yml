@@ -1,0 +1,5 @@
+plugins:
+  cppcheck:
+    enabled: true
+  gnu-complexity:
+    enabled: true
