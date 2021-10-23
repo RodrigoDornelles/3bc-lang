@@ -44,6 +44,7 @@
 #define MODE_PROCEDURE_RET      (41)
 #define MODE_PROCEDURE          (42)
 #define MODE_PROCEDURE_TCO_RET  (43)
+#define MODE_END                (44)
 
 #define NILL 0b000
 #define MODE 0b111
@@ -107,7 +108,7 @@ void instructions(cpumode_3bc_t mode, register_3bc_t reg, address_3bc_t address,
     else switch ((mode * 7) + reg)
     {
         /** prevent enter in invalid cpu mode **/
-        default: driver_program_error(ERROR_INVALID_CPU);
+        default: cpu_not_exist(0,0,0);
         CPU_PACK_ZEROMODE(MODE_EMPUTY);
         CPU_PACK5(MODE_DEBUG, cpu_debug_strb, cpu_debug_stro, cpu_debug_stri, cpu_debug_strx, cpu_debug_strc);
         CPU_PACK5(MODE_STRING, cpu_string_strb, cpu_string_stro, cpu_string_stri, cpu_string_strx, cpu_string_strc);

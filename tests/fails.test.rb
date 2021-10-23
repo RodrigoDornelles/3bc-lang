@@ -32,9 +32,11 @@ class TestFails < Minitest::Test
     end
 
     def test_invalid_register
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "baaz 0 0")
+        for console_input in ["baaz 0 0", "7.0.11,2.0.0"]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
         assert_match /ERROR CODE\: (0x3BC003)/, stderr
         assert_equal 15, status.exitstatus
+        end
     end
 
     def test_invalid_address
@@ -49,8 +51,8 @@ class TestFails < Minitest::Test
         assert_equal 15, status.exitstatus
     end
 
-    def test_invalid_cpu
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode nill full\nstri 0 0")
+    def test_invalid_cpu_mode
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode nill full")
         assert_match /ERROR CODE\: (0x3BC006)/, stderr
         assert_equal 15, status.exitstatus
     end
