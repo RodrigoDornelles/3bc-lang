@@ -9,4 +9,11 @@ class TestFails < Minitest::Test
         assert_equal "a.ba.cba.dcba.edcba.", stdout
         assert_equal 0, status
     end
+
+    def test_nop
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "0.0.0")
+        assert_equal "", stderr
+        assert_equal "", stdout
+        assert_equal 0, status
+    end
 end
