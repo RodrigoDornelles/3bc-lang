@@ -50,7 +50,7 @@ bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val
                 
                 /** insufficient memory to read a large line **/
                 if (new_buffer == NULL) {
-                    driver_program_error(ERROR_LONG_LINE);
+                    driver_program_error(ERROR_OUT_OF_MEMORY);
                 }
 
                 /** add character **/

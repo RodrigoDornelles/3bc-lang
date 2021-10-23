@@ -167,7 +167,7 @@ class TestFails < Minitest::Test
             "mode 0 7\naloc 'p' nill", "mode 0 7\nfree 'p' nill", "mode 0 7\npull 'p' nill", "mode 0 7\nspin 'p' nill", "mode 0 7\npush 'p' nill"
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
-        assert_match /ERROR CODE\: (0x3BC01E)/, stderr
+        assert_match /ERROR CODE\: (0x3BC01B)/, stderr
         assert_equal 15, status.exitstatus
         end
     end
@@ -177,7 +177,7 @@ class TestFails < Minitest::Test
             "nill", "nill nill", "nill nill nill nill"
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
-        assert_match /ERROR CODE\: (0x3BC01F)/, stderr
+        assert_match /ERROR CODE\: (0x3BC01E)/, stderr
         assert_equal 15, status.exitstatus
         end
     end
