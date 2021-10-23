@@ -24,9 +24,11 @@ class TestFails < Minitest::Test
 =end
 
     def test_cpu_reserved
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 10\nstrc 0 0")
+        for cpu_mode in (20..40).step(10)
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 #{cpu_mode}\n1 0 0")
         assert_match /ERROR CODE\: (0x3BC002)/, stderr
         assert_equal 15, status.exitstatus
+        end
     end
 
     def test_invalid_register
