@@ -172,6 +172,22 @@ class TestFails < Minitest::Test
         end
     end
 
+    def test_invalid_char_scape
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "0.0.'\\N'")
+        assert_match /ERROR CODE\: (0x3BC01C)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
+    def test_invalid_char_size
+        for console_input in [
+            "0.0.'aa'", "0.0.'a"
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
+        assert_match /ERROR CODE\: (0x3BC01D)/, stderr
+        assert_equal 15, status.exitstatus
+        end
+    end
+
     def test_columns
         for console_input in [
             "nill", "nill nill", "nill nill nill nill"
