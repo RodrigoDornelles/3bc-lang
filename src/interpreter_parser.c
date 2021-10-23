@@ -79,7 +79,7 @@ bool interpreter_parser_strtol(const char* string, signed long int* value)
     }
     #endif
     else if (errno != 0 && *value == 0){
-        driver_program_error(ERROR_NUMBER_UNKOWN);    
+        driver_program_error(ERROR_NUMBER_WRONG_BASE);    
     }
     else if (errno == 0 && *endptr != 0){
         driver_program_error(ERROR_NUMBER_WRONG_BASE);    
