@@ -1,8 +1,5 @@
 #include "3bc.h"
 
-#define print_error(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);break
-#define print_signal(string) fprintf(stderr, "> ERROR DESCRIPTION: %s\n", string);exit(error_code)
-
 void driver_program_run()
 {
     while(tape_program_avaliable()? tape_program_exe(): interpreter_compiler(APP_3BC->tty_source));
@@ -22,53 +19,51 @@ void driver_program_error(enum error_3bc_e error_code)
         APP_3BC->program.curr->line:
         APP_3BC->program.last_line;
 
-    #ifdef _3BC_ARDUINO
+    #ifdef _3BC_COMPACT
     /** smaller log erros for economy rom memory **/
     char error_code_string[48];
-    snprintf(error_code_string,  48, "\n\n[3BC] Fatal error 0x%06X in line: %d", error_code, error_line);
-    #endif
-
-    #ifdef _3BC_COMPUTER
-    fprintf(stderr, "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM");
-    fprintf(stderr, "\n> ERROR LINE: %06d", error_line);
-    fprintf(stderr, "\n> ERROR CODE: 0x%06X\n", error_code);
+    snprintf(error_code_string, sizeof(error_code_string), "\n\n[3BC] Fatal error 0x%06X in line: %d\n", error_code, error_line);
+    driver_tty_output_raw(APP_3BC->tty_error, error_code_string);
+    #else
+    char error_code_string[128];
+    snprintf(error_code_string, sizeof(error_code_string), "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM\n> ERROR LINE: %06d\n> ERROR CODE: 0x%06X\n> ERROR DESCRIPTION: ", error_line, error_code);
+    driver_tty_output_raw(APP_3BC->tty_error, error_code_string);
 
     switch((long) (error_code))
     {
-        case SIGSEGV: print_error("SEGMENT FAULT");
-        case ERROR_CPU_ZERO: print_error("CPU MODE IS NOT DEFINED"); 
-        case ERROR_CPU_PROTECT: print_error("CPU MODE IS PROTECTED");
-        case ERROR_CPU_RESERVED: print_error("CPU MODE IS RESERVED");
-        case ERROR_INVALID_REGISTER: print_error("INVALID REGISTER");
-        case ERROR_INVALID_ADDRESS: print_error("INVALID ADDRESS");
-        case ERROR_INVALID_CONSTANT: print_error("INVALID CONSTANT");
-        case ERROR_INVALID_CPU: print_error("INVALID CPU");
-        case ERROR_INVALID_LABEL: print_error("INVALID LABEL");
-        case ERROR_PARAM_DUALITY: print_error("DUALITY ADDRES WITH VALUE IS NOT ALLOWED");
-        case ERROR_PARAM_REQUIRE_VALUE: print_error("VALUE IS REQUIRED");
-        case ERROR_PARAM_REQUIRE_ADDRESS: print_error("ADDRESS IS REQUIRED");
-        case ERROR_PARAM_BLOCKED_VALUE: print_error("VALUE IS NOT ALLOWED");
-        case ERROR_PARAM_BLOCKED_ADDRESS: print_error("ADDRESS IS NOT ALLOWED");
-        case ERROR_NUMBER_NO_DIGITS: print_error("NUMBER WHIOUT DIGITS");
-        case ERROR_NUMBER_UNDERFLOW: print_error("NUMBER UNDERFLOW");
-        case ERROR_NUMBER_OVERFLOW: print_error("NUMBER OVERFLOW");
-        case ERROR_NUMBER_WRONG_BASE: print_error("NUMBER WRONG BASE");
-        case ERROR_NUMBER_UNKOWN: print_error("NUMBER UNKNOWN");
-        case ERROR_INVALID_RETURN: print_error("INVALID PROCEDURE RETURN");
-        case ERROR_DIVISION_BY_ZERO: print_error("DIVISION BY ZERO");
-        case ERROR_OUT_OF_MEMORY: print_error("OUT OF MEMORY");
-        case ERROR_NONE_TTY: print_error("NONE TTY");
-        case ERROR_TAPE_SORT: print_error("FAILURE TO EXPAND THE SORT");
-        case ERROR_INVALID_MEMORY_CONFIG: print_error("INVALID MEMORY TYPE CONFIG");
-        case ERROR_INVALID_MEMORY_CLAMP:  print_error("INVALID MEMORY TYPE CLAMP");
-        case ERROR_VOID_HELPER_MAX_MIN: print_error("MAX/MIN CANNOT BE EMPTY");
-        case ERROR_OPEN_FILE: print_error("CANNOT OPEN FILE");
-        case ERROR_LONG_LINE: print_error("EXCEED LINE COLUMN LIMIT");
-        case ERROR_CHAR_SCAPE: print_error("INVALID CHARACTER ESCAPE");
-        case ERROR_CHAR_SIZE: print_error("INVALID CHARACTER SIZE");
-        case ERROR_COLUMNS: print_error("WRONG NUMBER OF COLUMNS");
-        case ERROR_UNSUPPORTED: print_error("UNSUPPORTED FEATURE");
-        default: print_error("UNKNOWN ERROR");
+        ERROR_LOG_3BC(SIGSEGV, "SEGMENT FAULT");
+        ERROR_LOG_3BC(ERROR_CPU_ZERO, "CPU MODE IS NOT DEFINED"); 
+        ERROR_LOG_3BC(ERROR_CPU_PROTECT, "CPU MODE IS PROTECTED");
+        ERROR_LOG_3BC(ERROR_CPU_RESERVED, "CPU MODE IS RESERVED");
+        ERROR_LOG_3BC(ERROR_INVALID_REGISTER, "INVALID CPU REGISTER");
+        ERROR_LOG_3BC(ERROR_INVALID_ADDRESS, "INVALID ADDRESS");
+        ERROR_LOG_3BC(ERROR_INVALID_CONSTANT, "INVALID CONSTANT");
+        ERROR_LOG_3BC(ERROR_INVALID_CPU_MODE, "INVALID CPU MODE");
+        ERROR_LOG_3BC(ERROR_INVALID_LABEL, "INVALID LABEL");
+        ERROR_LOG_3BC(ERROR_PARAM_DUALITY, "DUALITY ADDRES WITH VALUE IS NOT ALLOWED");
+        ERROR_LOG_3BC(ERROR_PARAM_REQUIRE_VALUE, "VALUE IS REQUIRED");
+        ERROR_LOG_3BC(ERROR_PARAM_REQUIRE_ADDRESS, "ADDRESS IS REQUIRED");
+        ERROR_LOG_3BC(ERROR_PARAM_BLOCKED_VALUE, "VALUE IS NOT ALLOWED");
+        ERROR_LOG_3BC(ERROR_PARAM_BLOCKED_ADDRESS, "ADDRESS IS NOT ALLOWED");
+        ERROR_LOG_3BC(ERROR_NUMBER_NO_DIGITS, "NUMBER WHIOUT DIGITS");
+        ERROR_LOG_3BC(ERROR_NUMBER_UNDERFLOW, "NUMBER UNDERFLOW");
+        ERROR_LOG_3BC(ERROR_NUMBER_OVERFLOW, "NUMBER OVERFLOW");
+        ERROR_LOG_3BC(ERROR_NUMBER_WRONG_BASE, "NUMBER WRONG BASE");
+        ERROR_LOG_3BC(ERROR_NUMBER_UNKOWN, "NUMBER UNKNOWN");
+        ERROR_LOG_3BC(ERROR_INVALID_RETURN, "INVALID PROCEDURE RETURN");
+        ERROR_LOG_3BC(ERROR_DIVISION_BY_ZERO, "DIVISION BY ZERO");
+        ERROR_LOG_3BC(ERROR_OUT_OF_MEMORY, "OUT OF MEMORY");
+        ERROR_LOG_3BC(ERROR_NONE_TTY, "NONE TTY");
+        ERROR_LOG_3BC(ERROR_UNSUPPORTED, "UNSUPPORTED FEATURE");
+        ERROR_LOG_3BC(ERROR_INVALID_MEMORY_CONFIG, "INVALID MEMORY TYPE CONFIG");
+        ERROR_LOG_3BC(ERROR_INVALID_MEMORY_CLAMP, "INVALID MEMORY TYPE CLAMP");
+        ERROR_LOG_3BC(ERROR_VOID_HELPER_MAX_MIN, "MAX/MIN CANNOT BE EMPTY");
+        ERROR_LOG_3BC(ERROR_OPEN_FILE, "CANNOT OPEN FILE");
+        ERROR_LOG_3BC(ERROR_NULL_POINTER, "NULL POINTER");
+        ERROR_LOG_3BC(ERROR_CHAR_SCAPE, "INVALID CHARACTER ESCAPE");
+        ERROR_LOG_3BC(ERROR_CHAR_SIZE, "INVALID CHARACTER SIZE");
+        ERROR_LOG_3BC(ERROR_COLUMNS, "WRONG NUMBER OF COLUMNS");
+        default: driver_tty_output_raw(APP_3BC->tty_error, "UNKNOWN ERROR");
     }
     #endif
 

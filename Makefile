@@ -35,7 +35,7 @@ tests: tests-clear tests-build tests-unit
 
 tests-clear:
 	@echo " > clearing coverage metadata..."
-	@rm main.gcda main.gcno 2>/dev/null; true
+	@rm unit.gcda unit.gcno 2>/dev/null; true
 
 tests-build:
 	@echo " > building..."

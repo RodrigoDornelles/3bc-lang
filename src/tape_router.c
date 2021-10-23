@@ -5,6 +5,10 @@
  */
 void tape_router_cpu_set(cpumode_3bc_t value)
 {
+    if (value >= MODE_END) {
+        driver_program_error(ERROR_INVALID_CPU_MODE);
+    }
+
     /** after cpu mode change **/
     switch (APP_3BC->cpu_mode) {
         case MODE_HELPER_MAX:

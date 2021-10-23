@@ -24,15 +24,19 @@ class TestFails < Minitest::Test
 =end
 
     def test_cpu_reserved
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 10\nstrc 0 0")
+        for cpu_mode in (20..40).step(10)
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 #{cpu_mode}\n1 0 0")
         assert_match /ERROR CODE\: (0x3BC002)/, stderr
         assert_equal 15, status.exitstatus
+        end
     end
 
     def test_invalid_register
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 11\naloc 0 0")
+        for console_input in ["baaz 0 0", "7.0.11,2.0.0"]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
         assert_match /ERROR CODE\: (0x3BC003)/, stderr
         assert_equal 15, status.exitstatus
+        end
     end
 
     def test_invalid_address
@@ -47,8 +51,8 @@ class TestFails < Minitest::Test
         assert_equal 15, status.exitstatus
     end
 
-    def test_invalid_cpu
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode nill full\nstri 0 0")
+    def test_invalid_cpu_mode
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode nill full")
         assert_match /ERROR CODE\: (0x3BC006)/, stderr
         assert_equal 15, status.exitstatus
     end
@@ -132,6 +136,18 @@ class TestFails < Minitest::Test
         assert_equal 15, status.exitstatus
     end
 
+    def test_none_tty
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.10,2.0.0")
+        assert_match /ERROR CODE\: (0x3BC015)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
+    def test_unsupported
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.10,3.0.0")
+        assert_match /ERROR CODE\: (0x3BC016)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
     def test_invalid_memory_config
         for console_input in ['mode.0.6,muse.1.8','mode.0.6,muse.1.10','mode.0.6,muse.1.12','mode.0.6,muse.1.192','mode.0.6,muse.1.80','mode.0.6,muse.1.48','mode.0.6,muse.1.128']
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
@@ -163,7 +179,23 @@ class TestFails < Minitest::Test
             "mode 0 7\naloc 'p' nill", "mode 0 7\nfree 'p' nill", "mode 0 7\npull 'p' nill", "mode 0 7\nspin 'p' nill", "mode 0 7\npush 'p' nill"
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
-        assert_match /ERROR CODE\: (0x3BC01E)/, stderr
+        assert_match /ERROR CODE\: (0x3BC01B)/, stderr
+        assert_equal 15, status.exitstatus
+        end
+    end
+
+    def test_invalid_char_scape
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "0.0.'\\N'")
+        assert_match /ERROR CODE\: (0x3BC01C)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
+    def test_invalid_char_size
+        for console_input in [
+            "0.0.'aa'", "0.0.'a"
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
+        assert_match /ERROR CODE\: (0x3BC01D)/, stderr
         assert_equal 15, status.exitstatus
         end
     end
@@ -173,7 +205,7 @@ class TestFails < Minitest::Test
             "nill", "nill nill", "nill nill nill nill"
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
-        assert_match /ERROR CODE\: (0x3BC01F)/, stderr
+        assert_match /ERROR CODE\: (0x3BC01E)/, stderr
         assert_equal 15, status.exitstatus
         end
     end

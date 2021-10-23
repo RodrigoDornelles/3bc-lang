@@ -50,6 +50,8 @@ struct app_3bc_s* bootstrap_3bc()
         instance.tty_output.io.stream = stdout;
         instance.tty_keylog.type = STREAM_TYPE_CLONE_TTY;
         instance.tty_keylog.io.tty = &instance.tty_output;
+        instance.tty_error.type = STREAM_TYPE_COMPUTER_STD;
+        instance.tty_error.io.stream = stderr;
         #endif
     }
 

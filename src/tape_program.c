@@ -70,17 +70,10 @@ bool tape_program_exe()
      * request function pointer to machine instruction
      * FILE: 3bc_register.h
      */
-    function_3bc_t instruction = instructions(APP_3BC->cpu_mode, APP_3BC->program.curr->column.reg);
-
-    /**
-     * Perform physical function
-     */
-    (instruction)(
-        /** param for function: register_3bc_t reg **/
+    instructions(
+        APP_3BC->cpu_mode,
         APP_3BC->program.curr->column.reg,
-        /** param for function: address_3bc_t addres **/
         APP_3BC->program.curr->column.adr,
-        /** param for function: data_3bc_t value **/
         APP_3BC->program.curr->column.dta
     );
 
