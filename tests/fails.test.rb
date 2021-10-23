@@ -136,6 +136,18 @@ class TestFails < Minitest::Test
         assert_equal 15, status.exitstatus
     end
 
+    def test_none_tty
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.10,2.0.0")
+        assert_match /ERROR CODE\: (0x3BC015)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
+    def test_unsupported
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.10,3.0.0")
+        assert_match /ERROR CODE\: (0x3BC016)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
     def test_invalid_memory_config
         for console_input in ['mode.0.6,muse.1.8','mode.0.6,muse.1.10','mode.0.6,muse.1.12','mode.0.6,muse.1.192','mode.0.6,muse.1.80','mode.0.6,muse.1.48','mode.0.6,muse.1.128']
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
