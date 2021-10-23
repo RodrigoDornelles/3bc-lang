@@ -127,6 +127,7 @@ struct app_3bc_s {
     struct tty_3bc_s tty_output;
     struct tty_3bc_s tty_source;
     struct tty_3bc_s tty_keylog;
+    struct tty_3bc_s tty_error;
     struct program_3bc_s program;
     struct memory_3bc_s memory;
 };

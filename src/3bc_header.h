@@ -132,6 +132,7 @@ optional_inline void driver_tty_init(void);
 optional_inline void driver_tty_exit(void);
 data_3bc_t driver_tty_input(register_3bc_t type, address_3bc_t addres);
 void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
+void driver_tty_output_raw(struct tty_3bc_s tty,const char* string);
 #ifdef _3BC_COMPUTER
 void driver_tty_signal(int sig);
 #endif

@@ -165,18 +165,23 @@ void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
             driver_program_error(ERROR_UNSUPPORTED);
     }
 
+    driver_tty_output_raw(tty, output);
+}
+
+void driver_tty_output_raw(struct tty_3bc_s tty, const char* string)
+{
     #if defined(_3BC_COMPUTER)
     /** stream standard c output **/
     if (tty.type == STREAM_TYPE_COMPUTER_STD){
-        fprintf(tty.io.stream, "%s", output);
+        fputs(string, tty.io.stream);
         return;
     }
     #endif
     if (tty.type == STREAM_TYPE_CLONE_TTY) {
-        driver_tty_output(*tty.io.tty, type, val);
+        driver_tty_output_raw(*tty.io.tty, string);
     }
     else if (tty.type == STREAM_TYPE_FUNCTION_CALL) {
-        tty.io.lambda(output);
+        tty.io.lambda((char *) string);
         return;
     }
     else if (tty.type == STREAM_TYPE_NONE) {
