@@ -2,18 +2,16 @@ name: Automatic tests
 on:
   push:
     branches:
-      - whitesplaining
+      - master
   pull_request:
     branches:
-      - whitesplaining
+      - master
 jobs:
   minitest: 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
-        with:
-          repository: rodrigodornelles/3bc-lang
     
       - name: Run tests
         run: make tests
