@@ -1,0 +1,24 @@
+name: Automatic tests
+on:
+  push:
+    branches:
+      - whitesplaining
+  pull_request:
+    branches:
+      - whitesplaining
+jobs:
+  minitest: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+        with:
+          repository: rodrigodornelles/3bc-lang
+    
+      - name: Run tests
+        run: make tests
+
+      - name: Report tests
+        run: |
+          gcov unit.c
+          bash <(curl -s https://codecov.io/bash)
