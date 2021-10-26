@@ -27,7 +27,7 @@ jobs:
       - name: Prepare project
         run: |
           zip -r lib.zip project/*
-          mv ./project/examples/Arduino/helloworld.ino ./bin/bin.ino
+          mv ./project/examples/ArduinoHelloworld/ArduinoHelloworld.ino ./bin/bin.ino
           ./bin/arduino-cli lib install --zip-path lib.zip
 
       - name: Build project
