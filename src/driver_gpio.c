@@ -34,7 +34,9 @@ void driver_gpio_output(memory_conf_t conf, address_3bc_t pin, data_3bc_t data)
     }
 
     if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_SEND | MEM_CONFIG_GPIO_ANAL)) {
-        #if defined(_3BC_ARDUINO)
+        #if defined(_3BC_ARDUINO) && defined(ESP32)
+        driver_program_error(ERROR_UNSUPPORTED);
+        #elif defined(_3BC_ARDUINO)
         analogWrite(pin, data);
         #endif
     }
