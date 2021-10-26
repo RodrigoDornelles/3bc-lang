@@ -20,9 +20,9 @@ jobs:
 
       - name: Configure arduino-cli
         run: |
-          ./bin/arduino-cli core install arduino:avr 
           ./bin/arduino-cli config init
           ./bin/arduino-cli config set library.enable_unsafe_install true
+          ./bin/arduino-cli core install arduino:avr 
 
       - name: Prepare project
         run: |
