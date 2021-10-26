@@ -1,0 +1,67 @@
+name: Compiler xtensa-gcc
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  esp8266: 
+    runs-on: ubuntu-latest      
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+        with:
+          path: project
+
+      - name: Checkout arduino-cli
+        run: curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+
+      - name: Configure arduino-cli
+        run: |
+          ./bin/arduino-cli config init
+          ./bin/arduino-cli config set library.enable_unsafe_install true
+          ./bin/arduino-cli config add board_manager.additional_urls https://arduino.esp8266.com/stable/package_esp8266com_index.json          
+          ./bin/arduino-cli core install esp8266:esp8266
+
+      - name: Prepare project
+        run: |
+          zip -r lib.zip project/*
+          mv ./project/examples/Arduino/helloworld.ino ./bin/bin.ino
+          ./bin/arduino-cli lib install --zip-path lib.zip
+
+      - name: Build project
+        run: |
+          cd bin/
+          ./arduino-cli compile --fqbn esp8266:esp8266:generic
+  
+  esp32: 
+    runs-on: ubuntu-latest      
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+        with:
+          repository: rodrigodornelles/3bc-lang
+          path: project
+
+      - name: Checkout arduino-cli
+        run: curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+
+      - name: Configure arduino-cli
+        run: |
+          ./bin/arduino-cli config init
+          ./bin/arduino-cli config set library.enable_unsafe_install true
+          ./bin/arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
+          ./bin/arduino-cli core install esp32:esp32
+
+      - name: Prepare project
+        run: |
+          zip -r lib.zip project/*
+          mv ./project/examples/Arduino/helloworld.ino ./bin/bin.ino
+          ./bin/arduino-cli lib install --zip-path lib.zip
+
+      - name: Build project
+        run: |
+          cd bin/
+          ./arduino-cli compile --fqbn esp32:esp32:esp32

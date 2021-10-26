@@ -1,0 +1,22 @@
+name: Automatic tests
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  minitest: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+    
+      - name: Run tests
+        run: make tests
+
+      - name: Report tests
+        run: |
+          gcov unit.c
+          bash <(curl -s https://codecov.io/bash)
