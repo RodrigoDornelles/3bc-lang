@@ -29,4 +29,18 @@ class TestFails < Minitest::Test
         assert_match "", stderr
         assert_equal 2, status.exitstatus
     end
+
+    def test_memory_clean_unstarted
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.6,free.6.0")
+        assert_equal "", stderr
+        assert_equal "", stdout
+        assert_equal 0, status
+    end
+
+    def test_memory_clean_right
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.6,aloc.1.0,aloc.2.0,aloc.3.0,aloc.4.0,free.2.0")
+        assert_equal "", stderr
+        assert_equal "", stdout
+        assert_equal 0, status
+    end
 end
