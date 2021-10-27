@@ -23,4 +23,10 @@ class TestFails < Minitest::Test
         assert_equal "", stdout
         assert_equal 0, status
     end
+
+    def test_signal_sigint
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "7.0.10,1.0.2")
+        assert_match "", stderr
+        assert_equal 2, status.exitstatus
+    end
 end
