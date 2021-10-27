@@ -123,7 +123,9 @@ void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
     }
 
     switch (type) {
-        #ifndef _3BC_MOS6502
+        #if defined(_3BC_MOS6502)
+        driver_program_error(ERROR_UNSUPPORTED);
+        #else
         case STRB:
         {
             /**
@@ -160,9 +162,6 @@ void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
         case STRO:
             snprintf(output, sizeof(output), "%o", val);
             break;
-
-        default:
-            driver_program_error(ERROR_UNSUPPORTED);
     }
 
     driver_tty_output_raw(tty, output);
