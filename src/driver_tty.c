@@ -95,10 +95,10 @@ data_3bc_t driver_tty_input(register_3bc_t type, address_3bc_t addres)
         }
 
         /** validade input inner memory clamp limits **/
-        if ((driver_memory_data_get(addres) & MEM_CONFIG_MIN_VALUE) == MEM_CONFIG_MIN_VALUE) {
+        if (BITFIELD_HAS(driver_memory_conf_get(addres), MEM_CONFIG_MIN_VALUE)) {
             invalid |= driver_memory_vmin_get(addres) > value;
         }
-        if ((driver_memory_data_get(addres) & MEM_CONFIG_MAX_VALUE) == MEM_CONFIG_MAX_VALUE) {
+        if (BITFIELD_HAS(driver_memory_conf_get(addres), MEM_CONFIG_MAX_VALUE)) {
             invalid |= driver_memory_vmax_get(addres) < value;
         }
     
