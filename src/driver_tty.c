@@ -95,10 +95,10 @@ data_3bc_t driver_tty_input(register_3bc_t type, address_3bc_t addres)
         }
 
         /** validade input inner memory clamp limits **/
-        if ((driver_memory_data_get(addres) & MEM_CONFIG_MIN_VALUE) == MEM_CONFIG_MIN_VALUE) {
+        if (BITFIELD_HAS(driver_memory_conf_get(addres), MEM_CONFIG_MIN_VALUE)) {
             invalid |= driver_memory_vmin_get(addres) > value;
         }
-        if ((driver_memory_data_get(addres) & MEM_CONFIG_MAX_VALUE) == MEM_CONFIG_MAX_VALUE) {
+        if (BITFIELD_HAS(driver_memory_conf_get(addres), MEM_CONFIG_MAX_VALUE)) {
             invalid |= driver_memory_vmax_get(addres) < value;
         }
     
@@ -123,7 +123,9 @@ void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
     }
 
     switch (type) {
-        #ifndef _3BC_MOS6502
+        #if defined(_3BC_MOS6502)
+        driver_program_error(ERROR_UNSUPPORTED);
+        #else
         case STRB:
         {
             /**
@@ -160,9 +162,6 @@ void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
         case STRO:
             snprintf(output, sizeof(output), "%o", val);
             break;
-
-        default:
-            driver_program_error(ERROR_UNSUPPORTED);
     }
 
     driver_tty_output_raw(tty, output);

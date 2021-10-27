@@ -156,6 +156,9 @@ struct memory_node_s* ds_memory_llrbt_clear(address_3bc_t address, struct memory
     return node;
 }
 
+/** 
+ * TODO: unify function with ds_memory_llrbt_insert?
+ */
 struct memory_node_s* ds_memory_llrbt_access(address_3bc_t address)
 {
     struct memory_node_s* node = APP_3BC->memory.root;
@@ -201,10 +204,12 @@ struct memory_node_s* ds_memory_llrbt_insert(address_3bc_t address, struct memor
     else if (node->address < address) {
         node->right = ds_memory_llrbt_insert(address, node->right);
     }
-    /** address exists **/
-    else {
-        return node;
-    }
+    /** 
+     * unless address exists see: ds_memory_llrbt_access
+     *   else {
+     *       return node;
+     *   }
+     */
     
     /**
      * case 1.
