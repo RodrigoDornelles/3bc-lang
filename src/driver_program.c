@@ -65,6 +65,8 @@ void driver_program_error(enum error_3bc_e error_code)
         ERROR_LOG_3BC(ERROR_COLUMNS, "WRONG NUMBER OF COLUMNS");
         default: driver_tty_output_raw(APP_3BC->tty_error, "UNKNOWN ERROR");
     }
+
+    driver_tty_output_raw(APP_3BC->tty_error, "\n");
     #endif
 
     #if defined(_3BC_COMPUTER)
