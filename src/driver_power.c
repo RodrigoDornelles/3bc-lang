@@ -6,6 +6,8 @@ void driver_power_init(int argc, char **argv)
 void driver_power_init()
 #endif
 {
+    driver_tty_init();
+
     #if defined(_3BC_COMPUTER)
     /**
      * Capture computer signals
@@ -23,8 +25,6 @@ void driver_power_init()
         driver_program_error(ERROR_OPEN_FILE);
     }
     #endif
-
-    driver_tty_init();
 }
 
 #if defined(_3BC_COMPUTER)
