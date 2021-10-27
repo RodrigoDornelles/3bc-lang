@@ -51,8 +51,15 @@ class TestFails < Minitest::Test
         assert_equal 0, status
     end
 
-    def test_memory_clean_left_unbalanced
+    def test_memory_clean_two_childrens
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.6,aloc.4.0,aloc.3.0,aloc.2.0,aloc.1.0,free.3.0")
+        assert_equal "", stderr
+        assert_equal "", stdout
+        assert_equal 0, status
+    end
+
+    def test_memory_clean_left_unbalanced
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.6,aloc.5.0,aloc.4.0,aloc.3.0,aloc.2.0,aloc.1.0,free.3.0")
         assert_equal "", stderr
         assert_equal "", stdout
         assert_equal 0, status
