@@ -30,7 +30,7 @@ Um grande ponto para facilitar o aprendizado, é a sua sintaxe muito bem organiz
 
 Uma linha do programa é consequentemente uma instrução, que possui três parâmetros de maneira obrigatória. São separados pela respectivamente ordem de **registrador**, **endereço**, **constante**.
 
-![structure-pt-br](/images/structure-pt-br.png)
+![structure-pt-br ><](/images/structure-pt-br.png)
 
 
 Sintaxe
