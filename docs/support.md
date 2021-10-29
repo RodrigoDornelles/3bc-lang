@@ -1,3 +1,8 @@
+---
+description: List of all platforms that are working, or that will receive the support soon.
+redirect_from: /support.html
+---
+
 Platform Support List
 =====================
 

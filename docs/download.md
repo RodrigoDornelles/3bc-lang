@@ -1,10 +1,9 @@
 ---
 title: Download
 description: Get the last version of 3BC Language now!
-click_here: https://3bc-lang.org/download
+click_here: https://3bc-lang.org/docs/download
+redirect_from: /download.html
 ---
-
-<!-- HIDE ON GITHUB {{ '--' | append: '>' }}
 
 {% assign release = site.github.releases | first %}
 
@@ -39,5 +38,3 @@ click_here: https://3bc-lang.org/download
 </div>
 {% endfor %}
 </section>
-
-<!--  HIDE ON GITHUB -->
