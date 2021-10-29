@@ -105,3 +105,4 @@ Hall of fame with everyone who dedicated to **just learning 3bc language**, this
 | **9º** |  ![avatar](https://avatars.githubusercontent.com/lrv-dev?size=32) | **[Lucas Rangel](https://github.com/lrv-dev)** | **5 February 2021** |
 | **10º** |  ![avatar](https://avatars.githubusercontent.com/otavio-burato?size=32) | **[Otávio Burato](https://github.com/otavio-burato)** | **6 February 2021** |
 | **11º** |  ![avatar](https://avatars.githubusercontent.com/github?size=32) | **[Github Copilot](https://copilot.github.com/)** _(IA)_ | **21 July 2021** |
+| **12º** |  ![avatar](https://avatars.githubusercontent.com/yxqsnz?size=32) | **[Moizes Sousa](https://github.com/yxqsnzo)** | **14 August 2021** |
