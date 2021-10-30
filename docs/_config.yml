@@ -1,10 +1,14 @@
 title: 3BC LANG
+
+author: Rodrigo Dornelles
+
+baseurl: "/"
+url: "https://3bc-lang.org"
+
 description: >- 
   3BC Lang is Low level language,
   tiny virtual machine that works on computers and microcontrollers.
   (Friendly Punched cards)
-baseurl: "/"
-url: "https://3bc-lang.org"
 
 plugins:
   - jekyll-optional-front-matter
@@ -17,19 +21,3 @@ plugins:
   - jekyll-sitemap
   - jekyll-feed
   - jemoji
-
-data_dir: docs/_data/
-includes_dir: docs/_includes/
-layouts_dir: docs/_layouts/
-
-exclude:
-  - src/
-  - tests/
-  - examples/
-  - .sass-cache/
-  - .jekyll-cache/
-  - main.c
-  - Gemfile
-  - Gemfile.lock
-  - library.properties
-  - Makefile

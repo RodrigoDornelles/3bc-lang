@@ -6,7 +6,20 @@
 [![covarage](https://codecov.io/gh/RodrigoDornelles/3bc-lang/branch/master/graph/badge.svg?token=FS152PL31C)](https://codecov.io/gh/RodrigoDornelles/3bc-lang)
 [![Build Status](https://img.shields.io/github/checks-status/rodrigodornelles/3bc-lang/master)](https://github.com/rodrigodornelles/3bc-lang/actions)
 
+> ![3bc lang logo](/docs/images/3bc-logo-small.png)
 > Low level language, tiny virtual machine that works on computers and microcontrollers. (Friendly Punched cards)
+
+## Documentation ##
+
+* **[Tutorial :us:](https://3bc-lang.org/guide/tutorial-en-us)**
+* **[Tutorial :brazil:](https://3bc-lang.org/guide/tutorial-pt-br)**
+* **[Cheatsheet](https://3bc-lang.org/guide/cheatsheet.md)**
+* **[Changelogs](https://3bc-lang.org/extra/changelogs.md)**
+* **[Ambient Roadmap](https://3bc-lang.org/extra/roadmap)**
+* **[Platform Support](https://3bc-lang.org/support.md)**
+* **[How to "Hello World"](#how-to-hello-world)**
+* **[Download last version](https://3bc-lang.org/download)**
+* **[List of early developers](https://3bc-lang.org/early-adopters)**
 
 | Common questions | answer |
 | :--------------- | :----- |
@@ -17,18 +30,6 @@
 | Does it work as a compiler? | No, it currently works as an interpreter (although a very fast one), or also by packaging bytecode with a vm in a single binary. |
 | What are the influences? | Languages **Cobol**, **Ruby** and **Java**; Assembly´s **WASM**, **ARM** and **x86** |
 | Is it more compact than **Lua**? | Yeah, because it has the same performance target as the Arduino Uno microcontroller. And this impacts it's size (depending on the CPU's architecture, 14KiB ROM and 400 bytes RAM ) |
-
-## Documentation ##
-
-* **[Tutorial :us:](docs/tutorial-en-us.md)**
-* **[Tutorial :brazil:](docs/tutorial-pt-br.md)**
-* **[Cheatsheet](docs/cheatsheet.md)**
-* **[Changelogs](docs/changelogs.md)**
-* **[Platform Support](support.md)**
-* **[Download last version](download.md)**
-* **[Ambient Roadmap](#ambient-roadmap)**
-* **[How to "Hello World"](#how-to-hello-world)**
-* **[List of early developers](#list-of-early-developers)**
 
 ## How to "Hello World" ##
 

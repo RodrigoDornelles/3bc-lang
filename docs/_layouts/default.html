@@ -1,84 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ site.locale }}">
     <head>
-        <!-- META TAGS -->
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!-- FAV ICON -->       
-        <link rel="shortcut icon" href="{{ '/images/favicon.ico' | relative_url }}" type="image/x-icon"/>
-        <link rel="icon" href="{{ '/images/favicon.ico' | relative_url }}" type="image/x-icon">
-        <link rel="apple-touch-icon" sizes="57x57" href="{{ '/images/apple-icon-57x57.png' | relative_url }}">
-        <link rel="apple-touch-icon" sizes="60x60" href="{{ '/images/apple-icon-60x60.png' | relative_url }}">
-        <link rel="apple-touch-icon" sizes="72x72" href="{{ '/images/apple-icon-72x72.png' | relative_url }}">
-        <link rel="apple-touch-icon" sizes="76x76" href="{{ '/images/apple-icon-76x76.png' | relative_url }}">
-        <link rel="apple-touch-icon" sizes="114x114" href="{{ '/images/apple-icon-114x114.png' | relative_url }}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{{ '/images/apple-icon-120x120.png' | relative_url }}">
-        <link rel="apple-touch-icon" sizes="144x144" href="{{ '/images/apple-icon-144x144.png' | relative_url }}">
-        <link rel="apple-touch-icon" sizes="152x152" href="{{ '/images/apple-icon-152x152.png' | relative_url }}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ '/images/apple-icon-180x180.png' | relative_url }}">
-        <link rel="icon" type="image/png" sizes="192x192"  href="{{ '/images/android-icon-192x192.png' | relative_url }}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ '/images/favicon-32x32.png' | relative_url }}">
-        <link rel="icon" type="image/png" sizes="96x96" href="{{ '/images/favicon-96x96.png' | relative_url }}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ '/images/favicon-16x16.png' | relative_url }}">
-        <link rel="manifest" href="{{ '/images/manifest.json' | relative_url }}">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="{{ '/images/ms-icon-144x144.png' | relative_url }}">
-        <meta name="theme-color" content="#ffffff">
-
-        <!-- MATERIALIZE CSS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize/dist/css/materialize.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize/dist/js/materialize.min.js"></script>
-
-        <!-- MATERILIZE SCRIPT -->
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                M.Tabs.init(document.querySelectorAll('.tabs'), {swipeable: false});
-                M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
-            });
-        </script>
-
-        <!-- HIGHLIGHT JS -->
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/default.min.css">
-        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js"></script>
-
-        <!-- CUSTOM ASSETS -->
-        <link rel="stylesheet" href="{{ '/docs/assets/style.css' | relative_url }}?{{ site.time | date: '%s%N' }}">
-
-        {% if page.url == '/' %}
-        <title>{{ page.title }}</title>
-        {% seo title=false %}
-        {% else %}
-        {% seo %}
-        {% endif %}
+        {% include head.rhtml%}
     </head>
     <body>
-        <!-- BEGIN NAV -->
-        <nav class="nav-extended">
-            <!-- DESTKTOP MENU-->
-            <div class="nav-wrapper">
-                <a href="{{ '/' | relative_url }}" class="brand-logo right">
-                    <img src="{{ '/images/favicon-32x32.png' | relative_url }}"/>
-                </a>
-                <a href="#" data-target="menu" class="sidenav-trigger" style="display:block">
-                    <i class="material-icons">menu</i>
-                </a>
-            </div>
-        </nav>
-
-        <!-- BEGIN MOBILE MENU-->
-        <ul class="sidenav" id="menu">
-            <li><a href="{{ '/' | relative_url }}"><i class="material-icons">home</i>Home</a></li>
-            <li><a href="{{ site.github.clone_url }}"><i class="material-icons">code</i>Source</a></li>
-            {% for page in site.pages %}
-            {% if page.title and page.path != 'README.md' %}
-            <li><a href="{{ page.url | relative_url }}"><i class="material-icons">arrow_forward</i>{{ page.title }}</a></li>
-            {% endif %}
-            {% endfor %}
-        </ul>
-
+        {% include nav.rhtml %}
         <!-- CONTENT -->
         <main class="container" style="margin: 10px auto;max-width: 800px; text-align: center;">
             {{ content }}

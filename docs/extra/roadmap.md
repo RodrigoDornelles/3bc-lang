@@ -1,5 +1,5 @@
 ---
-title: Language roadmap
+title: Roadmap
 description: The expected future for language and community. (aka to do list)
 ---
 

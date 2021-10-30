@@ -1,0 +1,33 @@
+<!-- META TAGS -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- FAV ICON -->       
+
+<!-- MATERIALIZE CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize/dist/css/materialize.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize/dist/js/materialize.min.js"></script>
+
+<!-- MATERILIZE SCRIPT -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        M.Tabs.init(document.querySelectorAll('.tabs'), {swipeable: false});
+        M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
+    });
+</script>
+
+<!-- HIGHLIGHT JS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/styles/default.min.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release/build/highlight.min.js"></script>
+
+<!-- CUSTOM ASSETS -->
+<link rel="stylesheet" href="/assets/style.css?{{ site.time | date: '%s%N' }}">
+
+{% if page.url == '/' %}
+<title>{{ page.title }}</title>
+{% seo title=false %}
+{% else %}
+{% seo %}
+{% endif %}

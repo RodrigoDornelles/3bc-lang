@@ -7,7 +7,7 @@ permalink: /
 <section class="row">
 <div class="col s12 m6" markdown="1">
 
-![3BC LANGUAGE LOGO ><](/images/logo-3bc-mid.png)
+![3BC LANGUAGE LOGO ><](/images/3bc-logo-mid.png)
 
 </div>
 <div class="col s12 m6" markdown="1">
@@ -18,7 +18,7 @@ permalink: /
 
  * **Released:** {{ release.name }}
  * **Date published:** {{ release.created_at | date_to_long_string }}
- * **More:** [Changelogs](docs/changelog) or [Download others versions](docs/download).
+ * **More:** [Changelogs](extra/changelogs) or [Download others versions](download).
 
 
 <div class="row">
@@ -39,12 +39,13 @@ permalink: /
 
 ## Documentation ##
 
-* **[Tutorial :us:](docs/tutorial-en-us)**
-* **[Tutorial :brazil:](docs/tutorial-pt-br)**
-* **[Cheatsheet](docs/cheatsheet)**
-* **[Platform Support](docs/support)**
-* **[Ambient Roadmap](docs/roadmap)**
-* **[List of early developers](docs/early)**
+* **[Tutorial :us:](guide/tutorial-en-us)**
+* **[Tutorial :brazil:](guide/tutorial-pt-br)**
+* **[Cheatsheet](guide/cheatsheet)**
+* **[Source code]({{ site.github.clone_url }})**
+* **[Platform Support](support)**
+* **[Ambient Roadmap](extra/roadmap)**
+* **[List of early developers](extra/early-adopters)**
 
 </div>
 <div class="col s12 m6 pull-m6" markdown="1">
