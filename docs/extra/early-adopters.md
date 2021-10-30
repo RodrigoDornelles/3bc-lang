@@ -50,3 +50,7 @@ Hall of fame with everyone who dedicated to **just learning 3bc language**, this
 | 12º | 14 August 2021 |
 | :-: | :-: |
 | ![avatar](https://avatars.githubusercontent.com/yxqsnz?size=64) | [Moizes Sousa](https://github.com/yxqsnzo) |
+
+| 13º | 30 October 2021 |
+| :-: | :-: |
+| ![avatar](https://avatars.githubusercontent.com/arcostasi?size=64) | [Anderson Costa](https://github.com/arcostasi) |
