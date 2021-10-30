@@ -4,8 +4,6 @@ permalink: /
 
 # 3BC Language
 
-{% assign release = site.github.releases | first %}
-
 <section class="row">
 <div class="col s12 m6" markdown="1">
 
@@ -15,6 +13,8 @@ permalink: /
 <div class="col s12 m6" markdown="1">
 
 ## Download last version!
+
+{% assign release = site.github.releases | first %}
 
  * **Released:** {{ release.name }}
  * **Date published:** {{ release.created_at | date_to_long_string }}
@@ -43,8 +43,8 @@ permalink: /
 * **[Tutorial :brazil:](docs/tutorial-pt-br)**
 * **[Cheatsheet](docs/cheatsheet)**
 * **[Platform Support](docs/support)**
-* **[Ambient Roadmap](#ambient-roadmap)**
-* **[List of early developers](#list-of-early-developers)**
+* **[Ambient Roadmap](docs/roadmap)**
+* **[List of early developers](docs/early)**
 
 </div>
 <div class="col s12 m6 pull-m6" markdown="1">

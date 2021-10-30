@@ -7,7 +7,7 @@ Hall of fame with everyone who dedicated to **just learning 3bc language**, this
 | :-: | :-: |
 | ![avatar](https://avatars.githubusercontent.com/rodrigodornelles?size=64) | [Rodrigo Dornelles](https://github.com/rodrigodornelles) |
 
-| 2º | 28 November 2020 
+| 2º | 28 November 2020 |
 | :-: | :-: |
 | ![avatar](https://avatars.githubusercontent.com/kadu?size=64) | [Carlos Eduardo](https://github.com/kadu) |
 
@@ -37,7 +37,7 @@ Hall of fame with everyone who dedicated to **just learning 3bc language**, this
 
 | 9º | 5 February 2021 |
 | :-: | :-: |
-| ![avatar](https://avatars.githubusercontent.com/lrv-dev?size=64) | [Lucas Rangel](https://github.com/lrv-dev) |\
+| ![avatar](https://avatars.githubusercontent.com/lrv-dev?size=64) | [Lucas Rangel](https://github.com/lrv-dev) |
 
 | 10º | 6 February 2021 |
 | :-: | :-: |
