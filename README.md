@@ -12,10 +12,10 @@
 
 * **[Tutorial :us:](https://3bc-lang.org/guide/tutorial-en-us)**
 * **[Tutorial :brazil:](https://3bc-lang.org/guide/tutorial-pt-br)**
-* **[Cheatsheet](https://3bc-lang.org/guide/cheatsheet.md)**
-* **[Changelogs](https://3bc-lang.org/extra/changelogs.md)**
+* **[Cheatsheet](https://3bc-lang.org/guide/cheatsheet)**
+* **[Changelogs](https://3bc-lang.org/extra/changelogs)**
 * **[Ambient Roadmap](https://3bc-lang.org/extra/roadmap)**
-* **[Platform Support](https://3bc-lang.org/support.md)**
+* **[Platform Support](https://3bc-lang.org/support)**
 * **[How to "Hello World"](https://3bc-lang.org/guide/tutorial-en-us#how-to-hello-world)**
 * **[Download last version](https://3bc-lang.org/download)**
 * **[List of early developers](https://3bc-lang.org/extra/early-adopters)**
