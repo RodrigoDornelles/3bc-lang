@@ -1,0 +1,14 @@
+{% assign title = include.title | default: asset.name %}
+{% assign size = asset.size | divided_by: 1024 %}
+
+{{ title }}
+<br/>
+<a href="{{ asset.browser_download_url }}" class="btn btn-block" download>
+    <span>
+        {{ size }} KB
+    </span>
+    <span>
+        <i class="material-icons">file_download</i>
+    </span>
+</a>
+<br/>

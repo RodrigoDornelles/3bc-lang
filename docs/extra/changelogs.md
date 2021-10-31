@@ -1,18 +1,13 @@
 ---
 title: Changelogs
 description: See all changelogs and download the latest version of 3BC language.
+click_here: https://github.com/RodrigoDornelles/3bc-lang/releases
+redirect_from: ['/changelogs', '/docs/changelogs/']
 ---
 
 Changelogs
 ==========
 
-<!-- SHOW ON GITHUB {% if false %}-->
-
- * click here: <https://github.com/RodrigoDornelles/3bc-lang/releases>
-
-<!-- SHOW ON GITHUB {% endif %}-->
-
-<!-- HIDE ON GITHUB {{ '--' | append: '>' }}
 {% for release in site.github.releases %}
 
 {{ release.name }}
@@ -33,4 +28,3 @@ Changelogs
 </section>
 
 {% endfor %}
-<!--  HIDE ON GITHUB -->

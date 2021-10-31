@@ -1,0 +1,22 @@
+MODE NILL 0d6 
+ALOC :var 3
+
+MODE NILL 0d8
+NILL NILL :where_entry
+PUSH :var NILL
+MODE NILL 0d9
+ZGTO NILL :where_exit
+
+MODE NILL 0d2
+STRC NILL '.'
+
+MODE NILL 0d8
+PUSH :var NILL
+MODE NILL 0d12
+MATH NILL 1
+MODE NILL 0d8
+PULL :var NILL
+
+MODE NILL 0d9
+GOTO NILL :where_entry
+NILL NILL :where_exit

@@ -8,6 +8,20 @@
 
 > Low level language, tiny virtual machine that works on computers and microcontrollers. (Friendly Punched cards)
 
+## Documentation ##
+
+* **[Tutorial :us:](https://3bc-lang.org/guide/tutorial-en-us)**
+* **[Tutorial :brazil:](https://3bc-lang.org/guide/tutorial-pt-br)**
+* **[Cheatsheet](https://3bc-lang.org/guide/cheatsheet.md)**
+* **[Changelogs](https://3bc-lang.org/extra/changelogs.md)**
+* **[Ambient Roadmap](https://3bc-lang.org/extra/roadmap)**
+* **[Platform Support](https://3bc-lang.org/support.md)**
+* **[How to "Hello World"](https://3bc-lang.org/guide/tutorial-en-us#how-to-hello-world)**
+* **[Download last version](https://3bc-lang.org/download)**
+* **[List of early developers](https://3bc-lang.org/extra/early-adopters)**
+
+## About project ##
+
 | Common questions | answer |
 | :--------------- | :----- |
 | What is the purpose of the language? | the idea is to be a low level, simple and intuitive language that anyone can learn! (and that can even be read on punched cards) |
@@ -18,90 +32,6 @@
 | What are the influences? | Languages **Cobol**, **Ruby** and **Java**; Assembly´s **WASM**, **ARM** and **x86** |
 | Is it more compact than **Lua**? | Yeah, because it has the same performance target as the Arduino Uno microcontroller. And this impacts it's size (depending on the CPU's architecture, 14KiB ROM and 400 bytes RAM ) |
 
-## Documentation ##
-
-* **[Tutorial :us:](docs/tutorial-en-us.md)**
-* **[Tutorial :brazil:](docs/tutorial-pt-br.md)**
-* **[Cheatsheet](docs/cheatsheet.md)**
-* **[Changelogs](docs/changelogs.md)**
-* **[Platform Support](support.md)**
-* **[Download last version](download.md)**
-* **[Ambient Roadmap](#ambient-roadmap)**
-* **[How to "Hello World"](#how-to-hello-world)**
-* **[List of early developers](#list-of-early-developers)**
-
-## How to "Hello World" ##
-
-These steps will guide you to run the hello world example and to have your first 3BC program running in your machine, let get's started.
-
-After downloading the binary on the [releases](#https://github.com/RodrigoDornelles/3bc-lang/releases) page, just decompress the file and utilize the command line to interpret the source code using the compiler according to your operating system: [windows](#windows),[mac osx](#mac--unix--linux), [unix](#mac--unix--linux), [linux](#mac--unix--linux)
-
-### example: `helloworld.3bc` ###
-
-```RUBY
-mode nill 0d2
-strc nill 'h'
-strc nill 'e'
-strc nill 'l'
-strc nill 'l'
-strc nill 'o'
-strc nill ' '
-strc nill 'w'
-strc nill 'o'
-strc nill 'r'
-strc nill 'l'
-strc nill 'd'
-strc nill '!'
-```
-
-### windows ###
-
-```
-C:\Users\nicod\Downloads\3bc-windows-32>3bc.exe helloworld.3bc
-hello world!
-C:\Users\nicod\Downloads\3bc-windows-32>
-```
-
-### mac / unix / linux ###
-
-```
-$ ./3bc helloworld.3bc
-hello world!
-$
-```
-
-## Ambient Roadmap ##
-
- - [X] VM Output characters
- - [X] VM Input characters
- - [X] VM Memory Allocation 
- - [X] VM Memory Auxiliary
- - [X] VM Memory Pointers
- - [X] VM Mathematic Basics
- - [X] VM Mathematic Boolean
- - [X] VM Labels and conditional jumps
- - [X] VM Procedure calls
- - [ ] Transpiler to C
- - [ ] Documentation
- - [ ] Programming IDE
- - [ ] Arduino Framework support
- - [ ] Web Assembly support
- - [ ] Includes support
- - [ ] Bindings support
-
-## List of early developers ##
-
-Hall of fame with everyone who dedicated to **just learning 3bc language**, this list is open until the day that version **0.1** will be released.
-
-| **1º** | ![avatar](https://avatars.githubusercontent.com/rodrigodornelles?size=32) | **[Rodrigo Dornelles](https://github.com/rodrigodornelles)** | **26 November 2020** |
-| :-: | :-: | :-- | :--: |
-| **2º** | ![avatar](https://avatars.githubusercontent.com/kadu?size=32) | **[Carlos Eduardo](https://github.com/kadu)** | **28 November 2020** |
-| **3º** |  ![avatar](https://avatars.githubusercontent.com/robsondrs?size=32) | **[Robson Soares](https://github.com/robsondrs)** | **23 December 2020** |
-| **4º** |  ![avatar](https://avatars.githubusercontent.com/gnevesdev?size=32) | **[Guilherme Neves](https://github.com/gnevesdev)** | **28 December 2020** |
-| **5º** |  ![avatar](https://avatars.githubusercontent.com/marcusmmmz?size=32) | **[Marcus Paulo](https://github.com/marcusmmmz)** | **30 December 2020** |
-| **6º** |  ![avatar](https://avatars.githubusercontent.com/keshizin?size=32) | **[Takeshi Ishikawa](https://github.com/keshizin)** | **30 December 2020** |
-| **7º** |  ![avatar](https://avatars.githubusercontent.com/andreluispy?size=32) | **[André Luis](https://github.com/andreluispy)** | **31 December 2020** |
-| **8º** |  ![avatar](https://avatars.githubusercontent.com/guridev?size=32) | **[Francisco Noble](https://github.com/guridev)** | **2 January 2021** |
-| **9º** |  ![avatar](https://avatars.githubusercontent.com/lrv-dev?size=32) | **[Lucas Rangel](https://github.com/lrv-dev)** | **5 February 2021** |
-| **10º** |  ![avatar](https://avatars.githubusercontent.com/otavio-burato?size=32) | **[Otávio Burato](https://github.com/otavio-burato)** | **6 February 2021** |
-| **11º** |  ![avatar](https://avatars.githubusercontent.com/github?size=32) | **[Github Copilot](https://copilot.github.com/)** _(IA)_ | **21 July 2021** |
+-----------------------------------------------------------------------------------------
+![3bc lang logo](/docs/images/3bc-logo-small.png)
+This project is licensed under **GNU GPL 3.0 or higher**, please read the [LICENSE.txt](LICENSE.txt) file.

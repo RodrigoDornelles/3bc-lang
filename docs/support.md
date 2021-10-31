@@ -1,3 +1,7 @@
+---
+description: List of all platforms that are working, or that will receive the support soon.
+---
+
 Platform Support List
 =====================
 

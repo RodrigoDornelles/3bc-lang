@@ -1,0 +1,8 @@
+- name: 3bc-windows-32.zip
+  title: Windows
+
+- name: 3bc-linux-32.zip
+  title: Linux
+
+- name: 3bc-mac-64.zip
+  title: Mac OSX
