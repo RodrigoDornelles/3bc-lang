@@ -39,6 +39,7 @@ Embedded Systems
 
 | system | architeture | working | running | released |
 | :----- | :---------: | :-----: | :-----: | :------: |
+| AVR Libc | avr | :ok: |
 | Arduino | avr | :ok: | :ok: |
 | Arduino | risc-v | :ok: | :ok: |
 | Free RTOS | risc-v |
