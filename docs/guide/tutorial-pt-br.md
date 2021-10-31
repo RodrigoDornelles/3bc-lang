@@ -270,7 +270,7 @@ Imprimir '**n**<5' se menor número for menor, imprimir '**n**=5' se o número f
 MODE NILL 0d3
 STRI :cmp NILL
 
-# Comparar a negação (:cmp != 5)
+# Comparar com 5
 MODE NILL 0d8
 PUSH :cmp NILL
 MODE NILL 0d12
@@ -308,3 +308,40 @@ STRI NILL 5
 ```
 
 ### Procedimental ##
+
+
+```RUBY
+# Saltar para ponto de entrada
+MODE NILL 0d9
+GOTO NILL :entry
+
+MODE NILL 0d7
+NILL NILL :print
+PUSH :ptr NILL
+MODE NILL 0d41
+ZRET NILL NILL
+MODE NILL 0d8
+PULL :buf NILL 
+MODE NILL 0d2
+STRC :buf NILL
+MODE NILL 0d8
+PUSH :ptr NILL 
+MODE NILL 0d11
+MATH NILL 1
+MODE NILL 0d8
+PULL :ptr NILL
+MODE NILL 0d9
+GOTO NILL :print
+
+MODE NILL 0d6
+NILL NILL :entry
+ALOC :ptr 0x01
+ALOC 0x01 'O'
+ALOC 0x02 'l'
+ALOC 0x03 'a'
+ALOC 0x04 '!'
+ALOC 0x05 '\n'
+
+MODE NILL 0d42
+CALL NILL :print
+```
