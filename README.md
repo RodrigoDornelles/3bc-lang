@@ -6,7 +6,6 @@
 [![covarage](https://codecov.io/gh/RodrigoDornelles/3bc-lang/branch/master/graph/badge.svg?token=FS152PL31C)](https://codecov.io/gh/RodrigoDornelles/3bc-lang)
 [![Build Status](https://img.shields.io/github/checks-status/rodrigodornelles/3bc-lang/master)](https://github.com/rodrigodornelles/3bc-lang/actions)
 
-> ![3bc lang logo](/docs/images/3bc-logo-small.png)
 > Low level language, tiny virtual machine that works on computers and microcontrollers. (Friendly Punched cards)
 
 ## Documentation ##
@@ -17,9 +16,11 @@
 * **[Changelogs](https://3bc-lang.org/extra/changelogs.md)**
 * **[Ambient Roadmap](https://3bc-lang.org/extra/roadmap)**
 * **[Platform Support](https://3bc-lang.org/support.md)**
-* **[How to "Hello World"](#how-to-hello-world)**
+* **[How to "Hello World"](https://3bc-lang.org/guide/tutorial-en-us#how-to-hello-world)**
 * **[Download last version](https://3bc-lang.org/download)**
-* **[List of early developers](https://3bc-lang.org/early-adopters)**
+* **[List of early developers](https://3bc-lang.org/extra/early-adopters)**
+
+## About project ##
 
 | Common questions | answer |
 | :--------------- | :----- |
@@ -30,3 +31,7 @@
 | Does it work as a compiler? | No, it currently works as an interpreter (although a very fast one), or also by packaging bytecode with a vm in a single binary. |
 | What are the influences? | Languages **Cobol**, **Ruby** and **Java**; Assembly´s **WASM**, **ARM** and **x86** |
 | Is it more compact than **Lua**? | Yeah, because it has the same performance target as the Arduino Uno microcontroller. And this impacts it's size (depending on the CPU's architecture, 14KiB ROM and 400 bytes RAM ) |
+
+-----------------------------------------------------------------------------------------
+![3bc lang logo](/docs/images/3bc-logo-small.png)
+This project is licensed under **GNU GPL 3.0 or higher**, please read the [LICENSE.txt](LICENSE.txt) file.
