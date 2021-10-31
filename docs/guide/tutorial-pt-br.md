@@ -161,6 +161,8 @@ O paradigma não estruturado pode ser utilizado para diversas ocasiões como ela
 
 * **Infinito**
 
+Imprimir 'cafe' ininterruptamente. 
+
 ```RUBY
 MODE NILL 0d2
 NILL NILL :loop
@@ -170,6 +172,9 @@ GOTO NILL :loop
 ```
 
 * **Faça enquanto**
+
+
+Imprimr '...' utilizando _do_ _while_.
 
 ```RUBY
 # Valor de :var é 3
@@ -195,6 +200,8 @@ FGTO NILL :do_while
 ```
 
 * **Enquanto**
+
+Imprimr '...' utilizando _while_.
 
 ```RUBY
 # Valor de :var é 3
@@ -228,5 +235,76 @@ NILL NILL :where_exit
 
 #### Desvio condicional ###
 
+ * **Se Diferente**
+
+Imprimir '!=' se a entrada for diferente de 5.
+
+```RUBY
+# Capturar teclado e armazenar em :cmp
+MODE NILL 0d4
+STRI :cmp NILL
+
+# Comparar a negação (:cmp != 5)
+MODE NILL 0d8
+PUSH :cmp NILL
+MODE NILL 0d12
+MATH NILL 5
+MODE NILL 0d9
+ZGTO NILL :if_equal
+
+# Imprimir '!='
+MODE NILL 0d2
+STRC NILL '!'
+STRC NILL '='
+
+# Fim programa.
+NILL NILL :if_equal
+```
+
+ * **Se Igual, Maior ou Menor**
+
+Imprimir '**n**<5' se menor número for menor, imprimir '**n**=5' se o número for exatamente 5 ou imprimir '**n**>5' se for maior. Onde **n** sera a entrada de teclado.
+
+```RUBY
+# Capturar teclado e armazenar em :cmp
+MODE NILL 0d3
+STRI :cmp NILL
+
+# Comparar a negação (:cmp != 5)
+MODE NILL 0d8
+PUSH :cmp NILL
+MODE NILL 0d12
+MATH NILL 5
+MODE NILL 0d9
+NGTO NILL :if_less
+ZGTO NILL :if_equal
+PGTO NILL :if_greater
+
+# Imprimir '<'
+MODE NILL 0d2
+NILL NILL :if_less
+STRC NILL '<'
+MODE NILL 0d9
+GOTO NILL :if_exit
+
+# Imprimir '='
+MODE NILL 0d2
+NILL NILL :if_equal
+STRC NILL '='
+MODE NILL 0d9
+GOTO NILL :if_exit
+
+# Imprimir '>'
+MODE NILL 0d2
+NILL NILL :if_greater
+STRC NILL '>'
+MODE NILL 0d9
+GOTO NILL :if_exit
+
+# Imprimir '5'
+MODE NILL 0d2
+NILL NILL :if_exit
+STRI NILL 5
+```
 
 ### Procedimental ##
