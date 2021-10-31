@@ -309,39 +309,34 @@ STRI NILL 5
 
 ### Procedimental ##
 
+O Paradigma procedimental (popularmente chamado de procedural), traz a vantagem de fazer uma pilha de processos, onde existe um ponto de retorno no mesmo local de sua chamada. Isso pode facilitar em escrever grandes programas.
 
 ```RUBY
 # Saltar para ponto de entrada
 MODE NILL 0d9
 GOTO NILL :entry
 
-MODE NILL 0d7
-NILL NILL :print
-PUSH :ptr NILL
-MODE NILL 0d41
-ZRET NILL NILL
-MODE NILL 0d8
-PULL :buf NILL 
+# Procedimento :print_bar
 MODE NILL 0d2
-STRC :buf NILL
-MODE NILL 0d8
-PUSH :ptr NILL 
-MODE NILL 0d11
-MATH NILL 1
-MODE NILL 0d8
-PULL :ptr NILL
-MODE NILL 0d9
-GOTO NILL :print
+NILL NILL :print_bar # Etiqueta
+STRC NILL 'B'
+STRC NILL 'a'
+STRC NILL 'r'
+MODE NILL 0d41 # Modo de retorno
+BACK NILL NILL # Retornar incondicionalmente
 
-MODE NILL 0d6
-NILL NILL :entry
-ALOC :ptr 0x01
-ALOC 0x01 'O'
-ALOC 0x02 'l'
-ALOC 0x03 'a'
-ALOC 0x04 '!'
-ALOC 0x05 '\n'
+# Procedimento :print_foo
+MODE NILL 0d2
+NILL NILL :print_foo # Inicio do processo
+STRC NILL 'F'
+STRC NILL 'o'
+STRC NILL 'o'
+MODE NILL 0d41 
+BACK NILL NILL # Fim do processo
 
-MODE NILL 0d42
-CALL NILL :print
+# Ponto de entrada
+MODE NILL 0d42   # Chamar procedimentos e retornar
+NILL NILL :entry # Ponto de entrada
+CALL NILL :print_foo # Chamar :print_foo
+CALL NILL :print_bar # Chamar :print_bar
 ```
