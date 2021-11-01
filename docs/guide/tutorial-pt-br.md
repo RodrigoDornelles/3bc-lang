@@ -12,7 +12,7 @@ Como fazer um "Ola mundo!"
 
 Estas etapas irão guiá-lo para executar o exemplo hello world e para ter seu primeiro programa 3BC em execução em sua máquina, vamos começar.
 
-Depois de baixar o binário na página _[releases](https://github.com/RodrigoDornelles/3bc-lang/releases)_, basta descompactar o arquivo e utilizar a linha de comando para excutar o código-fonte usando o interpretador de acordo com seu sistema operacional: **windows**, **mac os**, **unix** ou **linux**.
+Depois de baixar o binário na página _[downalod](https://3bc-lang.org/download)_, basta descompactar o arquivo e utilizar a linha de comando para excutar o código-fonte usando o interpretador de acordo com seu sistema operacional: **windows**, **mac os**, **unix** ou **linux**.
 
  * **Exemplo:** `olamundo.3bc`
 
@@ -57,7 +57,7 @@ Um grande ponto para facilitar o aprendizado, é a sua sintaxe muito bem organiz
 
 Uma linha do programa é consequentemente uma instrução, que possui três parâmetros de maneira obrigatória. São separados pela respectivamente ordem de **registrador**, **endereço**, **constante**.
 
-![structure-pt-br ><](/images/structure-pt-br.png)
+![structure-pt-br ><](https://3bc-lang.org/images/structure-pt-br.png)
 
  * **Registrador**
 
