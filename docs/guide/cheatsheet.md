@@ -34,15 +34,15 @@ CheatSheet
 | 28 | **[MODE_HELPER_LOG10](#mode-helper-log-base-10)** | helper log base 10 | `nill` `math` `mode` |
 | 29 | **[MODE_HELPER_MUL_ADD](#mode-helper-mul-add)** | multiply by base and add acumulator | `nill` `nb02` `nb08` `nb10` `nb16` `mode` |
 | 30 | <br/> | reserved | <br/> |
-| 11 | **[MODE_BOOL_NOT](#mode-bool-not)** | boolean not | `nill` `math` `mode` |
-| 12 | **[MODE_BOOL_AND](#mode-bool-and)** | boolean and | `nill` `math` `mode` |
-| 13 | **[MODE_BOOL_OR](#mode-bool-or)** | boolean or | `nill` `math` `mode` |
-| 14 | **[MODE_BOOL_XOR](#mode-bool-xor)** | boolean xor | `nill` `math` `mode` |
-| 15 | **[MODE_BOOL_NAND](#mode-bool-nand)** | boolean nand  | `nill` `math` `mode` |
-| 16 | **[MODE_BOOL_NOR](#mode-bool-nor)** | boolean nor | `nill` `math` `mode` |
-| 17 | **[MODE_BOOL_XNOR](#mode-bool-xnor)** | boolean xnor | `nill` `math` `mode` |
-| 18 | **[MODE_BOOL_AND_NOT](#mode-bool-and-not)** | boolean and not | `nill` `math` `mode` |
-| 19 | **[MODE_BOOL_OR_NOT](#mode-bool-or-not)** | boolean or not | `nill` `math` `mode` |
+| 31 | **[MODE_BOOL_NOT](#mode-bool-not)** | boolean not | `nill` `math` `mode` |
+| 32 | **[MODE_BOOL_AND](#mode-bool-and)** | boolean and | `nill` `math` `mode` |
+| 33 | **[MODE_BOOL_OR](#mode-bool-or)** | boolean or | `nill` `math` `mode` |
+| 34 | **[MODE_BOOL_XOR](#mode-bool-xor)** | boolean xor | `nill` `math` `mode` |
+| 35 | **[MODE_BOOL_NAND](#mode-bool-nand)** | boolean nand  | `nill` `math` `mode` |
+| 36 | **[MODE_BOOL_NOR](#mode-bool-nor)** | boolean nor | `nill` `math` `mode` |
+| 37 | **[MODE_BOOL_XNOR](#mode-bool-xnor)** | boolean xnor | `nill` `math` `mode` |
+| 38 | **[MODE_BOOL_AND_NOT](#mode-bool-and-not)** | boolean and not | `nill` `math` `mode` |
+| 39 | **[MODE_BOOL_OR_NOT](#mode-bool-or-not)** | boolean or not | `nill` `math` `mode` |
 | 40 | <br/> | reserved | <br/> |
 | 41 | **[MODE_PROCEDURE_RET](#mode-procedure-ret)** | procedure return | `nill` `back` `fret` `zret` `pret` `nret` `mode` |
 | 42 | **[MODE_PROCEDURE](#mode-procedure)** | procedure call | `nill` `call` `fcal` `zcal` `pcal` `ncal` `mode` |
