@@ -4,5 +4,5 @@
 - name: 3bc-linux-i686.zip
   title: Linux
 
-- name: 3bc-mac-amd64.zip
+- name: 3bc-macos10-amd64.zip
   title: Mac OSX
