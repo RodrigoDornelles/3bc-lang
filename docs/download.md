@@ -1,30 +1,29 @@
 ---
 title: Download
-description: Get the last version of 3BC Language now!
-click_here: https://3bc-lang.org/docs/download
+description: See all changelogs and download the latest version of 3BC language.
+click_here: https://3bc-lang.org/download
+redirect_from: ['changelogs', 'docs/changelogs', 'extra/changelogs']
 ---
 
-{% assign release = site.github.releases | first %}
+{% assign first_release = site.github.releases | first %}
+{% for release in site.github.releases %}
 
-<section class="row">
+{{ release.name }}
+------------------
 
-<div class="col s12 m6" markdown="1">
+<details markdown="1">
+<summary>Changelogs</summary>
 
-![3BC LANGUAGE LOGO ><](/images/logo-3bc-mid.png)
+{{ release.body }}
 
-</div>
+</details>
 
-<div class="col s12 m6" markdown="1">
-
-## Download last version!
-
- * **Version:** {{ release.name }}
- * **Date published:** {{ release.created_at | date_to_long_string }}
- * **For more details:** [click here!]({{ '/docs/changelogs' | relative_url | append: '#' | append: release.name }})
-  
-</div>
-
-</section>
+{% if first_release.tag_name != release.tag_name %}
+<details markdown="1">
+<summary>Download</summary>
+{% else %}
+<br/>
+{% endif %}
 
 <section class="row">
 {% for asset in release.assets %}
@@ -37,3 +36,10 @@ click_here: https://3bc-lang.org/docs/download
 </div>
 {% endfor %}
 </section>
+
+{% if first_release.tag_name != release.tag_name %}
+</details>
+{% endif %}
+<br/><br/>
+
+{% endfor %}
