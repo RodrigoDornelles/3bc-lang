@@ -28,7 +28,7 @@ docs:
 	@cd docs && bundle exec jekyll serve --watch --incremental --livereload
 	
 build:
-	@${CC} ${SOURCES} ${CFLAGS} ${LDFLAGS}
+	@${CC} ${SOURCES} ${CFLAGS} ${LDFLAGS} -o 3bc
 
 tests: tests-clear tests-build tests-unit
 	@
