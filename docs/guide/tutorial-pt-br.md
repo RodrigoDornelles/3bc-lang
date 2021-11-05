@@ -1,11 +1,11 @@
 Tutorial em português :brazil:
 ==============================
 
-3BC é uma linguagem de programação em baixo nível e de fácil aprendizado, que trabalha na forma de uma maquina virtual semelhante a um computador da década de 60, mas com uma arquitetura muito inusitada que possui processadores de apenas **3 bits**.
+3BC é uma linguagem de programação em baixo nível e de fácil aprendizado, que trabalha na forma de uma máquina virtual semelhante a um computador da década de 60, mas com uma arquitetura muito inusitada que possui processadores de apenas **3 bits**.
 
-Apesar de ter um aspeto para ser uma linguagem esotérica, tem uma boa capacidade de uso genérico para resolver problemas computacionais, e certas vantagens com a implementação em embarcados e microcontroladores.
+Apesar de ter um aspecto para ser uma linguagem esotérica, tem uma boa capacidade de uso genérico para resolver problemas computacionais, e certas vantagens com a implementação em embarcados e microcontroladores.
 
-Foi introduzida por um brasileiro no natal de 2020 após complentar um mês de desenvolvimento, sendo um projeto para estudos e também como uma prova conceitual sobre cartões perfurados ser legível e prático tanto para humanos quanto maquinas.
+Foi introduzida por um brasileiro no natal de 2020 após completar um mês de desenvolvimento, sendo um projeto para estudos e também como uma prova conceitual sobre cartões perfurados ser legível e prático tanto para humanos quanto máquinas.
 
 Como fazer um "Ola mundo!"
 --------------------------
@@ -61,7 +61,7 @@ Uma linha do programa é consequentemente uma instrução, que possui três par�
 
  * **Registrador**
 
-O registrador definte o comportamento da instrução seja imprimir na tela, capturar entradas, somar, etc. 
+O registrador define o comportamento da instrução seja imprimir na tela, capturar entradas, somar, etc. 
 
 Deve ser utilizado mnemónicos como `mode`, `math` e `nill` ou algumas expressões literais que representam seu opcode de 0 até 7. Se oriente pelo guia _[cheatsheet](https://3bc-lang.org/cheatsheet)_, onde explica detalhadamente sobre cada instrução.
 
