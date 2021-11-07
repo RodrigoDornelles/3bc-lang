@@ -5,10 +5,6 @@ void driver_program_run()
     while(tape_program_avaliable()? tape_program_exe(): interpreter_compiler(APP_3BC->tty_source));
 }
 
-/**
- * TODO: use tty_error
- * TODO: use _3BC_COMPACT
- */
 void driver_program_error(enum error_3bc_e error_code)
 {
     /**
