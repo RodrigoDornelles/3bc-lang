@@ -22,8 +22,6 @@ bool interpreter_syntax_registers(const char* string, signed long int* value)
 
         PARSER_PACK('m', 'o', 'f', 'f', value, MOFF);
         PARSER_PACK('m', 'u', 's', 'e', value, MUSE);
-        PARSER_PACK('m', 'm', 'a', 'x', value, MMAX);
-        PARSER_PACK('m', 'm', 'i', 'n', value, MMIN);
 
         PARSER_PACK('g', 'o', 't', 'o', value, GOTO);
         PARSER_PACK('f', 'g', 't', 'o', value, FGTO);

@@ -82,13 +82,11 @@
 #define PCAL 0b100
 
 #define STRC 0b101
-#define MMAX 0b101
 #define NGTO 0b101
 #define PUSH 0b101
 #define NRET 0b101
 #define NCAL 0b101
 
-#define MMIN 0b110
 /**
  * case of separate compilation in different statistical libraries,
  * only FILE: tape_program.c must know this variable
@@ -115,7 +113,7 @@ void instructions(cpumode_3bc_t mode, register_3bc_t reg, address_3bc_t address,
         CPU_PACK5(MODE_INPUT, cpu_input_strb, cpu_input_stro, cpu_input_stri, cpu_input_strx, cpu_input_strc);
         CPU_PACK5(MODE_INPUT_SILENT, cpu_input_silent_strb, cpu_input_silent_stro, cpu_input_silent_stri, cpu_input_silent_strx, cpu_input_silent_strc);
         CPU_PACK5(MODE_INPUT_PASSWORD, cpu_input_password_strb, cpu_input_password_stro, cpu_input_password_stri, cpu_input_password_strx, cpu_input_password_strc);
-        CPU_PACK6(MODE_MEMORY, cpu_memory_free, cpu_memory_aloc, cpu_memory_moff, cpu_memory_muse, cpu_memory_mmax, cpu_memory_mmin);
+        CPU_PACK4(MODE_MEMORY, cpu_memory_free, cpu_memory_aloc, cpu_memory_moff, cpu_memory_muse);
         CPU_PACK5(MODE_MEMORY_PTR, cpu_memory_ptr_free, cpu_memory_ptr_aloc, cpu_memory_ptr_pull, cpu_memory_ptr_spin, cpu_memory_ptr_push);
         CPU_PACK5(MODE_MEMORY_AUX, cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_spin, cpu_memory_aux_push);
         CPU_PACK5(MODE_JUMP,cpu_jump_goto, cpu_jump_fgto, cpu_jump_zgto, cpu_jump_pgto, cpu_jump_ngto);

@@ -89,8 +89,6 @@ void cpu_memory_free(PARAMS_DEFINE);
 void cpu_memory_aloc(PARAMS_DEFINE);
 void cpu_memory_moff(PARAMS_DEFINE);
 void cpu_memory_muse(PARAMS_DEFINE);
-void cpu_memory_mmin(PARAMS_DEFINE);
-void cpu_memory_mmax(PARAMS_DEFINE);
 void cpu_memory_ptr_free(PARAMS_DEFINE);
 void cpu_memory_ptr_aloc(PARAMS_DEFINE);
 void cpu_memory_ptr_pull(PARAMS_DEFINE);
@@ -144,16 +142,11 @@ data_3bc_t driver_gpio_input(memory_conf_t conf, address_3bc_t pin, data_3bc_t d
 
 /** FILE: driver_memory.c **/
 void driver_memory_data_set(address_3bc_t address, data_3bc_t value);
-void driver_memory_vmax_set(address_3bc_t address, data_3bc_t vmax);
-void driver_memory_vmin_set(address_3bc_t address, data_3bc_t vmin);
 void driver_memory_conf_set(address_3bc_t address, data_3bc_t conf);
 data_3bc_t driver_memory_data_get(address_3bc_t address);
-optional_inline data_3bc_t driver_memory_vmax_get(address_3bc_t address);
-optional_inline data_3bc_t driver_memory_vmin_get(address_3bc_t address);
 optional_inline data_3bc_t driver_memory_conf_get(address_3bc_t address);
 address_3bc_t driver_memory_pointer(address_3bc_t address);
-void driver_memory_validate(memory_conf_t conf, data_3bc_t vmin, data_3bc_t vmax);
-data_3bc_t driver_memory_normalize(memory_conf_t conf, data_3bc_t value, data_3bc_t vmin, data_3bc_t vmax);
+void driver_memory_validate(memory_conf_t conf);
 void driver_memory_free(address_3bc_t address);
 
 /** FILE: driver_power.c **/
@@ -205,12 +198,8 @@ void ds_fpg_array_func_call(cpumode_3bc_t cpu_mode, register_3bc_t reg, address_
 
 /** FILE: ds_memory_llrbt.c **/
 data_3bc_t ds_memory_llrbt_data_get(address_3bc_t address);
-data_3bc_t ds_memory_llrbt_vmin_get(address_3bc_t address);
-data_3bc_t ds_memory_llrbt_vmax_get(address_3bc_t address);
 data_3bc_t ds_memory_llrbt_conf_get(address_3bc_t address);
 void ds_memory_llrbt_data_set(address_3bc_t address, data_3bc_t value);
-void ds_memory_llrbt_vmin_set(address_3bc_t address, data_3bc_t vmin);
-void ds_memory_llrbt_vmax_set(address_3bc_t address, data_3bc_t vmax);
 void ds_memory_llrbt_conf_set(address_3bc_t address, data_3bc_t conf);
 /** TODO: rename **/
 struct memory_node_s* ds_memory_llrbt_create_node(address_3bc_t address);

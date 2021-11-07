@@ -34,12 +34,8 @@ struct app_3bc_s* bootstrap_3bc()
     if (!instance.bootstrap) {
         instance.bootstrap = true;
         instance.memory.data_get = &ds_memory_llrbt_data_get;
-        instance.memory.vmin_get = &ds_memory_llrbt_vmin_get;
-        instance.memory.vmax_get = &ds_memory_llrbt_vmax_get;
         instance.memory.conf_get = &ds_memory_llrbt_conf_get;
         instance.memory.data_set = &ds_memory_llrbt_data_set;
-        instance.memory.vmin_set = &ds_memory_llrbt_vmin_set;
-        instance.memory.vmax_set = &ds_memory_llrbt_vmax_set;
         instance.memory.conf_set = &ds_memory_llrbt_conf_set;
         #if defined(_3BC_COMPUTER)
         instance.tty_source.type = STREAM_TYPE_COMPUTER_STD;

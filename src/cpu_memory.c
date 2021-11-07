@@ -27,18 +27,6 @@ void cpu_memory_muse(PARAMS_DEFINE)
     driver_memory_conf_set(address, driver_memory_conf_get(address) | value);
 }
 
-void cpu_memory_mmin(PARAMS_DEFINE)
-{
-    REQUIRED_ADDRESS
-    driver_memory_vmin_set(address, value);
-}
-
-void cpu_memory_mmax(PARAMS_DEFINE)
-{
-    REQUIRED_ADDRESS
-    driver_memory_vmax_set(address, value);
-}
-
 void cpu_memory_ptr_free(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS

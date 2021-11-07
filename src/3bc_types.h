@@ -95,8 +95,6 @@ struct memory_node_s {
     bool color;
     memory_conf_t conf;
     data_3bc_t data;
-    data_3bc_t vmax;
-    data_3bc_t vmin;
     address_3bc_t address;
     struct memory_node_s *left;
     struct memory_node_s *right;
@@ -105,12 +103,8 @@ struct memory_node_s {
 struct memory_3bc_s {
     struct memory_node_s* root;
     data_3bc_t (*data_get)(address_3bc_t);
-    data_3bc_t (*vmin_get)(address_3bc_t);
-    data_3bc_t (*vmax_get)(address_3bc_t);
     data_3bc_t (*conf_get)(address_3bc_t);
     void (*data_set)(address_3bc_t, data_3bc_t);
-    void (*vmin_set)(address_3bc_t, data_3bc_t);
-    void (*vmax_set)(address_3bc_t, data_3bc_t);
     void (*conf_set)(address_3bc_t, data_3bc_t);
 };
 

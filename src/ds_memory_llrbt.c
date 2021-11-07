@@ -6,18 +6,6 @@ data_3bc_t ds_memory_llrbt_data_get(address_3bc_t address)
     return node->data;   
 }
 
-data_3bc_t ds_memory_llrbt_vmin_get(address_3bc_t address)
-{
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
-    return node->vmin;   
-}
-
-data_3bc_t ds_memory_llrbt_vmax_get(address_3bc_t address)
-{
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
-    return node->vmax;   
-}
-
 data_3bc_t ds_memory_llrbt_conf_get(address_3bc_t address)
 {
     struct memory_node_s* node = ds_memory_llrbt_access(address);
@@ -28,18 +16,6 @@ void ds_memory_llrbt_data_set(address_3bc_t address, data_3bc_t value)
 {
     struct memory_node_s* node = ds_memory_llrbt_access(address);
     node->data = value;   
-}
-
-void ds_memory_llrbt_vmin_set(address_3bc_t address, data_3bc_t vmin)
-{
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
-    node->vmin = vmin;   
-}
-
-void ds_memory_llrbt_vmax_set(address_3bc_t address, data_3bc_t vmax)
-{
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
-    node->vmax = vmax;   
 }
 
 void ds_memory_llrbt_conf_set(address_3bc_t address, data_3bc_t conf)
@@ -58,8 +34,6 @@ struct memory_node_s* ds_memory_llrbt_create_node(address_3bc_t address)
     new_node->right = NULL;
     new_node->conf = 0;
     new_node->data = 0;
-    new_node->vmax = 0;
-    new_node->vmin = 0;
     new_node->address = address;
   
     /** New Node which is created is always red in color. **/
