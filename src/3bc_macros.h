@@ -75,7 +75,7 @@
 #endif
 
 #ifndef AUX
-#define AUX                         (tape_aux_get())
+#define AUX                         (driver_accumulator_get())
 #endif
 
 #ifndef LABEL_HASH_SIZE
@@ -131,7 +131,7 @@
 #define VALIDATE_NOT_VALUES             if(value!=0)driver_program_error(ERROR_PARAM_BLOCKED_VALUE);
 #define REQUIRED_ADDRESS                if(address==0)driver_program_error(ERROR_PARAM_REQUIRE_ADDRESS);
 #define REQUIRED_VALUE                  if(value==0)driver_program_error(ERROR_PARAM_REQUIRE_VALUE);
-#define AUX_USE_ANY_PARAM               tape_aux_set(GET_ANY_PARAM);
+#define AUX_USE_ANY_PARAM               driver_accumulator_set(GET_ANY_PARAM);
 
 /**
  * INSTRUCTIONS PACK MACROS

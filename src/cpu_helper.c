@@ -18,7 +18,7 @@ void after_helper_maxmin()
         driver_program_error(ERROR_VOID_HELPER_MAX_MIN);
     }
     /** update memory aux with better value **/
-    tape_aux_set(APP_3BC->cache_l2.maxmin_value);
+    driver_accumulator_set(APP_3BC->cache_l2.maxmin_value);
 }
 
 /**
@@ -32,7 +32,7 @@ void cpu_helper_average(PARAMS_DEFINE)
     APP_3BC->cache_l2.average_sum += GET_ANY_PARAM;
 
     /** recalculate average **/
-    tape_aux_set(APP_3BC->cache_l2.average_sum/APP_3BC->cache_l1.average_count);
+    driver_accumulator_set(APP_3BC->cache_l2.average_sum/APP_3BC->cache_l1.average_count);
 }
 
 /**
@@ -69,7 +69,7 @@ void cpu_helper_percentage(PARAMS_DEFINE)
     #if defined(_3BC_MOS6502)
     driver_program_error(ERROR_UNSUPPORTED);
     #else 
-    tape_aux_set((data_aux_3bc_t) round((((double) GET_ANY_PARAM)/100.0) * AUX));
+    driver_accumulator_set((data_aux_3bc_t) round((((double) GET_ANY_PARAM)/100.0) * AUX));
     #endif
 }
 
@@ -101,7 +101,7 @@ void cpu_helper_reverse(PARAMS_DEFINE)
         }
         while(initial % base);
         
-        tape_aux_set(final);
+        driver_accumulator_set(final);
     }
 }
 
@@ -112,7 +112,7 @@ void cpu_helper_log2(PARAMS_DEFINE)
     #if defined(_3BC_MOS6502)
     driver_program_error(ERROR_UNSUPPORTED);
     #else 
-    tape_aux_set((data_aux_3bc_t) round(log2((double) GET_ANY_PARAM)));
+    driver_accumulator_set((data_aux_3bc_t) round(log2((double) GET_ANY_PARAM)));
     #endif
 }
 
@@ -122,7 +122,7 @@ void cpu_helper_log10(PARAMS_DEFINE)
     #if defined(_3BC_MOS6502)
     driver_program_error(ERROR_UNSUPPORTED);
     #else 
-    tape_aux_set((data_aux_3bc_t) round(log10((double) GET_ANY_PARAM)));
+    driver_accumulator_set((data_aux_3bc_t) round(log10((double) GET_ANY_PARAM)));
     #endif
 }
 
@@ -143,7 +143,7 @@ void cpu_helper_mul_add(PARAMS_DEFINE)
         base = 16;
     }
 
-    tape_aux_set((AUX * base) + GET_ANY_PARAM);
+    driver_accumulator_set((AUX * base) + GET_ANY_PARAM);
 }
 
 void cpu_helper_sign(PARAMS_DEFINE)
@@ -152,12 +152,12 @@ void cpu_helper_sign(PARAMS_DEFINE)
     AUX_USE_ANY_PARAM
 
     if (AUX > 0) {
-        tape_aux_set(+1);
+        driver_accumulator_set(+1);
     }
     else if (AUX < 0) {
-        tape_aux_set(-1);
+        driver_accumulator_set(-1);
     }
     else {
-        tape_aux_set(0);
+        driver_accumulator_set(0);
     }
 }

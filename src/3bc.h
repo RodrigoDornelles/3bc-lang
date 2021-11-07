@@ -50,6 +50,7 @@
 #include "cpu_memory.c"
 #include "cpu_procedure.c"
 #include "cpu_string.c"
+#include "driver_accumulator.c"
 #include "driver_tty.c"
 #include "driver_gpio.c"
 #include "driver_memory.c"
@@ -64,7 +65,6 @@
 #include "interpreter_parser.c"
 #include "interpreter_syntax.c"
 #include "interpreter_tokens.c"
-#include "tape_aux.c"
 #include "tape_program.c"
 #include "tape_router.c"
 #endif
