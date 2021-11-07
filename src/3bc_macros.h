@@ -127,6 +127,7 @@
 #define VALIDATE_NOT_DUALITY            if(address!=0&&value!=0)driver_program_error(ERROR_PARAM_DUALITY);
 #define VALIDATE_NOT_ADRESS             if(address!=0)driver_program_error(ERROR_PARAM_BLOCKED_ADDRESS);
 #define VALIDATE_NOT_VALUES             if(value!=0)driver_program_error(ERROR_PARAM_BLOCKED_VALUE);
+#define VALIDATE_NOT_NEGATIVES          if(value<0||address<0||AUX<0)driver_program_error(ERROR_NUMBER_NEGATIVE);
 #define REQUIRED_ADDRESS                if(address==0)driver_program_error(ERROR_PARAM_REQUIRE_ADDRESS);
 #define REQUIRED_VALUE                  if(value==0)driver_program_error(ERROR_PARAM_REQUIRE_VALUE);
 #define AUX_USE_ANY_PARAM               driver_accumulator_set(GET_ANY_PARAM);

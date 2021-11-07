@@ -43,7 +43,7 @@ optional_inline data_3bc_t driver_memory_conf_get(address_3bc_t address)
  */
 address_3bc_t driver_memory_pointer(address_3bc_t address)
 {
-    register address_3bc_t ptr = driver_memory_data_get(address);
+    register data_3bc_t ptr = driver_memory_data_get(address);
 
     /**
      * JOKE:
@@ -55,8 +55,11 @@ address_3bc_t driver_memory_pointer(address_3bc_t address)
         /** also apply to microsoft java devs (aka C#) */
         driver_program_error(ERROR_NULL_POINTER);
     }
+    else if (ptr < 0) {
+        driver_program_error(ERROR_NUMBER_NEGATIVE);
+    }
 
-    return ptr;
+    return (address_3bc_t) ptr;
 }
 
 void driver_memory_validate(memory_conf_t conf)

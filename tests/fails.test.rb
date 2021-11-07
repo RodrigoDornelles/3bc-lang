@@ -113,7 +113,13 @@ class TestFails < Minitest::Test
     
     def test_number_wrong_base
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 0o8")
-        assert_match /ERROR CODE\: (0x3BC010|0x3BC011)/, stderr
+        assert_match /ERROR CODE\: (0x3BC010)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
+    def test_number_negative
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.32,math.0.-1")
+        assert_match /ERROR CODE\: (0x3BC011)/, stderr
         assert_equal 15, status.exitstatus
     end
 
