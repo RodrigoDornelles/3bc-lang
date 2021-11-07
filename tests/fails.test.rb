@@ -149,7 +149,7 @@ class TestFails < Minitest::Test
     end
 
     def test_invalid_memory_config
-        for console_input in ['mode.0.6,muse.1.192','mode.0.6,muse.1.80','mode.0.6,muse.1.48','mode.0.6,muse.1.128']
+        for console_input in ['mode.0.6,muse.1.48','mode.0.6,muse.1.20','mode.0.6,muse.1.12','mode.0.6,muse.1.32']
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
         assert_match /ERROR CODE\: (0x3BC017)/, stderr
         assert_equal 15, status.exitstatus
