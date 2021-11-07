@@ -43,8 +43,7 @@
 #define MODE_CUSTOM_4           (40)
 #define MODE_PROCEDURE_RET      (41)
 #define MODE_PROCEDURE          (42)
-#define MODE_PROCEDURE_TCO_RET  (43)
-#define MODE_END                (44)
+#define MODE_END                (43)
 
 #define NILL 0b000
 #define MODE 0b111
@@ -150,7 +149,6 @@ void instructions(cpumode_3bc_t mode, register_3bc_t reg, address_3bc_t address,
         CPU_PACK_RESERVED(MODE_CUSTOM_4);
         CPU_PACK5(MODE_PROCEDURE_RET, cpu_procedure_back, cpu_procedure_fret, cpu_procedure_zret, cpu_procedure_pret, cpu_procedure_nret);
         CPU_PACK5(MODE_PROCEDURE, cpu_procedure_call, cpu_procedure_fcal, cpu_procedure_zcal, cpu_procedure_pcal, cpu_procedure_ncal);
-        CPU_PACK5(MODE_PROCEDURE_TCO_RET, cpu_procedure_tco_back, cpu_procedure_tco_fret, cpu_procedure_tco_zret, cpu_procedure_tco_pret, cpu_procedure_tco_nret);
     }
 }
 #endif
