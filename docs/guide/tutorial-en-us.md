@@ -58,7 +58,7 @@ A great point to facilitate the learning, is its very well organized syntax of t
 
 A program line is consequently an instruction, which has three mandatory parameters. They are separated in the respectively order of **register**, **address**, **constant**.
 
-![structure_en><](https://3bc-lang.org/images/structure-pt-br.png)
+![structure_en><](https://3bc-lang.org/images/structure-en-us.png)
 
  * **Register**
 
