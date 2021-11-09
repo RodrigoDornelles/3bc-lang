@@ -12,7 +12,7 @@ How to make a "Hello world!"
 
 These steps will guide you through running the hello world example and getting your first 3BC program running on your machine, so let's get started.
 
-After downloading the binary from _[downalod](https://3bc-lang.org/download)_, simply unzip the file and use the command line to run the source code using the interpreter according to your operating system: **windows**, **mac os**, **unix** or **linux**.
+After downloading the binary from _[donwload](https://3bc-lang.org/download)_, simply unzip the file and use the command line to run the source code using the interpreter according to your operating system: **windows**, **mac os**, **unix** or **linux**.
 
 
  * **Examples:** `helloworld.3bc`
