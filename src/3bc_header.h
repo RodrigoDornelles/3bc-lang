@@ -146,17 +146,17 @@ void driver_memory_free(address_3bc_t address);
 
 /** FILE: driver_power.c **/
 #ifdef _3BC_COMPUTER
-void driver_power_init(int argc, char **argv);
+app_3bc_t driver_power_init(int argc, char **argv);
 void driver_power_exit(int sig);
 void driver_power_signal(int sig);
 #else
-void driver_power_init();
+app_3bc_t driver_power_init();
 void driver_power_exit();
 #endif
 
 /** FILE: driver_program.c **/
-void driver_program_run();
 void driver_program_error(enum error_3bc_e error_code);
+void driver_program_tick(app_3bc_t app);
 
 /** FILE: ds_procedure_lifo.c **/
 void ds_procedure_lifo_push(struct line_node_s* line_node, label_3bc_t label);
@@ -171,6 +171,8 @@ bool interpreter_parser_strtol(const char* string, signed long int* value);
 bool interpreter_parser_strchar(const char* string, signed long int* value);
 bool interpreter_parser_strhash(const char* string, signed long int* value);
 int interpreter_parser_skip();
+
+int interpreter_read(app_3bc_t app);
 
 /** FILE: interpreter_syntax.c **/
 bool interpreter_syntax_registers(const char* string, signed long int* value);
@@ -206,14 +208,13 @@ void ds_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node
 void tape_memory_destroy(void);
 
 /** FILE: tape_program.c **/
-bool tape_program_exe();
 void tape_program_resize(void);
 void tape_program_destroy(void);
 void tape_program_line_add(register_3bc_t reg, address_3bc_t mem, data_3bc_t val);
 void tape_program_label_jump(label_3bc_t label);
 void tape_program_label_insert(label_3bc_t label, cpumode_3bc_t cpumode, struct line_node_s* line);
 struct label_node_s* tape_program_label_search(label_3bc_t label);
-bool tape_program_avaliable(void);
+bool tape_program_avaliable(app_3bc_t app);
 
 /** FILE: tape_router.c **/
 void tape_router_cpu_set(cpumode_3bc_t value);

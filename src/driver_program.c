@@ -1,9 +1,5 @@
+#define _3BC_SCU_FIX
 #include "3bc.h"
-
-void driver_program_run()
-{
-    while(tape_program_avaliable()? tape_program_exe(): interpreter_compiler(APP_3BC->tty_source));
-}
 
 void driver_program_error(enum error_3bc_e error_code)
 {
@@ -70,4 +66,21 @@ void driver_program_error(enum error_3bc_e error_code)
     #elif defined(_3BC_ARDUINO)
     driver_power_exit();
     #endif
+}
+
+/**
+ * run processor instructions,
+ * this is a core of virtual machine
+ */
+void driver_program_tick(app_3bc_t app)
+{
+    instructions(
+        app->cpu_mode,
+        app->program.curr->column.reg,
+        app->program.curr->column.adr,
+        app->program.curr->column.dta
+    );
+
+    /** go next line **/
+    app->program.curr = app->program.curr->next;
 }

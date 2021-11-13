@@ -37,6 +37,17 @@ struct tty_3bc_s {
     union stream_file_u io;
 };
 
+/** FSM INTERRUPTS **/
+enum fsm_3bc_e {
+    FSM_3BC_DEFAULT = 0,
+    FSM_3BC_READING,
+    FSM_3BC_RUNNING,
+    FSM_3BC_WAITING,
+    FSM_3BC_IO_READ,
+    FSM_3BC_IO_SEND,
+    FSM_3BC_STOPED
+};
+
 /** DS PROCEDURE LIFO **/
 struct procedure_3bc_s {
     label_3bc_t label;
@@ -57,6 +68,13 @@ union cache_l2_u {
     data_3bc_t min_value;
     data_3bc_t maxmin_value;
     long int average_sum;
+};
+
+struct cache_l3_s {
+    char* buffer;
+    unsigned int size;
+    unsigned int lines;
+    signed char direction;
 };
 
 /** PROGRAM MEMORY **/
@@ -111,11 +129,13 @@ struct memory_3bc_s {
 /** APLICATION **/
 struct app_3bc_s {
     bool bootstrap;
+    enum fsm_3bc_e state;
     data_aux_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
     struct memory_node_s* cache_l0;
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
+    struct cache_l3_s cache_l3;
     struct tty_3bc_s tty_input;
     struct tty_3bc_s tty_debug;
     struct tty_3bc_s tty_output;
@@ -125,3 +145,5 @@ struct app_3bc_s {
     struct program_3bc_s program;
     struct memory_3bc_s memory;
 };
+
+typedef struct app_3bc_s* app_3bc_t;

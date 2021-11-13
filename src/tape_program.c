@@ -1,4 +1,3 @@
-#define _3BC_SCU_FIX
 #include "3bc.h"
 
 /**
@@ -58,28 +57,6 @@ void tape_program_resize()
     APP_3BC->program.tail = new_line_node;
     APP_3BC->program.tail->next = NULL;
     APP_3BC->program.tail->line = APP_3BC->program.last_line;
-}
-
-/**
- * run processor instructions,
- * this is a core of virtual machine
- */
-bool tape_program_exe()
-{
-    /**
-     * request function pointer to machine instruction
-     * FILE: 3bc_register.h
-     */
-    instructions(
-        APP_3BC->cpu_mode,
-        APP_3BC->program.curr->column.reg,
-        APP_3BC->program.curr->column.adr,
-        APP_3BC->program.curr->column.dta
-    );
-
-    /** go next line **/
-    APP_3BC->program.curr = APP_3BC->program.curr->next;
-    return true;
 }
 
 /**
@@ -151,11 +128,11 @@ struct label_node_s* tape_program_label_search(label_3bc_t label)
 /**
  * check if there is tape program available
  */
-bool tape_program_avaliable()
+bool tape_program_avaliable(app_3bc_t app)
 {
     /** waits for a label **/
-    if (APP_3BC->program.label_target != NILL) {
-        struct label_node_s* label_node = tape_program_label_search(APP_3BC->program.label_target);
+    if (app->program.label_target != NILL) {
+        struct label_node_s* label_node = tape_program_label_search(app->program.label_target);
 
         /** cooming label **/
         if (label_node == NULL) {
@@ -169,11 +146,11 @@ bool tape_program_avaliable()
     
         /** jump to point **/
         tape_router_cpu_set(label_node->cpumode);
-        APP_3BC->program.curr = label_node->point->next;
-        APP_3BC->program.label_target = NILL;
+        app->program.curr = label_node->point->next;
+        app->program.label_target = NILL;
         return true;
     }
 
     /** end of program **/
-    return APP_3BC->program.curr != NULL;
+    return app->program.curr != NULL;
 }

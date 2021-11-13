@@ -1,5 +1,7 @@
 #include "3bc.h"
 
+#if defined(_3BC_ENABLE_CUSTOM)
+
 function_3bc_t* custom_funcs = NULL;
 unsigned char last_func = 0;
 
@@ -38,3 +40,4 @@ void ds_fpg_array_func_call(cpumode_3bc_t cpu_mode, register_3bc_t reg, address_
     
     custom_funcs[atual_func](reg, address, value);
 }
+#endif
