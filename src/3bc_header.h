@@ -149,11 +149,9 @@ void driver_memory_free(address_3bc_t address);
 void driver_power_init(int argc, char **argv);
 void driver_power_exit(int sig);
 void driver_power_signal(int sig);
-void driver_power_safe_exit(int sig);
 #else
 void driver_power_init();
 void driver_power_exit();
-void driver_power_safe_exit();
 #endif
 
 /** FILE: driver_program.c **/

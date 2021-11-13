@@ -65,17 +65,9 @@ void driver_program_error(enum error_3bc_e error_code)
     driver_tty_output_raw(APP_3BC->tty_error, "\n");
     #endif
 
-    #if defined(_3BC_COMPUTER)
-    if(error_code >= ERROR_CPU_ZERO){
-        driver_power_exit(SIGTERM);
-    }
-    driver_power_safe_exit(error_code);
-    #else
+    #if defined(_3BC_COMPUTER) || defined(_3BC_PC_1970)
+    driver_power_exit(error_code >= ERROR_CPU_ZERO? SIGTERM: error_code);
+    #elif defined(_3BC_ARDUINO)
     driver_power_exit();
-    #endif
-
-    #if defined(_3BC_ARDUINO)
-    /** TODO: some thing? **/
-    while(1);
     #endif
 }
