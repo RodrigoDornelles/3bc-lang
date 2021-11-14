@@ -11,12 +11,12 @@ int interpreter_read(app_3bc_t app)
     char character = fgetc(app->tty_source.io.stream);
 
     /** end of file **/
-    if (character == EOF || feof(app->tty_source.io.stream)) {
+    if (character == EOF && app->cache_l3.buffer == NULL) {
         return EOF;
     }
 
     /** end of line **/
-    if(strchr("#;,\n", character) != NULL || character == '\0') {
+    if(character == '\n' || character == '\0' || character == EOF) {
         /** mark end of string **/
         {
             char* new_buffer = (char*) realloc(app->cache_l3.buffer, sizeof(char) * (++app->cache_l3.size));   
