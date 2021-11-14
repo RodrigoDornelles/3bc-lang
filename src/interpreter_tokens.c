@@ -45,11 +45,13 @@ bool interpreter_tokens(char* line, char** reg, char** mem, char** val)
 
         /** skip literal char **/
         if (pointer[0] == '\'') {
-            for (;pointer[0] == '\'' || pointer[0] == '\0'; pointer++) {
+            do {
+                pointer++;
                 if (pointer[0] == '\\') {
                     pointer++;
                 }
             }
+            while(pointer[0] != '\'' && pointer[0] != '\0');
         }
 
         /** skip other literals **/

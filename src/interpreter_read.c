@@ -26,6 +26,7 @@ int interpreter_read(app_3bc_t app)
             app->cache_l3.buffer = new_buffer;
             app->cache_l3.buffer[app->cache_l3.size - 1] = '\0';
         }
+
         /** insert to vm **/
         {
             app->program.last_line += 1;
