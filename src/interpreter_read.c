@@ -1,11 +1,12 @@
 #include "3bc.h"
 
-#if defined(_3BC_DISABLE_INTERPRETER)
-int interpreter_read(app_3bc_t app)
-{
-    return EOF;
-}
-#else
+#if !defined(_3BC_DISABLE_INTERPRETER)
+/**
+ *  Default entry point to the interpreter, works asynchronously.
+ *
+ * RETURN: EOF if there is nothing else to read.
+ * RETURN: 1 if the interpretation was successful.
+ */
 int interpreter_read(app_3bc_t app)
 {  
     char character = fgetc(app->tty_source.io.stream);
@@ -58,5 +59,14 @@ int interpreter_read(app_3bc_t app)
     }
 
     return 0;
+}
+
+#else
+/**
+ * Disable interpreter, returns whenever there is nothing to read.
+ */
+int interpreter_read(app_3bc_t app)
+{
+    return EOF;
 }
 #endif

@@ -2,6 +2,18 @@
 
 #if !defined(_3BC_DISABLE_INTERPRETER)
 
+/**
+ * Separator in columns and rows.
+ *
+ * REFERENCE: 'reg' receive the first column
+ * REFERENCE: 'mem' receive the second column
+ * REFERENCE: 'val' receive the thirdy column
+ * REFERENCE: 'line_end' NULL if the string is used completely.
+ * REFERENCE: 'line_end' Pointer to the rest of the text if there are still other lines.
+ * RETURN: true if the number of columns is valid.
+ * RETURN: true if the number of columns is valid.
+ * 
+ */
 bool interpreter_tokens(char* line, char** reg, char** mem, char** val, char** line_end)
 {
     unsigned char columns = 0;

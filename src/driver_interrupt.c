@@ -1,5 +1,8 @@
 #include "3bc.h"
 
+/**
+ * VM processor context manager, allows asychronism.
+ */
 bool driver_interrupt(app_3bc_t app)
 {
     switch (app->state)

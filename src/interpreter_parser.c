@@ -128,6 +128,9 @@ bool interpreter_parser_strchar(const char* string, signed long int* value)
     return true;
 }
 
+/**
+ * Text Equivalent Hash Generator.
+ */
 bool interpreter_parser_strhash(const char* string, signed long int* value)
 {
     register unsigned long hash = 5381;

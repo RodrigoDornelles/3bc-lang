@@ -2,6 +2,13 @@
 
 #if !defined(_3BC_DISABLE_INTERPRETER)
 
+/**
+ * Interpret text and insert to virtual machine.
+ *
+ * EXAMPLE: interpreter_compiler(app, "MODE 0 2");
+ * RETURN: NULL if the entire string is compiled.
+ * RETURN: Pointer to the rest of the string that can be compiled.
+ */
 char* interpreter_compiler(app_3bc_t app, char* line)
 {
     char *text_reg, *text_mem, *text_val;
