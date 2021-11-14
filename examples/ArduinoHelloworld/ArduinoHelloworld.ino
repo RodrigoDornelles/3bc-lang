@@ -1,14 +1,17 @@
 #include <3bc.h>
 
+app_3bc_t VM;
+
 void setup()
 { 
   Serial.begin(9600);
   
+  VM = lang_3bc_init();
+
   lang_io_call(tty_output, [](char* output){
     Serial.write(output);    
   });
   
-  lang_init();
   lang_line(MODE, NILL, 2);
   lang_line(STRC, NILL, 'H');
   lang_line(STRC, NILL, 'e');
@@ -23,8 +26,8 @@ void setup()
   lang_line(STRC, NILL, 'd');
   lang_line(STRC, NILL, '!');
   lang_line(STRC, NILL, '\n');
-  lang_run();
-  lang_exit();
 }
 
-void loop() {}
+void loop() {
+  lang_3bc_update(VM);
+}
