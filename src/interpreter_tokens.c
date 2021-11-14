@@ -1,87 +1,64 @@
 #include "3bc.h"
 
-bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val)
+#if !defined(_3BC_DISABLE_INTERPRETER)
+
+bool interpreter_tokens(char* line, char** reg, char** mem, char** val)
 {
-    unsigned int columns = 0;
-    char c = '\0';
+    unsigned char columns = 0;
+    char* pointer = line;
 
     /** reset strings **/
     *reg = NULL;
     *mem = NULL;
     *val = NULL;
 
-    /** read line **/
-    do {
-        /** scan character **/
-        c = (c != '#' && c != ';')? fgetc(tty.io.stream): '#';
+   do {
+        /** search for the beginning of the column **/ 
+        for (;strchr("\t. ", *pointer) != NULL && pointer[0] != '\0'; pointer++);
 
-        /** skip comment **/
-        if(strchr("#;", c) != NULL){
-            for(;c!= '\n' && c != '\0' && c != EOF; c=fgetc(tty.io.stream));
+        /** end of line **/
+        if (pointer[0] == '\0') {
+            break;
         }
 
-        /** skip spacing | end of file **/
-        if (strchr("\t,. ", c) != NULL || feof(tty.io.stream) || c == '\n') {
-            continue;
-        }
-
-        /** create column **/
+        /** insert columun **/
+        switch (++columns)
         {
-            bool is_char = false;
-            unsigned char lenght = 1;
-            char* string = (char*) malloc(lenght * sizeof(char) + 1);
-            string[0] = c;
-            string[1] = '\0';
-            columns += 1;
+            case 1:
+                *reg = pointer;
+                break;
 
-            /** init char or hash **/
-            is_char |= c == '\'';
+            case 2:
+                *mem = pointer;
+                break;
 
-            /** scan column string **/
-            while ((c = fgetc(tty.io.stream)) != '\0'
-                && c != '\n' && !feof(tty.io.stream)
-                && (strchr("\t#;,. ", c) == NULL || is_char))
-            {
-                /** detect is scape **/
-                bool is_scape = (is_char) && c == '\\';
+            case 3:
+                *val = pointer;
+                break;
+        }
 
-                /** expand string **/
-                char* new_buffer = (char*) realloc(string, ++lenght * sizeof(char) + 1);
-                
-                /** insufficient memory to read a large line **/
-                if (new_buffer == NULL) {
-                    driver_program_error(ERROR_OUT_OF_MEMORY);
+        /** skip literal char **/
+        if (pointer[0] == '\'') {
+            for (;pointer[0] == '\'' || pointer[0] == '\0'; pointer++) {
+                if (pointer[0] == '\\') {
+                    pointer++;
                 }
-
-                /** add character **/
-                string = new_buffer;
-                string[lenght - 1] = c;
-                string[lenght] = '\0';
-
-                /** end of char or hash **/
-                is_char = is_char && !is_scape && c != '\'';
-                is_scape = false;
             }
+        }
 
-            /** write string in the column pointer reference **/
-            switch (columns) 
-            {
-                case 1:
-                    *reg = string;
-                    break;
+        /** skip other literals **/
+        for (;strchr("\t. ", *pointer) == NULL && pointer[0] != '\0'; pointer++);
 
-                case 2:
-                    *mem = string;
-                    break;
-
-                case 3:
-                    *val = string;
-                    break;
-            }
-        } 
+        /** mark end of column **/
+        if (pointer[0] != '\0') {
+            pointer[0] = '\0';
+            pointer++;
+        }
     }
-    while (!feof(tty.io.stream) && c != '\0' && c != '\n' && c != ',');
+    while (pointer[0] != '\0');
 
     /** validate number of columns **/
     return columns == 3 || columns == 0;
 }
+
+#endif

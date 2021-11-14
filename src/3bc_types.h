@@ -74,7 +74,6 @@ union cache_l2_u {
 struct cache_l3_s {
     char* buffer;
     unsigned int size;
-    unsigned int lines;
     signed char direction;
 };
 

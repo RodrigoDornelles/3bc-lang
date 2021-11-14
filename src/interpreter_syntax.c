@@ -1,5 +1,7 @@
 #include "3bc.h"
 
+#if !defined(_3BC_DISABLE_INTERPRETER)
+
 bool interpreter_syntax_registers(const char* string, signed long int* value)
 {
     /** mnemonic translate world to register **/
@@ -78,3 +80,5 @@ bool interpreter_syntax_constants(const char* string, signed long int* value)
 
     return false;
 }
+
+#endif

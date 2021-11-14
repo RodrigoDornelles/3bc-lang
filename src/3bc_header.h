@@ -164,7 +164,7 @@ struct line_node_s* ds_procedure_lifo_burst(label_3bc_t label);
 struct line_node_s* ds_procedure_lifo_pop();
 
 /** FILE: interpreter_compiler.c **/
-bool interpreter_compiler(struct tty_3bc_s tty);
+void interpreter_compiler(app_3bc_t app, char* line);
 
 /** FILE: interpreter_parser.c **/
 bool interpreter_parser_strtol(const char* string, signed long int* value);
@@ -172,6 +172,7 @@ bool interpreter_parser_strchar(const char* string, signed long int* value);
 bool interpreter_parser_strhash(const char* string, signed long int* value);
 int interpreter_parser_skip();
 
+/** FILE: interpreter_read.c **/
 int interpreter_read(app_3bc_t app);
 
 /** FILE: interpreter_syntax.c **/
@@ -179,7 +180,7 @@ bool interpreter_syntax_registers(const char* string, signed long int* value);
 bool interpreter_syntax_constants(const char* string, signed long int* value);
 
 /** FILE: interpreter_tokens.c **/
-bool interpreter_tokens(struct tty_3bc_s tty, char** reg, char** mem, char** val);
+bool interpreter_tokens(char* line, char** reg, char** mem, char** val);
 
 /** FILE: driver_accumulator.c **/
 data_aux_3bc_t driver_accumulator_get(void);

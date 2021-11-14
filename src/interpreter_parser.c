@@ -1,5 +1,6 @@
 #include "3bc.h"
 
+#if !defined(_3BC_DISABLE_INTERPRETER)
 /**
  * convert string in any numeric base
  */
@@ -160,3 +161,5 @@ int interpreter_parser_skip()
 
     return hash % SHRT_MAX;
 }
+
+#endif
