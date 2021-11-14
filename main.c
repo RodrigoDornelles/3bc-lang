@@ -23,4 +23,5 @@ int main(int argc, char **argv)
      //*/
 
     while(lang_3bc_update(VM));
+    return 0;
 }

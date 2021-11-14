@@ -22,7 +22,7 @@ bool driver_interrupt(app_3bc_t app)
                     return true;
 
                 case 2:
-                    app->state = FSM_3BC_STOPED;
+                    app->state = FSM_3BC_EXITING;
                     return true;
             }
             return true;
@@ -70,6 +70,18 @@ bool driver_interrupt(app_3bc_t app)
          */
         case FSM_3BC_IO_SEND:
             app->state = FSM_3BC_RUNNING;
+            return true;
+
+        /**
+         * EXIT CONTEXT
+         */
+        case FSM_3BC_EXITING:
+            #if defined(SIGINT)
+            driver_power_exit(0);
+            #else 
+            driver_power_exit();
+            #endif
+            app->state = FSM_3BC_STOPED;
             return true;
 
         /**

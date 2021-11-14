@@ -47,7 +47,7 @@ void driver_power_signal(int sig)
 /**
  * UNSAFE SHUTDOWNS
  */
-#if defined(_3BC_COMPUTER)
+#if defined(SIGINT)
 void driver_power_exit(int sig)
 #else
 void driver_power_exit()
@@ -67,7 +67,9 @@ void driver_power_exit()
 
     driver_tty_exit();
     
-    #if defined(_3BC_COMPUTER)
-    exit(sig);
+    #if defined(SIGINT)
+    if (sig != 0) {
+        exit(sig);
+    }
     #endif 
 }

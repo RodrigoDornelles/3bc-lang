@@ -45,6 +45,7 @@ enum fsm_3bc_e {
     FSM_3BC_WAITING,
     FSM_3BC_IO_READ,
     FSM_3BC_IO_SEND,
+    FSM_3BC_EXITING,
     FSM_3BC_STOPED
 };
 

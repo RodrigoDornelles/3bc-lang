@@ -145,7 +145,7 @@ void driver_memory_validate(memory_conf_t conf);
 void driver_memory_free(address_3bc_t address);
 
 /** FILE: driver_power.c **/
-#ifdef _3BC_COMPUTER
+#ifdef SIGINT
 app_3bc_t driver_power_init(int argc, char **argv);
 void driver_power_exit(int sig);
 void driver_power_signal(int sig);
