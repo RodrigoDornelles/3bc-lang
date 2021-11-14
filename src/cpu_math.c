@@ -4,19 +4,19 @@
 void cpu_math_sum(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    tape_aux_set(AUX + GET_ANY_PARAM);
+    driver_accumulator_set(AUX + GET_ANY_PARAM);
 }
 
 void cpu_math_sub(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    tape_aux_set(AUX - GET_ANY_PARAM);
+    driver_accumulator_set(AUX - GET_ANY_PARAM);
 }
 
 void cpu_math_mul(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    tape_aux_set(AUX * GET_ANY_PARAM);
+    driver_accumulator_set(AUX * GET_ANY_PARAM);
 }
 
 void cpu_math_div(PARAMS_DEFINE)
@@ -28,7 +28,7 @@ void cpu_math_div(PARAMS_DEFINE)
             driver_program_error(ERROR_DIVISION_BY_ZERO);
         }
         else {
-            tape_aux_set(AUX/divisor);
+            driver_accumulator_set(AUX/divisor);
         }
     }    
 }
@@ -36,7 +36,7 @@ void cpu_math_div(PARAMS_DEFINE)
 void cpu_math_mod(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    tape_aux_set(AUX % GET_ANY_PARAM);
+    driver_accumulator_set(AUX % GET_ANY_PARAM);
 }
 
 void cpu_math_power(PARAMS_DEFINE)
@@ -45,7 +45,7 @@ void cpu_math_power(PARAMS_DEFINE)
     #if defined(_3BC_MOS6502)
     driver_program_error(ERROR_UNSUPPORTED);
     #else 
-    tape_aux_set((data_aux_3bc_t) pow((double) (AUX), (double) (GET_ANY_PARAM)));
+    driver_accumulator_set((data_aux_3bc_t) pow((double) (AUX), (double) (GET_ANY_PARAM)));
     #endif
 }
 
@@ -55,7 +55,7 @@ void cpu_math_root(PARAMS_DEFINE)
     #if defined(_3BC_MOS6502)
     driver_program_error(ERROR_UNSUPPORTED);
     #else 
-    tape_aux_set((data_aux_3bc_t) pow((double) (AUX), (1 / (double) (GET_ANY_PARAM))));
+    driver_accumulator_set((data_aux_3bc_t) pow((double) (AUX), (1 / (double) (GET_ANY_PARAM))));
     #endif
 }
 
@@ -63,12 +63,12 @@ void cpu_math_abs(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
     VALIDATE_NOT_VALUES
-    tape_aux_set((data_aux_3bc_t) labs((long int) AUX));
+    driver_accumulator_set((data_aux_3bc_t) labs((long int) AUX));
 }
 
 void cpu_math_negative(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
     VALIDATE_NOT_VALUES
-    tape_aux_set((data_aux_3bc_t) labs((long int) AUX) * (-1));
+    driver_accumulator_set((data_aux_3bc_t) labs((long int) AUX) * (-1));
 }

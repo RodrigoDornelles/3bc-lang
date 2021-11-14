@@ -1,9 +1,9 @@
 #include "3bc.h"
 
 #if defined(_3BC_COMPUTER)
-void driver_power_init(int argc, char **argv)
+app_3bc_t driver_power_init(int argc, char **argv)
 #else
-void driver_power_init()
+app_3bc_t driver_power_init()
 #endif
 {
     driver_tty_init();
@@ -25,6 +25,9 @@ void driver_power_init()
         driver_program_error(ERROR_OPEN_FILE);
     }
     #endif
+
+    /** remove macro**/
+    return APP_3BC;
 }
 
 #if defined(_3BC_COMPUTER)
@@ -62,25 +65,9 @@ void driver_power_exit()
     tape_memory_destroy();
     tape_program_destroy();
 
-    #if defined(_3BC_COMPUTER)
-    driver_power_safe_exit(sig);
-    #else
-    driver_power_safe_exit();
-    #endif 
-}
-
-/**
- * SAFETY SHUTDOWNS
- */
-#if defined (_3BC_COMPUTER)
-void driver_power_safe_exit(int sig)
-#else
-void driver_power_safe_exit()
-#endif 
-{
     driver_tty_exit();
     
     #if defined(_3BC_COMPUTER)
     exit(sig);
-    #endif
+    #endif 
 }

@@ -1,14 +1,6 @@
+#define _3BC_SCU_FIX
 #include "3bc.h"
 
-void driver_program_run()
-{
-    while(tape_program_avaliable()? tape_program_exe(): interpreter_compiler(APP_3BC->tty_source));
-}
-
-/**
- * TODO: use tty_error
- * TODO: use _3BC_COMPACT
- */
 void driver_program_error(enum error_3bc_e error_code)
 {
     /**
@@ -49,7 +41,7 @@ void driver_program_error(enum error_3bc_e error_code)
         ERROR_LOG_3BC(ERROR_NUMBER_UNDERFLOW, "NUMBER UNDERFLOW");
         ERROR_LOG_3BC(ERROR_NUMBER_OVERFLOW, "NUMBER OVERFLOW");
         ERROR_LOG_3BC(ERROR_NUMBER_WRONG_BASE, "NUMBER WRONG BASE");
-        ERROR_LOG_3BC(ERROR_NUMBER_UNKOWN, "NUMBER UNKNOWN");
+        ERROR_LOG_3BC(ERROR_NUMBER_NEGATIVE, "NUMBER NEGATIVE IS NOT EXPECTED");
         ERROR_LOG_3BC(ERROR_INVALID_RETURN, "INVALID PROCEDURE RETURN");
         ERROR_LOG_3BC(ERROR_DIVISION_BY_ZERO, "DIVISION BY ZERO");
         ERROR_LOG_3BC(ERROR_OUT_OF_MEMORY, "OUT OF MEMORY");
@@ -69,17 +61,26 @@ void driver_program_error(enum error_3bc_e error_code)
     driver_tty_output_raw(APP_3BC->tty_error, "\n");
     #endif
 
-    #if defined(_3BC_COMPUTER)
-    if(error_code >= ERROR_CPU_ZERO){
-        driver_power_exit(SIGTERM);
-    }
-    driver_power_safe_exit(error_code);
-    #else
+    #if defined(_3BC_COMPUTER) || defined(_3BC_PC_1970)
+    driver_power_exit(error_code >= ERROR_CPU_ZERO? SIGTERM: error_code);
+    #elif defined(_3BC_ARDUINO)
     driver_power_exit();
     #endif
+}
 
-    #if defined(_3BC_ARDUINO)
-    /** TODO: some thing? **/
-    while(1);
-    #endif
+/**
+ * run processor instructions,
+ * this is a core of virtual machine
+ */
+void driver_program_tick(app_3bc_t app)
+{
+    instructions(
+        app->cpu_mode,
+        app->program.curr->column.reg,
+        app->program.curr->column.adr,
+        app->program.curr->column.dta
+    );
+
+    /** go next line **/
+    app->program.curr = app->program.curr->next;
 }

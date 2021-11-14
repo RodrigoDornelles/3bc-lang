@@ -2,10 +2,10 @@
 
 int main(int argc, char **argv)
 {
-    lang_init(argc, argv);
+    app_3bc_t VM = lang_3bc_init(argc, argv);
     /** 
      * put transpiled program here.
-     * @example:
+     * @example:*/
     lang_line(MODE, NILL, MODE_STRING);
     lang_line(STRC, NILL, 'H');
     lang_line(STRC, NILL, 'E');
@@ -20,8 +20,7 @@ int main(int argc, char **argv)
     lang_line(STRC, NILL, 'D');
     lang_line(STRC, NILL, '!');
     lang_line(STRC, NILL, '\n');
-     */
+     //*/
 
-    lang_run();
-    lang_exit(0);
+    while(lang_3bc_update(VM));
 }
