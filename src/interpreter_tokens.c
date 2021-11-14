@@ -16,6 +16,12 @@ bool interpreter_tokens(char* line, char** reg, char** mem, char** val)
         /** search for the beginning of the column **/ 
         for (;strchr("\t. ", *pointer) != NULL && pointer[0] != '\0'; pointer++);
 
+        /** skip comments **/
+        if(strchr("#;", *pointer) != NULL){
+            for(;pointer[0] != '\n' && pointer[0] != '\0' && pointer[0] != EOF; pointer++);
+            break;
+        }
+
         /** end of line **/
         if (pointer[0] == '\0') {
             break;
