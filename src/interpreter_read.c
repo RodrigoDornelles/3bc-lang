@@ -28,10 +28,12 @@ int interpreter_read(app_3bc_t app)
         }
 
         /** insert to vm **/
-        {
+        char* line = app->cache_l3.buffer;
+        do {
             app->program.last_line += 1;
-            interpreter_compiler(app, app->cache_l3.buffer);
+            line = interpreter_compiler(app, line);
         }
+        while (line != NULL);
 
         /** reset buffer **/
         {

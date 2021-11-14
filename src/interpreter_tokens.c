@@ -2,12 +2,13 @@
 
 #if !defined(_3BC_DISABLE_INTERPRETER)
 
-bool interpreter_tokens(char* line, char** reg, char** mem, char** val)
+bool interpreter_tokens(char* line, char** reg, char** mem, char** val, char** line_end)
 {
     unsigned char columns = 0;
     char* pointer = line;
 
     /** reset strings **/
+    *line_end = NULL;
     *reg = NULL;
     *mem = NULL;
     *val = NULL;
@@ -23,7 +24,14 @@ bool interpreter_tokens(char* line, char** reg, char** mem, char** val)
         }
 
         /** end of line **/
-        if (pointer[0] == '\0') {
+        if ((pointer[0] == '\n' && pointer[1] == '\0') || pointer[0] == '\0') {
+            break;
+        }
+
+        /** partial end of line **/
+        if (pointer[0] == '\n' || pointer[0] == ',') {
+            pointer[0] = '\0';
+            *line_end = ++pointer;
             break;
         }
 
@@ -55,10 +63,10 @@ bool interpreter_tokens(char* line, char** reg, char** mem, char** val)
         }
 
         /** skip other literals **/
-        for (;strchr("\t. ", *pointer) == NULL && pointer[0] != '\0'; pointer++);
+        for (;strchr("\t,. ", *pointer) == NULL && pointer[0] != '\0'; pointer++);
 
         /** mark end of column **/
-        if (pointer[0] != '\0') {
+        if (pointer[0] != '\0' && pointer[0] != ',') {
             pointer[0] = '\0';
             pointer++;
         }
