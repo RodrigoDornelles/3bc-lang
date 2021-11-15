@@ -1,6 +1,6 @@
 #include "3bc.h"
 
-#if !(defined(ARDUINO) && defined(_3BC_SCU_FIX_2))
+#if !(defined(ARDUINO) && defined(_3BC_SCU_FIX_2)) || (!defined(ARDUINO) && defined(_3BC_SCU_FIX))
 
 #if !defined(_3BC_ENABLE_CUSTOM)
 void custom_3bc_func_call(cpumode_3bc_t cpu_mode, register_3bc_t reg, address_3bc_t address, data_3bc_t value)

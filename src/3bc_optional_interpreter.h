@@ -7,7 +7,7 @@
  * easy, arduino-cli/arduino-ide forced me.
  */
 
-#if !(defined(ARDUINO) && defined(_3BC_SCU_FIX_2))
+#if !(defined(ARDUINO) && defined(_3BC_SCU_FIX_2)) || (!defined(ARDUINO) && defined(_3BC_SCU_FIX))
 
 #if (!defined(_3BC_ENABLE_INTERPRETER) && !defined(_3BC_DISABLE_INTERPRETER)) || (defined(_3BC_ENABLE_INTERPRETER) && defined(_3BC_DISABLE_INTERPRETER))
 #error "Required define '_3BC_ENABLE_INTERPRETER' or '_3BC_DISABLE_INTERPRETER' after include header '3bc.h'"
