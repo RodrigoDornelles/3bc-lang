@@ -168,16 +168,13 @@ struct line_node_s* ds_procedure_lifo_pop();
 
 /** TODO: move **/
 int interpreter_3bc(app_3bc_t app);
+void custom_3bc_func_set(cpumode_3bc_t cpu_mode, register_3bc_t reg, function_3bc_t lambda);
+void custom_3bc_func_call(cpumode_3bc_t cpu_mode, register_3bc_t reg, address_3bc_t address, data_3bc_t value);
+
 
 /** FILE: driver_accumulator.c **/
 data_aux_3bc_t driver_accumulator_get(void);
 void driver_accumulator_set(data_aux_3bc_t value);
-
-/** FILE: ds_fpga_array.c **/
-#if defined(_3BC_ENABLE_CUSTOM)
-void ds_fpg_array_func_set(cpumode_3bc_t cpu_mode, register_3bc_t reg, function_3bc_t lambda);
-void ds_fpg_array_func_call(cpumode_3bc_t cpu_mode, register_3bc_t reg, address_3bc_t address, data_3bc_t value);
-#endif
 
 /** FILE: ds_memory_llrbt.c **/
 data_3bc_t ds_memory_llrbt_data_get(address_3bc_t address);

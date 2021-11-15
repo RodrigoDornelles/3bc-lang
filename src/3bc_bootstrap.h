@@ -15,7 +15,7 @@
 #define lang_exit                driver_power_exit
 #define lang_line                tape_program_line_add
 #define lang_io_call(tty,l);     APP_3BC->tty.type=STREAM_TYPE_FUNCTION_CALL;APP_3BC->tty.io.lambda=l;
-#define lang_fpga                ds_fpg_array_func_set
+#define lang_fpga                custom_3bc_func_set
 /**
  * SINGLETON
  * MACRO: APP_3BC
