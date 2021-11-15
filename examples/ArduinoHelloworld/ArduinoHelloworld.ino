@@ -1,3 +1,4 @@
+#define _3BC_DISABLE_INTERPRETER
 #include <3bc.h>
 
 app_3bc_t VM;

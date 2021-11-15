@@ -1,3 +1,4 @@
+#define _3BC_SCU_FIX_2
 #include "3bc.h"
 
 void ds_procedure_lifo_push(struct line_node_s* line_node, label_3bc_t label)

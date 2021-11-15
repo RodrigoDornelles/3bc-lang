@@ -49,6 +49,9 @@
  */
 #else
 #define _3BC_COMPUTER
+#if !defined(_3BC_ENABLE_INTERPRETER) && !defined(_3BC_DISABLE_INTERPRETER)
+#define _3BC_ENABLE_INTERPRETER
+#endif
 #if defined(_WIN32)
 #define _3BC_PC_WINDOWS
 #else 

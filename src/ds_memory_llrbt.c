@@ -1,3 +1,4 @@
+#define _3BC_SCU_FIX_2
 #include "3bc.h"
 
 data_3bc_t ds_memory_llrbt_data_get(address_3bc_t address)

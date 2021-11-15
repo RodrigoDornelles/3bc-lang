@@ -1,3 +1,4 @@
+#define _3BC_SCU_FIX_2
 #include "3bc.h"
 
 /**
@@ -18,7 +19,11 @@ bool driver_interrupt(app_3bc_t app)
          *  INTERPRETER CONTEXT
          */
         case FSM_3BC_READING:
-            switch (interpreter_read(app))
+            #if defined(_3BC_DISABLE_INTERPRETER)
+            switch (EOF)
+            #else
+            switch (interpreter_3bc(app))
+            #endif
             {
                 case 1:
                     app->state = FSM_3BC_RUNNING;

@@ -1,3 +1,4 @@
+#define _3BC_SCU_FIX_2
 #include "3bc.h"
 
 void driver_memory_data_set(address_3bc_t address, data_3bc_t value)

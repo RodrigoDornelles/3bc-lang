@@ -34,6 +34,7 @@
 #include "3bc_types.h"
 #include "3bc_header.h"
 #include "3bc_register.h"
+#include "3bc_interpreter.h"
 #if defined(_3BC_APP_UNIQUE)
 #include "3bc_bootstrap.h"
 #endif
@@ -60,11 +61,6 @@
 #include "ds_fpga_array.c"
 #include "ds_memory_llrbt.c"
 #include "ds_procedure_lifo.c"
-#include "interpreter_compiler.c"
-#include "interpreter_parser.c"
-#include "interpreter_syntax.c"
-#include "interpreter_read.c"
-#include "interpreter_tokens.c"
 #include "tape_program.c"
 #include "tape_router.c"
 #endif

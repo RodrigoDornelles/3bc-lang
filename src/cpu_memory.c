@@ -1,3 +1,4 @@
+#define _3BC_SCU_FIX_2
 #include "3bc.h"
 
 void cpu_memory_free(PARAMS_DEFINE)

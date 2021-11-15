@@ -1,3 +1,4 @@
+#define _3BC_SCU_FIX_2
 #include "3bc.h"
 
 void driver_gpio_setup(memory_conf_t conf, address_3bc_t pin)
