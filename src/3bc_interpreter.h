@@ -1,5 +1,12 @@
 #include "3bc.h"
 
+/**
+ * JOKE:
+ *
+ * anyone asks me why this code spaghetti, 
+ * easy, arduino-cli/arduino-ide forced me.
+ */
+
 #if !(defined(ARDUINO) && defined(_3BC_SCU_FIX_2))
 
 #if (!defined(_3BC_ENABLE_INTERPRETER) && !defined(_3BC_DISABLE_INTERPRETER)) || (defined(_3BC_ENABLE_INTERPRETER) && defined(_3BC_DISABLE_INTERPRETER))
