@@ -1,7 +1,6 @@
 #include "3bc.h"
 
 /** PRIMITIVE TYPES **/
-typedef void (*function_3bc_t)(int, int, int);
 typedef unsigned short int line_3bc_t;
 typedef unsigned char cpumode_3bc_t;
 typedef unsigned char register_3bc_t;
@@ -57,24 +56,39 @@ struct procedure_3bc_s {
 };
 
 /** AUXILIARY MEMORY **/
+enum sleep_3bc_e {
+    SLEEP_3BC_NONE = 0,
+    SLEEP_3BC_REAL_TICK,
+    SLEEP_3BC_FAKE_TICK,
+    SLEEP_3BC_MICROSECONDS,
+    SLEEP_3BC_MILLISECONDS,
+    SLEEP_3BC_SECONDS
+};
+
+struct buffer_s {
+    char* storage;
+    unsigned int size;
+};
+
 union cache_l1_u {
     bool max_init;
     bool min_init;
     bool maxmin_init;
-    unsigned short average_count;
+    unsigned char average_count;
+    enum sleep_3bc_e sleep_mode;
 };
 
 union cache_l2_u {
     data_3bc_t max_value;
     data_3bc_t min_value;
     data_3bc_t maxmin_value;
-    long int average_sum;
+    signed long average_sum;
+    unsigned long sleep_period;
 };
 
-struct cache_l3_s {
-    char* buffer;
-    unsigned int size;
-    signed char direction;
+union cache_l3_u {
+    struct buffer_s buffer;
+    unsigned long sleep_called;
 };
 
 /** PROGRAM MEMORY **/
@@ -135,7 +149,7 @@ struct app_3bc_s {
     struct memory_node_s* cache_l0;
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
-    struct cache_l3_s cache_l3;
+    union cache_l3_u cache_l3;
     struct tty_3bc_s tty_input;
     struct tty_3bc_s tty_debug;
     struct tty_3bc_s tty_output;
@@ -147,3 +161,5 @@ struct app_3bc_s {
 };
 
 typedef struct app_3bc_s* app_3bc_t;
+
+typedef void (*function_3bc_t)(app_3bc_t, register_3bc_t, address_3bc_t, data_3bc_t);

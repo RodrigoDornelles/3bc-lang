@@ -17,6 +17,7 @@
 #include <limits.h>
 #include <string.h>
 #if defined(_3BC_COMPUTER)
+#include <time.h>
 #include <signal.h>
 #endif
 #if defined(_3BC_PC_UNIX)
@@ -34,11 +35,11 @@
 #include "3bc_types.h"
 #include "3bc_header.h"
 #include "3bc_register.h"
-#include "3bc_optional_custom.h"
-#include "3bc_optional_interpreter.h"
 #if defined(_3BC_APP_UNIQUE)
 #include "3bc_bootstrap.h"
 #endif
+#include "3bc_optional_custom.h"
+#include "3bc_optional_interpreter.h"
 
 /** program **/
 #if !defined(_3BC_SCU)
@@ -51,6 +52,7 @@
 #include "cpu_jump.c"
 #include "cpu_memory.c"
 #include "cpu_procedure.c"
+#include "cpu_sleep.c"
 #include "cpu_string.c"
 #include "driver_accumulator.c"
 #include "driver_tty.c"

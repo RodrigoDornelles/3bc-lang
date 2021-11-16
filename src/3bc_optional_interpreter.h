@@ -40,7 +40,7 @@ int interpreter_3bc(app_3bc_t app)
     char character = fgetc(app->tty_source.io.stream);
 
     /** end of file **/
-    if (character == EOF && app->cache_l3.buffer == NULL) {
+    if (character == EOF && app->cache_l3.buffer.storage == NULL) {
         return EOF;
     }
 
@@ -48,16 +48,16 @@ int interpreter_3bc(app_3bc_t app)
     if(character == '\n' || character == '\0' || character == EOF) {
         /** mark end of string **/
         {
-            char* new_buffer = (char*) realloc(app->cache_l3.buffer, sizeof(char) * (++app->cache_l3.size));   
+            char* new_buffer = (char*) realloc(app->cache_l3.buffer.storage, sizeof(char) * (++app->cache_l3.buffer.size));   
             if (new_buffer == NULL) {
                 driver_program_error(ERROR_OUT_OF_MEMORY);
             }
-            app->cache_l3.buffer = new_buffer;
-            app->cache_l3.buffer[app->cache_l3.size - 1] = '\0';
+            app->cache_l3.buffer.storage = new_buffer;
+            app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1] = '\0';
         }
 
         /** insert to vm **/
-        char* line = app->cache_l3.buffer;
+        char* line = app->cache_l3.buffer.storage;
         do {
             app->program.last_line += 1;
             line = interpreter_3bc_compiler(app, line);
@@ -66,9 +66,9 @@ int interpreter_3bc(app_3bc_t app)
 
         /** reset buffer **/
         {
-            free(app->cache_l3.buffer);
-            app->cache_l3.buffer = NULL;
-            app->cache_l3.size = 0;
+            free(app->cache_l3.buffer.storage);
+            app->cache_l3.buffer.storage = NULL;
+            app->cache_l3.buffer.size = 0;
         }
 
         return 1;
@@ -76,14 +76,14 @@ int interpreter_3bc(app_3bc_t app)
 
     /** expand the  buffer **/
     {
-        char* new_buffer = (char*) realloc(app->cache_l3.buffer, sizeof(char) * (++app->cache_l3.size));
+        char* new_buffer = (char*) realloc(app->cache_l3.buffer.storage, sizeof(char) * (++app->cache_l3.buffer.size));
             
         if (new_buffer == NULL) {
             driver_program_error(ERROR_OUT_OF_MEMORY);
         }
         
-        app->cache_l3.buffer = new_buffer;
-        app->cache_l3.buffer[app->cache_l3.size - 1] = character;
+        app->cache_l3.buffer.storage = new_buffer;
+        app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1] = character;
     }
 
     return 0;
@@ -340,6 +340,12 @@ bool interpreter_3bc_syntax_registers(const char* string, signed long int* value
         PARSER_PACK('p', 'r', 'e', 't', value, PRET);
         PARSER_PACK('n', 'r', 'e', 't', value, NRET);
         PARSER_PACK('b', 'a', 'c', 'k', value, BACK);
+
+        PARSER_PACK('r', 'e', 'a', 'l', value, REAL);
+        PARSER_PACK('f', 'a', 'k', 'e', value, FAKE);
+        PARSER_PACK('m', 'i', 'c', 'r', value, MICR);
+        PARSER_PACK('m', 'i', 'l', 'i', value, MILI);
+        PARSER_PACK('s', 'e', 'c', 'o', value, SECO);
     }
 
     /** passing register as numerical (octo, bin) **/

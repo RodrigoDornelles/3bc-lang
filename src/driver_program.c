@@ -26,7 +26,6 @@ void driver_program_error(enum error_3bc_e error_code)
     {
         ERROR_LOG_3BC(SIGSEGV, "SEGMENT FAULT");
         ERROR_LOG_3BC(ERROR_CPU_ZERO, "CPU MODE IS NOT DEFINED"); 
-        ERROR_LOG_3BC(ERROR_CPU_PROTECT, "CPU MODE IS PROTECTED");
         ERROR_LOG_3BC(ERROR_CPU_RESERVED, "CPU MODE IS RESERVED");
         ERROR_LOG_3BC(ERROR_INVALID_REGISTER, "INVALID CPU REGISTER");
         ERROR_LOG_3BC(ERROR_INVALID_ADDRESS, "INVALID ADDRESS");
@@ -34,6 +33,7 @@ void driver_program_error(enum error_3bc_e error_code)
         ERROR_LOG_3BC(ERROR_INVALID_CPU_MODE, "INVALID CPU MODE");
         ERROR_LOG_3BC(ERROR_INVALID_LABEL, "INVALID LABEL");
         ERROR_LOG_3BC(ERROR_PARAM_DUALITY, "DUALITY ADDRES WITH VALUE IS NOT ALLOWED");
+        ERROR_LOG_3BC(ERROR_PARAM_REQUIRE_ANY, "VALUE OR ADDRESS IS REQUIRED");
         ERROR_LOG_3BC(ERROR_PARAM_REQUIRE_VALUE, "VALUE IS REQUIRED");
         ERROR_LOG_3BC(ERROR_PARAM_REQUIRE_ADDRESS, "ADDRESS IS REQUIRED");
         ERROR_LOG_3BC(ERROR_PARAM_BLOCKED_VALUE, "VALUE IS NOT ALLOWED");
@@ -75,8 +75,8 @@ void driver_program_error(enum error_3bc_e error_code)
  */
 void driver_program_tick(app_3bc_t app)
 {
-    instructions(
-        app->cpu_mode,
+    instruction_3bc(
+        app,
         app->program.curr->column.reg,
         app->program.curr->column.adr,
         app->program.curr->column.dta

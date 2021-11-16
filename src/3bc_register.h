@@ -43,7 +43,8 @@
 #define MODE_CUSTOM_4           (40)
 #define MODE_PROCEDURE_RET      (41)
 #define MODE_PROCEDURE          (42)
-#define MODE_END                (43)
+#define MODE_SLEEP              (43)
+#define MODE_END                (44)
 
 #define NILL 0b000
 #define MODE 0b111
@@ -55,6 +56,7 @@
 #define NB02 0b001
 #define CALL 0b001
 #define BACK 0b001
+#define FAKE 0b001
 
 #define STRO 0b010
 #define ALOC 0b010
@@ -63,6 +65,7 @@
 #define STOP 0b010
 #define FRET 0b010
 #define FCAL 0b010
+#define REAL 0b010
 
 #define STRI 0b011 
 #define MOFF 0b011
@@ -71,6 +74,7 @@
 #define NB10 0B011
 #define ZRET 0b011
 #define ZCAL 0b011
+#define MICR 0b011
 
 #define STRX 0b100
 #define PGTO 0b100
@@ -79,12 +83,14 @@
 #define NB16 0b100
 #define PRET 0b100
 #define PCAL 0b100
+#define MILI 0b100
 
 #define STRC 0b101
 #define NGTO 0b101
 #define PUSH 0b101
 #define NRET 0b101
 #define NCAL 0b101
+#define SECO 0b101
 
 /**
  * case of separate compilation in different statistical libraries,
@@ -93,19 +99,19 @@
  * (required for avr compiler in arduino ide)
  */
 #ifdef _3BC_SCU_FIX
-void instructions(cpumode_3bc_t mode, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
+void instruction_3bc(app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
 {
     if (reg == 0) {
-        cpu_null(0,0,0);
+        cpu_null(app, 0, 0, 0);
     }
     else if (reg == 7) {
-        cpu_mode(reg, address, value);
+        cpu_mode(app, reg, address, value);
     }
     /** CPU MODES ADD REGISTER PACKAGES **/
-    else switch ((mode * 7) + reg)
+    else switch ((app->cpu_mode * 7) + reg)
     {
         /** prevent enter in invalid cpu mode **/
-        default: cpu_not_exist(0,0,0);
+        default: cpu_not_exist(app, 0,0,0);
         CPU_PACK_ZEROMODE(MODE_EMPUTY);
         CPU_PACK5(MODE_DEBUG, cpu_debug_strb, cpu_debug_stro, cpu_debug_stri, cpu_debug_strx, cpu_debug_strc);
         CPU_PACK5(MODE_STRING, cpu_string_strb, cpu_string_stro, cpu_string_stri, cpu_string_strx, cpu_string_strc);
@@ -149,6 +155,7 @@ void instructions(cpumode_3bc_t mode, register_3bc_t reg, address_3bc_t address,
         CPU_PACK_RESERVED(MODE_CUSTOM_4);
         CPU_PACK5(MODE_PROCEDURE_RET, cpu_procedure_back, cpu_procedure_fret, cpu_procedure_zret, cpu_procedure_pret, cpu_procedure_nret);
         CPU_PACK5(MODE_PROCEDURE, cpu_procedure_call, cpu_procedure_fcal, cpu_procedure_zcal, cpu_procedure_pcal, cpu_procedure_ncal);
+        CPU_PACK5(MODE_SLEEP, cpu_sleep_real, cpu_sleep_fake, cpu_sleep_micr, cpu_sleep_mili, cpu_sleep_seco);
     }
 }
 #endif

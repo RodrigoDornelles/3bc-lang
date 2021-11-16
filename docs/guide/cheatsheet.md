@@ -46,7 +46,7 @@ CheatSheet
 | 40 | <br/> | reserved | <br/> |
 | 41 | **[MODE_PROCEDURE_RET](#mode-procedure-ret)** | procedure return | `nill` `back` `fret` `zret` `pret` `nret` `mode` |
 | 42 | **[MODE_PROCEDURE](#mode-procedure)** | procedure call | `nill` `call` `fcal` `zcal` `pcal` `ncal` `mode` |
-| 43 | **[MODE_PROCEDURE_TCO_RET ](#mode-procedure-tco-ret)** | procedure return with tco | `nill` `back` `fret` `zret` `pret` `nret` `mode` |
+| 43 | **[MODE_SLEEP](#mode-sleep)** | inactive cpu for a periodt of time | `nill` `real` `fake` `micr` `mili` `seco` `mode` |
 
 # Architecture details  #
 
@@ -421,14 +421,14 @@ CheatSheet
 | `pcal` | 4 | 100 | call label procedure if aux memory is positive |
 | `ncal` | 5 | 101 | call label procedure if aux memory is negative |
 
-## MODE PROCEDURE_RET_TCO ##
+## MODE SLEEP ##
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
-| `call` | 1 | 001 | return from procedure at label unconditionally |
-| `fcal` | 2 | 010 | return from procedure at label if aux memory is fill |
-| `zcal` | 3 | 011 | return from procedure at label if aux memory is empty |
-| `pcal` | 4 | 100 | return from procedure at label if aux memory is positive |
-| `ncal` | 5 | 101 | return from procedure at label if aux memory is negative |
+| `real` | 1 | 001 | inactive cpu for x cycles (real hardware) |
+| `fake` | 2 | 010 | inactive cpu for x cycles (virtual machine) |
+| `micr` | 3 | 011 | inactive cpu for x microseconds |
+| 'mili` | 4 | 100 | inactive cpu for x milliseconds |
+| `seco` | 5 | 101 | inactive cpu for x seconds |
 
- * **NOTE**: _this cpu mode should be used for **Tail Call Optimization**, or else to make explicit when procedures will be terminated passing a label._
+ * **NOTE**: there may be an inaccuracy for values ​​less than 1 millisecond (depends of hardware).

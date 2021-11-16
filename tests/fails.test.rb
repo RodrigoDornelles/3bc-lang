@@ -15,18 +15,10 @@ class TestFails < Minitest::Test
         assert_equal 15, status.exitstatus
     end
 
-=begin DECREPTED
-    def test_cpu_protected
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 7\nstrc 0 0")
-        assert_match /ERROR CODE\: (0x3BC001)/, stderr
-        assert_equal 15, status.exitstatus
-    end
-=end
-
     def test_cpu_reserved
         for cpu_mode in (20..40).step(10)
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 #{cpu_mode}\n1 0 0")
-        assert_match /ERROR CODE\: (0x3BC002)/, stderr
+        assert_match /ERROR CODE\: (0x3BC001)/, stderr
         assert_equal 15, status.exitstatus
         end
     end
@@ -34,37 +26,43 @@ class TestFails < Minitest::Test
     def test_invalid_register
         for console_input in ["baaz 0 0", "7.0.11,2.0.0"]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
-        assert_match /ERROR CODE\: (0x3BC003)/, stderr
+        assert_match /ERROR CODE\: (0x3BC002)/, stderr
         assert_equal 15, status.exitstatus
         end
     end
 
     def test_invalid_address
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode e nill")
-        assert_match /ERROR CODE\: (0x3BC004)/, stderr
+        assert_match /ERROR CODE\: (0x3BC003)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_invalid_constant
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode nill e")
-        assert_match /ERROR CODE\: (0x3BC005)/, stderr
+        assert_match /ERROR CODE\: (0x3BC004)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_invalid_cpu_mode
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode nill full")
-        assert_match /ERROR CODE\: (0x3BC006)/, stderr
+        assert_match /ERROR CODE\: (0x3BC005)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_invalid_label
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "nill nill 1\nnill nill 1")
-        assert_match /ERROR CODE\: (0x3BC007)/, stderr
+        assert_match /ERROR CODE\: (0x3BC006)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_param_ambiguous
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 2\nstri 1 1")
+        assert_match /ERROR CODE\: (0x3BC007)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
+    def test_param_required_any
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.43,fake.0.0")
         assert_match /ERROR CODE\: (0x3BC008)/, stderr
         assert_equal 15, status.exitstatus
     end

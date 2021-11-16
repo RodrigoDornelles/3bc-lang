@@ -126,23 +126,24 @@
 /**
  * PARAMTERS MACROS
  */
-#define PARAMS_DEFINE                   int reg, int address, int value
+#define PARAMS_DEFINE                   app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value
 #define VALIDATE_NOT_DUALITY            if(address!=0&&value!=0)driver_program_error(ERROR_PARAM_DUALITY);
 #define VALIDATE_NOT_ADRESS             if(address!=0)driver_program_error(ERROR_PARAM_BLOCKED_ADDRESS);
 #define VALIDATE_NOT_VALUES             if(value!=0)driver_program_error(ERROR_PARAM_BLOCKED_VALUE);
 #define VALIDATE_NOT_NEGATIVES          if(value<0||address<0||AUX<0)driver_program_error(ERROR_NUMBER_NEGATIVE);
 #define REQUIRED_ADDRESS                if(address==0)driver_program_error(ERROR_PARAM_REQUIRE_ADDRESS);
 #define REQUIRED_VALUE                  if(value==0)driver_program_error(ERROR_PARAM_REQUIRE_VALUE);
+#define REQUIRED_ANY                    if(value==0&&address==0)driver_program_error(ERROR_PARAM_REQUIRE_ANY);
 #define AUX_USE_ANY_PARAM               driver_accumulator_set(GET_ANY_PARAM);
 
 /**
  * INSTRUCTIONS PACK MACROS
  */
-#define CPU_PACK_ZEROMODE(mode)     case((mode*7)+1):case((mode*7)+2):case((mode*7)+3):case((mode*7)+4):case((mode*7)+5):case((mode*7)+6):cpu_not_mode(0,0,0);break;
-#define CPU_PACK_RESERVED(mode)     case((mode*7)+1):case((mode*7)+2):case((mode*7)+3):case((mode*7)+4):case((mode*7)+5):case((mode*7)+6):cpu_mode_reserved(reg,address,value);break;
-#define CPU_PACK1(mode,a)           case((mode*7)+1):a(reg,address,value);break;
-#define CPU_PACK2(mode,a,b)         case((mode*7)+1):a(reg,address,value);break;case((mode*7)+2):b(reg,address,value);break;
-#define CPU_PACK3(mode,a,b,c)       case((mode*7)+1):a(reg,address,value);break;case((mode*7)+2):b(reg,address,value);break;case((mode*7)+3):c(reg,address,value);break;
-#define CPU_PACK4(mode,a,b,c,d)     case((mode*7)+1):a(reg,address,value);break;case((mode*7)+2):b(reg,address,value);break;case((mode*7)+3):c(reg,address,value);break;case((mode*7)+4):d(reg,address,value);break;
-#define CPU_PACK5(mode,a,b,c,d,e)   case((mode*7)+1):a(reg,address,value);break;case((mode*7)+2):b(reg,address,value);break;case((mode*7)+3):c(reg,address,value);break;case((mode*7)+4):d(reg,address,value);break;case((mode*7)+5):e(reg,address,value);break;
-#define CPU_PACK6(mode,a,b,c,d,e,f) case((mode*7)+1):a(reg,address,value);break;case((mode*7)+2):b(reg,address,value);break;case((mode*7)+3):c(reg,address,value);break;case((mode*7)+4):d(reg,address,value);break;case((mode*7)+5):e(reg,address,value);break;case((mode*7)+6):f(reg,address,value);break;
+#define CPU_PACK_ZEROMODE(mode)     case((mode*7)+1):case((mode*7)+2):case((mode*7)+3):case((mode*7)+4):case((mode*7)+5):case((mode*7)+6):cpu_not_mode(app,reg,address,value);break;
+#define CPU_PACK_RESERVED(mode)     case((mode*7)+1):case((mode*7)+2):case((mode*7)+3):case((mode*7)+4):case((mode*7)+5):case((mode*7)+6):cpu_mode_reserved(app,reg,address,value);break;
+#define CPU_PACK1(mode,a)           case((mode*7)+1):a(app,reg,address,value);break;
+#define CPU_PACK2(mode,a,b)         case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;
+#define CPU_PACK3(mode,a,b,c)       case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;case((mode*7)+3):c(app,reg,address,value);break;
+#define CPU_PACK4(mode,a,b,c,d)     case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;case((mode*7)+3):c(app,reg,address,value);break;case((mode*7)+4):d(app,reg,address,value);break;
+#define CPU_PACK5(mode,a,b,c,d,e)   case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;case((mode*7)+3):c(app,reg,address,value);break;case((mode*7)+4):d(app,reg,address,value);break;case((mode*7)+5):e(app,reg,address,value);break;
+#define CPU_PACK6(mode,a,b,c,d,e,f) case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;case((mode*7)+3):c(app,reg,address,value);break;case((mode*7)+4):d(app,reg,address,value);break;case((mode*7)+5):e(app,reg,address,value);break;case((mode*7)+6):f(app,reg,address,value);break;

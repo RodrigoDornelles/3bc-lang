@@ -1,6 +1,11 @@
 #define _3BC_SCU_FIX_2
 #include "3bc.h"
 
+#if defined(_3BC_ARDUINO)
+/** TODO: make compatible with xtensa **/
+extern volatile unsigned long timer0_overflow_count;
+#endif
+
 /**
  * VM processor context manager, allows asychronism.
  */
@@ -42,10 +47,10 @@ bool driver_interrupt(app_3bc_t app)
             if (!tape_program_avaliable(app)) {
                 app->state = FSM_3BC_READING;
             }
-            /** TODO: this
-            else if (false) {
+            else if (app->cpu_mode == MODE_SLEEP && app->cache_l1.sleep_mode != SLEEP_3BC_NONE) {
                 app->state = FSM_3BC_WAITING;
             }
+            /** TODO
             else if (app->cache_l3.direction < 0) {
                 app->state = FSM_3BC_IO_READ;
             }
@@ -61,9 +66,85 @@ bool driver_interrupt(app_3bc_t app)
          * SLEEP CONTEXT
          */
         case FSM_3BC_WAITING:
-            if (false /** todo **/) {
-                app->state = FSM_3BC_RUNNING;
+            switch (app->cache_l1.sleep_mode)
+            {
+                case SLEEP_3BC_REAL_TICK:
+                {
+                    #if defined(_3BC_COMPUTER)
+                    unsigned long time_now = clock();
+                    #elif defined(_3BC_ARDUINO)
+                    unsigned long time_now = timer0_overflow_count;
+                    #endif
+                    if (app->cache_l3.sleep_called == 0) {
+                        app->cache_l3.sleep_called = time_now;
+                    }
+                    else if ((time_now - app->cache_l3.sleep_called) > app->cache_l2.sleep_period) {
+                        break;
+                    }
+                    return true;
+                }
+
+                case SLEEP_3BC_FAKE_TICK:    
+                {
+                    app->cache_l2.sleep_period -= 1;
+                    if (app->cache_l2.sleep_period == 0) {
+                        break;
+                    }
+                    return true;
+                }
+
+                case SLEEP_3BC_MICROSECONDS:
+                {
+                    #if defined(_3BC_COMPUTER)
+                    unsigned long time_now = clock()/(CLOCKS_PER_SEC/1000/1000);
+                    #elif defined(_3BC_ARDUINO)
+                    unsigned long time_now = micros();
+                    #endif
+                    if (app->cache_l3.sleep_called == 0) {
+                        app->cache_l3.sleep_called = time_now;
+                    }
+                    else if ((time_now - app->cache_l3.sleep_called) > app->cache_l2.sleep_period) {
+                        break;
+                    }
+                    return true;
+                }
+
+                case SLEEP_3BC_MILLISECONDS:
+                {
+                    #if defined(_3BC_COMPUTER)
+                    unsigned long time_now = clock()/(CLOCKS_PER_SEC/1000);
+                    #elif defined(_3BC_ARDUINO)
+                    unsigned long time_now = millis();
+                    #endif
+                    if (app->cache_l3.sleep_called == 0) {
+                        app->cache_l3.sleep_called = time_now;
+                    }
+                    else if ((time_now - app->cache_l3.sleep_called) > app->cache_l2.sleep_period) {
+                        break;
+                    }
+                    return true;
+                }
+
+                case SLEEP_3BC_SECONDS:
+                {
+                    #if defined(_3BC_COMPUTER)
+                    unsigned long time_now = time(NULL);
+                    #elif defined(_3BC_ARDUINO)
+                    unsigned long time_now = millis()/1000;
+                    #endif
+                    if (app->cache_l3.sleep_called == 0) {
+                        app->cache_l3.sleep_called = time_now;
+                    }
+                    else if ((time_now - app->cache_l3.sleep_called) > app->cache_l2.sleep_period) {
+                        break;
+                    }
+                    return true;
+                }
             }
+            app->state = FSM_3BC_RUNNING;
+            app->cache_l1.sleep_mode = SLEEP_3BC_NONE;
+            app->cache_l2.sleep_period = 0;
+            app->cache_l3.sleep_called = 0;
             return true;
 
         /**

@@ -112,6 +112,13 @@ void cpu_procedure_zret(PARAMS_DEFINE);
 void cpu_procedure_pret(PARAMS_DEFINE);
 void cpu_procedure_nret(PARAMS_DEFINE);
 
+/** FILE: cpu_sleep.c**/
+void cpu_sleep_real(PARAMS_DEFINE);
+void cpu_sleep_fake(PARAMS_DEFINE);
+void cpu_sleep_micr(PARAMS_DEFINE);
+void cpu_sleep_mili(PARAMS_DEFINE);
+void cpu_sleep_seco(PARAMS_DEFINE);
+
 /** FILE: cpu_string.c **/
 void cpu_string_strb(PARAMS_DEFINE);
 void cpu_string_stri(PARAMS_DEFINE);

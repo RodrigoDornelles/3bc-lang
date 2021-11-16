@@ -44,13 +44,14 @@ void custom_3bc_func_set(cpumode_3bc_t cpu_mode, register_3bc_t reg, function_3b
 void custom_3bc_func_call(cpumode_3bc_t cpu_mode, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
 {
     unsigned char atual_func = ((cpu_mode/10) - 1) * 6 + reg;
-    
+    app_3bc_t app = APP_3BC;
+
     /** custom function not found **/
     if (custom_funcs == NULL || custom_funcs[atual_func] == NULL || atual_func >= last_func) {
         driver_program_error(ERROR_CPU_RESERVED);
     }
     
-    custom_funcs[atual_func](reg, address, value);
+    custom_funcs[atual_func](app, reg, address, value);
 }
 #endif
 #endif
