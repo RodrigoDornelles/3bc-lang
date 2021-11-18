@@ -17,9 +17,9 @@ unsigned char last_func = 0;
  * DS: Dynamic Array
  *
  */
-void custom_3bc_func_set(app_3bc_t app, register_3bc_t reg, function_3bc_t lambda)
+void custom_3bc_func_set(app_3bc_t app, cpumode_3bc_t cpu_mode, register_3bc_t reg, function_3bc_t lambda)
 {
-    unsigned char atual_func = ((app->cpu_mode/10) - 1) * 6 + reg;
+    unsigned char atual_func = ((cpu_mode/10) - 1) * 6 + reg;
     
     /** expand array of functions **/
     if (custom_funcs == NULL || last_func <= atual_func){
