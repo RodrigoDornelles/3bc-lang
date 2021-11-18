@@ -50,7 +50,7 @@ int interpreter_3bc(app_3bc_t app)
         {
             char* new_buffer = (char*) realloc(app->cache_l3.buffer.storage, sizeof(char) * (++app->cache_l3.buffer.size));   
             if (new_buffer == NULL) {
-                driver_program_error(ERROR_OUT_OF_MEMORY);
+                driver_program_error(app, ERROR_OUT_OF_MEMORY);
             }
             app->cache_l3.buffer.storage = new_buffer;
             app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1] = '\0';
@@ -79,7 +79,7 @@ int interpreter_3bc(app_3bc_t app)
         char* new_buffer = (char*) realloc(app->cache_l3.buffer.storage, sizeof(char) * (++app->cache_l3.buffer.size));
             
         if (new_buffer == NULL) {
-            driver_program_error(ERROR_OUT_OF_MEMORY);
+            driver_program_error(app, ERROR_OUT_OF_MEMORY);
         }
         
         app->cache_l3.buffer.storage = new_buffer;
@@ -104,7 +104,7 @@ char* interpreter_3bc_compiler(app_3bc_t app, char* line)
     /** scan more 1 line**/
     if (!interpreter_3bc_tokens(line, &text_reg, &text_mem, &text_val, &line)) {
         fprintf(stderr, "%s, %s, %s, %s", text_reg, text_mem, text_val, line);
-        driver_program_error(ERROR_COLUMNS);
+        driver_program_error(app, ERROR_COLUMNS);
     }
     /** blank line **/
     if (text_reg == NULL) {
@@ -112,15 +112,15 @@ char* interpreter_3bc_compiler(app_3bc_t app, char* line)
     }
     /** parse string to register and validate **/
     if (!interpreter_3bc_syntax_registers(text_reg, &reg)){
-        driver_program_error(ERROR_INVALID_REGISTER);
+        driver_program_error(app, ERROR_INVALID_REGISTER);
     }
     /** parse string to address and validate **/
     if (!interpreter_3bc_syntax_constants(text_mem, &mem)){
-        driver_program_error(ERROR_INVALID_ADDRESS);
+        driver_program_error(app, ERROR_INVALID_ADDRESS);
     }
     /** parse string to constant and validate **/
     if (!interpreter_3bc_syntax_constants(text_val, &val)){
-        driver_program_error(ERROR_INVALID_CONSTANT);
+        driver_program_error(app, ERROR_INVALID_CONSTANT);
     }
     
     /** add new line **/
@@ -189,29 +189,29 @@ bool interpreter_3bc_parser_strtol(const char* string, signed long int* value)
 
         default:
             /** base invalid **/
-            driver_program_error(ERROR_NUMBER_WRONG_BASE); 
+            driver_program_error(app, ERROR_NUMBER_WRONG_BASE); 
     }
 
     if (decode == endptr){
-        driver_program_error(ERROR_NUMBER_NO_DIGITS);
+        driver_program_error(app, ERROR_NUMBER_NO_DIGITS);
     }
     else if (errno == ERANGE && *value == LONG_MIN){
-        driver_program_error(ERROR_NUMBER_UNDERFLOW);
+        driver_program_error(app, ERROR_NUMBER_UNDERFLOW);
     }
     else if (errno == ERANGE && *value == LONG_MAX){
-        driver_program_error(ERROR_NUMBER_OVERFLOW);
+        driver_program_error(app, ERROR_NUMBER_OVERFLOW);
     }
     #if defined(EINVAL)
     /** not in all c99 implementations **/
     else if (errno == EINVAL){ 
-        driver_program_error(ERROR_NUMBER_WRONG_BASE); 
+        driver_program_error(app, ERROR_NUMBER_WRONG_BASE); 
     }
     #endif
     else if (errno != 0 && *value == 0){
-        driver_program_error(ERROR_NUMBER_WRONG_BASE);    
+        driver_program_error(app, ERROR_NUMBER_WRONG_BASE);    
     }
     else if (errno == 0 && *endptr != 0){
-        driver_program_error(ERROR_NUMBER_WRONG_BASE);    
+        driver_program_error(app, ERROR_NUMBER_WRONG_BASE);    
     }
 
     return true;
@@ -226,7 +226,7 @@ bool interpreter_3bc_parser_strchar(const char* string, signed long int* value)
 
     /** not ends with (') **/
     if (string[2] != 0x27 && string[3] != 0x27) {
-        driver_program_error(ERROR_CHAR_SIZE);
+        driver_program_error(app, ERROR_CHAR_SIZE);
     }
 
     /** single char **/
@@ -237,7 +237,7 @@ bool interpreter_3bc_parser_strchar(const char* string, signed long int* value)
 
     /** not scape **/
     if (string[1] != '\\') {
-        driver_program_error(ERROR_CHAR_SIZE);
+        driver_program_error(app, ERROR_CHAR_SIZE);
     }
 
     /** scape controll char **/
@@ -250,7 +250,7 @@ bool interpreter_3bc_parser_strchar(const char* string, signed long int* value)
         case 'n': *value = 0x0A; break;
         case '\'': *value = 0x27; break;
         case '\\': *value = 0x5c; break;
-        default: driver_program_error(ERROR_CHAR_SCAPE);
+        default: driver_program_error(app, ERROR_CHAR_SCAPE);
     }
 
     return true;

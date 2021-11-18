@@ -19,7 +19,7 @@ void cpu_test_none_tty(PARAMS_DEFINE)
 
 void cpu_test_unsupported(PARAMS_DEFINE)
 {
-    driver_program_error(ERROR_UNSUPPORTED);
+    driver_program_error(app, ERROR_UNSUPPORTED);
 }
 
 void cpu_test_scape_characters(PARAMS_DEFINE)

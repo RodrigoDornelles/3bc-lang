@@ -5,48 +5,48 @@
  * record program memory,
  * similar to writing a line on the punch card.
  */
-void tape_program_line_add(register_3bc_t reg, address_3bc_t mem, data_3bc_t val)
+void tape_program_line_add(app_3bc_t app, register_3bc_t reg, address_3bc_t mem, data_3bc_t val)
 {
     /** register point label for jumps logical **/
     if (reg == NILL && mem == NILL && val != NILL) {
-        tape_program_label_insert(val, APP_3BC->program.last_cpu, APP_3BC->program.tail);
+        tape_program_label_insert(app, val);
         return;
     }
 
     /** remember last cpu change interpreted **/
     if (reg == MODE) {
-        APP_3BC->program.last_cpu = val;
+        app->program.last_cpu = val;
     }
 
     /** register program bytecode **/
-    tape_program_resize();
-    APP_3BC->program.tail->column.reg = reg;
-    APP_3BC->program.tail->column.adr = mem;
-    APP_3BC->program.tail->column.dta = val;
+    tape_program_resize(app);
+    app->program.tail->column.reg = reg;
+    app->program.tail->column.adr = mem;
+    app->program.tail->column.dta = val;
 }
 
 /**
  * Expand program memory,
  * provide more punch card lines.
  */
-void tape_program_resize()
+void tape_program_resize(app_3bc_t app)
 {
-    struct line_node_s* prev_line_node = APP_3BC->program.tail;
+    struct line_node_s* prev_line_node = app->program.tail;
     struct line_node_s* new_line_node = (struct line_node_s*) malloc(sizeof (struct line_node_s));
 
     /** was not possible expand program **/
     if (new_line_node == NULL) {
-        driver_program_error(ERROR_OUT_OF_MEMORY);
+        driver_program_error(app, ERROR_OUT_OF_MEMORY);
     }
     
     /** first line program **/
-    if (APP_3BC->program.head == NULL) {
-        APP_3BC->program.head = new_line_node;
+    if (app->program.head == NULL) {
+        app->program.head = new_line_node;
     }
 
     /** current line program **/
-    if (APP_3BC->program.curr == NULL){
-        APP_3BC->program.curr = new_line_node;
+    if (app->program.curr == NULL){
+        app->program.curr = new_line_node;
     }
 
     /** link line program **/
@@ -55,33 +55,35 @@ void tape_program_resize()
     }
     
     /** last line program **/
-    APP_3BC->program.tail = new_line_node;
-    APP_3BC->program.tail->next = NULL;
-    APP_3BC->program.tail->line = APP_3BC->program.last_line;
+    app->program.tail = new_line_node;
+    app->program.tail->next = NULL;
+    app->program.tail->line = app->program.last_line;
 }
 
 /**
  * eject punch card program
  */
-void tape_program_destroy()
+void tape_program_destroy(app_3bc_t app)
 {
-    struct line_node_s* node = APP_3BC->program.head;
+    struct line_node_s* node = app->program.head;
     struct line_node_s* prev;
-    for (;node != NULL; prev = node, node = node->next, free(prev));
+    for (;node != NULL; prev = node, node = node->next){
+        free(prev);
+    }
 }
 
 /**
  * mark point to logical jumps
  */
-void tape_program_label_insert(label_3bc_t label, cpumode_3bc_t cpumode, struct line_node_s* line)
-{
+void tape_program_label_insert(app_3bc_t app, label_3bc_t label)
+{ 
     unsigned char hash;
     struct label_node_s* new_node; 
     struct label_node_s* last_node; 
 
     /** label already exists **/
-    if (tape_program_label_search(label) != NULL) {
-        driver_program_error(ERROR_INVALID_LABEL);
+    if (tape_program_label_search(app) != NULL) {
+        driver_program_error(app, ERROR_INVALID_LABEL);
     }
 
     new_node = (struct label_node_s*) malloc(sizeof(struct label_node_s));
@@ -89,20 +91,20 @@ void tape_program_label_insert(label_3bc_t label, cpumode_3bc_t cpumode, struct 
 
     /** was not possible expand labels **/
     if (new_node == NULL) {
-        driver_program_error(ERROR_OUT_OF_MEMORY);
+        driver_program_error(app, ERROR_OUT_OF_MEMORY);
     }
 
     new_node->label = label;
-    new_node->point = APP_3BC->program.tail;
-    new_node->cpumode = APP_3BC->program.last_cpu;
+    new_node->point = app->program.tail;
+    new_node->cpumode = app->program.last_cpu;
 
-    if (APP_3BC->program.label_table[hash] == NULL) {
-        APP_3BC->program.label_table[hash] = new_node;
+    if (app->program.label_table[hash] == NULL) {
+        app->program.label_table[hash] = new_node;
         new_node->next = NULL;
         return;
     }
 
-    last_node = APP_3BC->program.label_table[hash];
+    last_node = app->program.label_table[hash];
     for (;last_node->next != NULL; last_node = last_node->next);
     last_node->next = new_node;
 }
@@ -110,12 +112,12 @@ void tape_program_label_insert(label_3bc_t label, cpumode_3bc_t cpumode, struct 
 /**
  * find label in hash tabel
  */
-struct label_node_s* tape_program_label_search(label_3bc_t label)
+struct label_node_s* tapa_program_label_search(app_3bc_t app)
 {
-    struct label_node_s* last_node = APP_3BC->program.label_table[label % LABEL_HASH_SIZE];
+    struct label_node_s* last_node = app->program.label_table[app->program.label_target % LABEL_HASH_SIZE];
     
     while (last_node != NULL) {
-        if (last_node->label == label) {
+        if (last_node->label == app->program.label_target) {
             return last_node;
         }
 
@@ -133,7 +135,7 @@ bool tape_program_avaliable(app_3bc_t app)
 {
     /** waits for a label **/
     if (app->program.label_target != NILL) {
-        struct label_node_s* label_node = tape_program_label_search(app->program.label_target);
+        struct label_node_s* label_node = tape_program_label_search(app);
 
         /** cooming label **/
         if (label_node == NULL) {
@@ -146,7 +148,7 @@ bool tape_program_avaliable(app_3bc_t app)
         }
     
         /** jump to point **/
-        tape_router_cpu_set(label_node->cpumode);
+        driver_mode_set(app, label_node->cpumode);
         app->program.curr = label_node->point->next;
         app->program.label_target = NILL;
         return true;

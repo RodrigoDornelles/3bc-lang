@@ -45,9 +45,6 @@
 #if !defined(_3BC_SCU)
 #include "cpu_bool.c"
 #include "cpu_common.c"
-#include "cpu_debug.c"
-#include "cpu_helper.c"
-#include "cpu_input.c"
 #include "cpu_math.c"
 #include "cpu_jump.c"
 #include "cpu_memory.c"
@@ -59,11 +56,12 @@
 #include "driver_gpio.c"
 #include "driver_interrupt.c"
 #include "driver_memory.c"
+#include "driver_mode.c"
 #include "driver_power.c"
 #include "driver_program.c"
 #include "ds_memory_llrbt.c"
+#include "ds_container_darray.c"
 #include "ds_procedure_lifo.c"
 #include "tape_program.c"
-#include "tape_router.c"
 #endif
 #endif

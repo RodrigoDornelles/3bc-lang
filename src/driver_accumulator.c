@@ -1,12 +1,12 @@
 #define _3BC_SCU_FIX_2
 #include "3bc.h"
 
-data_aux_3bc_t driver_accumulator_get()
+data_aux_3bc_t driver_accumulator_get(app_3bc_t app)
 {
-    return APP_3BC->mem_aux;
+    return app->mem_aux;
 }
 
-void driver_accumulator_set(data_aux_3bc_t value)
+void driver_accumulator_set(app_3bc_t app, data_aux_3bc_t value)
 {
-    APP_3BC->mem_aux = value;
+    app->mem_aux = value;
 }

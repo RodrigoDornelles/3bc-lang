@@ -2,25 +2,25 @@
 #define _3BC_SCU_FIX
 #include "3bc.h"
 
-void driver_program_error(enum error_3bc_e error_code)
+void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
 {
     /**
      * NOTE: if the current line does not exist,
      * it was because it was interpreting a line which failed.
      */
-    line_3bc_t error_line = APP_3BC->program.curr != NULL && error_code >= ERROR_CPU_ZERO?
-        APP_3BC->program.curr->line:
-        APP_3BC->program.last_line;
+    line_3bc_t error_line = app->program.curr != NULL && error_code >= ERROR_CPU_ZERO?
+        app->program.curr->line:
+        app->program.last_line;
 
     #ifdef _3BC_COMPACT
     /** smaller log erros for economy rom memory **/
-    char error_code_string[48];
+    char error_code_string[64];
     snprintf(error_code_string, sizeof(error_code_string), "\n\n[3BC] Fatal error 0x%06X in line: %d\n", error_code, error_line);
-    driver_tty_output_raw(APP_3BC->tty_error, error_code_string);
+    driver_tty_output_raw(app->tty_error, error_code_string);
     #else
     char error_code_string[128];
-    snprintf(error_code_string, sizeof(error_code_string), "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM\n> ERROR LINE: %06d\n> ERROR CODE: 0x%06X\n> ERROR DESCRIPTION: ", error_line, error_code);
-    driver_tty_output_raw(APP_3BC->tty_error, error_code_string);
+    snprintf(error_code_string, sizeof(error_code_string), "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM\n> ERROR LINE: %6d\n> ERROR CODE: 0x%06X\n> DESCRIPTION: ", error_line, error_code);
+    driver_tty_output_raw(app->tty_error, error_code_string);
 
     switch((long) (error_code))
     {
@@ -56,17 +56,13 @@ void driver_program_error(enum error_3bc_e error_code)
         ERROR_LOG_3BC(ERROR_CHAR_SCAPE, "INVALID CHARACTER ESCAPE");
         ERROR_LOG_3BC(ERROR_CHAR_SIZE, "INVALID CHARACTER SIZE");
         ERROR_LOG_3BC(ERROR_COLUMNS, "WRONG NUMBER OF COLUMNS");
-        default: driver_tty_output_raw(APP_3BC->tty_error, "UNKNOWN ERROR");
+        default: driver_tty_output_raw(app->tty_error, "UNKNOWN ERROR");
     }
 
-    driver_tty_output_raw(APP_3BC->tty_error, "\n");
+    driver_tty_output_raw(app->tty_error, "\n");
     #endif
 
-    #if defined(_3BC_COMPUTER) || defined(_3BC_PC_1970)
-    driver_power_exit(error_code >= ERROR_CPU_ZERO? SIGTERM: error_code);
-    #elif defined(_3BC_ARDUINO)
-    driver_power_exit();
-    #endif
+    driver_power_exit(app);
 }
 
 /**

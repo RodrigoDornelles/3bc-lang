@@ -40,8 +40,10 @@ optional_inline void driver_tty_exit()
 
 /**
  * detect keyboard input
+ *
+ * TODO: More compatible tty
  */
-data_3bc_t driver_tty_input(register_3bc_t type, address_3bc_t addres)
+data_3bc_t driver_tty_input(struct tty_3bc_s tty, register_3bc_t type, address_3bc_t addres)
 {
     signed int value;
     char c[2] = "\0";
@@ -116,7 +118,7 @@ void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
 
     switch (type) {
         #if defined(_3BC_MOS6502)
-        driver_program_error(ERROR_UNSUPPORTED);
+        driver_program_error(app, ERROR_UNSUPPORTED);
         #else
         case STRB:
         {
@@ -176,6 +178,6 @@ void driver_tty_output_raw(struct tty_3bc_s tty, const char* string)
         return;
     }
     else if (tty.type == STREAM_TYPE_NONE) {
-        driver_program_error(ERROR_NONE_TTY);
+        driver_program_error(app, ERROR_NONE_TTY);
     }
 }

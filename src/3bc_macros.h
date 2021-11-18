@@ -72,13 +72,8 @@
 #define LLRBT_BLACK                 (false)
 #define LLRBT_RED                   (true)
 
-#ifndef APP_3BC
-#define _3BC_APP_UNIQUE
-#define APP_3BC                     (bootstrap_3bc())
-#endif
-
 #ifndef AUX
-#define AUX                         (driver_accumulator_get())
+#define AUX                         (driver_accumulator_get(app))
 #endif
 
 #ifndef LABEL_HASH_SIZE
@@ -90,7 +85,7 @@
 #endif
 
 #ifndef GET_ANY_PARAM
-#define GET_ANY_PARAM               (address?driver_memory_data_get(address):value)
+#define GET_ANY_PARAM               (address?driver_memory_data_get(app,address):value)
 #endif 
 
 #define MEM_CONFIG_RESERVED         (0b00000001) /** unused for a while **/
@@ -105,7 +100,7 @@
  */
 #define PARSER_UNPACK(c)                (tolower(c[0])|tolower(c[1])<<8|(long)tolower(c[2])<<16|(long)tolower(c[3])<<24)
 #define PARSER_PACK(c1,c2,c3,c4,v,r)    case(c1|c2<<8|(long)c3<<16|(long)c4<<24):*v=r;return(true)
-#define ERROR_LOG_3BC(a,b)              case(a):driver_tty_output_raw(APP_3BC->tty_error,(b));break;
+#define ERROR_LOG_3BC(a,b)              case(a):driver_tty_output_raw(app->tty_error,(b));break;
 #define LLRBT_IS_RED(n)                 (n==NULL?false:n->color==LLRBT_RED)
 #define POINTER(a)                      (driver_memory_pointer(a))
 #define BITFIELD_HAS(a,b)               ((b)==((a)&(b)))
@@ -127,14 +122,13 @@
  * PARAMTERS MACROS
  */
 #define PARAMS_DEFINE                   app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value
-#define VALIDATE_NOT_DUALITY            if(address!=0&&value!=0)driver_program_error(ERROR_PARAM_DUALITY);
-#define VALIDATE_NOT_ADRESS             if(address!=0)driver_program_error(ERROR_PARAM_BLOCKED_ADDRESS);
-#define VALIDATE_NOT_VALUES             if(value!=0)driver_program_error(ERROR_PARAM_BLOCKED_VALUE);
-#define VALIDATE_NOT_NEGATIVES          if(value<0||address<0||AUX<0)driver_program_error(ERROR_NUMBER_NEGATIVE);
-#define REQUIRED_ADDRESS                if(address==0)driver_program_error(ERROR_PARAM_REQUIRE_ADDRESS);
-#define REQUIRED_VALUE                  if(value==0)driver_program_error(ERROR_PARAM_REQUIRE_VALUE);
-#define REQUIRED_ANY                    if(value==0&&address==0)driver_program_error(ERROR_PARAM_REQUIRE_ANY);
-#define AUX_USE_ANY_PARAM               driver_accumulator_set(GET_ANY_PARAM);
+#define VALIDATE_NOT_DUALITY            if(address!=0&&value!=0)driver_program_error(app, ERROR_PARAM_DUALITY);
+#define VALIDATE_NOT_ADRESS             if(address!=0)driver_program_error(app, ERROR_PARAM_BLOCKED_ADDRESS);
+#define VALIDATE_NOT_VALUES             if(value!=0)driver_program_error(app, ERROR_PARAM_BLOCKED_VALUE);
+#define VALIDATE_NOT_NEGATIVES          if(value<0||address<0||AUX<0)driver_program_error(app, ERROR_NUMBER_NEGATIVE);
+#define REQUIRED_ADDRESS                if(address==0)driver_program_error(app, ERROR_PARAM_REQUIRE_ADDRESS);
+#define REQUIRED_VALUE                  if(value==0)driver_program_error(app, ERROR_PARAM_REQUIRE_VALUE);
+#define REQUIRED_ANY                    if(value==0&&address==0)driver_program_error(app, ERROR_PARAM_REQUIRE_ANY);
 
 /**
  * INSTRUCTIONS PACK MACROS

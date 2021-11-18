@@ -1,33 +1,46 @@
 #define _3BC_SCU_FIX_2
 #include "3bc.h"
 
-void cpu_string_strb(PARAMS_DEFINE)
+void cpu_string_debug(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    driver_tty_output(APP_3BC->tty_output, STRB, GET_ANY_PARAM);
+    driver_tty_output(app->tty_debug, reg, GET_ANY_PARAM);
 }
 
-void cpu_string_stri(PARAMS_DEFINE)
+void cpu_string_output(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    driver_tty_output(APP_3BC->tty_output, STRI, GET_ANY_PARAM);
+    driver_tty_output(app->tty_output, reg, GET_ANY_PARAM);
 }
 
-void cpu_string_strc(PARAMS_DEFINE)
+void cpu_string_input(PARAMS_DEFINE)
 {
-    VALIDATE_NOT_DUALITY
-    driver_tty_output(APP_3BC->tty_output, STRC, GET_ANY_PARAM);
+    VALIDATE_NOT_VALUES
+    {
+        data_3bc_t aux = driver_tty_input(app->tty_input, reg);
+        driver_accumulator_set(app, aux);
+        driver_memory_data_set(app, address, aux);
+        driver_tty_output(app->tty_keylog, reg, aux);
+    }
 }
 
-void cpu_string_stro(PARAMS_DEFINE)
+void cpu_string_input_silent(PARAMS_DEFINE)
 {
-    VALIDATE_NOT_DUALITY
-    driver_tty_output(APP_3BC->tty_output, STRO, GET_ANY_PARAM);
+    VALIDATE_NOT_VALUES
+    {
+        data_3bc_t aux = driver_tty_input(app->tty_input, reg);
+        driver_accumulator_set(app, aux);
+        driver_memory_data_set(app, address, aux);
+    }
 }
 
-void cpu_string_strx(PARAMS_DEFINE)
+void cpu_string_input_password(PARAMS_DEFINE)
 {
-    VALIDATE_NOT_DUALITY
-    driver_tty_output(APP_3BC->tty_output, STRX, GET_ANY_PARAM);
+    VALIDATE_NOT_VALUES
+    {
+        data_3bc_t aux = driver_tty_input(app->tty_input, reg);
+        driver_accumulator_set(app, aux);
+        driver_memory_data_set(app, address, aux);
+        driver_tty_output(app->tty_keylog, STRC, '*');
+    }
 }
-

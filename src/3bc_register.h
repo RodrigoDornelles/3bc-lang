@@ -113,11 +113,11 @@ void instruction_3bc(app_3bc_t app, register_3bc_t reg, address_3bc_t address, d
         /** prevent enter in invalid cpu mode **/
         default: cpu_not_exist(app, 0,0,0);
         CPU_PACK_ZEROMODE(MODE_EMPUTY);
-        CPU_PACK5(MODE_DEBUG, cpu_debug_strb, cpu_debug_stro, cpu_debug_stri, cpu_debug_strx, cpu_debug_strc);
-        CPU_PACK5(MODE_STRING, cpu_string_strb, cpu_string_stro, cpu_string_stri, cpu_string_strx, cpu_string_strc);
-        CPU_PACK5(MODE_INPUT, cpu_input_strb, cpu_input_stro, cpu_input_stri, cpu_input_strx, cpu_input_strc);
-        CPU_PACK5(MODE_INPUT_SILENT, cpu_input_silent_strb, cpu_input_silent_stro, cpu_input_silent_stri, cpu_input_silent_strx, cpu_input_silent_strc);
-        CPU_PACK5(MODE_INPUT_PASSWORD, cpu_input_password_strb, cpu_input_password_stro, cpu_input_password_stri, cpu_input_password_strx, cpu_input_password_strc);
+        CPU_PACK5(MODE_DEBUG, cpu_string_debug, cpu_string_debug, cpu_string_debug, cpu_string_debug, cpu_string_debug);
+        CPU_PACK5(MODE_STRING, cpu_string_output, cpu_string_output, cpu_string_output, cpu_string_output, cpu_string_output);
+        CPU_PACK5(MODE_INPUT, cpu_string_input, cpu_string_input, cpu_string_input, cpu_string_input, cpu_string_input);
+        CPU_PACK5(MODE_INPUT_SILENT, cpu_string_input_silent, cpu_string_input_silent, cpu_string_input_silent, cpu_string_input_silent, cpu_string_input_silent);
+        CPU_PACK5(MODE_INPUT_PASSWORD, cpu_string_input_password, cpu_input_string_password, cpu_input_password, cpu_string_input_password, cpu_string_input_password);
         CPU_PACK4(MODE_MEMORY, cpu_memory_free, cpu_memory_aloc, cpu_memory_moff, cpu_memory_muse);
         CPU_PACK5(MODE_MEMORY_PTR, cpu_memory_ptr_free, cpu_memory_ptr_aloc, cpu_memory_ptr_pull, cpu_memory_ptr_spin, cpu_memory_ptr_push);
         CPU_PACK5(MODE_MEMORY_AUX, cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_spin, cpu_memory_aux_push);
@@ -131,17 +131,11 @@ void instruction_3bc(app_3bc_t app, register_3bc_t reg, address_3bc_t address, d
         CPU_PACK1(MODE_MATH_POWER, cpu_math_power);
         CPU_PACK1(MODE_MATH_ROOT, cpu_math_root);
         CPU_PACK1(MODE_MATH_ABS, cpu_math_abs);
-        CPU_PACK1(MODE_MATH_NEGATIVE, cpu_math_negative);
+        CPU_PACK4(MODE_HELPER_MUL_ADD, cpu_math_mul_add, cpu_math_mul_add, cpu_math_mul_add, cpu_math_mul_add);
         CPU_PACK_RESERVED(MODE_CUSTOM_2);
-        CPU_PACK1(MODE_HELPER_AVARAGE, cpu_helper_average);
-        CPU_PACK1(MODE_HELPER_SIGN, cpu_helper_sign);
-        CPU_PACK1(MODE_HELPER_MAX, cpu_helper_max);
-        CPU_PACK1(MODE_HELPER_MIN, cpu_helper_min);
-        CPU_PACK1(MODE_HELPER_PERCENTAGE, cpu_helper_percentage);
-        CPU_PACK4(MODE_HELPER_REVERSE, cpu_helper_reverse, cpu_helper_reverse, cpu_helper_reverse, cpu_helper_reverse);
-        CPU_PACK1(MODE_HELPER_LOG2, cpu_helper_log2);
-        CPU_PACK1(MODE_HELPER_LOG10, cpu_helper_log10);
-        CPU_PACK4(MODE_HELPER_MUL_ADD, cpu_helper_mul_add, cpu_helper_mul_add, cpu_helper_mul_add, cpu_helper_mul_add);
+        /** TODO: boolean bitwise **/
+        /** TODO: boolean algebra implication bitwise **/
+        CPU_PACK1(MODE_MATH_LOG_BASE, cpu_math_logb);
         CPU_PACK_RESERVED(MODE_CUSTOM_3);
         CPU_PACK1(MODE_BOOLEAN_NOT, cpu_bool_not);
         CPU_PACK1(MODE_BOOLEAN_AND, cpu_bool_and);
@@ -150,8 +144,8 @@ void instruction_3bc(app_3bc_t app, register_3bc_t reg, address_3bc_t address, d
         CPU_PACK1(MODE_BOOLEAN_NAND, cpu_bool_nand);
         CPU_PACK1(MODE_BOOLEAN_NOR, cpu_bool_nor);
         CPU_PACK1(MODE_BOOLEAN_XNOR, cpu_bool_xnor);
-        CPU_PACK1(MODE_BOOLEAN_AND_NOT, cpu_bool_and_not);
-        CPU_PACK1(MODE_BOOLEAN_OR_NOT, cpu_bool_or_not);
+        /** TODO: boolean algebra implication **/
+        CPU_PACK1(MODE_MATH_LOG_NATURAL, cpu_math_logn);
         CPU_PACK_RESERVED(MODE_CUSTOM_4);
         CPU_PACK5(MODE_PROCEDURE_RET, cpu_procedure_back, cpu_procedure_fret, cpu_procedure_zret, cpu_procedure_pret, cpu_procedure_nret);
         CPU_PACK5(MODE_PROCEDURE, cpu_procedure_call, cpu_procedure_fcal, cpu_procedure_zcal, cpu_procedure_pcal, cpu_procedure_ncal);
