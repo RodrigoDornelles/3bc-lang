@@ -141,3 +141,13 @@
 #define CPU_PACK4(mode,a,b,c,d)     case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;case((mode*7)+3):c(app,reg,address,value);break;case((mode*7)+4):d(app,reg,address,value);break;
 #define CPU_PACK5(mode,a,b,c,d,e)   case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;case((mode*7)+3):c(app,reg,address,value);break;case((mode*7)+4):d(app,reg,address,value);break;case((mode*7)+5):e(app,reg,address,value);break;
 #define CPU_PACK6(mode,a,b,c,d,e,f) case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;case((mode*7)+3):c(app,reg,address,value);break;case((mode*7)+4):d(app,reg,address,value);break;case((mode*7)+5):e(app,reg,address,value);break;case((mode*7)+6):f(app,reg,address,value);break;
+
+/**
+ * USER MACROS
+ */
+#define lang_3bc_update          driver_interrupt
+#define lang_3bc_init            driver_power_init
+#define lang_3bc_line            tape_program_line_add
+/** TODO: POO **/
+#define lang_io_call(tty,l);     APP_3BC->tty.type=STREAM_TYPE_FUNCTION_CALL;APP_3BC->tty.io.lambda=l;
+#define lang_fpga                custom_3bc_func_set

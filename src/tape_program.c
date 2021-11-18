@@ -112,7 +112,7 @@ void tape_program_label_insert(app_3bc_t app, label_3bc_t label)
 /**
  * find label in hash tabel
  */
-struct label_node_s* tapa_program_label_search(app_3bc_t app)
+struct label_node_s* tape_program_label_search(app_3bc_t app)
 {
     struct label_node_s* last_node = app->program.label_table[app->program.label_target % LABEL_HASH_SIZE];
     
