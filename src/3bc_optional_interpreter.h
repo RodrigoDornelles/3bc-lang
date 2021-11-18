@@ -20,13 +20,13 @@ int interpreter_3bc(app_3bc_t app) {
 #elif defined(_3BC_ENABLE_INTERPRETER)
 int interpreter_3bc(app_3bc_t app);
 char* interpreter_3bc_compiler(app_3bc_t app, char* line);
-bool interpreter_3bc_parser_strtol(const char* string, signed long int* value);
-bool interpreter_3bc_parser_strchar(const char* string, signed long int* value);
+bool interpreter_3bc_parser_strtol(app_3bc_t app, const char* string, signed long int* value);
+bool interpreter_3bc_parser_strchar(app_3bc_t app, const char* string, signed long int* value);
 bool interpreter_3bc_parser_strhash(const char* string, signed long int* value);
 int interpreter_3bc_parser_skip();
 int interpreter_3bc_read(app_3bc_t app);
-bool interpreter_3bc_syntax_registers(const char* string, signed long int* value);
-bool interpreter_3bc_syntax_constants(const char* string, signed long int* value);
+bool interpreter_3bc_syntax_registers(app_3bc_t app, const char* string, signed long int* value);
+bool interpreter_3bc_syntax_constants(app_3bc_t app, const char* string, signed long int* value);
 bool interpreter_3bc_tokens(char* line, char** reg, char** mem, char** val, char** line_end);
 
 /**
@@ -111,20 +111,20 @@ char* interpreter_3bc_compiler(app_3bc_t app, char* line)
         return line;
     }
     /** parse string to register and validate **/
-    if (!interpreter_3bc_syntax_registers(text_reg, &reg)){
+    if (!interpreter_3bc_syntax_registers(app, text_reg, &reg)){
         driver_program_error(app, ERROR_INVALID_REGISTER);
     }
     /** parse string to address and validate **/
-    if (!interpreter_3bc_syntax_constants(text_mem, &mem)){
+    if (!interpreter_3bc_syntax_constants(app, text_mem, &mem)){
         driver_program_error(app, ERROR_INVALID_ADDRESS);
     }
     /** parse string to constant and validate **/
-    if (!interpreter_3bc_syntax_constants(text_val, &val)){
+    if (!interpreter_3bc_syntax_constants(app, text_val, &val)){
         driver_program_error(app, ERROR_INVALID_CONSTANT);
     }
     
     /** add new line **/
-    tape_program_line_add(reg, mem, val);
+    tape_program_line_add(app, reg, mem, val);
 
     return line;
 }
@@ -132,7 +132,7 @@ char* interpreter_3bc_compiler(app_3bc_t app, char* line)
 /**
  * convert string in any numeric base
  */
-bool interpreter_3bc_parser_strtol(const char* string, signed long int* value)
+bool interpreter_3bc_parser_strtol(app_3bc_t app, const char* string, signed long int* value)
 {
     char* endptr = NULL;
     char decode[32];
@@ -217,7 +217,7 @@ bool interpreter_3bc_parser_strtol(const char* string, signed long int* value)
     return true;
 }
 
-bool interpreter_3bc_parser_strchar(const char* string, signed long int* value)
+bool interpreter_3bc_parser_strchar(app_3bc_t app, const char* string, signed long int* value)
 {
     /** not init with (') **/
     if (string[0] != 0x27) {
@@ -293,7 +293,7 @@ int interpreter_3bc_parser_skip()
     return hash % SHRT_MAX;
 }
 
-bool interpreter_3bc_syntax_registers(const char* string, signed long int* value)
+bool interpreter_3bc_syntax_registers(app_3bc_t app, const char* string, signed long int* value)
 {
     /** mnemonic translate world to register **/
     switch(PARSER_UNPACK(string))
@@ -349,14 +349,14 @@ bool interpreter_3bc_syntax_registers(const char* string, signed long int* value
     }
 
     /** passing register as numerical (octo, bin) **/
-    if(interpreter_3bc_parser_strtol(string, value)){
+    if(interpreter_3bc_parser_strtol(app, string, value)){
         return true;
     }
 
     return false;
 }
 
-bool interpreter_3bc_syntax_constants(const char* string, signed long int* value)
+bool interpreter_3bc_syntax_constants(app_3bc_t app, const char* string, signed long int* value)
 {
     switch(PARSER_UNPACK(string))
     {
@@ -365,10 +365,10 @@ bool interpreter_3bc_syntax_constants(const char* string, signed long int* value
         PARSER_PACK('s', 'k', 'i', 'p', value, interpreter_3bc_parser_skip());
     }
 
-    if (interpreter_3bc_parser_strtol(string, value)){
+    if (interpreter_3bc_parser_strtol(app, string, value)){
         return true;
     }
-    else if (interpreter_3bc_parser_strchar(string, value)){
+    else if (interpreter_3bc_parser_strchar(app, string, value)){
         return true;    
     }
     else if (interpreter_3bc_parser_strhash(string, value)) {

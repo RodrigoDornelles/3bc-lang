@@ -19,17 +19,9 @@
 #define MODE_MATH_POWER         (16)
 #define MODE_MATH_ROOT          (17)
 #define MODE_MATH_ABS           (18)
-#define MODE_MATH_NEGATIVE      (19)
+#define MODE_MATH_MUL_ADD       (19)
 #define MODE_CUSTOM_2           (20)
-#define MODE_HELPER_AVARAGE     (21)
-#define MODE_HELPER_SIGN        (22)
-#define MODE_HELPER_MAX         (23)
-#define MODE_HELPER_MIN         (24)
-#define MODE_HELPER_PERCENTAGE  (25)
-#define MODE_HELPER_REVERSE     (26)
-#define MODE_HELPER_LOG2        (27)
-#define MODE_HELPER_LOG10       (28)
-#define MODE_HELPER_MUL_ADD     (29)
+#define MODE_MATH_LOG_BASE      (29)
 #define MODE_CUSTOM_3           (30)
 #define MODE_BOOLEAN_NOT        (31)
 #define MODE_BOOLEAN_AND        (32)
@@ -38,8 +30,7 @@
 #define MODE_BOOLEAN_NAND       (35)
 #define MODE_BOOLEAN_NOR        (36)
 #define MODE_BOOLEAN_XNOR       (37)
-#define MODE_BOOLEAN_AND_NOT    (38)
-#define MODE_BOOLEAN_OR_NOT     (39)
+#define MODE_MATH_LOG_NATURAL   (39)
 #define MODE_CUSTOM_4           (40)
 #define MODE_PROCEDURE_RET      (41)
 #define MODE_PROCEDURE          (42)
@@ -117,7 +108,7 @@ void instruction_3bc(app_3bc_t app, register_3bc_t reg, address_3bc_t address, d
         CPU_PACK5(MODE_STRING, cpu_string_output, cpu_string_output, cpu_string_output, cpu_string_output, cpu_string_output);
         CPU_PACK5(MODE_INPUT, cpu_string_input, cpu_string_input, cpu_string_input, cpu_string_input, cpu_string_input);
         CPU_PACK5(MODE_INPUT_SILENT, cpu_string_input_silent, cpu_string_input_silent, cpu_string_input_silent, cpu_string_input_silent, cpu_string_input_silent);
-        CPU_PACK5(MODE_INPUT_PASSWORD, cpu_string_input_password, cpu_input_string_password, cpu_input_password, cpu_string_input_password, cpu_string_input_password);
+        CPU_PACK5(MODE_INPUT_PASSWORD, cpu_string_input_password, cpu_string_input_password, cpu_string_input_password, cpu_string_input_password, cpu_string_input_password);
         CPU_PACK4(MODE_MEMORY, cpu_memory_free, cpu_memory_aloc, cpu_memory_moff, cpu_memory_muse);
         CPU_PACK5(MODE_MEMORY_PTR, cpu_memory_ptr_free, cpu_memory_ptr_aloc, cpu_memory_ptr_pull, cpu_memory_ptr_spin, cpu_memory_ptr_push);
         CPU_PACK5(MODE_MEMORY_AUX, cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull, cpu_memory_aux_spin, cpu_memory_aux_push);
@@ -131,7 +122,7 @@ void instruction_3bc(app_3bc_t app, register_3bc_t reg, address_3bc_t address, d
         CPU_PACK1(MODE_MATH_POWER, cpu_math_power);
         CPU_PACK1(MODE_MATH_ROOT, cpu_math_root);
         CPU_PACK1(MODE_MATH_ABS, cpu_math_abs);
-        CPU_PACK4(MODE_HELPER_MUL_ADD, cpu_math_mul_add, cpu_math_mul_add, cpu_math_mul_add, cpu_math_mul_add);
+        CPU_PACK4(MODE_MATH_MUL_ADD, cpu_math_mul_add, cpu_math_mul_add, cpu_math_mul_add, cpu_math_mul_add);
         CPU_PACK_RESERVED(MODE_CUSTOM_2);
         /** TODO: boolean bitwise **/
         /** TODO: boolean algebra implication bitwise **/

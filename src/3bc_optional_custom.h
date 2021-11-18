@@ -3,7 +3,7 @@
 #if !(defined(ARDUINO) && defined(_3BC_SCU_FIX_2)) || (!defined(ARDUINO) && defined(_3BC_SCU_FIX))
 
 #if !defined(_3BC_ENABLE_CUSTOM)
-void custom_3bc_func_call(cpumode_3bc_t cpu_mode, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
+void custom_3bc_func_call(app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
 {
     driver_program_error(app, ERROR_CPU_RESERVED);
 }

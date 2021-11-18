@@ -57,7 +57,7 @@ void cpu_math_root(PARAMS_DEFINE)
     #if defined(_3BC_MOS6502)
     driver_program_error(app, ERROR_UNSUPPORTED);
     #else 
-    driver_accumulator_set((data_aux_3bc_t) pow((double) (AUX), (1 / (double) (GET_ANY_PARAM))));
+    driver_accumulator_set(app, (data_aux_3bc_t) pow((double) (AUX), (1 / (double) (GET_ANY_PARAM))));
     #endif
 }
 
@@ -65,7 +65,7 @@ void cpu_math_abs(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
     VALIDATE_NOT_VALUES
-    driver_accumulator_set((data_aux_3bc_t) labs((long int) AUX));
+    driver_accumulator_set(app, labs(AUX));
 }
 
 /**

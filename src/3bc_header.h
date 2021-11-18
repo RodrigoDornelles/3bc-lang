@@ -32,6 +32,8 @@ void cpu_math_mod(PARAMS_DEFINE);
 void cpu_math_power(PARAMS_DEFINE);
 void cpu_math_root(PARAMS_DEFINE);
 void cpu_math_abs(PARAMS_DEFINE);
+void cpu_math_logb(PARAMS_DEFINE);
+void cpu_math_logn(PARAMS_DEFINE);
 void cpu_math_mul_add(PARAMS_DEFINE);
 void cpu_jump_goto(PARAMS_DEFINE);
 void cpu_jump_fgto(PARAMS_DEFINE);
@@ -79,9 +81,9 @@ void cpu_string_input_password(PARAMS_DEFINE);
 /************************************************************/
 optional_inline void driver_tty_init(void);
 optional_inline void driver_tty_exit(void);
-data_3bc_t driver_tty_input(register_3bc_t type, address_3bc_t addres);
-void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
-void driver_tty_output_raw(struct tty_3bc_s tty,const char* string);
+data_3bc_t driver_tty_input(app_3bc_t app, struct tty_3bc_s tty, register_3bc_t type);
+void driver_tty_output(app_3bc_t app, struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
+void driver_tty_output_raw(app_3bc_t app, struct tty_3bc_s tty,const char* string);
 /************************************************************/
 void driver_gpio_setup(memory_conf_t conf, address_3bc_t pin);
 void driver_gpio_output(memory_conf_t conf, address_3bc_t pin, data_3bc_t data);
@@ -111,13 +113,13 @@ void driver_power_exit(app_3bc_t app);
 void driver_program_error(app_3bc_t app, enum error_3bc_e error_code);
 void driver_program_tick(app_3bc_t app);
 /************************************************************/
-void ds_procedure_lifo_push(app_3bc_t app, struct line_node_s* line_node, label_3bc_t label);
+void ds_procedure_lifo_push(app_3bc_t app);
 struct line_node_s* ds_procedure_lifo_pop(app_3bc_t app);
 /************************************************************/
 /** TODO: move **/
 int interpreter_3bc(app_3bc_t app);
 void custom_3bc_func_set(cpumode_3bc_t cpu_mode, register_3bc_t reg, function_3bc_t lambda);
-void custom_3bc_func_call(cpumode_3bc_t cpu_mode, register_3bc_t reg, address_3bc_t address, data_3bc_t value);
+void custom_3bc_func_call(app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value);
 /************************************************************/
 data_aux_3bc_t driver_accumulator_get(app_3bc_t app);
 void driver_accumulator_set(app_3bc_t app, data_aux_3bc_t value);

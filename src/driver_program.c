@@ -16,11 +16,11 @@ void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
     /** smaller log erros for economy rom memory **/
     char error_code_string[64];
     snprintf(error_code_string, sizeof(error_code_string), "\n\n[3BC] Fatal error 0x%06X in line: %d\n", error_code, error_line);
-    driver_tty_output_raw(app->tty_error, error_code_string);
+    driver_tty_output_raw(app, app->tty_error, error_code_string);
     #else
     char error_code_string[128];
     snprintf(error_code_string, sizeof(error_code_string), "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM\n> ERROR LINE: %6d\n> ERROR CODE: 0x%06X\n> DESCRIPTION: ", error_line, error_code);
-    driver_tty_output_raw(app->tty_error, error_code_string);
+    driver_tty_output_raw(app, app->tty_error, error_code_string);
 
     switch((long) (error_code))
     {
@@ -56,10 +56,10 @@ void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
         ERROR_LOG_3BC(ERROR_CHAR_SCAPE, "INVALID CHARACTER ESCAPE");
         ERROR_LOG_3BC(ERROR_CHAR_SIZE, "INVALID CHARACTER SIZE");
         ERROR_LOG_3BC(ERROR_COLUMNS, "WRONG NUMBER OF COLUMNS");
-        default: driver_tty_output_raw(app->tty_error, "UNKNOWN ERROR");
+        default: driver_tty_output_raw(app, app->tty_error, "UNKNOWN ERROR");
     }
 
-    driver_tty_output_raw(app->tty_error, "\n");
+    driver_tty_output_raw(app, app->tty_error, "\n");
     #endif
 
     driver_power_exit(app);

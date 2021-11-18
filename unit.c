@@ -14,7 +14,7 @@ void cpu_test_signal(PARAMS_DEFINE)
 void cpu_test_none_tty(PARAMS_DEFINE)
 {
     APP_3BC->tty_output.type = STREAM_TYPE_NONE;
-    driver_tty_output_raw(APP_3BC->tty_output, NULL);
+    driver_tty_output_raw(app, APP_3BC->tty_output, NULL);
 }
 
 void cpu_test_unsupported(PARAMS_DEFINE)

@@ -1,7 +1,7 @@
 #define _3BC_SCU_FIX_2
 #include "3bc.h"
 
-void ds_procedure_lifo_push(app_3bc_t app, struct line_node_s* line_node, label_3bc_t label)
+void ds_procedure_lifo_push(app_3bc_t app)
 {
     struct procedure_3bc_s* procedure = (struct procedure_3bc_s*) malloc(sizeof(struct procedure_3bc_s));
 
@@ -10,8 +10,7 @@ void ds_procedure_lifo_push(app_3bc_t app, struct line_node_s* line_node, label_
     }
 
     procedure->prev = app->program.stack;
-    procedure->remember = line_node;
-    procedure->label = label;
+    procedure->remember = app->program.curr;
 
     app->program.stack = procedure;
 }

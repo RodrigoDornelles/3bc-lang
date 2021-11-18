@@ -5,7 +5,7 @@ void cpu_procedure_call(PARAMS_DEFINE)
 {
     REQUIRED_VALUE
     VALIDATE_NOT_ADRESS
-    ds_procedure_lifo_push(app->program.curr, value);
+    ds_procedure_lifo_push(app);
     app->program.label_target = value;
 }
 
@@ -22,7 +22,7 @@ void cpu_procedure_fcal(PARAMS_DEFINE)
     REQUIRED_VALUE
     VALIDATE_NOT_ADRESS
     if (AUX != 0) {
-        ds_procedure_lifo_push(app->program.curr, value);
+        ds_procedure_lifo_push(app);
         app->program.label_target = value;
     }
 }
@@ -32,7 +32,7 @@ void cpu_procedure_zcal(PARAMS_DEFINE)
     REQUIRED_VALUE
     VALIDATE_NOT_ADRESS
     if (AUX == 0) {
-        ds_procedure_lifo_push(app->program.curr, value);
+        ds_procedure_lifo_push(app);
         app->program.label_target = value;
     }
 }
@@ -42,7 +42,7 @@ void cpu_procedure_pcal(PARAMS_DEFINE)
     REQUIRED_VALUE
     VALIDATE_NOT_ADRESS
     if (AUX > 0) {
-        ds_procedure_lifo_push(app->program.curr, value);
+        ds_procedure_lifo_push(app);
         app->program.label_target = value;
     }
 }
@@ -52,7 +52,7 @@ void cpu_procedure_ncal(PARAMS_DEFINE)
     REQUIRED_VALUE
     VALIDATE_NOT_ADRESS
     if (AUX < 0) {
-        ds_procedure_lifo_push(app->program.curr, value);
+        ds_procedure_lifo_push(app);
         app->program.label_target = value;
     }
 }
