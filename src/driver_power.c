@@ -10,7 +10,7 @@ app_3bc_t driver_power_init(int argc, char **argv)
 app_3bc_t driver_power_init()
 #endif
 {
-    app_3bc_t app = ds_container_darray_new();
+    app_3bc_t app = ds_hypervisor_darray_new();
 
     #if defined(_3BC_COMPUTER)
     /** TODO: move to driver_tty_init() **/
@@ -52,12 +52,12 @@ app_3bc_t driver_power_init()
 /**
  * JOKE:
  *
- * The supervisor is crazy!!
+ * The Hypervisor is crazy!!
  * anything dangerous, everything is down!!
  */
 void driver_power_signal(int sig)
 {
-    app_3bc_t* apps = ds_container_darray_get_all();
+    app_3bc_t* apps = ds_hypervisor_darray_get_all();
     app_3bc_t app;
 
     /**
@@ -92,9 +92,6 @@ void driver_power_signal(int sig)
     #endif
 }
 
-/**
- * UNSAFE SHUTDOWNS
- */
 void driver_power_exit(app_3bc_t app)
 {   
     if (app->state == FSM_3BC_STOPED) {

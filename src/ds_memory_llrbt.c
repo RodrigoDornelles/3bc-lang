@@ -3,28 +3,28 @@
 
 data_3bc_t ds_memory_llrbt_data_get(app_3bc_id app_id, address_3bc_t address)
 {
-    app_3bc_t app = ds_container_darray_get_one(app_id);
+    app_3bc_t app = ds_hypervisor_darray_get_one(app_id);
     struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     return node->data;   
 }
 
 data_3bc_t ds_memory_llrbt_conf_get(app_3bc_id app_id, address_3bc_t address)
 {
-    app_3bc_t app = ds_container_darray_get_one(app_id);
+    app_3bc_t app = ds_hypervisor_darray_get_one(app_id);
     struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     return node->conf;   
 }
 
 void ds_memory_llrbt_data_set(app_3bc_id app_id, address_3bc_t address, data_3bc_t value)
 {
-    app_3bc_t app = ds_container_darray_get_one(app_id);
+    app_3bc_t app = ds_hypervisor_darray_get_one(app_id);
     struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     node->data = value;   
 }
 
 void ds_memory_llrbt_conf_set(app_3bc_id app_id, address_3bc_t address, data_3bc_t conf)
 {
-    app_3bc_t app = ds_container_darray_get_one(app_id);
+    app_3bc_t app = ds_hypervisor_darray_get_one(app_id);
     struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     node->conf = conf;   
 }

@@ -9,7 +9,7 @@ app_3bc_t _instances[3] = {NULL};
 /**
  * TODO: Dynamic array
  */
-app_3bc_t ds_container_darray_new()
+app_3bc_t ds_hypervisor_darray_new()
 {
     _instance = (app_3bc_t) malloc(sizeof(struct app_3bc_s));
     memset(_instance, 0, sizeof(struct app_3bc_s));
@@ -23,12 +23,12 @@ app_3bc_t ds_container_darray_new()
     return _instance;
 }
 
-app_3bc_t ds_container_darray_get_one(app_3bc_id app)
+app_3bc_t ds_hypervisor_darray_get_one(app_3bc_id app)
 {
     return _instance;
 }
 
-app_3bc_t* ds_container_darray_get_all()
+app_3bc_t* ds_hypervisor_darray_get_all()
 {
     return _instances;
 }

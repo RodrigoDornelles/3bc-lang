@@ -57,7 +57,7 @@
 #include "driver_power.c"
 #include "driver_program.c"
 #include "ds_memory_llrbt.c"
-#include "ds_container_darray.c"
+#include "ds_hypervisor_darray.c"
 #include "ds_procedure_lifo.c"
 #include "tape_program.c"
 #endif
