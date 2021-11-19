@@ -9,24 +9,24 @@ void setup()
   
   VM = lang_3bc_init();
 
-  lang_io_call(tty_output, [](char* output){
+  lang_3bc_print(VM, tty_output, [](char* output){
     Serial.write(output);    
   });
   
-  lang_line(MODE, NILL, 2);
-  lang_line(STRC, NILL, 'H');
-  lang_line(STRC, NILL, 'e');
-  lang_line(STRC, NILL, 'l');
-  lang_line(STRC, NILL, 'l');
-  lang_line(STRC, NILL, 'o');
-  lang_line(STRC, NILL, ' ');
-  lang_line(STRC, NILL, 'w');
-  lang_line(STRC, NILL, 'o');
-  lang_line(STRC, NILL, 'r');
-  lang_line(STRC, NILL, 'l');
-  lang_line(STRC, NILL, 'd');
-  lang_line(STRC, NILL, '!');
-  lang_line(STRC, NILL, '\n');
+  lang_3bc_line(VM, MODE, NILL, 2);
+  lang_3bc_line(VM, STRC, NILL, 'H');
+  lang_3bc_line(VM, STRC, NILL, 'e');
+  lang_3bc_line(VM, STRC, NILL, 'l');
+  lang_3bc_line(VM, STRC, NILL, 'l');
+  lang_3bc_line(VM, STRC, NILL, 'o');
+  lang_3bc_line(VM, STRC, NILL, ' ');
+  lang_3bc_line(VM, STRC, NILL, 'w');
+  lang_3bc_line(VM, STRC, NILL, 'o');
+  lang_3bc_line(VM, STRC, NILL, 'r');
+  lang_3bc_line(VM, STRC, NILL, 'l');
+  lang_3bc_line(VM, STRC, NILL, 'd');
+  lang_3bc_line(VM, STRC, NILL, '!');
+  lang_3bc_line(VM, STRC, NILL, '\n');
 }
 
 void loop() {

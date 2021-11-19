@@ -149,9 +149,8 @@
 /**
  * USER MACROS
  */
-#define lang_3bc_update          driver_interrupt
-#define lang_3bc_init            driver_power_init
-#define lang_3bc_line            tape_program_line_add
-/** TODO: POO **/
-#define lang_io_call(tty,l);     APP_3BC->tty.type=STREAM_TYPE_FUNCTION_CALL;APP_3BC->tty.io.lambda=l;
-#define lang_fpga                custom_3bc_func_set
+#define lang_3bc_update             driver_interrupt
+#define lang_3bc_init               driver_power_init
+#define lang_3bc_line               tape_program_line_add
+#define lang_3bc_print(a,t,l);      a->t.type=STREAM_TYPE_FUNCTION_CALL;a->t.io.lambda=l;
+#define lang_3bc_custom             custom_3bc_func_set
