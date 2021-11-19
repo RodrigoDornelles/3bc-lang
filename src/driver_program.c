@@ -62,7 +62,9 @@ void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
     driver_tty_output_raw(app, app->tty_error, "\n");
     #endif
 
-    driver_power_signal(error_code >= ERROR_CPU_ZERO? SIGTERM: error_code);
+    if (error_code >= ERROR_CPU_ZERO) {
+        driver_power_signal(SIGTERM);
+    }
 }
 
 /**

@@ -1,6 +1,8 @@
 #define _3BC_SCU_FIX_2
 #include "3bc.h"
 
+/** TODO: rename this file to 3bc_hypervisor.h **/
+
 app_3bc_t _instance;
 app_3bc_t _instances[3] = {NULL};
 
