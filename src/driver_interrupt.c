@@ -165,12 +165,7 @@ bool driver_interrupt(app_3bc_t app)
          * EXIT CONTEXT
          */
         case FSM_3BC_EXITING:
-            #if defined(SIGINT)
-            driver_power_exit(0);
-            #else 
-            driver_power_exit();
-            #endif
-            app->state = FSM_3BC_STOPED;
+            driver_power_exit(app);
             return true;
     }
 

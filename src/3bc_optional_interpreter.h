@@ -103,7 +103,6 @@ char* interpreter_3bc_compiler(app_3bc_t app, char* line)
 
     /** scan more 1 line**/
     if (!interpreter_3bc_tokens(line, &text_reg, &text_mem, &text_val, &line)) {
-        fprintf(stderr, "%s, %s, %s, %s", text_reg, text_mem, text_val, line);
         driver_program_error(app, ERROR_COLUMNS);
     }
     /** blank line **/

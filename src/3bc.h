@@ -35,9 +35,6 @@
 #include "3bc_types.h"
 #include "3bc_header.h"
 #include "3bc_register.h"
-#if defined(_3BC_APP_UNIQUE)
-#include "3bc_bootstrap.h"
-#endif
 #include "3bc_optional_custom.h"
 #include "3bc_optional_interpreter.h"
 

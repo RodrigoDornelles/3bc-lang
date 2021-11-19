@@ -103,12 +103,11 @@ void driver_mode_set(app_3bc_t app, cpumode_3bc_t value);
 /************************************************************/
 #ifdef SIGINT
 app_3bc_t driver_power_init(int argc, char **argv);
-void driver_power_exit(app_3bc_t app);
-void driver_power_signal(int sig);
 #else
 app_3bc_t driver_power_init();
-void driver_power_exit(app_3bc_t app);
 #endif
+void driver_power_signal(int sig);
+void driver_power_exit(app_3bc_t app);
 /************************************************************/
 void driver_program_error(app_3bc_t app, enum error_3bc_e error_code);
 void driver_program_tick(app_3bc_t app);
@@ -124,8 +123,9 @@ void custom_3bc_func_call(app_3bc_t app, register_3bc_t reg, address_3bc_t addre
 data_aux_3bc_t driver_accumulator_get(app_3bc_t app);
 void driver_accumulator_set(app_3bc_t app, data_aux_3bc_t value);
 /************************************************************/
-app_3bc_t ds_container_darray_new();
+app_3bc_t ds_container_darray_new(void);
 app_3bc_t ds_container_darray_get_one(app_3bc_id app);
+app_3bc_t* ds_container_darray_get_all(void);
 /************************************************************/
 data_3bc_t ds_memory_llrbt_data_get(app_3bc_id app_id, address_3bc_t address);
 data_3bc_t ds_memory_llrbt_conf_get(app_3bc_id app_id, address_3bc_t address);

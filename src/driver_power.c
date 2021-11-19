@@ -49,34 +49,66 @@ app_3bc_t driver_power_init()
     return app;
 }
 
-#if defined(_3BC_COMPUTER)
-/** TODO: I do not know what to do :/ **/
+/**
+ * JOKE:
+ *
+ * The supervisor is crazy!!
+ * anything dangerous, everything is down!!
+ */
 void driver_power_signal(int sig)
 {
-    switch (sig)
+    app_3bc_t* apps = ds_container_darray_get_all();
+    app_3bc_t app;
+
+    /**
+     * JOKE:
+     *
+     * Finally, C ANSI FOREACH!!!!
+     */
+    while((app = *(++apps)) != NULL) 
     {
-        case SIGINT:
-            driver_power_exit(NULL);
-        
-        case SIGSEGV:
-            driver_program_error(NULL, (enum error_3bc_e) sig);
+        switch (sig)
+        {
+            case SIGTERM:
+                driver_power_exit(app);
+                break;
+
+            #if defined(SIGINT)
+            case SIGINT:
+                driver_power_exit(app);
+                break;
+            #endif
+            
+            #if defined(SIGSEGV)
+            case SIGSEGV:
+                driver_program_error(app, (enum error_3bc_e) sig);
+                break;
+            #endif
+        }
     }
+
+    #if defined(SIGINT)
+    exit(sig);
+    #endif
 }
-#endif
 
 /**
  * UNSAFE SHUTDOWNS
  */
 void driver_power_exit(app_3bc_t app)
-{
+{   
+    if (app->state == FSM_3BC_STOPED) {
+        return;
+    }
+
     /** TODO: move driver_tty_exit **/
     if (app->tty_source.type == STREAM_TYPE_COMPUTER_FILE && app->tty_source.io.file != NULL) {
         fclose(app->tty_source.io.file);
     }
-
     /** deallocate occupied memory **/
     tape_memory_destroy(app);
     tape_program_destroy(app);
 
     driver_tty_exit();
+    app->state = FSM_3BC_STOPED;
 }

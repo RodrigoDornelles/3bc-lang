@@ -67,7 +67,10 @@ void tape_program_destroy(app_3bc_t app)
 {
     struct line_node_s* node = app->program.head;
     struct line_node_s* prev;
-    for (;node != NULL; prev = node, node = node->next){
+    while (node != NULL)
+    {
+        prev = node;
+        node = node->next; 
         free(prev);
     }
 }

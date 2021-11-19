@@ -76,6 +76,10 @@
 #define AUX                         (driver_accumulator_get(app))
 #endif
 
+#ifndef SIGTERM
+#define SIGTERM                     (15)
+#endif
+
 #ifndef LABEL_HASH_SIZE
 #ifdef _3BC_ARDUINO
 #define LABEL_HASH_SIZE             (8) 

@@ -140,6 +140,7 @@ struct app_3bc_s {
     enum fsm_3bc_e state;
     data_aux_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
+    enum error_3bc_e error_code;
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
     union cache_l3_u cache_l3;
