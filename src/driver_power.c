@@ -65,7 +65,7 @@ void driver_power_signal(int sig)
      *
      * Finally, C ANSI FOREACH!!!!
      */
-    while((app = *(++apps)) != NULL) 
+    while((app = *(apps++)) != NULL) 
     {
         switch (sig)
         {
