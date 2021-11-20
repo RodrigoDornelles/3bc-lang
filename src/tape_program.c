@@ -85,7 +85,7 @@ void tape_program_label_insert(app_3bc_t app, label_3bc_t label)
     struct label_node_s* last_node; 
 
     /** label already exists **/
-    if (tape_program_label_search(app) != NULL) {
+    if (tape_program_label_search(app, label) != NULL) {
         driver_program_error(app, ERROR_INVALID_LABEL);
     }
 
@@ -115,12 +115,12 @@ void tape_program_label_insert(app_3bc_t app, label_3bc_t label)
 /**
  * find label in hash tabel
  */
-struct label_node_s* tape_program_label_search(app_3bc_t app)
+struct label_node_s* tape_program_label_search(app_3bc_t app, label_3bc_t label)
 {
-    struct label_node_s* last_node = app->program.label_table[app->program.label_target % LABEL_HASH_SIZE];
+    struct label_node_s* last_node = app->program.label_table[label % LABEL_HASH_SIZE];
     
     while (last_node != NULL) {
-        if (last_node->label == app->program.label_target) {
+        if (last_node->label == label) {
             return last_node;
         }
 
@@ -138,7 +138,7 @@ bool tape_program_avaliable(app_3bc_t app)
 {
     /** waits for a label **/
     if (app->program.label_target != NILL) {
-        struct label_node_s* label_node = tape_program_label_search(app);
+        struct label_node_s* label_node = tape_program_label_search(app, app->program.label_target);
 
         /** cooming label **/
         if (label_node == NULL) {

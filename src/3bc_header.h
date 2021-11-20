@@ -44,6 +44,7 @@ void cpu_math_abs(PARAMS_DEFINE);
 void cpu_math_logb(PARAMS_DEFINE);
 void cpu_math_logn(PARAMS_DEFINE);
 void cpu_math_mul_add(PARAMS_DEFINE);
+/************************************************************/
 void cpu_jump_goto(PARAMS_DEFINE);
 void cpu_jump_fgto(PARAMS_DEFINE);
 void cpu_jump_zgto(PARAMS_DEFINE);
@@ -156,7 +157,7 @@ void tape_program_destroy(app_3bc_t app);
 void tape_program_line_add(app_3bc_t app, register_3bc_t reg, address_3bc_t mem, data_3bc_t val);
 void tape_program_label_jump(label_3bc_t label);
 void tape_program_label_insert(app_3bc_t app, label_3bc_t label);
-struct label_node_s* tape_program_label_search(app_3bc_t app);
+struct label_node_s* tape_program_label_search(app_3bc_t app, label_3bc_t label);
 bool tape_program_avaliable(app_3bc_t app);
 /************************************************************/
 #ifdef __cplusplus
