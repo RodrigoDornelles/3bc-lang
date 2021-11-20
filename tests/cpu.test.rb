@@ -298,6 +298,29 @@ class TestCpu < Minitest::Test
         end
     end
 
+    def test_mode_38
+        console_input = [
+            "mode.0.8,aloc.0.1,mode.0.38,math.0.2,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.2,mode.0.38,math.0.2,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.4,mode.0.38,math.0.2,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.8,mode.0.38,math.0.2,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.16,mode.0.38,math.0.2,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.32,mode.0.38,math.0.2,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.64,mode.0.38,math.0.2,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.128,mode.0.38,math.0.2,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.1,mode.0.38,math.0.8,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.8,mode.0.38,math.0.8,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.64,mode.0.38,math.0.8,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.1,mode.0.38,math.0.10,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.10,mode.0.38,math.0.10,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.100,mode.0.38,math.0.10,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input.join("\n"))
+        assert_equal "01234567012012", stdout
+        assert_equal 0, status
+    end
+
+
     def test_mode_41
         for console_input in [
             "mode.0.9,goto.0.:entry,mode.0.2,stri.0.6,mode.0.2,nill.0.:procedure,stri.0.4,mode.0.41,back.0.0,mode.0.2,stri.0.9,mode.0.42,nill.0.:entry,call.0.:procedure,mode.0.2,stri.0.2",
