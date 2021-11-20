@@ -62,7 +62,7 @@ void cpu_bool_not(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
     VALIDATE_NOT_VALUES
-    driver_accumulator_set(app, !GET_ANY_PARAM);
+    driver_accumulator_set(app, !AUX);
 }
 
 void cpu_bool_and(PARAMS_DEFINE)
