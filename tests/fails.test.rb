@@ -121,13 +121,6 @@ class TestFails < Minitest::Test
         assert_equal 15, status.exitstatus
     end
 
-=begin DECREPTED
-    def test_number_dirty
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 2i")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC012)/, stderr
-        assert_equal 15, status.exitstatus
-    end
-=end
     def test_invalid_return
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.41,back.0.0")
         assert_match /ERROR CODE\:(\t| )?(0x3BC012)/, stderr
@@ -160,23 +153,9 @@ class TestFails < Minitest::Test
         end
     end
 
-=begin DECREPTED
-    def test_invalid_memory_clamp
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 6\nmmin 1 2\nmmax 1 1")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC018)/, stderr
-        assert_equal 15, status.exitstatus
-    end
-=end
-
-    def test_void_helper_max_min
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 23\nmode 0 23")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC019)/, stderr
-        assert_equal 15, status.exitstatus
-    end
-
     def test_no_such_file
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "none.3bc")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC01A)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC018)/, stderr
         assert_equal 15, status.exitstatus
     end
 
@@ -185,14 +164,14 @@ class TestFails < Minitest::Test
             "mode 0 7\naloc 'p' nill", "mode 0 7\nfree 'p' nill", "mode 0 7\npull 'p' nill", "mode 0 7\nspin 'p' nill", "mode 0 7\npush 'p' nill"
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
-        assert_match /ERROR CODE\:(\t| )?(0x3BC01B)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC019)/, stderr
         assert_equal 15, status.exitstatus
         end
     end
 
     def test_invalid_char_scape
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "0.0.'\\N'")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC01C)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC01A)/, stderr
         assert_equal 15, status.exitstatus
     end
 
@@ -201,7 +180,7 @@ class TestFails < Minitest::Test
             "0.0.'aa'", "0.0.'a"
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
-        assert_match /ERROR CODE\:(\t| )?(0x3BC01D)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC01B)/, stderr
         assert_equal 15, status.exitstatus
         end
     end
@@ -211,7 +190,7 @@ class TestFails < Minitest::Test
             "nill", "nill nill", "nill nill nill nill"
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
-        assert_match /ERROR CODE\:(\t| )?(0x3BC01E)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC01C)/, stderr
         assert_equal 15, status.exitstatus
         end
     end

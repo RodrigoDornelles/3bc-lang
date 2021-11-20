@@ -71,19 +71,19 @@ void driver_memory_validate(app_3bc_t app, memory_conf_t conf)
     }
     /** not allow pullup and analogic some times **/
     if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_ANAL | MEM_CONFIG_GPIO_PULL)) {
-        driver_program_error(app, ERROR_INVALID_MEMORY_CONFIG);
+        driver_program_error(app, ERROR_MEMORY_CONFIG);
     }
     /** not allow pullup and output some times **/
     if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_SEND | MEM_CONFIG_GPIO_PULL)) {
-        driver_program_error(app, ERROR_INVALID_MEMORY_CONFIG);
+        driver_program_error(app, ERROR_MEMORY_CONFIG);
     }
     /** not allow input and output some times **/
     if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_SEND | MEM_CONFIG_GPIO_READ)) {
-        driver_program_error(app, ERROR_INVALID_MEMORY_CONFIG);
+        driver_program_error(app, ERROR_MEMORY_CONFIG);
     }
     /** analogic required input or output **/
     if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_ANAL) && !(BITFIELD_HAS(conf, MEM_CONFIG_GPIO_READ) || BITFIELD_HAS(conf, MEM_CONFIG_GPIO_SEND))) {
-        driver_program_error(app, ERROR_INVALID_MEMORY_CONFIG);
+        driver_program_error(app, ERROR_MEMORY_CONFIG);
     }
 }
 
