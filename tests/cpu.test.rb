@@ -144,6 +144,69 @@ class TestCpu < Minitest::Test
         assert_equal 0, status
     end
 
+    def test_mode_21
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.8,aloc.0.0b10,mode.0.21,math.0.0,mode.0.8,pull.1.0,mode.0.2,strb.1.0")
+        assert_equal "", stderr
+        assert_equal "-11", stdout
+        assert_equal 0, status
+    end
+
+    def test_mode_22
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.8,aloc.0.0b1100,mode.0.22,math.0.0b1010,mode.0.8,pull.1.0,mode.0.2,strb.1.0")
+        assert_equal "", stderr
+        assert_equal "1000", stdout
+        assert_equal 0, status
+    end 
+
+    def test_mode_23
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.8,aloc.0.0b1100,mode.0.23,math.0.0b1010,mode.0.8,pull.1.0,mode.0.2,strb.1.0")
+        assert_equal "", stderr
+        assert_equal "1110", stdout
+        assert_equal 0, status
+    end 
+
+    def test_mode_24
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.8,aloc.0.0b1100,mode.0.24,math.0.0b1010,mode.0.8,pull.1.0,mode.0.2,strb.1.0")
+        assert_equal "", stderr
+        assert_equal "110", stdout
+        assert_equal 0, status
+    end 
+
+    def test_mode_25
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.8,aloc.0.0b1100,mode.0.25,math.0.0b1010,mode.0.8,pull.1.0,mode.0.2,strb.1.0")
+        assert_equal "", stderr
+        assert_equal "-1001", stdout
+        assert_equal 0, status
+    end 
+
+    def test_mode_26
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.8,aloc.0.0b1100,mode.0.26,math.0.0b1010,mode.0.8,pull.1.0,mode.0.2,strb.1.0")
+        assert_equal "", stderr
+        assert_equal "-1111", stdout
+        assert_equal 0, status
+    end 
+
+    def test_mode_27
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.8,aloc.0.0b1100,mode.0.27,math.0.0b1010,mode.0.8,pull.1.0,mode.0.2,strb.1.0")
+        assert_equal "", stderr
+        assert_equal "-111", stdout
+        assert_equal 0, status
+    end 
+
+    def test_mode_28
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.8,aloc.0.0b10,mode.0.28,math.0.0b1,mode.0.8,pull.1.0,mode.0.2,strb.1.0")
+        assert_equal "", stderr
+        assert_equal "100", stdout
+        assert_equal 0, status
+    end 
+
+    def test_mode_29
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.8,aloc.0.0b10,mode.0.29,math.0.0b1,mode.0.8,pull.1.0,mode.0.2,strb.1.0")
+        assert_equal "", stderr
+        assert_equal "1", stdout
+        assert_equal 0, status
+    end 
+
     def test_mode_31
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.31,math.0.0,mode.0.8,pull.1.0,aloc.0.8,mode.0.31,math.0.0,mode.0.8,pull.2.0,mode.0.2,stri.1.0,stri.2.0")
         assert_equal "", stderr
