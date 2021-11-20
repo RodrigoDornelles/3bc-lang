@@ -21,7 +21,15 @@
 #define MODE_MATH_ABS           (18)
 #define MODE_MATH_MUL_ADD       (19)
 #define MODE_CUSTOM_2           (20)
-#define MODE_MATH_LOG_BASE      (29)
+#define MODE_BITWISE_NOT        (21)
+#define MODE_BITWISE_AND        (22)
+#define MODE_BITWISE_OR         (23)
+#define MODE_BITWISE_XOR        (24)
+#define MODE_BITWISE_NAND       (25)
+#define MODE_BITWISE_NOR        (26)
+#define MODE_BITWISE_XNOR       (27)
+#define MODE_BITWISE_LEFT       (28)
+#define MODE_BITWISE_RIGHT      (29)
 #define MODE_CUSTOM_3           (30)
 #define MODE_BOOLEAN_NOT        (31)
 #define MODE_BOOLEAN_AND        (32)
@@ -30,6 +38,7 @@
 #define MODE_BOOLEAN_NAND       (35)
 #define MODE_BOOLEAN_NOR        (36)
 #define MODE_BOOLEAN_XNOR       (37)
+#define MODE_MATH_LOG_BASE      (38)
 #define MODE_MATH_LOG_NATURAL   (39)
 #define MODE_CUSTOM_4           (40)
 #define MODE_PROCEDURE_RET      (41)
@@ -124,9 +133,15 @@ void instruction_3bc(app_3bc_t app, register_3bc_t reg, address_3bc_t address, d
         CPU_PACK1(MODE_MATH_ABS, cpu_math_abs);
         CPU_PACK4(MODE_MATH_MUL_ADD, cpu_math_mul_add, cpu_math_mul_add, cpu_math_mul_add, cpu_math_mul_add);
         CPU_PACK_RESERVED(MODE_CUSTOM_2);
-        /** TODO: boolean bitwise **/
-        /** TODO: boolean algebra implication bitwise **/
-        CPU_PACK1(MODE_MATH_LOG_BASE, cpu_math_logb);
+        CPU_PACK1(MODE_BITWISE_NOT, cpu_bitwise_not);
+        CPU_PACK1(MODE_BITWISE_AND, cpu_bitwise_and);
+        CPU_PACK1(MODE_BITWISE_OR, cpu_bitwise_or);
+        CPU_PACK1(MODE_BITWISE_XOR, cpu_bitwise_xor);
+        CPU_PACK1(MODE_BITWISE_NAND, cpu_bitwise_nand);
+        CPU_PACK1(MODE_BITWISE_NOR, cpu_bitwise_nor);
+        CPU_PACK1(MODE_BITWISE_XNOR, cpu_bitwise_xnor);
+        CPU_PACK1(MODE_BITWISE_LEFT, cpu_bitwise_left);
+        CPU_PACK1(MODE_BITWISE_RIGHT, cpu_bitwise_right);
         CPU_PACK_RESERVED(MODE_CUSTOM_3);
         CPU_PACK1(MODE_BOOLEAN_NOT, cpu_bool_not);
         CPU_PACK1(MODE_BOOLEAN_AND, cpu_bool_and);
@@ -135,7 +150,7 @@ void instruction_3bc(app_3bc_t app, register_3bc_t reg, address_3bc_t address, d
         CPU_PACK1(MODE_BOOLEAN_NAND, cpu_bool_nand);
         CPU_PACK1(MODE_BOOLEAN_NOR, cpu_bool_nor);
         CPU_PACK1(MODE_BOOLEAN_XNOR, cpu_bool_xnor);
-        /** TODO: boolean algebra implication **/
+        CPU_PACK1(MODE_MATH_LOG_BASE, cpu_math_logb);
         CPU_PACK1(MODE_MATH_LOG_NATURAL, cpu_math_logn);
         CPU_PACK_RESERVED(MODE_CUSTOM_4);
         CPU_PACK5(MODE_PROCEDURE_RET, cpu_procedure_back, cpu_procedure_fret, cpu_procedure_zret, cpu_procedure_pret, cpu_procedure_nret);

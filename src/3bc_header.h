@@ -10,6 +10,15 @@ extern "C" {
 #endif
 
 /************************************************************/
+void cpu_bitwise_not(PARAMS_DEFINE);
+void cpu_bitwise_and(PARAMS_DEFINE);
+void cpu_bitwise_or(PARAMS_DEFINE);
+void cpu_bitwise_xor(PARAMS_DEFINE);
+void cpu_bitwise_nand(PARAMS_DEFINE);
+void cpu_bitwise_nor(PARAMS_DEFINE);
+void cpu_bitwise_xnor(PARAMS_DEFINE);
+void cpu_bitwise_left(PARAMS_DEFINE);
+void cpu_bitwise_right(PARAMS_DEFINE);
 void cpu_bool_not(PARAMS_DEFINE);
 void cpu_bool_and(PARAMS_DEFINE);
 void cpu_bool_or(PARAMS_DEFINE);

@@ -40,7 +40,7 @@
 
 /** program **/
 #if !defined(_3BC_SCU)
-#include "cpu_bool.c"
+#include "cpu_boolean.c"
 #include "cpu_common.c"
 #include "cpu_math.c"
 #include "cpu_jump.c"
