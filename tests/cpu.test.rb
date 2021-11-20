@@ -320,6 +320,19 @@ class TestCpu < Minitest::Test
         assert_equal 0, status
     end
 
+    def test_mode_39
+        console_input = [
+            "mode.0.8,aloc.0.1,mode.0.39,math.0.0,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.5,mode.0.39,math.0.0,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.15,mode.0.39,math.0.0,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.40,mode.0.39,math.0.0,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.100,mode.0.39,math.0.0,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+            "mode.0.8,aloc.0.255,mode.0.39,math.0.0,mode.0.8,pull.'r'.nill,mode.0.2,stri.'r'.nill",
+        ]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input.join("\n"))
+        assert_equal "012345", stdout
+        assert_equal 0, status
+    end
 
     def test_mode_41
         for console_input in [

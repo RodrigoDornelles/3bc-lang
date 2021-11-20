@@ -47,7 +47,7 @@ void cpu_math_power(PARAMS_DEFINE)
     driver_program_error(app, ERROR_UNSUPPORTED);
     #else 
     /** TODO: remove this "gambiarra" tecnical debt **/
-    driver_accumulator_set(app, (data_aux_3bc_t) pow((double) (AUX), (double) (GET_ANY_PARAM)));
+    driver_accumulator_set(app, (data_aux_3bc_t) trunc(pow((double) (AUX), (double) (GET_ANY_PARAM))));
     #endif
 }
 
@@ -57,7 +57,7 @@ void cpu_math_root(PARAMS_DEFINE)
     #if defined(_3BC_MOS6502)
     driver_program_error(app, ERROR_UNSUPPORTED);
     #else 
-    driver_accumulator_set(app, (data_aux_3bc_t) pow((double) (AUX), (1 / (double) (GET_ANY_PARAM))));
+    driver_accumulator_set(app, (data_aux_3bc_t) trunc(pow((double) (AUX), (1 / (double) (GET_ANY_PARAM)))));
     #endif
 }
 
@@ -83,15 +83,15 @@ void cpu_math_logb(PARAMS_DEFINE)
         switch (base)
         {
             case 2:
-                driver_accumulator_set(app, (data_aux_3bc_t) round(log2((double) AUX)));
+                driver_accumulator_set(app, (data_aux_3bc_t) trunc(log2((double) AUX)));
                 break;
 
             case 10:
-                driver_accumulator_set(app, (data_aux_3bc_t) round(log10((double) AUX)));
+                driver_accumulator_set(app, (data_aux_3bc_t) trunc(log10((double) AUX)));
                 break;
 
             default:
-                driver_accumulator_set(app, (data_aux_3bc_t) round(log((double) AUX)/log((double) base)));
+                driver_accumulator_set(app, (data_aux_3bc_t) trunc(log((double) AUX)/log((double) base)));
                 break;
         }
     }    
@@ -105,7 +105,7 @@ void cpu_math_logn(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
     VALIDATE_NOT_VALUES
-    driver_accumulator_set(app, (data_aux_3bc_t) round(log((double) AUX)));
+    driver_accumulator_set(app, (data_aux_3bc_t) trunc(log((double) AUX)));
 }
 
 void cpu_math_mul_add(PARAMS_DEFINE)
