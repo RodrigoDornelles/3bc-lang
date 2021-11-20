@@ -40,8 +40,10 @@ optional_inline void driver_tty_exit()
 
 /**
  * detect keyboard input
+ *
+ * TODO: More compatible tty
  */
-data_3bc_t driver_tty_input(register_3bc_t type, address_3bc_t addres)
+data_3bc_t driver_tty_input(app_3bc_t app, struct tty_3bc_s tty, register_3bc_t type)
 {
     signed int value;
     char c[2] = "\0";
@@ -103,7 +105,7 @@ data_3bc_t driver_tty_input(register_3bc_t type, address_3bc_t addres)
 /**
  * stream texts to outputs
  */
-void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
+void driver_tty_output(app_3bc_t app, struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
 {
     /** the size of the buffer is according to the memory */
     char output[sizeof(data_3bc_t) * 8 + 1];
@@ -111,12 +113,12 @@ void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
     /** print negative symbol **/
     if (val < 0 && type != STRC) {
         val = abs(val);
-        driver_tty_output(tty, STRC, '-');
+        driver_tty_output(app, tty, STRC, '-');
     }
 
     switch (type) {
         #if defined(_3BC_MOS6502)
-        driver_program_error(ERROR_UNSUPPORTED);
+        driver_program_error(app, ERROR_UNSUPPORTED);
         #else
         case STRB:
         {
@@ -156,10 +158,10 @@ void driver_tty_output(struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val
             break;
     }
 
-    driver_tty_output_raw(tty, output);
+    driver_tty_output_raw(app, tty, output);
 }
 
-void driver_tty_output_raw(struct tty_3bc_s tty, const char* string)
+void driver_tty_output_raw(app_3bc_t app, struct tty_3bc_s tty, const char* string)
 {
     #if defined(_3BC_COMPUTER)
     /** stream standard c output **/
@@ -169,13 +171,13 @@ void driver_tty_output_raw(struct tty_3bc_s tty, const char* string)
     }
     #endif
     if (tty.type == STREAM_TYPE_CLONE_TTY) {
-        driver_tty_output_raw(*tty.io.tty, string);
+        driver_tty_output_raw(app, *tty.io.tty, string);
     }
     else if (tty.type == STREAM_TYPE_FUNCTION_CALL) {
         tty.io.lambda((char *) string);
         return;
     }
     else if (tty.type == STREAM_TYPE_NONE) {
-        driver_program_error(ERROR_NONE_TTY);
+        driver_program_error(app, ERROR_NONE_TTY);
     }
 }

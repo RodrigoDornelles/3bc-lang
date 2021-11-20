@@ -9,6 +9,7 @@ typedef unsigned char label_3bc_t;
 typedef unsigned char memory_conf_t;
 typedef signed int data_3bc_t;
 typedef signed long data_aux_3bc_t;
+typedef unsigned char app_3bc_id;
 
 /** FILE/STREAM/INTERFACE TYPES **/
 typedef FILE file_t;
@@ -71,18 +72,10 @@ struct buffer_s {
 };
 
 union cache_l1_u {
-    bool max_init;
-    bool min_init;
-    bool maxmin_init;
-    unsigned char average_count;
     enum sleep_3bc_e sleep_mode;
 };
 
 union cache_l2_u {
-    data_3bc_t max_value;
-    data_3bc_t min_value;
-    data_3bc_t maxmin_value;
-    signed long average_sum;
     unsigned long sleep_period;
 };
 
@@ -134,19 +127,20 @@ struct memory_node_s {
 
 struct memory_3bc_s {
     struct memory_node_s* root;
-    data_3bc_t (*data_get)(address_3bc_t);
-    data_3bc_t (*conf_get)(address_3bc_t);
-    void (*data_set)(address_3bc_t, data_3bc_t);
-    void (*conf_set)(address_3bc_t, data_3bc_t);
+    struct memory_node_s* cache;
+    data_3bc_t (*data_get)(app_3bc_id, address_3bc_t);
+    data_3bc_t (*conf_get)(app_3bc_id, address_3bc_t);
+    void (*data_set)(app_3bc_id, address_3bc_t, data_3bc_t);
+    void (*conf_set)(app_3bc_id, address_3bc_t, data_3bc_t);
 };
 
 /** APLICATION **/
 struct app_3bc_s {
-    bool bootstrap;
+    app_3bc_id id;
     enum fsm_3bc_e state;
     data_aux_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
-    struct memory_node_s* cache_l0;
+    enum error_3bc_e error_code;
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
     union cache_l3_u cache_l3;

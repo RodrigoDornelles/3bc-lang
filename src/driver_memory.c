@@ -1,32 +1,32 @@
 #define _3BC_SCU_FIX_2
 #include "3bc.h"
 
-void driver_memory_data_set(address_3bc_t address, data_3bc_t value)
+void driver_memory_data_set(app_3bc_t app, address_3bc_t address, data_3bc_t value)
 {
-    memory_conf_t conf = APP_3BC->memory.conf_get(address);
+    memory_conf_t conf = app->memory.conf_get(app->id, address);
 
     driver_gpio_output(conf, address, value);
     
-    APP_3BC->memory.data_set(address, value);
+    app->memory.data_set(app->id, address, value);
 }
 
-void driver_memory_conf_set(address_3bc_t address, data_3bc_t conf)
+void driver_memory_conf_set(app_3bc_t app, address_3bc_t address, data_3bc_t conf)
 {
-    data_3bc_t value = APP_3BC->memory.data_get(address);
+    data_3bc_t value = app->memory.data_get(app->id, address);
 
-    driver_memory_validate(conf);
+    driver_memory_validate(app, conf);
     driver_gpio_setup(conf, address);
     driver_gpio_output(conf, address, value);
     value = driver_gpio_input(conf, address, value);
 
-    APP_3BC->memory.conf_set(address, conf);
-    APP_3BC->memory.data_set(address, value);
+    app->memory.conf_set(app->id, address, conf);
+    app->memory.data_set(app->id, address, value);
 }
 
-data_3bc_t driver_memory_data_get(address_3bc_t address)
+data_3bc_t driver_memory_data_get(app_3bc_t app, address_3bc_t address)
 {
-    data_3bc_t value = APP_3BC->memory.data_get(address);
-    memory_conf_t conf = APP_3BC->memory.conf_get(address);
+    data_3bc_t value = app->memory.data_get(app->id, address);
+    memory_conf_t conf = app->memory.conf_get(app->id, address);
 
     /** read gpios if necessary **/
     value = driver_gpio_input(conf, address, value);
@@ -34,17 +34,17 @@ data_3bc_t driver_memory_data_get(address_3bc_t address)
     return value;
 }
 
-optional_inline data_3bc_t driver_memory_conf_get(address_3bc_t address)
+optional_inline data_3bc_t driver_memory_conf_get(app_3bc_t app, address_3bc_t address)
 {
-    return APP_3BC->memory.conf_get(address);
+    return app->memory.conf_get(app->id, address);
 }
 
 /**
  * MACRO: POINTER 
  */
-address_3bc_t driver_memory_pointer(address_3bc_t address)
+address_3bc_t driver_memory_pointer(app_3bc_t app, address_3bc_t address)
 {
-    register data_3bc_t ptr = driver_memory_data_get(address);
+    register data_3bc_t ptr = driver_memory_data_get(app, address);
 
     /**
      * JOKE:
@@ -54,16 +54,16 @@ address_3bc_t driver_memory_pointer(address_3bc_t address)
      */
     if (ptr == NILL) {
         /** also apply to microsoft java devs (aka C#) */
-        driver_program_error(ERROR_NULL_POINTER);
+        driver_program_error(app, ERROR_NULL_POINTER);
     }
     else if (ptr < 0) {
-        driver_program_error(ERROR_NUMBER_NEGATIVE);
+        driver_program_error(app, ERROR_NUMBER_NEGATIVE);
     }
 
     return (address_3bc_t) ptr;
 }
 
-void driver_memory_validate(memory_conf_t conf)
+void driver_memory_validate(app_3bc_t app, memory_conf_t conf)
 {
     /** optimize **/
     if (conf == 0) {
@@ -71,29 +71,30 @@ void driver_memory_validate(memory_conf_t conf)
     }
     /** not allow pullup and analogic some times **/
     if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_ANAL | MEM_CONFIG_GPIO_PULL)) {
-        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+        driver_program_error(app, ERROR_MEMORY_CONFIG);
     }
     /** not allow pullup and output some times **/
     if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_SEND | MEM_CONFIG_GPIO_PULL)) {
-        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+        driver_program_error(app, ERROR_MEMORY_CONFIG);
     }
     /** not allow input and output some times **/
     if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_SEND | MEM_CONFIG_GPIO_READ)) {
-        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+        driver_program_error(app, ERROR_MEMORY_CONFIG);
     }
     /** analogic required input or output **/
     if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_ANAL) && !(BITFIELD_HAS(conf, MEM_CONFIG_GPIO_READ) || BITFIELD_HAS(conf, MEM_CONFIG_GPIO_SEND))) {
-        driver_program_error(ERROR_INVALID_MEMORY_CONFIG);
+        driver_program_error(app, ERROR_MEMORY_CONFIG);
     }
 }
 
-void driver_memory_free(address_3bc_t address)
+void driver_memory_free(app_3bc_t app, address_3bc_t address)
 {
     /** clear cache level 0 **/
-    if (APP_3BC->cache_l0 != NULL && APP_3BC->cache_l0->address == address) {
-        APP_3BC->cache_l0 = NULL;
+    if (app->memory.cache != NULL && app->memory.cache->address == address) {
+        app->memory.cache = NULL;
     }
 
     /** clear memory node **/
-    APP_3BC->memory.root = ds_memory_llrbt_clear(address, APP_3BC->memory.root);
+    /** TODO: move to ds_memory_llrbt **/
+    app->memory.root = ds_memory_llrbt_clear(address, app->memory.root);
 }

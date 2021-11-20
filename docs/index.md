@@ -7,7 +7,7 @@ permalink: /
 <section class="row">
 <div class="col s12 m6" markdown="1">
 
-![3BC LANGUAGE LOGO ><](/images/3bc-logo-mid.png)
+![3BC LANGUAGE LOGO ><](images/3bc-logo-mid.png)
 
 </div>
 <div class="col s12 m6" markdown="1">
@@ -18,7 +18,7 @@ permalink: /
 
  * **Released:** {{ release.name }}
  * **Date published:** {{ release.created_at | date_to_long_string }}
- * **More:** [Changelogs](extra/changelogs) or [Download others versions](download).
+ * **More:** [Changelogs](download) or [Download others versions](download).
 
 
 <div class="row">

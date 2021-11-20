@@ -7,18 +7,18 @@ void setup()
 { 
   VM = lang_3bc_init();
   
-  lang_line(MODE, NILL, MODE_MEMORY);
-  lang_line(MUSE, LED_BUILTIN, MEM_CONFIG_GPIO_SEND);
-  lang_line(NILL, NILL, LED_BUILTIN);
-  lang_line(ALOC, LED_BUILTIN, HIGH);
-  lang_line(MODE, NILL, MODE_SLEEP);
-  lang_line(MILI, NILL, 250);
-  lang_line(MODE, NILL, MODE_MEMORY);
-  lang_line(ALOC, LED_BUILTIN, LOW);
-  lang_line(MODE, NILL, MODE_SLEEP);
-  lang_line(MILI, NILL, 250);
-  lang_line(MODE, NILL, MODE_JUMP);
-  lang_line(GOTO, NILL, LED_BUILTIN);
+  lang_3bc_line(VM, MODE, NILL, MODE_MEMORY);
+  lang_3bc_line(VM, MUSE, LED_BUILTIN, MEM_CONFIG_GPIO_SEND);
+  lang_3bc_line(VM, NILL, NILL, LED_BUILTIN);
+  lang_3bc_line(VM, ALOC, LED_BUILTIN, HIGH);
+  lang_3bc_line(VM, MODE, NILL, MODE_SLEEP);
+  lang_3bc_line(VM, MILI, NILL, 250);
+  lang_3bc_line(VM, MODE, NILL, MODE_MEMORY);
+  lang_3bc_line(VM, ALOC, LED_BUILTIN, LOW);
+  lang_3bc_line(VM, MODE, NILL, MODE_SLEEP);
+  lang_3bc_line(VM, MILI, NILL, 250);
+  lang_3bc_line(VM, MODE, NILL, MODE_JUMP);
+  lang_3bc_line(VM, GOTO, NILL, LED_BUILTIN);
 }
 
 void loop() {

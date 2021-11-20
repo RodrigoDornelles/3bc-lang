@@ -44,7 +44,7 @@ bool driver_interrupt(app_3bc_t app)
          * PROCESS CONTEXT
          */
         case FSM_3BC_RUNNING:
-            if (!tape_program_avaliable(app)) {
+            if (!ds_program_fifo_avaliable(app)) {
                 app->state = FSM_3BC_READING;
             }
             else if (app->cpu_mode == MODE_SLEEP && app->cache_l1.sleep_mode != SLEEP_3BC_NONE) {
@@ -165,12 +165,7 @@ bool driver_interrupt(app_3bc_t app)
          * EXIT CONTEXT
          */
         case FSM_3BC_EXITING:
-            #if defined(SIGINT)
-            driver_power_exit(0);
-            #else 
-            driver_power_exit();
-            #endif
-            app->state = FSM_3BC_STOPED;
+            driver_power_exit(app);
             return true;
     }
 

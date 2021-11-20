@@ -1,12 +1,31 @@
 #define _3BC_SCU_FIX_2
 #include "3bc.h"
 
+/**
+ * MACRO: lang_3bc_init
+ */
 #if defined(_3BC_COMPUTER)
 app_3bc_t driver_power_init(int argc, char **argv)
 #else
 app_3bc_t driver_power_init()
 #endif
 {
+    app_3bc_t app = ds_hypervisor_darray_new();
+
+    #if defined(_3BC_COMPUTER)
+    /** TODO: move to driver_tty_init() **/
+    app->tty_source.type = STREAM_TYPE_COMPUTER_STD;
+    app->tty_source.io.file = stdin;
+    app->tty_debug.type = STREAM_TYPE_COMPUTER_STD;
+    app->tty_debug.io.stream = stderr;
+    app->tty_output.type = STREAM_TYPE_COMPUTER_STD;
+    app->tty_output.io.stream = stdout;
+    app->tty_keylog.type = STREAM_TYPE_CLONE_TTY;
+    app->tty_keylog.io.tty = &app->tty_output;
+    app->tty_error.type = STREAM_TYPE_COMPUTER_STD;
+    app->tty_error.io.stream = stderr;
+    #endif
+
     driver_tty_init();
 
     #if defined(_3BC_COMPUTER)
@@ -17,60 +36,76 @@ app_3bc_t driver_power_init()
     signal(SIGSEGV, driver_power_signal);
 
     if (argc > 1) {
-        APP_3BC->tty_source.type = STREAM_TYPE_COMPUTER_FILE;
-        APP_3BC->tty_source.io.file = fopen(argv[argc - 1], "r");
+        app->tty_source.type = STREAM_TYPE_COMPUTER_FILE;
+        app->tty_source.io.file = fopen(argv[argc - 1], "r");
     }
 
     /** file not found | forbidden **/
-    if (APP_3BC->tty_source.type == STREAM_TYPE_COMPUTER_FILE && APP_3BC->tty_source.io.file == NULL) {
-        driver_program_error(ERROR_OPEN_FILE);
+    if (app->tty_source.type == STREAM_TYPE_COMPUTER_FILE && app->tty_source.io.file == NULL) {
+        driver_program_error(app, ERROR_OPEN_FILE);
     }
     #endif
 
-    /** remove macro**/
-    return APP_3BC;
+    return app;
 }
-
-#if defined(_3BC_COMPUTER)
-void driver_power_signal(int sig)
-{
-    switch (sig)
-    {
-        case SIGINT:
-            driver_power_exit(sig);
-        
-        case SIGSEGV:
-            driver_program_error((enum error_3bc_e) sig);
-    }
-}
-#endif
 
 /**
- * UNSAFE SHUTDOWNS
+ * JOKE:
+ *
+ * The Hypervisor is crazy!!
+ * anything dangerous, everything is down!!
  */
-#if defined(SIGINT)
-void driver_power_exit(int sig)
-#else
-void driver_power_exit()
-#endif
-
+void driver_power_signal(int sig)
 {
-    #if defined(_3BC_COMPUTER)
-    /** close file (safe pointer) **/
-    if (APP_3BC->tty_source.type == STREAM_TYPE_COMPUTER_FILE && APP_3BC->tty_source.io.file != NULL) {
-        fclose(APP_3BC->tty_source.io.file);
-    }
-    #endif
+    app_3bc_t* apps = ds_hypervisor_darray_get_all();
+    app_3bc_t app;
 
+    /**
+     * JOKE:
+     *
+     * Finally, C ANSI FOREACH!!!!
+     */
+    while((app = *(apps++)) != NULL) 
+    {
+        switch (sig)
+        {
+            case SIGTERM:
+                driver_power_exit(app);
+                break;
+
+            #if defined(SIGINT)
+            case SIGINT:
+                driver_power_exit(app);
+                break;
+            #endif
+            
+            #if defined(SIGSEGV)
+            case SIGSEGV:
+                driver_program_error(app, (enum error_3bc_e) sig);
+                break;
+            #endif
+        }
+    }
+
+    #if defined(SIGINT)
+    exit(sig);
+    #endif
+}
+
+void driver_power_exit(app_3bc_t app)
+{   
+    if (app->state == FSM_3BC_STOPED) {
+        return;
+    }
+
+    /** TODO: move driver_tty_exit **/
+    if (app->tty_source.type == STREAM_TYPE_COMPUTER_FILE && app->tty_source.io.file != NULL) {
+        fclose(app->tty_source.io.file);
+    }
     /** deallocate occupied memory **/
-    tape_memory_destroy();
-    tape_program_destroy();
+    ds_memory_llrbt_destroy(app);
+    ds_program_fifo_destroy(app);
 
     driver_tty_exit();
-    
-    #if defined(SIGINT)
-    if (sig != 0) {
-        exit(sig);
-    }
-    #endif 
+    app->state = FSM_3BC_STOPED;
 }

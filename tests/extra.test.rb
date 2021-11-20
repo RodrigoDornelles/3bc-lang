@@ -3,15 +3,6 @@ require 'minitest/spec'
 require 'minitest/autorun'
 
 class TestFails < Minitest::Test
-=begin DECREPTED
-    def test_clamp_input
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.6,mmin.1.2,mmax.2.1,mode.0.4,stri.1.0,12,stri.2.0,21,mode.0.2,stri.1.0,stri.2.0")
-        assert_equal "", stderr
-        assert_equal "21", stdout
-        assert_equal 0, status
-    end
-=end
-
     def test_scapes
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.10,4.0.0,mode.0.2,strc.0.'\\0',strc.0.'\\a',strc.0.'\\b',strc.0.'\\t',strc.0.'\\n',strc.0.'\\'',strc.0.'\\\\'")
         assert_equal "", stderr

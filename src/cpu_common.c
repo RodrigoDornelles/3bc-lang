@@ -8,20 +8,20 @@ void cpu_null(PARAMS_DEFINE)
 void cpu_mode(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
-    tape_router_cpu_set(value);
+    driver_mode_set(app, value);
 }
 
 void cpu_not_mode(PARAMS_DEFINE)
 {
-    driver_program_error(ERROR_CPU_ZERO);
+    driver_program_error(app, ERROR_CPU_ZERO);
 }
 
 void cpu_not_exist(PARAMS_DEFINE)
 {
-    driver_program_error(ERROR_INVALID_REGISTER);
+    driver_program_error(app, ERROR_INVALID_REGISTER);
 }
 
 void cpu_mode_reserved(PARAMS_DEFINE)
 {
-    custom_3bc_func_call(APP_3BC->cpu_mode, reg, address, value);
+    custom_3bc_func_call(app, reg, address, value);
 }
