@@ -55,79 +55,79 @@ class TestFails < Minitest::Test
         assert_equal 15, status.exitstatus
     end
 
+    def test_invalid_return
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.41,back.0.0")
+        assert_match /ERROR CODE\:(\t| )?(0x3BC007)/, stderr
+        assert_equal 15, status.exitstatus
+    end
+
     def test_param_ambiguous
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 2\nstri 1 1")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC007)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC008)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_param_required_any
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.43,fake.0.0")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC008)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC009)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_param_required_value
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 9\ngoto 0 0")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC009)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC00A)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_param_required_address
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 6\nfree 0 0")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC00A)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC00B)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_param_blocked_value
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 6\nfree 1 1")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC00B)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC00C)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_param_blocked_address
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 9\ngoto 1 1")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC00C)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC00D)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_number_no_digits
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 --")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC00D)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC00E)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_number_underflow
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.2,strx.0.-0xFFFFFFFFFFFFFFFF")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC00E)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC00F)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_number_overflow
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.2,strx.0.0xFFFFFFFFFFFFFFFF")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC00F)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC010)/, stderr
         assert_equal 15, status.exitstatus
     end
     
     def test_number_wrong_base
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 0o8")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC010)/, stderr
+        assert_match /ERROR CODE\:(\t| )?(0x3BC011)/, stderr
         assert_equal 15, status.exitstatus
     end
 
     def test_number_negative
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.32,math.0.-1")
-        assert_match /ERROR CODE\:(\t| )?(0x3BC011)/, stderr
-        assert_equal 15, status.exitstatus
-    end
-
-    def test_invalid_return
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.41,back.0.0")
         assert_match /ERROR CODE\:(\t| )?(0x3BC012)/, stderr
         assert_equal 15, status.exitstatus
     end
 
-    def test_division_by_zero
+    def test_number_zero
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.14,math.0.0")
         assert_match /ERROR CODE\:(\t| )?(0x3BC013)/, stderr
         assert_equal 15, status.exitstatus

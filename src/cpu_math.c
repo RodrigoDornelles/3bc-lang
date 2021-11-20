@@ -26,7 +26,7 @@ void cpu_math_div(PARAMS_DEFINE)
     {
         register data_3bc_t divisor = GET_ANY_PARAM;
         if (divisor == 0) {
-            driver_program_error(app, ERROR_DIVISION_BY_ZERO);
+            driver_program_error(app, ERROR_NUMBER_ZERO);
         }
         else {
             driver_accumulator_set(app, AUX/divisor);
@@ -77,7 +77,11 @@ void cpu_math_logb(PARAMS_DEFINE)
     REQUIRED_ANY
     #if defined(_3BC_MOS6502)
     driver_program_error(app, ERROR_UNSUPPORTED);
-    #else 
+    #else
+    if (AUX == 0) {
+        driver_program_error(app, ERROR_NUMBER_ZERO);
+    }
+    else
     {
         register int base = GET_ANY_PARAM;
         switch (base)
@@ -105,6 +109,11 @@ void cpu_math_logn(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
     VALIDATE_NOT_VALUES
+
+    if (AUX == 0) {
+        driver_program_error(app, ERROR_NUMBER_ZERO);
+    }
+
     driver_accumulator_set(app, (data_aux_3bc_t) trunc(log((double) AUX)));
 }
 
