@@ -94,7 +94,7 @@
 
 /**
  * case of separate compilation in different statistical libraries,
- * only FILE: tape_program.c must know this variable
+ * only FILE: ds_program_fifo.c must know this variable
  * 
  * (required for avr compiler in arduino ide)
  */

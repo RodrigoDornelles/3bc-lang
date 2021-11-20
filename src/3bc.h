@@ -56,9 +56,10 @@
 #include "driver_mode.c"
 #include "driver_power.c"
 #include "driver_program.c"
-#include "ds_memory_llrbt.c"
 #include "ds_hypervisor_darray.c"
+#include "ds_label_hash.c"
+#include "ds_memory_llrbt.c"
 #include "ds_procedure_lifo.c"
-#include "tape_program.c"
+#include "ds_program_fifo.c"
 #endif
 #endif

@@ -123,7 +123,7 @@ char* interpreter_3bc_compiler(app_3bc_t app, char* line)
     }
     
     /** add new line **/
-    tape_program_line_add(app, reg, mem, val);
+    ds_program_fifo_line_add(app, reg, mem, val);
 
     return line;
 }

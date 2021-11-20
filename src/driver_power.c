@@ -103,8 +103,8 @@ void driver_power_exit(app_3bc_t app)
         fclose(app->tty_source.io.file);
     }
     /** deallocate occupied memory **/
-    tape_memory_destroy(app);
-    tape_program_destroy(app);
+    ds_memory_llrbt_destroy(app);
+    ds_program_fifo_destroy(app);
 
     driver_tty_exit();
     app->state = FSM_3BC_STOPED;

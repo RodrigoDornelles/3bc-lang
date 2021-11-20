@@ -240,7 +240,7 @@ void ds_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node
     node2->color = color;
 }
 
-void tape_memory_destroy(app_3bc_t app)
+void ds_memory_llrbt_destroy(app_3bc_t app)
 {
     /** TODO: this **/
 }

@@ -137,6 +137,10 @@ app_3bc_t ds_hypervisor_darray_new(void);
 app_3bc_t ds_hypervisor_darray_get_one(app_3bc_id app);
 app_3bc_t* ds_hypervisor_darray_get_all(void);
 /************************************************************/
+void ds_label_hash_jump(label_3bc_t label);
+void ds_label_hash_insert(app_3bc_t app, label_3bc_t label);
+struct label_node_s* ds_label_hash_search(app_3bc_t app, label_3bc_t label);
+/************************************************************/
 data_3bc_t ds_memory_llrbt_data_get(app_3bc_id app_id, address_3bc_t address);
 data_3bc_t ds_memory_llrbt_conf_get(app_3bc_id app_id, address_3bc_t address);
 void ds_memory_llrbt_data_set(app_3bc_id app_id, address_3bc_t address, data_3bc_t value);
@@ -149,16 +153,12 @@ struct memory_node_s* ds_memory_llrbt_access(app_3bc_t app, address_3bc_t addres
 struct memory_node_s* ds_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node);
 struct memory_node_s* ds_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node);
 void ds_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2);
-/** TODO: rename and work it **/
-void tape_memory_destroy(app_3bc_t app);
+void ds_memory_llrbt_destroy(app_3bc_t app);
 /************************************************************/
-void tape_program_resize(app_3bc_t app);
-void tape_program_destroy(app_3bc_t app);
-void tape_program_line_add(app_3bc_t app, register_3bc_t reg, address_3bc_t mem, data_3bc_t val);
-void tape_program_label_jump(label_3bc_t label);
-void tape_program_label_insert(app_3bc_t app, label_3bc_t label);
-struct label_node_s* tape_program_label_search(app_3bc_t app, label_3bc_t label);
-bool tape_program_avaliable(app_3bc_t app);
+void ds_program_fifo_resize(app_3bc_t app);
+void ds_program_fifo_destroy(app_3bc_t app);
+void ds_program_fifo_line_add(app_3bc_t app, register_3bc_t reg, address_3bc_t mem, data_3bc_t val);
+bool ds_program_fifo_avaliable(app_3bc_t app);
 /************************************************************/
 #ifdef __cplusplus
 }
