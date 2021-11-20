@@ -9,7 +9,7 @@ CheatSheet
 | 3 | **[MODE_INPUT](#mode-input)** | console input keyboard | `nill` `strb` `stro` `stri` `strx` `strc` `mode` |
 | 4 | **[MODE_INPUT_SILENT](#mode-input-silent)** | console input keyboard (silent) | `nill` `strb` `stro` `stri` `strx` `strc` `mode` |
 | 5 | **[MODE_INPUT_PASSWORD](#mode-input-password)** | console input keyboard (password) | `nill` `strb` `stro` `stri` `strx` `strc` `mode` |
-| 6 | **[MODE_MEMORY](#mode-memory)** | main memory controller | `nill` `free` `aloc` `moff` `muse` `mmax` `tmin` `mode` |
+| 6 | **[MODE_MEMORY](#mode-memory)** | main memory controller | `nill` `free` `aloc` `moff` `muse` `mode` |
 | 7 | **[MODE_MEMORY_PTR](#mode-memory-ptr)** | pointers memory controller | `nill` `free` `aloc` `pull` `spin` `push` `mode` |
 | 8 | **[MODE_MEMORY_AUX](#mode-memory-aux)** | aux memory controller | `nill` `free` `aloc` `pull` `spin` `push` `mode` |
 | 9 | **[MODE_JUMP](#mode-jump)** | logical jumps between labels | `nill` `goto` `fgto` `zgto` `pgto` `ngto` `mode` |
@@ -128,8 +128,6 @@ CheatSheet
 | `aloc` | 2 | 010 | reserve memory and set a value |
 | `moff` | 3 | 011 | memory config remove mask |
 | `muse` | 4 | 100 | memory config append mask |
-| `mmax` | 5 | 101 | set max value allowed in memory |
-| `mmin` | 6 | 110 | set min value allowed in memory |
 
 * **Number:** 0o06 0d06 0x06
 
