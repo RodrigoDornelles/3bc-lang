@@ -12,7 +12,7 @@ Como fazer um "Ola mundo!"
 
 Estas etapas irão guiá-lo para executar o exemplo hello world e para ter seu primeiro programa 3BC em execução em sua máquina, vamos começar.
 
-Depois de baixar o binário na página _[downalod](https://3bc-lang.org/download)_, basta descompactar o arquivo e utilizar a linha de comando para excutar o código-fonte usando o interpretador de acordo com seu sistema operacional: **windows**, **mac os**, **unix** ou **linux**.
+Depois de baixar o binário na página _[download](https://3bc-lang.org/download)_, basta descompactar o arquivo e utilizar a linha de comando para excutar o código-fonte usando o interpretador de acordo com seu sistema operacional: **windows**, **mac os**, **unix** ou **linux**.
 
  * **Exemplo:** `olamundo.3bc`
 
@@ -57,13 +57,13 @@ Um grande ponto para facilitar o aprendizado, é a sua sintaxe muito bem organiz
 
 Uma linha do programa é consequentemente uma instrução, que possui três parâmetros de maneira obrigatória. São separados pela respectivamente ordem de **registrador**, **endereço**, **constante**.
 
-![structure-pt-br ><](https://3bc-lang.org/images/structure-pt-br.png)
+![structure-pt-br ><](../images/structure-pt-br.png)
 
  * **Registrador**
 
 O registrador define o comportamento da instrução seja imprimir na tela, capturar entradas, somar, etc. 
 
-Deve ser utilizado mnemónicos como `mode`, `math` e `nill` ou algumas expressões literais que representam seu opcode de 0 até 7. Se oriente pelo guia _[cheatsheet](https://3bc-lang.org/cheatsheet)_, onde explica detalhadamente sobre cada instrução.
+Deve ser utilizado mnemónicos como `mode`, `math` e `nill` ou algumas expressões literais que representam seu opcode de 0 até 7. Se oriente pelo guia _[cheatsheet](cheatsheet)_, onde explica detalhadamente sobre cada instrução.
 
 Conforme o registrador é necessário passar ou não valores de **endereço** e **constante**. Pode tanto ser obrigatórios quanto restritivos, ou não aceitar ambos na mesma instrução, para evitar ambiguidade.
 
