@@ -22,7 +22,7 @@ CheatSheet
 | 16 | **[MODE_MATH_POWER](#mode-math-power)** | basic mathematic power | `nill` `math` `mode` |
 | 17 | **[MODE_MATH_ROOT](#mode-math-root)** | basic mathematic root | `nill` `math` `mode` |
 | 18 | **[MODE_MATH_ABS](#mode-math-abs)** | basic mathematic module | `nill` `math` `mode` |
-| 29 | **[MODE_HELPER_MUL_ADD](#mode-helper-mul-add)** | multiply by base and add acumulator | `nill` `nb02` `nb08` `nb10` `nb16` `mode` |
+| 29 | **[MODE_MATH_MUL_ADD](#mode-math-mul-add)** | multiply by base and add acumulator | `nill` `nb02` `nb08` `nb10` `nb16` `mode` |
 | 20 | <br/> | reserved | <br/> |
 | 21 | **[MODE_BITWISE_NOT](#mode-bitwise-not)** | boolean not (per bit) | `nill` `math` `mode` |
 | 22 | **[MODE_BITWISE_AND](#mode-bitwise-and)** | boolean and (per bit) | `nill` `math` `mode` |
@@ -233,7 +233,7 @@ CheatSheet
 
 * **Number:** 0o23 0d18 0x12
 
-## MODE HELPER MUL ADD ##
+## MODE MATH MUL ADD ##
 
 | name | octal | bit | description |
 | ------ | - | --- | - |
