@@ -6,7 +6,7 @@ struct termios term_old_attr;
 struct termios term_new_attr;
 #endif
 
-optional_inline void driver_tty_init()
+void driver_tty_init()
 {
     #if defined(_3BC_PC_UNIX)
     /**
@@ -24,7 +24,7 @@ optional_inline void driver_tty_init()
     #endif
 }
 
-optional_inline void driver_tty_exit()
+void driver_tty_exit()
 {
     #if defined(_3BC_COMPUTER)
     /** clear buffers **/

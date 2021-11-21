@@ -44,6 +44,9 @@
 #define _3BC_COMPACT
 #define _3BC_COMPUTER
 #define _3BC_PC_1970
+#if !defined(_3BC_ENABLE_INTERPRETER) && !defined(_3BC_DISABLE_INTERPRETER)
+#define _3BC_DISABLE_INTERPRETER
+#endif
 /**
  * PLATAFORM: MODERN COMPUTER
  */
@@ -76,10 +79,6 @@
 #define AUX                         (driver_accumulator_get(app))
 #endif
 
-#ifndef SIGTERM
-#define SIGTERM                     (15)
-#endif
-
 #ifndef LABEL_HASH_SIZE
 #ifdef _3BC_ARDUINO
 #define LABEL_HASH_SIZE             (8) 
@@ -108,20 +107,6 @@
 #define LLRBT_IS_RED(n)                 (n==NULL?false:n->color==LLRBT_RED)
 #define POINTER(a)                      (driver_memory_pointer(app,a))
 #define BITFIELD_HAS(a,b)               ((b)==((a)&(b)))
-
-/**
- * C/C++ COMPATIBILITY MACROS
- */
-#ifdef _3BC_AVR
-#define log2(l)                 (log(l)/log(2))
-#endif
-
-#if defined(inline) && !defined(_3BC_SCU)
-#define optional_inline         inline
-#else 
-#define optional_inline
-#endif
-
 /**
  * PARAMTERS MACROS
  */
@@ -129,7 +114,7 @@
 #define VALIDATE_NOT_DUALITY            if(address!=0&&value!=0)driver_program_error(app, ERROR_PARAM_DUALITY);
 #define VALIDATE_NOT_ADRESS             if(address!=0)driver_program_error(app, ERROR_PARAM_BLOCKED_ADDRESS);
 #define VALIDATE_NOT_VALUES             if(value!=0)driver_program_error(app, ERROR_PARAM_BLOCKED_VALUE);
-#define VALIDATE_NOT_NEGATIVES          if(value<0||address<0||AUX<0)driver_program_error(app, ERROR_NUMBER_NEGATIVE);
+#define VALIDATE_NOT_NEGATIVES          if(value<0||driver_memory_data_get(app, address)<0||AUX<0)driver_program_error(app, ERROR_NUMBER_NEGATIVE);
 #define REQUIRED_ADDRESS                if(address==0)driver_program_error(app, ERROR_PARAM_REQUIRE_ADDRESS);
 #define REQUIRED_VALUE                  if(value==0)driver_program_error(app, ERROR_PARAM_REQUIRE_VALUE);
 #define REQUIRED_ANY                    if(value==0&&address==0)driver_program_error(app, ERROR_PARAM_REQUIRE_ANY);

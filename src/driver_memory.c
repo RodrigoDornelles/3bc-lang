@@ -34,7 +34,7 @@ data_3bc_t driver_memory_data_get(app_3bc_t app, address_3bc_t address)
     return value;
 }
 
-optional_inline data_3bc_t driver_memory_conf_get(app_3bc_t app, address_3bc_t address)
+data_3bc_t driver_memory_conf_get(app_3bc_t app, address_3bc_t address)
 {
     return app->memory.conf_get(app->id, address);
 }

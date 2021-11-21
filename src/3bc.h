@@ -38,6 +38,9 @@
 #include "3bc_optional_custom.h"
 #include "3bc_optional_interpreter.h"
 
+/** compatibility fixes **/
+#include "3bc_support.h"
+
 /** program **/
 #if !defined(_3BC_SCU)
 #include "cpu_boolean.c"

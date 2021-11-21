@@ -109,31 +109,37 @@ void cpu_math_logn(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
     VALIDATE_NOT_VALUES
-
+    #if defined(_3BC_MOS6502)
+    /** TODO: support logarithm on 6502 **/
+    driver_program_error(app, ERROR_UNSUPPORTED);
+    #else
     if (AUX == 0) {
         driver_program_error(app, ERROR_NUMBER_ZERO);
     }
 
     driver_accumulator_set(app, (data_aux_3bc_t) trunc(log((double) AUX)));
+    #endif
 }
 
 void cpu_math_mul_add(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    register char base = 0;
+    {
+        char base = 0;
 
-    if (reg == NB02) {
-        base = 2;
-    }
-    else if (reg == NB08) {
-        base = 8;
-    }
-    else if (reg == NB10) {
-        base = 10;
-    }
-    else if (reg == NB16) {
-        base = 16;
-    }
+        if (reg == NB02) {
+            base = 2;
+        }
+        else if (reg == NB08) {
+            base = 8;
+        }
+        else if (reg == NB10) {
+            base = 10;
+        }
+        else if (reg == NB16) {
+            base = 16;
+        }
 
-    driver_accumulator_set(app, (AUX * base) + GET_ANY_PARAM);
+        driver_accumulator_set(app, (AUX * base) + GET_ANY_PARAM);
+    }
 }
