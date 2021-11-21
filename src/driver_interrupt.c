@@ -75,7 +75,7 @@ bool driver_interrupt(app_3bc_t app)
                     #elif defined(_3BC_ARDUINO) && defined(_3BC_AVR)
                     unsigned long time_now = timer0_overflow_count;
                     #else
-                    unsigned long time_now = 1;
+                    unsigned long time_now = 0;
                     #endif
                     if (app->cache_l3.sleep_called == 0) {
                         app->cache_l3.sleep_called = time_now;
@@ -102,7 +102,7 @@ bool driver_interrupt(app_3bc_t app)
                     #elif defined(_3BC_ARDUINO) && defined(_3BC_AVR)
                     unsigned long time_now = micros();
                     #else
-                    unsigned long time_now = 1;
+                    unsigned long time_now = 0;
                     #endif
                     if (app->cache_l3.sleep_called == 0) {
                         app->cache_l3.sleep_called = time_now;
@@ -119,6 +119,8 @@ bool driver_interrupt(app_3bc_t app)
                     unsigned long time_now = clock()/(CLOCKS_PER_SEC/1000);
                     #elif defined(_3BC_ARDUINO)
                     unsigned long time_now = millis();
+                    #else
+                    unsigned long time_now = 0;
                     #endif
                     if (app->cache_l3.sleep_called == 0) {
                         app->cache_l3.sleep_called = time_now;
@@ -135,6 +137,8 @@ bool driver_interrupt(app_3bc_t app)
                     unsigned long time_now = time(NULL);
                     #elif defined(_3BC_ARDUINO)
                     unsigned long time_now = millis()/1000;
+                    #else
+                    unsigned long time_now = 0;
                     #endif
                     if (app->cache_l3.sleep_called == 0) {
                         app->cache_l3.sleep_called = time_now;
