@@ -4,7 +4,7 @@
 typedef unsigned short int line_3bc_t;
 typedef unsigned char cpumode_3bc_t;
 typedef unsigned char register_3bc_t;
-typedef unsigned char address_3bc_t;
+typedef unsigned short address_3bc_t;
 typedef unsigned char label_3bc_t;
 typedef unsigned char memory_conf_t;
 typedef signed int data_3bc_t;
