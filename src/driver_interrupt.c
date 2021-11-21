@@ -97,7 +97,7 @@ bool driver_interrupt(app_3bc_t app)
 
                 case SLEEP_3BC_MICROSECONDS:
                 {
-                    #if defined(_3BC_COMPUTER)
+                    #if defined(_3BC_COMPUTER) && defined(CLOCKS_PER_SEC)
                     unsigned long time_now = clock()/(CLOCKS_PER_SEC/1000/1000);
                     #elif defined(_3BC_ARDUINO) && defined(_3BC_AVR)
                     unsigned long time_now = micros();
@@ -115,7 +115,7 @@ bool driver_interrupt(app_3bc_t app)
 
                 case SLEEP_3BC_MILLISECONDS:
                 {
-                    #if defined(_3BC_COMPUTER)
+                    #if defined(_3BC_COMPUTER) && defined(CLOCKS_PER_SEC)
                     unsigned long time_now = clock()/(CLOCKS_PER_SEC/1000);
                     #elif defined(_3BC_ARDUINO)
                     unsigned long time_now = millis();
