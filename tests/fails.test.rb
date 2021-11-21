@@ -128,9 +128,11 @@ class TestFails < Minitest::Test
     end
 
     def test_number_zero
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.14,math.0.0")
+        for console_input in ['mode.0.14,math.0.0,', 'mode.0.38,math.0.2', 'mode.0.39,math.0.0']
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
         assert_match /ERROR CODE\:(\t| )?(0x3BC013)/, stderr
         assert_equal 15, status.exitstatus
+        end
     end
 
     def test_none_tty
