@@ -22,7 +22,7 @@ jobs:
       - name: Build cc65
         run: |
           cd cc65
-          make cl65
+          make
 
       - name: Build project
         run: ./cc65/bin/cl65 main.c -t apple2
@@ -42,7 +42,7 @@ jobs:
       - name: Build cc65
         run: |
           cd cc65
-          make cl65
+          make
 
       - name: Build project
         run: ./cc65/bin/cl65 main.c -t c64
