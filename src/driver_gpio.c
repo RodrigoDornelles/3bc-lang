@@ -1,6 +1,14 @@
 #define _3BC_SCU_FIX_2
 #include "3bc.h"
 
+/**
+ * TODO:
+ *
+ * Support raspbary pico
+ * Support raspbary pi
+ * Support microbit
+ */
+
 void driver_gpio_setup(app_3bc_t app, memory_conf_t conf, address_3bc_t pin)
 {
     /** nothing use gpio´s pins */

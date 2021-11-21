@@ -91,8 +91,8 @@
 #define GET_ANY_PARAM               (address?driver_memory_data_get(app,address):value)
 #endif 
 
-#define MEM_CONFIG_RESERVED         (0b00000001) /** unused for a while **/
-#define MEM_CONFIG_FLOW_SAFE        (0b00000010) /** trust in over/under flow **/
+#define MEM_CONFIG_RESERVED         (0b00000001) /** unused **/
+#define MEM_CONFIG_FLOW_SAFE        (0b00000010) /** TODO: trust in over/under flow **/
 #define MEM_CONFIG_GPIO_SEND        (0b00000100) /** digital output **/
 #define MEM_CONFIG_GPIO_READ        (0b00001000) /** digital input **/
 #define MEM_CONFIG_GPIO_PULL        (0b00010000) /** pullup input **/

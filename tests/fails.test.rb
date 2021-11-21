@@ -116,9 +116,11 @@ class TestFails < Minitest::Test
     end
     
     def test_number_wrong_base
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode 0 0o8")
+        for console_input in ["mode.0.0o8", "0.0.0k0"]
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
         assert_match /ERROR CODE\:(\t| )?(0x3BC011)/, stderr
         assert_equal 15, status.exitstatus
+        end
     end
 
     def test_number_negative
@@ -178,9 +180,7 @@ class TestFails < Minitest::Test
     end
 
     def test_invalid_char_size
-        for console_input in [
-            "0.0.'aa'", "0.0.'a"
-        ]
+        for console_input in ["0.0.'aa'", "0.0.'a"]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
         assert_match /ERROR CODE\:(\t| )?(0x3BC01B)/, stderr
         assert_equal 15, status.exitstatus

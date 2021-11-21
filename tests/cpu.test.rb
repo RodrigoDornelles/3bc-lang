@@ -38,18 +38,18 @@ class TestCpu < Minitest::Test
         assert_equal 0, status
     end
 
-=begin TODO: REWORK
     def test_mode_6
         console_input = [
-            "mode.0.6,muse.1.16,muse.1.128,aloc.1.0xFF,mode.0.2,stri.1.0,mode.0.6,free.1.0",
-            "mode.0.6,muse.1.32,muse.1.128,aloc.1.0xFF,mode.0.2,stri.1.0,mode.0.6,free.1.0",
-            "mode.0.6,muse.1.32,aloc.1.0xFF,mode.0.2,stri.1.0,mode.0.6,free.1.0",
+            "mode.0.6,free.1.0,muse.1.4,aloc.1.1,moff.1.4,mode.0.2,stri.1.0",
+            "mode.0.6,free.1.0,muse.1.8,muse.1.16,mode.0.2,stri.1.0",
+            "mode.0.6,free.1.0,muse.1.8,muse.1.32,mode.0.2,stri.1.0",
+            "mode.0.6,free.1.0,muse.1.4,muse.1.32,aloc.1.1,mode.0.2,stri.1.0",
         ]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input.join("\n"))
-        assert_equal "25500", stdout
+        assert_equal "", stderr
+        assert_equal "1001", stdout
         assert_equal 0, status
     end
-=end
 
     def test_mode_7
         console_input = [
@@ -377,7 +377,7 @@ class TestCpu < Minitest::Test
     end
 
     def test_mode_43
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => 'mode.0.43,real.0.1,fake.0.1,micr.0.1,mili.0.1,seco.0.1,mode.0.2,strc.0.\'!\'')
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => 'mode.0.43,real.0.1,fake.0.2,micr.0.2,mili.0.2,seco.0.1,mode.0.2,strc.0.\'!\'')
         assert_equal "!", stdout
         assert_equal 0, status
     end

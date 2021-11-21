@@ -165,17 +165,17 @@ bool driver_interrupt(app_3bc_t app)
 
         /**
          * INPUT CONTEXT
-         */
+         * TODO: this
         case FSM_3BC_IO_READ:
             app->state = FSM_3BC_RUNNING;
-            return true;
+            return true;*/
 
         /**
          * OUTPUT CONTEXT
-         */
+         * TODO: this
         case FSM_3BC_IO_SEND:
             app->state = FSM_3BC_RUNNING;
-            return true;
+            return true;*/
 
         /**
          * EXIT CONTEXT
