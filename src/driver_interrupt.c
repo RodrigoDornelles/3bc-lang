@@ -1,7 +1,7 @@
 #define _3BC_SCU_FIX_2
 #include "3bc.h"
 
-#if defined(_3BC_ARDUINO)
+#if defined(_3BC_ARDUINO) && defined(_3BC_AVR)
 /** TODO: make compatible with xtensa **/
 extern volatile unsigned long timer0_overflow_count;
 #endif
@@ -72,8 +72,10 @@ bool driver_interrupt(app_3bc_t app)
                 {
                     #if defined(_3BC_COMPUTER)
                     unsigned long time_now = clock();
-                    #elif defined(_3BC_ARDUINO)
+                    #elif defined(_3BC_ARDUINO) && defined(_3BC_AVR)
                     unsigned long time_now = timer0_overflow_count;
+                    #else
+                    unsigned long time_now = 1;
                     #endif
                     if (app->cache_l3.sleep_called == 0) {
                         app->cache_l3.sleep_called = time_now;
@@ -97,8 +99,10 @@ bool driver_interrupt(app_3bc_t app)
                 {
                     #if defined(_3BC_COMPUTER)
                     unsigned long time_now = clock()/(CLOCKS_PER_SEC/1000/1000);
-                    #elif defined(_3BC_ARDUINO)
+                    #elif defined(_3BC_ARDUINO) && defined(_3BC_AVR)
                     unsigned long time_now = micros();
+                    #else
+                    unsigned long time_now = 1;
                     #endif
                     if (app->cache_l3.sleep_called == 0) {
                         app->cache_l3.sleep_called = time_now;

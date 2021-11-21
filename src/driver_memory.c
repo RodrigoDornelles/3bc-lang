@@ -5,7 +5,7 @@ void driver_memory_data_set(app_3bc_t app, address_3bc_t address, data_3bc_t val
 {
     memory_conf_t conf = app->memory.conf_get(app->id, address);
 
-    driver_gpio_output(conf, address, value);
+    driver_gpio_output(app, conf, address, value);
     
     app->memory.data_set(app->id, address, value);
 }
@@ -15,9 +15,9 @@ void driver_memory_conf_set(app_3bc_t app, address_3bc_t address, data_3bc_t con
     data_3bc_t value = app->memory.data_get(app->id, address);
 
     driver_memory_validate(app, conf);
-    driver_gpio_setup(conf, address);
-    driver_gpio_output(conf, address, value);
-    value = driver_gpio_input(conf, address, value);
+    driver_gpio_setup(app, conf, address);
+    driver_gpio_output(app, conf, address, value);
+    value = driver_gpio_input(app, conf, address, value);
 
     app->memory.conf_set(app->id, address, conf);
     app->memory.data_set(app->id, address, value);
@@ -29,7 +29,7 @@ data_3bc_t driver_memory_data_get(app_3bc_t app, address_3bc_t address)
     memory_conf_t conf = app->memory.conf_get(app->id, address);
 
     /** read gpios if necessary **/
-    value = driver_gpio_input(conf, address, value);
+    value = driver_gpio_input(app, conf, address, value);
 
     return value;
 }

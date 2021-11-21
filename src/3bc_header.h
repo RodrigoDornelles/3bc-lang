@@ -95,9 +95,9 @@ data_3bc_t driver_tty_input(app_3bc_t app, struct tty_3bc_s tty, register_3bc_t 
 void driver_tty_output(app_3bc_t app, struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
 void driver_tty_output_raw(app_3bc_t app, struct tty_3bc_s tty,const char* string);
 /************************************************************/
-void driver_gpio_setup(memory_conf_t conf, address_3bc_t pin);
-void driver_gpio_output(memory_conf_t conf, address_3bc_t pin, data_3bc_t data);
-data_3bc_t driver_gpio_input(memory_conf_t conf, address_3bc_t pin, data_3bc_t default_data);
+void driver_gpio_setup(app_3bc_t app, memory_conf_t conf, address_3bc_t pin);
+void driver_gpio_output(app_3bc_t app, memory_conf_t conf, address_3bc_t pin, data_3bc_t data);
+data_3bc_t driver_gpio_input(app_3bc_t app, memory_conf_t conf, address_3bc_t pin, data_3bc_t default_data);
 /************************************************************/
 bool driver_interrupt(app_3bc_t app);
 /************************************************************/
