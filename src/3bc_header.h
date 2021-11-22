@@ -154,6 +154,7 @@ struct memory_node_s* ds_memory_llrbt_insert(address_3bc_t address, struct memor
 struct memory_node_s* ds_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node);
 void ds_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2);
 void ds_memory_llrbt_destroy(app_3bc_t app);
+void ds_memory_llrbt_delete(struct memory_node_s* node);
 /************************************************************/
 void ds_program_fifo_resize(app_3bc_t app);
 void ds_program_fifo_destroy(app_3bc_t app);

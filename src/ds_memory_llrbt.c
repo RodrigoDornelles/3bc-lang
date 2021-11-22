@@ -242,5 +242,13 @@ void ds_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node
 
 void ds_memory_llrbt_destroy(app_3bc_t app)
 {
-    /** TODO: this **/
+    ds_memory_llrbt_delete(app->memory.root);
+}
+
+void ds_memory_llrbt_delete(struct memory_node_s* node)
+{
+    if (node != NULL) {
+        ds_memory_llrbt_delete(node->left);
+        ds_memory_llrbt_delete(node->right);
+    }
 }
