@@ -66,7 +66,7 @@ class TestFails < Minitest::Test
     end
 
     def test_more_teen_skips
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.9," + ("goto.0.skip,0.0.skip," * 9) + "goto.0.skip,mode.0.2,stri.0.1,0.0.skip,stri.0.2")
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.9," + ("goto.0.skip,0.0.skip," * 10) + "goto.0.skip,mode.0.2,stri.0.1,0.0.skip,stri.0.2")
         assert_equal "", stderr
         assert_equal "2", stdout
         assert_equal 0, status
