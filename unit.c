@@ -11,6 +11,11 @@ void cpu_test_signal(PARAMS_DEFINE)
     driver_power_signal(value);
 }
 
+void cpu_test_error(PARAMS_DEFINE)
+{
+    driver_program_error(app, (enum error_3bc_e) value);
+}
+
 void cpu_test_none_tty(PARAMS_DEFINE)
 {
     app->tty_output.type = STREAM_TYPE_NONE;
@@ -35,6 +40,7 @@ int main(int argc, char **argv)
     lang_3bc_custom(VM, MODE_CUSTOM_1, 2, &cpu_test_none_tty);
     lang_3bc_custom(VM, MODE_CUSTOM_1, 3, &cpu_test_unsupported);
     lang_3bc_custom(VM, MODE_CUSTOM_1, 4, &cpu_test_scape_characters);
+    lang_3bc_custom(VM, MODE_CUSTOM_1, 5, &cpu_test_error);
     while(lang_3bc_update(VM));
     return 0;
 }

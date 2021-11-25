@@ -60,6 +60,7 @@ void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
     driver_tty_output_raw(app, app->tty_error, "\n");
     #endif
 
+    /** TODO: no closign when else **/
     if (error_code >= ERROR_CPU_ZERO) {
         driver_power_signal(SIGTERM);
     }
