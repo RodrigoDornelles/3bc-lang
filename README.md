@@ -30,7 +30,7 @@
 | Does it have garbage collector? | No, the developer has full control over the memory, this follows the same philosophy as **C** "freedom with responsibility" |
 | Does it work as a compiler? | No, it currently works as an interpreter (although a very fast one), or also by packaging bytecode with a vm in a single binary. |
 | What are the influences? | Languages **Cobol**, **Ruby** and **Java**; Assembly´s **WASM**, **ARM** and **x86** |
-| Is it more compact than **Lua**? | Yeah, because it has the same performance target as the Arduino Uno microcontroller. And this impacts it's size (depending on the CPU's architecture, 14KiB ROM and 400 bytes RAM ) |
+| Is it more compact than **Lua**? | Yeah, because it has the same performance target as the Arduino Uno microcontroller. And this impacts it's size (depending on the CPU's architecture, 20KiB ROM and 300 bytes RAM ) |
 
 -----------------------------------------------------------------------------------------
 ![3bc lang logo](/docs/images/3bc-logo-small.png)
