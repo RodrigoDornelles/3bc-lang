@@ -52,3 +52,9 @@ img[alt$="><"] {
     margin: auto;
     float: none!important;
 }
+
+@media print {
+    .dont-print {
+        display: none;
+    }
+}

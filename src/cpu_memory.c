@@ -1,67 +1,56 @@
+#define _3BC_SCU_FIX_2
 #include "3bc.h"
 
 void cpu_memory_free(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     VALIDATE_NOT_VALUES
-    driver_memory_free(address);
+    driver_memory_free(app, address);
 }
 
 void cpu_memory_aloc(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    driver_memory_data_set(address, value);
+    driver_memory_data_set(app, address, value);
 }
 
 void cpu_memory_moff(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     /** config remove mask (and not) */
-    driver_memory_conf_set(address, driver_memory_conf_get(address) &~ value);
+    driver_memory_conf_set(app, address, driver_memory_conf_get(app, address) &~ value);
 }
 
 void cpu_memory_muse(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     /** config append mask (or) */
-    driver_memory_conf_set(address, driver_memory_conf_get(address) | value);
-}
-
-void cpu_memory_mmin(PARAMS_DEFINE)
-{
-    REQUIRED_ADDRESS
-    driver_memory_vmin_set(address, value);
-}
-
-void cpu_memory_mmax(PARAMS_DEFINE)
-{
-    REQUIRED_ADDRESS
-    driver_memory_vmax_set(address, value);
+    driver_memory_conf_set(app, address, driver_memory_conf_get(app, address) | value);
 }
 
 void cpu_memory_ptr_free(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     VALIDATE_NOT_VALUES
-    driver_memory_free(POINTER(address));
+    driver_memory_free(app, POINTER(address));
 }
 
 void cpu_memory_ptr_aloc(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    driver_memory_data_set(POINTER(address), value);
+    driver_memory_data_set(app, POINTER(address), value);
 }
 
 void cpu_memory_ptr_pull(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
-    driver_memory_data_set(POINTER(address), AUX);
+    driver_memory_data_set(app, POINTER(address), AUX);
 }
 
 void cpu_memory_ptr_push(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
-    tape_aux_set(driver_memory_data_get(POINTER(address)));
+    driver_accumulator_set(app, driver_memory_data_get(app, POINTER(address)));
 }
 
 void cpu_memory_ptr_spin(PARAMS_DEFINE)
@@ -70,8 +59,8 @@ void cpu_memory_ptr_spin(PARAMS_DEFINE)
     {
         data_3bc_t aux_old = AUX;
         address = POINTER(address);
-        tape_aux_set(driver_memory_data_get(address));
-        driver_memory_data_set(address, aux_old);
+        driver_accumulator_set(app, driver_memory_data_get(app, address));
+        driver_memory_data_set(app, address, aux_old);
     }
 }
 
@@ -79,25 +68,25 @@ void cpu_memory_aux_free(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
     VALIDATE_NOT_VALUES
-    tape_aux_set(NILL);
+    driver_accumulator_set(app, NILL);
 }
 
 void cpu_memory_aux_aloc(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
-    tape_aux_set(value);
+    driver_accumulator_set(app, value);
 }
 
 void cpu_memory_aux_pull(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
-    driver_memory_data_set(address, AUX);
+    driver_memory_data_set(app, address, AUX);
 }
 
 void cpu_memory_aux_push(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
-    tape_aux_set(driver_memory_data_get(address));
+    driver_accumulator_set(app, driver_memory_data_get(app, address));
 }
 
 /**
@@ -108,7 +97,7 @@ void cpu_memory_aux_spin(PARAMS_DEFINE)
     VALIDATE_NOT_VALUES
     {
         data_3bc_t aux_old = AUX;
-        tape_aux_set(driver_memory_data_get(address));
-        driver_memory_data_set(address, aux_old);
+        driver_accumulator_set(app, driver_memory_data_get(app, address));
+        driver_memory_data_set(app, address, aux_old);
     }
 }

@@ -18,7 +18,7 @@ References
 
 ### Tests ###
 
-* [Otavio Lemos](https://otaviolemos.github.io/) (2021) _162 - Pirâmide ou Troféu de Testes? | theWiseDev Testing_<br/><https://www.youtube.com/watch?v=LsV_d9y317E>
+* [Otavio Lemos](https://otaviolemos.github.io/) (2021) _162 - Pirâmide ou Troféu de Testes? \| theWiseDev Testing_<br/><https://www.youtube.com/watch?v=LsV_d9y317E>
 
 ## Extra subjects ##
 

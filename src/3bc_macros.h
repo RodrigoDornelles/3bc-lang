@@ -44,11 +44,17 @@
 #define _3BC_COMPACT
 #define _3BC_COMPUTER
 #define _3BC_PC_1970
+#if !defined(_3BC_ENABLE_INTERPRETER) && !defined(_3BC_DISABLE_INTERPRETER)
+#define _3BC_DISABLE_INTERPRETER
+#endif
 /**
  * PLATAFORM: MODERN COMPUTER
  */
 #else
 #define _3BC_COMPUTER
+#if !defined(_3BC_ENABLE_INTERPRETER) && !defined(_3BC_DISABLE_INTERPRETER)
+#define _3BC_ENABLE_INTERPRETER
+#endif
 #if defined(_WIN32)
 #define _3BC_PC_WINDOWS
 #else 
@@ -69,13 +75,8 @@
 #define LLRBT_BLACK                 (false)
 #define LLRBT_RED                   (true)
 
-#ifndef APP_3BC
-#define _3BC_APP_UNIQUE
-#define APP_3BC                     (bootstrap_3bc())
-#endif
-
 #ifndef AUX
-#define AUX                         (tape_aux_get())
+#define AUX                         (driver_accumulator_get(app))
 #endif
 
 #ifndef LABEL_HASH_SIZE
@@ -87,60 +88,54 @@
 #endif
 
 #ifndef GET_ANY_PARAM
-#define GET_ANY_PARAM               (address?driver_memory_data_get(address):value)
+#define GET_ANY_PARAM               (address?driver_memory_data_get(app,address):value)
 #endif 
 
-#define MEM_CONFIG_RESERVED         (0b00000001) /** unused for a while **/
-#define MEM_CONFIG_MAX_VALUE        (0b00000010) /** exists maximum value **/
-#define MEM_CONFIG_MIN_VALUE        (0b00000100) /** exists minimum value **/
-#define MEM_CONFIG_NORMALIZE        (0b00001000) /** transform clamp to map **/
-#define MEM_CONFIG_GPIO_SEND        (0b00010000) /** digital output **/
-#define MEM_CONFIG_GPIO_READ        (0b00100000) /** digital input **/
-#define MEM_CONFIG_GPIO_PULL        (0b01000000) /** pullup input **/
-#define MEM_CONFIG_GPIO_ANAL        (0b10000000) /** analogic/pwd **/
+#define MEM_CONFIG_RESERVED         (0b00000001) /** unused **/
+#define MEM_CONFIG_FLOW_SAFE        (0b00000010) /** TODO: trust in over/under flow **/
+#define MEM_CONFIG_GPIO_SEND        (0b00000100) /** digital output **/
+#define MEM_CONFIG_GPIO_READ        (0b00001000) /** digital input **/
+#define MEM_CONFIG_GPIO_PULL        (0b00010000) /** pullup input **/
+#define MEM_CONFIG_GPIO_ANAL        (0b00100000) /** analogic/pwd **/
 
 /**
  * FUNCTIONS MACROS
  */
 #define PARSER_UNPACK(c)                (tolower(c[0])|tolower(c[1])<<8|(long)tolower(c[2])<<16|(long)tolower(c[3])<<24)
 #define PARSER_PACK(c1,c2,c3,c4,v,r)    case(c1|c2<<8|(long)c3<<16|(long)c4<<24):*v=r;return(true)
-#define ERROR_LOG_3BC(a,b)              case(a):driver_tty_output_raw(APP_3BC->tty_error,(b));break;
+#define ERROR_LOG_3BC(a,b)              case(a):driver_tty_output_raw(app, app->tty_error,(b));break;
 #define LLRBT_IS_RED(n)                 (n==NULL?false:n->color==LLRBT_RED)
-#define POINTER(a)                      (driver_memory_pointer(a))
+#define POINTER(a)                      (driver_memory_pointer(app,a))
 #define BITFIELD_HAS(a,b)               ((b)==((a)&(b)))
-
-/**
- * C/C++ COMPATIBILITY MACROS
- */
-#ifdef _3BC_AVR
-#define log2(l)                 (log(l)/log(2))
-#endif
-
-#if defined(inline) && !defined(_3BC_SCU)
-#define optional_inline         inline
-#else 
-#define optional_inline
-#endif
-
 /**
  * PARAMTERS MACROS
  */
-#define PARAMS_DEFINE                   int reg, int address, int value
-#define VALIDATE_NOT_DUALITY            if(address!=0&&value!=0)driver_program_error(ERROR_PARAM_DUALITY);
-#define VALIDATE_NOT_ADRESS             if(address!=0)driver_program_error(ERROR_PARAM_BLOCKED_ADDRESS);
-#define VALIDATE_NOT_VALUES             if(value!=0)driver_program_error(ERROR_PARAM_BLOCKED_VALUE);
-#define REQUIRED_ADDRESS                if(address==0)driver_program_error(ERROR_PARAM_REQUIRE_ADDRESS);
-#define REQUIRED_VALUE                  if(value==0)driver_program_error(ERROR_PARAM_REQUIRE_VALUE);
-#define AUX_USE_ANY_PARAM               tape_aux_set(GET_ANY_PARAM);
+#define PARAMS_DEFINE                   app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value
+#define VALIDATE_NOT_DUALITY            if(address!=0&&value!=0)driver_program_error(app, ERROR_PARAM_DUALITY);
+#define VALIDATE_NOT_ADRESS             if(address!=0)driver_program_error(app, ERROR_PARAM_BLOCKED_ADDRESS);
+#define VALIDATE_NOT_VALUES             if(value!=0)driver_program_error(app, ERROR_PARAM_BLOCKED_VALUE);
+#define VALIDATE_NOT_NEGATIVES          if(value<0||driver_memory_data_get(app, address)<0||AUX<0)driver_program_error(app, ERROR_NUMBER_NEGATIVE);
+#define REQUIRED_ADDRESS                if(address==0)driver_program_error(app, ERROR_PARAM_REQUIRE_ADDRESS);
+#define REQUIRED_VALUE                  if(value==0)driver_program_error(app, ERROR_PARAM_REQUIRE_VALUE);
+#define REQUIRED_ANY                    if(value==0&&address==0)driver_program_error(app, ERROR_PARAM_REQUIRE_ANY);
 
 /**
  * INSTRUCTIONS PACK MACROS
  */
-#define CPU_PACK_ZEROMODE(mode)     case((mode*7)+1):case((mode*7)+2):case((mode*7)+3):case((mode*7)+4):case((mode*7)+5):case((mode*7)+6):cpu_not_mode(0,0,0);break;
-#define CPU_PACK_RESERVED(mode)     case((mode*7)+1):case((mode*7)+2):case((mode*7)+3):case((mode*7)+4):case((mode*7)+5):case((mode*7)+6):cpu_mode_reserved(reg,address,value);break;
-#define CPU_PACK1(mode,a)           case((mode*7)+1):a(reg,address,value);break;
-#define CPU_PACK2(mode,a,b)         case((mode*7)+1):a(reg,address,value);break;case((mode*7)+2):b(reg,address,value);break;
-#define CPU_PACK3(mode,a,b,c)       case((mode*7)+1):a(reg,address,value);break;case((mode*7)+2):b(reg,address,value);break;case((mode*7)+3):c(reg,address,value);break;
-#define CPU_PACK4(mode,a,b,c,d)     case((mode*7)+1):a(reg,address,value);break;case((mode*7)+2):b(reg,address,value);break;case((mode*7)+3):c(reg,address,value);break;case((mode*7)+4):d(reg,address,value);break;
-#define CPU_PACK5(mode,a,b,c,d,e)   case((mode*7)+1):a(reg,address,value);break;case((mode*7)+2):b(reg,address,value);break;case((mode*7)+3):c(reg,address,value);break;case((mode*7)+4):d(reg,address,value);break;case((mode*7)+5):e(reg,address,value);break;
-#define CPU_PACK6(mode,a,b,c,d,e,f) case((mode*7)+1):a(reg,address,value);break;case((mode*7)+2):b(reg,address,value);break;case((mode*7)+3):c(reg,address,value);break;case((mode*7)+4):d(reg,address,value);break;case((mode*7)+5):e(reg,address,value);break;case((mode*7)+6):f(reg,address,value);break;
+#define CPU_PACK_ZEROMODE(mode)     case((mode*7)+1):case((mode*7)+2):case((mode*7)+3):case((mode*7)+4):case((mode*7)+5):case((mode*7)+6):cpu_not_mode(app,reg,address,value);break;
+#define CPU_PACK_RESERVED(mode)     case((mode*7)+1):case((mode*7)+2):case((mode*7)+3):case((mode*7)+4):case((mode*7)+5):case((mode*7)+6):cpu_mode_reserved(app,reg,address,value);break;
+#define CPU_PACK1(mode,a)           case((mode*7)+1):a(app,reg,address,value);break;
+#define CPU_PACK2(mode,a,b)         case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;
+#define CPU_PACK3(mode,a,b,c)       case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;case((mode*7)+3):c(app,reg,address,value);break;
+#define CPU_PACK4(mode,a,b,c,d)     case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;case((mode*7)+3):c(app,reg,address,value);break;case((mode*7)+4):d(app,reg,address,value);break;
+#define CPU_PACK5(mode,a,b,c,d,e)   case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;case((mode*7)+3):c(app,reg,address,value);break;case((mode*7)+4):d(app,reg,address,value);break;case((mode*7)+5):e(app,reg,address,value);break;
+#define CPU_PACK6(mode,a,b,c,d,e,f) case((mode*7)+1):a(app,reg,address,value);break;case((mode*7)+2):b(app,reg,address,value);break;case((mode*7)+3):c(app,reg,address,value);break;case((mode*7)+4):d(app,reg,address,value);break;case((mode*7)+5):e(app,reg,address,value);break;case((mode*7)+6):f(app,reg,address,value);break;
+
+/**
+ * USER MACROS
+ */
+#define lang_3bc_update             driver_interrupt
+#define lang_3bc_init               driver_power_init
+#define lang_3bc_line               ds_program_fifo_line_add
+#define lang_3bc_print(a,t,l);      a->t.type=STREAM_TYPE_FUNCTION_CALL;a->t.io.lambda=l;
+#define lang_3bc_custom             custom_3bc_func_set

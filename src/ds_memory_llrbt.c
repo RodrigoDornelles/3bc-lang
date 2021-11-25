@@ -1,50 +1,31 @@
+#define _3BC_SCU_FIX_2
 #include "3bc.h"
 
-data_3bc_t ds_memory_llrbt_data_get(address_3bc_t address)
+data_3bc_t ds_memory_llrbt_data_get(app_3bc_id app_id, address_3bc_t address)
 {
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    app_3bc_t app = ds_hypervisor_darray_get_one(app_id);
+    struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     return node->data;   
 }
 
-data_3bc_t ds_memory_llrbt_vmin_get(address_3bc_t address)
+data_3bc_t ds_memory_llrbt_conf_get(app_3bc_id app_id, address_3bc_t address)
 {
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
-    return node->vmin;   
-}
-
-data_3bc_t ds_memory_llrbt_vmax_get(address_3bc_t address)
-{
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
-    return node->vmax;   
-}
-
-data_3bc_t ds_memory_llrbt_conf_get(address_3bc_t address)
-{
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    app_3bc_t app = ds_hypervisor_darray_get_one(app_id);
+    struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     return node->conf;   
 }
 
-void ds_memory_llrbt_data_set(address_3bc_t address, data_3bc_t value)
+void ds_memory_llrbt_data_set(app_3bc_id app_id, address_3bc_t address, data_3bc_t value)
 {
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    app_3bc_t app = ds_hypervisor_darray_get_one(app_id);
+    struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     node->data = value;   
 }
 
-void ds_memory_llrbt_vmin_set(address_3bc_t address, data_3bc_t vmin)
+void ds_memory_llrbt_conf_set(app_3bc_id app_id, address_3bc_t address, data_3bc_t conf)
 {
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
-    node->vmin = vmin;   
-}
-
-void ds_memory_llrbt_vmax_set(address_3bc_t address, data_3bc_t vmax)
-{
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
-    node->vmax = vmax;   
-}
-
-void ds_memory_llrbt_conf_set(address_3bc_t address, data_3bc_t conf)
-{
-    struct memory_node_s* node = ds_memory_llrbt_access(address);
+    app_3bc_t app = ds_hypervisor_darray_get_one(app_id);
+    struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     node->conf = conf;   
 }
 
@@ -58,8 +39,6 @@ struct memory_node_s* ds_memory_llrbt_create_node(address_3bc_t address)
     new_node->right = NULL;
     new_node->conf = 0;
     new_node->data = 0;
-    new_node->vmax = 0;
-    new_node->vmin = 0;
     new_node->address = address;
   
     /** New Node which is created is always red in color. **/
@@ -159,13 +138,13 @@ struct memory_node_s* ds_memory_llrbt_clear(address_3bc_t address, struct memory
 /** 
  * TODO: unify function with ds_memory_llrbt_insert?
  */
-struct memory_node_s* ds_memory_llrbt_access(address_3bc_t address)
+struct memory_node_s* ds_memory_llrbt_access(app_3bc_t app, address_3bc_t address)
 {
-    struct memory_node_s* node = APP_3BC->memory.root;
+    struct memory_node_s* node = app->memory.root;
 
     /** consult cache level 0 reused address **/
-    if (APP_3BC->cache_l0 != NULL && APP_3BC->cache_l0->address == address) {
-        return APP_3BC->cache_l0;
+    if (app->memory.cache != NULL && app->memory.cache->address == address) {
+        return app->memory.cache;
     }
 
     while (node != NULL && node->address != address) {
@@ -180,12 +159,12 @@ struct memory_node_s* ds_memory_llrbt_access(address_3bc_t address)
     }
 
     if (node == NULL) {
-        APP_3BC->memory.root = ds_memory_llrbt_insert(address, APP_3BC->memory.root);
-        return ds_memory_llrbt_access(address);
+        app->memory.root = ds_memory_llrbt_insert(address, app->memory.root);
+        return ds_memory_llrbt_access(app, address);
     }
 
-    APP_3BC->cache_l0 = node;
-    return APP_3BC->cache_l0;
+    app->memory.cache = node;
+    return app->memory.cache;
 }
 
 struct memory_node_s* ds_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node)
@@ -205,6 +184,7 @@ struct memory_node_s* ds_memory_llrbt_insert(address_3bc_t address, struct memor
         node->right = ds_memory_llrbt_insert(address, node->right);
     }
     /** 
+     * TODO: ????
      * unless address exists see: ds_memory_llrbt_access
      *   else {
      *       return node;
@@ -260,7 +240,15 @@ void ds_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node
     node2->color = color;
 }
 
-void tape_memory_destroy()
+void ds_memory_llrbt_destroy(app_3bc_t app)
 {
-    /** TODO: this **/
+    ds_memory_llrbt_delete(app->memory.root);
+}
+
+void ds_memory_llrbt_delete(struct memory_node_s* node)
+{
+    if (node != NULL) {
+        ds_memory_llrbt_delete(node->left);
+        ds_memory_llrbt_delete(node->right);
+    }
 }

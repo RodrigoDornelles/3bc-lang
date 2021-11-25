@@ -3,13 +3,6 @@ require 'minitest/spec'
 require 'minitest/autorun'
 
 class TestFails < Minitest::Test
-    def test_clamp_input
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.6,mmin.1.2,mmax.2.1,mode.0.4,stri.1.0,12,stri.2.0,21,mode.0.2,stri.1.0,stri.2.0")
-        assert_equal "", stderr
-        assert_equal "21", stdout
-        assert_equal 0, status
-    end
-
     def test_scapes
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.10,4.0.0,mode.0.2,strc.0.'\\0',strc.0.'\\a',strc.0.'\\b',strc.0.'\\t',strc.0.'\\n',strc.0.'\\'',strc.0.'\\\\'")
         assert_equal "", stderr
@@ -69,6 +62,13 @@ class TestFails < Minitest::Test
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.6,aloc.2.0,aloc.1.0,free.2.0")
         assert_equal "", stderr
         assert_equal "", stdout
+        assert_equal 0, status
+    end
+
+    def test_more_teen_skips
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.9," + ("goto.0.skip,0.0.skip," * 10) + "goto.0.skip,mode.0.2,stri.0.1,0.0.skip,stri.0.2")
+        assert_equal "", stderr
+        assert_equal "2", stdout
         assert_equal 0, status
     end
 end

@@ -1,6 +1,15 @@
+#define _3BC_SCU_FIX_2
 #include "3bc.h"
 
-void driver_gpio_setup(memory_conf_t conf, address_3bc_t pin)
+/**
+ * TODO:
+ *
+ * Support raspbary pico
+ * Support raspbary pi
+ * Support microbit
+ */
+
+void driver_gpio_setup(app_3bc_t app, memory_conf_t conf, address_3bc_t pin)
 {
     /** nothing use gpio´s pins */
     if (conf == 0 || (conf & (MEM_CONFIG_GPIO_SEND | MEM_CONFIG_GPIO_READ)) == 0) {
@@ -27,7 +36,7 @@ void driver_gpio_setup(memory_conf_t conf, address_3bc_t pin)
     }
 }
 
-void driver_gpio_output(memory_conf_t conf, address_3bc_t pin, data_3bc_t data)
+void driver_gpio_output(app_3bc_t app, memory_conf_t conf, address_3bc_t pin, data_3bc_t data)
 {
     if (conf == 0) {
         return;
@@ -35,7 +44,7 @@ void driver_gpio_output(memory_conf_t conf, address_3bc_t pin, data_3bc_t data)
 
     if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_SEND | MEM_CONFIG_GPIO_ANAL)) {
         #if defined(_3BC_ARDUINO) && defined(ESP32)
-        driver_program_error(ERROR_UNSUPPORTED);
+        driver_program_error(app, ERROR_UNSUPPORTED);
         #elif defined(_3BC_ARDUINO)
         analogWrite(pin, data);
         #endif
@@ -47,7 +56,7 @@ void driver_gpio_output(memory_conf_t conf, address_3bc_t pin, data_3bc_t data)
     }
 }
 
-data_3bc_t driver_gpio_input(memory_conf_t conf, address_3bc_t pin, data_3bc_t default_data)
+data_3bc_t driver_gpio_input(app_3bc_t app, memory_conf_t conf, address_3bc_t pin, data_3bc_t default_data)
 {
     if (conf == 0) {
         return default_data;

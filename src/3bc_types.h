@@ -1,15 +1,15 @@
 #include "3bc.h"
 
 /** PRIMITIVE TYPES **/
-typedef void (*function_3bc_t)(int, int, int);
 typedef unsigned short int line_3bc_t;
 typedef unsigned char cpumode_3bc_t;
 typedef unsigned char register_3bc_t;
-typedef unsigned char address_3bc_t;
+typedef unsigned short address_3bc_t;
 typedef unsigned char label_3bc_t;
 typedef unsigned char memory_conf_t;
 typedef signed int data_3bc_t;
 typedef signed long data_aux_3bc_t;
+typedef unsigned char app_3bc_id;
 
 /** FILE/STREAM/INTERFACE TYPES **/
 typedef FILE file_t;
@@ -37,6 +37,18 @@ struct tty_3bc_s {
     union stream_file_u io;
 };
 
+/** FSM INTERRUPTS **/
+enum fsm_3bc_e {
+    FSM_3BC_DEFAULT = 0,
+    FSM_3BC_READING,
+    FSM_3BC_RUNNING,
+    FSM_3BC_WAITING,
+    FSM_3BC_IO_READ,
+    FSM_3BC_IO_SEND,
+    FSM_3BC_EXITING,
+    FSM_3BC_STOPED
+};
+
 /** DS PROCEDURE LIFO **/
 struct procedure_3bc_s {
     label_3bc_t label;
@@ -45,18 +57,31 @@ struct procedure_3bc_s {
 };
 
 /** AUXILIARY MEMORY **/
+enum sleep_3bc_e {
+    SLEEP_3BC_NONE = 0,
+    SLEEP_3BC_REAL_TICK,
+    SLEEP_3BC_FAKE_TICK,
+    SLEEP_3BC_MICROSECONDS,
+    SLEEP_3BC_MILLISECONDS,
+    SLEEP_3BC_SECONDS
+};
+
+struct buffer_s {
+    char* storage;
+    unsigned int size;
+};
+
 union cache_l1_u {
-    bool max_init;
-    bool min_init;
-    bool maxmin_init;
-    unsigned short average_count;
+    enum sleep_3bc_e sleep_mode;
 };
 
 union cache_l2_u {
-    data_3bc_t max_value;
-    data_3bc_t min_value;
-    data_3bc_t maxmin_value;
-    long int average_sum;
+    unsigned long sleep_period;
+};
+
+union cache_l3_u {
+    struct buffer_s buffer;
+    unsigned long sleep_called;
 };
 
 /** PROGRAM MEMORY **/
@@ -95,8 +120,6 @@ struct memory_node_s {
     bool color;
     memory_conf_t conf;
     data_3bc_t data;
-    data_3bc_t vmax;
-    data_3bc_t vmin;
     address_3bc_t address;
     struct memory_node_s *left;
     struct memory_node_s *right;
@@ -104,24 +127,23 @@ struct memory_node_s {
 
 struct memory_3bc_s {
     struct memory_node_s* root;
-    data_3bc_t (*data_get)(address_3bc_t);
-    data_3bc_t (*vmin_get)(address_3bc_t);
-    data_3bc_t (*vmax_get)(address_3bc_t);
-    data_3bc_t (*conf_get)(address_3bc_t);
-    void (*data_set)(address_3bc_t, data_3bc_t);
-    void (*vmin_set)(address_3bc_t, data_3bc_t);
-    void (*vmax_set)(address_3bc_t, data_3bc_t);
-    void (*conf_set)(address_3bc_t, data_3bc_t);
+    struct memory_node_s* cache;
+    data_3bc_t (*data_get)(app_3bc_id, address_3bc_t);
+    data_3bc_t (*conf_get)(app_3bc_id, address_3bc_t);
+    void (*data_set)(app_3bc_id, address_3bc_t, data_3bc_t);
+    void (*conf_set)(app_3bc_id, address_3bc_t, data_3bc_t);
 };
 
 /** APLICATION **/
 struct app_3bc_s {
-    bool bootstrap;
+    app_3bc_id id;
+    enum fsm_3bc_e state;
     data_aux_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
-    struct memory_node_s* cache_l0;
+    enum error_3bc_e error_code;
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
+    union cache_l3_u cache_l3;
     struct tty_3bc_s tty_input;
     struct tty_3bc_s tty_debug;
     struct tty_3bc_s tty_output;
@@ -131,3 +153,7 @@ struct app_3bc_s {
     struct program_3bc_s program;
     struct memory_3bc_s memory;
 };
+
+typedef struct app_3bc_s* app_3bc_t;
+
+typedef void (*function_3bc_t)(app_3bc_t, register_3bc_t, address_3bc_t, data_3bc_t);

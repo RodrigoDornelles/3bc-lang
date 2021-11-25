@@ -1,5 +1,5 @@
-Tutorial in English :🇺🇸:
-==============================
+Tutorial
+========
 
 3BC is a low-level, easy-to-learn programming language that works in the form of a virtual machine similar to a 1960s computer, but with a very unusual architecture that has processors of only **3 bits**.
 
@@ -12,7 +12,7 @@ How to make a "Hello world!"
 
 These steps will guide you through running the hello world example and getting your first 3BC program running on your machine, so let's get started.
 
-After downloading the binary from _[donwload](https://3bc-lang.org/download)_, simply unzip the file and use the command line to run the source code using the interpreter according to your operating system: **windows**, **mac os**, **unix** or **linux**.
+After downloading the binary from _[download](https://3bc-lang.org/download)_, simply unzip the file and use the command line to run the source code using the interpreter according to your operating system: **windows**, **mac os**, **unix** or **linux**.
 
 
  * **Examples:** `helloworld.3bc`
@@ -58,13 +58,13 @@ A great point to facilitate the learning, is its very well organized syntax of t
 
 A program line is consequently an instruction, which has three mandatory parameters. They are separated in the respectively order of **register**, **address**, **constant**.
 
-![structure_en><](https://3bc-lang.org/images/structure-en-us.png)
+![structure_en><](../images/structure-en-us.png)
 
  * **Register**
 
 The register defines the behavior of the instruction be it printing to the screen, capturing inputs, summing, etc. 
 
-You should use mnemonics like `mode`, `math` and `nill` or some literal expressions that represent its opcode from 0 to 7. Be guided by the _[cheatsheet](https://3bc-lang.org/cheatsheet)_ guide, which explains in detail about each instruction.
+You should use mnemonics like `mode`, `math` and `nill` or some literal expressions that represent its opcode from 0 to 7. Be guided by the _[cheatsheet](cheatsheet)_ guide, which explains in detail about each instruction.
 
 Depending on the register it is necessary to pass or not **address** and **constant** values. It can be either mandatory or restrictive, or not accept both in the same instruction, to avoid ambiguity.
 

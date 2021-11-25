@@ -1,5 +1,5 @@
 <!-- BEGIN NAV -->
-<nav class="nav-extended">
+<nav class="nav-extended dont-print">
     <!-- DESTKTOP MENU-->
     <div class="nav-wrapper">
         <a href="{{ '/' | relative_url }}" class="brand-logo right">
@@ -12,7 +12,7 @@
 </nav>
 
 <!-- BEGIN MOBILE MENU-->
-<ul class="sidenav" id="menu">
+<ul class="sidenav dont-print" id="menu">
     <li><a href="{{ '/' | relative_url }}"><i class="material-icons">home</i>Home</a></li>
     <li><a href="{{ site.github.clone_url }}"><i class="material-icons">code</i>Source</a></li>
     {% for page in site.pages %}

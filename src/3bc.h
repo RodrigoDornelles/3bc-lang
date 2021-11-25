@@ -17,6 +17,7 @@
 #include <limits.h>
 #include <string.h>
 #if defined(_3BC_COMPUTER)
+#include <time.h>
 #include <signal.h>
 #endif
 #if defined(_3BC_PC_UNIX)
@@ -34,38 +35,34 @@
 #include "3bc_types.h"
 #include "3bc_header.h"
 #include "3bc_register.h"
-#if defined(_3BC_APP_UNIQUE)
-#include "3bc_bootstrap.h"
-#endif
+#include "3bc_optional_custom.h"
+#include "3bc_optional_interpreter.h"
+
+/** compatibility fixes **/
+#include "3bc_support.h"
 
 /** program **/
 #if !defined(_3BC_SCU)
-#include "cpu_bool.c"
+#include "cpu_boolean.c"
 #include "cpu_common.c"
-#include "cpu_debug.c"
-#include "cpu_helper.c"
-#include "cpu_input.c"
 #include "cpu_math.c"
 #include "cpu_jump.c"
 #include "cpu_memory.c"
 #include "cpu_procedure.c"
+#include "cpu_sleep.c"
 #include "cpu_string.c"
+#include "driver_accumulator.c"
 #include "driver_tty.c"
 #include "driver_gpio.c"
+#include "driver_interrupt.c"
 #include "driver_memory.c"
+#include "driver_mode.c"
 #include "driver_power.c"
 #include "driver_program.c"
-#if defined(_3BC_ENABLE_CUSTOM)
-#include "ds_fpga_array.c"
-#endif
+#include "ds_hypervisor_darray.c"
+#include "ds_label_hash.c"
 #include "ds_memory_llrbt.c"
 #include "ds_procedure_lifo.c"
-#include "interpreter_compiler.c"
-#include "interpreter_parser.c"
-#include "interpreter_syntax.c"
-#include "interpreter_tokens.c"
-#include "tape_aux.c"
-#include "tape_program.c"
-#include "tape_router.c"
+#include "ds_program_fifo.c"
 #endif
 #endif
