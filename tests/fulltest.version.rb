@@ -14,12 +14,12 @@ class TestVersion < Minitest::Test
     end
 
     def test_verify_version
-        assert @npm != nil, "Invalid npm version"
-        assert @arduino != nil, "Invalid arduino version"
-        assert @oficial != nil, "Invalid oficial version" 
-        assert @oficial_major != nil, "Invalid oficial major version" 
-        assert @oficial_minor != nil, "Invalid oficial minor version" 
-        assert @oficial_patch != nil, "Invalid oficial patch version" 
+        refute_equal @npm, nil, "Invalid npm version"
+        refute_equal @arduino, nil, "Invalid arduino version"
+        refute_equal @oficial, nil, "Invalid oficial version" 
+        refute_equal @oficial_major, nil, "Invalid oficial major version" 
+        refute_equal @oficial_minor, nil, "Invalid oficial minor version" 
+        refute_equal @oficial_patch, nil, "Invalid oficial patch version" 
     end
 
     def test_some_version
@@ -29,8 +29,12 @@ class TestVersion < Minitest::Test
     end
 
     def test_newer_version
-        for release in JSON.parse Net::HTTP.get URI 'https://api.github.com/repos/rodrigodornelles/3bc-lang/releases'
-            assert release['tag_name'] != @oficial, "Github tag '#{@oficial}' already exist."
-        end
+        for release in (JSON.parse Net::HTTP.get URI 'https://api.github.com/repos/rodrigodornelles/3bc-lang/releases').collect {|value|value['tag_name']}
+            assert release != @oficial, "Github tag '#{@oficial}' already exist."
+        end rescue skip warn "Skiped:\nGithub API is not available.\n\n"
+
+        for release in (JSON.parse Net::HTTP.get URI 'https://registry.npmjs.org/3bc-lang')['versions'].collect {|key,value|key}
+            assert release != @oficial, "NPM tag '#{@oficial}' already exist."
+        end rescue skip warn "Skiped:\nNPM API is not available.\n\n"
     end
 end
