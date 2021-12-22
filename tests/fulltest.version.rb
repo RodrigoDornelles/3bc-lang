@@ -30,11 +30,11 @@ class TestVersion < Minitest::Test
 
     def test_newer_version
         for release in (JSON.parse Net::HTTP.get URI 'https://api.github.com/repos/rodrigodornelles/3bc-lang/releases').collect {|value|value['tag_name']}
-            assert release != @oficial, "Github tag '#{@oficial}' already exist."
+            refute_equal release, @oficial, "Github tag '#{@oficial}' already exist."
         end rescue skip warn "Skiped:\nGithub API is not available.\n\n"
 
         for release in (JSON.parse Net::HTTP.get URI 'https://registry.npmjs.org/3bc-lang')['versions'].collect {|key,value|key}
-            assert release != @oficial, "NPM tag '#{@oficial}' already exist."
+            refute_equal release, @oficial, "NPM tag '#{@oficial}' already exist."
         end rescue skip warn "Skiped:\nNPM API is not available.\n\n"
     end
 end
