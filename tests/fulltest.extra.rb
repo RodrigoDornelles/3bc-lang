@@ -2,7 +2,7 @@ require 'open3'
 require 'minitest/spec'
 require 'minitest/autorun'
 
-class TestFails < Minitest::Test
+class TestExtra < Minitest::Test
     def test_scapes
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mode.0.10,4.0.0,mode.0.2,strc.0.'\\0',strc.0.'\\a',strc.0.'\\b',strc.0.'\\t',strc.0.'\\n',strc.0.'\\'',strc.0.'\\\\'")
         assert_equal "", stderr
