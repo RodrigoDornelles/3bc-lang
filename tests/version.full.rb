@@ -5,12 +5,12 @@ require 'minitest/autorun'
 
 class TestVersion < Minitest::Test
     def setup
-        @npm = File.read('./package.json').scan(/\"version\"\: \"(\d+\.\d+\.\d+)\"/)[0][0] rescue nil
-        @arduino = File.read('./library.properties').scan(/version = (\d+\.\d+\.\d+)/)[0][0] rescue nil
-        @oficial = File.read('./src/3bc.h').scan(/\#define VERSION_3BC \"(\d+\.\d+\.\d+)\"/)[0][0] rescue nil
-        @oficial_major = File.read('./src/3bc.h').scan(/\#define VERSION_3BC_MAJOR (\d+)/)[0][0] rescue nil
-        @oficial_minor = File.read('./src/3bc.h').scan(/\#define VERSION_3BC_MINOR (\d+)/)[0][0] rescue nil
-        @oficial_patch = File.read('./src/3bc.h').scan(/\#define VERSION_3BC_PATCH (\d+)/)[0][0] rescue nil
+        @npm = File.read('./package.json').scan(/\"version\"\: \"(\d+\.\d+\.\d+)\"/).first.first rescue nil
+        @arduino = File.read('./library.properties').scan(/version = (\d+\.\d+\.\d+)/).first.first rescue nil
+        @oficial = File.read('./src/3bc.h').scan(/\#define VERSION_3BC \"(\d+\.\d+\.\d+)\"/).first.first rescue nil
+        @oficial_major = File.read('./src/3bc.h').scan(/\#define VERSION_3BC_MAJOR (\d+)/).first.first rescue nil
+        @oficial_minor = File.read('./src/3bc.h').scan(/\#define VERSION_3BC_MINOR (\d+)/).first.first rescue nil
+        @oficial_patch = File.read('./src/3bc.h').scan(/\#define VERSION_3BC_PATCH (\d+)/).first.first rescue nil
     end
 
     def test_verify_version
