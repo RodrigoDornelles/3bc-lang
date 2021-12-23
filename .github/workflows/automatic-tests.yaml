@@ -7,14 +7,22 @@ on:
     branches:
       - master
 jobs:
-  minitest: 
+  fast: 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
     
-      - name: Run tests
+      - name: Run fast tests suite
         run: make tests
+  full: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+    
+      - name: Run full tests suite
+        run: make tests-full
 
       - name: Report tests
         run: |
