@@ -119,7 +119,7 @@ NILL NILL :inicio_do_loop
 * **Exemplo**
 
 ```RUBY
-MODE NILL 0d8
+MODE NILL 0d9
 GOTO NILL :entrada # Salte para o ponto de 'entrada'
 
 MODE NILL 0d2
