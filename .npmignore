@@ -1,0 +1,5 @@
+*
+!examples/*.3bc
+!glue/*.js
+!full/*.js
+!bin/*.wasm
