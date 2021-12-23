@@ -21,7 +21,7 @@ docs: clean-docs
 	@cd docs && bundle exec jekyll serve --watch --incremental --livereload
 	
 clean: clean-test clean-docs clean-test
-	@rm -f *.bin *.out *.s *.bin *.exe *.o *.a *.so 3bc main unit 2>/dev/null; true
+	@rm -f *.bin *.out *.s *.bin *.exe *.o *.a *.so *.wasm *.js *.html 3bc main unit 2>/dev/null; true
 
 clean-docs:
 	@rm -Rf docs/_site/* 2>/dev/null; true
