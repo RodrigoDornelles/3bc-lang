@@ -121,7 +121,7 @@ NILL NILL :loop start
 * **Example**
 
 ```RUBY
-MODE NILL 0d8
+MODE NILL 0d9
 GOTO NILL :entry # Jump to the entry point
 
 MODE NILL 0d2
