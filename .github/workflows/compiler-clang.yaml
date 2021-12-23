@@ -1,0 +1,27 @@
+name: Compiler clang
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  wasm: 
+    runs-on: ubuntu-latest
+    container: emscripten/emsdk
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+        
+      - name: Build project
+        run: emcc main.c -lm -O0 -s WASM=1
+  asmjs: 
+    runs-on: ubuntu-latest
+    container: emscripten/emsdk
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+        
+      - name: Build project
+        run: emcc main.c -lm -O0 -s WASM=0
