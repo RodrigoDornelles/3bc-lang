@@ -33,7 +33,7 @@ class TestVersion < Minitest::Test
             refute_equal release, @oficial, "Github tag '#{@oficial}' already exist."
         end rescue skip warn "Skiped:\nGithub API is not available.\n\n"
 
-        for release in (JSON.parse Net::HTTP.get URI 'https://registry.npmjs.org/3bc-lang')['versions'].collect {|key,value|key}
+        for release in (JSON.parse Net::HTTP.get URI 'https://registry.npmjs.org/3bc-lang')['versions'].collect {|key,_|key}
             refute_equal release, @oficial, "NPM tag '#{@oficial}' already exist."
         end rescue skip warn "Skiped:\nNPM API is not available.\n\n"
     end
