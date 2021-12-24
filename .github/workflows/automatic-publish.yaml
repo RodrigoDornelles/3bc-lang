@@ -17,16 +17,21 @@ jobs:
         run: emcc main.c -lm -Os -s WASM=1 -o bin/vm.wasm
         
       - name: Build full javascript app
-        run: emcc main.c -lm -Os -s WASM=0 -s MODULARIZE=0 -s EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -o full/app.js
+        run: emcc main.c -lm -O0 -s WASM=0 -s MODULARIZE=0 -s EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o full/app.js
         
       - name: Build full javascript module
-        run: emcc main.c -lm -Os -s WASM=0 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -o full/module.js
+        run: emcc main.c -lm -O0 -s WASM=0 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o full/module.js
 
       - name: Made javascript glue app
-        run: emcc main.c -lm -Os -s WASM=1 -s MODULARIZE=0 -s EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -o glue/app.js
+        run: emcc main.c -lm -O0 -s WASM=1 -s MODULARIZE=0 -s EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o glue/app.js
         
       - name: Made javascript glue module
-        run: emcc main.c -lm -Os -s WASM=1 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -o glue/module.js
+        run: emcc main.c -lm -O0 -s WASM=1 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o glue/module.js
+
+      - name: Made links with binary
+        run: |
+          sed -i 's/module.wasm/..\/bin\/vm.wasm/' ./*/module.js
+          sed -i 's/app.wasm/..\/bin\/vm.wasm/' ./*/app.js
 
       - uses: actions/setup-node@v2
         with:
