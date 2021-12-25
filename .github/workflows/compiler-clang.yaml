@@ -1,4 +1,4 @@
-name: Automatic tests
+name: Compiler clang
 on:
   push:
     branches:
@@ -7,24 +7,21 @@ on:
     branches:
       - master
 jobs:
-  fast: 
+  wasm: 
     runs-on: ubuntu-latest
+    container: emscripten/emsdk
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
-    
-      - name: Run fast tests suite
-        run: make tests
-  full: 
+        
+      - name: Build project
+        run: emcc main.c -lm -O0 -s WASM=1
+  asmjs: 
     runs-on: ubuntu-latest
+    container: emscripten/emsdk
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
-    
-      - name: Run full tests suite
-        run: make tests-full
-
-      - name: Report tests
-        run: |
-          gcov unit.c
-          bash <(curl -s https://codecov.io/bash)
+        
+      - name: Build project
+        run: emcc main.c -lm -O0 -s WASM=0

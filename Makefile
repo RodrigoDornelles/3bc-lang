@@ -1,10 +1,4 @@
-CC=gcc
-CXX=g++
-CFLAGS=-O0
-LDFLAGS=-lm
-SOURCES=main.c
-
-.PHONY: docs tests tests-clear tests-build tests-unit
+.PHONY: docs tests
 
 all:
 	##################################
@@ -14,7 +8,7 @@ all:
 	############    ##    ##    ###### 
 	############    ##    ##    ###### > make docs
 	##              ##    ##        ## > make tests
-	##              ##    ##        ## > make build
+	##              ##    ##        ## > make clean
 	##              ##    ############
 	############    ##              ##
 	############    ##              ##
@@ -23,24 +17,24 @@ all:
 	##              ##              ##
 	##################################
 
-docs:
-	@rm -Rf docs/_site/ 2>/dev/null; true
+docs: clean-docs
 	@cd docs && bundle exec jekyll serve --watch --incremental --livereload
 	
-build:
-	@${CC} ${SOURCES} ${CFLAGS} ${LDFLAGS} -o 3bc
+clean: clean-test clean-docs clean-test
+	@rm -f *.bin *.out *.s *.bin *.exe *.o *.a *.so *.wasm *.js *.html 3bc main unit 2>/dev/null; true
 
-tests: tests-clear tests-build tests-unit
-	@
+clean-docs:
+	@rm -Rf docs/_site/* 2>/dev/null; true
 
-tests-clear:
-	@echo " > clearing coverage metadata..."
+clean-test:
 	@rm *.gcda *.gcno 2>/dev/null; true
 
-tests-build:
-	@echo " > building..."
-	@${CXX} -Wno-deprecated -coverage unit.c ${CFLAGS} ${LDFLAGS} -o 3bc.test.bin
+tests: clean-test
+	@echo " > running fasts tests...\n > to use the full test suite, run: make tests-full\n"
+	@${CXX} -w -coverage main.c -O0 -lm -o 3bc.test.bin
+	@ruby -Ilib -e 'ARGV.each { |f| require f }' ./tests/fasttest.*.rb
 
-tests-unit:
-	@echo " > run units tests..."
-	@ruby -Ilib -e 'ARGV.each { |f| require f }' ./tests/*.test.rb
+tests-full: clean-test
+	@echo " > running full tests suite...\n"
+	@${CXX} -w -coverage unit.c -O0 -lm -o 3bc.test.bin
+	@ruby -Ilib -e 'ARGV.each { |f| require f }' ./tests/*.*.rb

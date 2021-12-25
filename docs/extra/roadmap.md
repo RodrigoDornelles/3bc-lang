@@ -18,20 +18,20 @@ description: The expected future for language and community. (aka to do list)
 ## Year 2021 roadmap
 
  - [X] VM Mathematic Boolean
- - [X] VM Labels and conditional jumps
  - [X] VM Procedure calls
  - [X] VM Memory Pointers
  - [X] Documentation
  - [X] Full tests suite
- - [ ] Programming IDE
  - [X] Support Framework Arduino
- - [ ] Support WebAssembly
+ - [X] Support WebAssembly
+ - [ ] Playground web
 
 ## Year 2022 roadmap
 
  - [ ] Support MOS6502 (Nes, Commodore 64, Apple 2)
  - [ ] Support Visual environment
  - [ ] Support Cuda cores
+ - [ ] Programming IDE
 
 ## Comunity roadmap
 

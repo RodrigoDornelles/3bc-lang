@@ -1,0 +1,12 @@
+{
+    "name": "3bc-lang",
+    "version": "0.1.0",
+    "author": "RodrigoDornelles",
+    "license": "GPL-3.0-or-later",
+    "homepage": "https://3bc-lang.org",
+    "repository": "github:rodrigodornelles/3bc-lang",
+    "funding": "https://github.com/sponsors/RodrigoDornelles",
+    "bugs": "https://github.com/RodrigoDornelles/3bc-lang/issues",
+    "keywords": ["language", "native", "c", "c++", "virtual machine"],
+    "description": "Low level language, tiny virtual machine that works on browser or nodejs. (Friendly Punched cards)"
+}
