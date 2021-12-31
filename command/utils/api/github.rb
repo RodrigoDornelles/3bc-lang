@@ -1,5 +1,6 @@
 require "json"
 require "net/http"
+include Net
 # A Tiny Github lib.
 class Github
   def initialize(user, repo)
@@ -12,7 +13,7 @@ class Github
   end
   def fetch_releases
     uri = URI("https://api.github.com/repos/#{@user}/#{@repo}/releases")
-    response = Net::HTTP.get(uri)
+    response = HTTP.get(uri)
     JSON.parse(response)
   end
 end

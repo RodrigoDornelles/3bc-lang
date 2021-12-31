@@ -1,24 +1,25 @@
-require "colorize"
-require "fileutils"
-require "./utils/api/github"
-require "./utils/git"
-require "./utils/path"
-require "./utils/cc"
+require 'colorize'
+require 'fileutils'
+require './utils/api/github'
+require './utils/git'
+require './utils/path'
+require './utils/cc'
+require './utils/config'
 def tool_install(version)
   puts "   #{'Installing'.colorize(:green)} version #{version}"
   puts "   #{'Searching'.colorize(:cyan)} for version #{version}"
-  gh = Github.new("RodrigoDornelles", "3bc-lang")
+  gh = Github.new('RodrigoDornelles', '3bc-lang')
   git = Git.new("#{SRC_DIR}/#{version}")
   ok = false
   gh.fetch_releases.each do |release|
-    next unless release["tag_name"] == version
+    next unless release['tag_name'] == version
 
     puts "      #{'Found'.colorize(:green)} version #{version}"
     puts "   #{'Clone'.colorize(:cyan)} version #{version}"
     _out, err, status = git.clone(gh.repo_url)
-    if status == 0
+    if status.success?
       puts "      #{'Cloned'.colorize(:green)} version #{version}"
-    elsif err.include?("already exists and is not an empty directory")
+    elsif err.include?('already exists and is not an empty directory')
       puts "      #{'Pull'.colorize(:green)} version #{version}"
       git.pull
     else
@@ -42,12 +43,14 @@ def tool_install(version)
     nil
   end
   puts "   #{'Compile'.colorize(:cyan)} version #{version}"
-  _, err, status = CC.new("./src/3bc.c", "-shared -fPIC", "#{SRC_DIR}/#{version}",
+  _, err, status = CC.new('./src/3bc.c', '-shared -fPIC', "#{SRC_DIR}/#{version}",
                           "#{BIN_DIR}/#{version}/lib3bc.so").compile
-  if status == 0
+  if status.success?
     puts "      #{'Compiled'.colorize(:green)} version #{version}"
   else
     puts "      #{'Failed to compile'.colorize(:red)} version #{version}"
     puts "      #{'Error'.colorize(:red)}: #{err}"
   end
+  config = Config.new
+  (config.global_version = version) unless config.global_version.nil?
 end

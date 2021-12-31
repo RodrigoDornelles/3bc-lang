@@ -1,11 +1,45 @@
-require "thor"
-require "./utils/path"
-require "./tools/install"
+require 'thor'
+require './utils/path'
+require './tools/install'
+require './tools/list'
+require './utils/config'
 require 'fileutils'
+require 'colorize'
+def version_exists?(ver)
+  Dir.entries(BIN_DIR).include?(ver)
+end
+
+# The Config commands
+class ConfigCommands < Thor
+  desc 'global-get', 'get current global version'
+  def global_set(version)
+    return puts("#{'error'.colorize(:red)}: version #{version} is not installed.") unless version_exists?(version)
+
+    config = Config.new
+    config.global_version = version
+  end
+  desc 'global-get', 'set global version'
+  def global_get
+    config = Config.new
+    puts(config.global_version)
+  end
+  desc 'local-set [VERSION]', 'set local version'
+  def local_set(version)
+    return puts("#{'error'.colorize(:red)}: version #{version} is not installed.") unless version_exists?(version)
+
+    config = Config.new
+    config.local_version = version
+  end
+  desc 'local-get', 'get current local version'
+  def local_get
+    config = Config.new
+    puts(config.local_version)
+  end
+end
 
 # The Virtual Machine commands
-class VM < Thor
-  desc "install <VERSION>", "install a version of 3bc"
+class VMCommands < Thor
+  desc 'install <VERSION>', 'install a version of 3bc'
   long_desc <<-LONGDESC
     `install` will install a version of 3bc.
     The version can be specified as a version number or a tag.
@@ -16,11 +50,20 @@ class VM < Thor
         3.0.0-rc1
         +git#1234567
   LONGDESC
-  option :from_src, type: :boolean, default: true, aliases: "-s"
+  option :from_src, type: :boolean, default: true, aliases: '-s'
   def install(version)
-    raise "Binary installation not supported yet" unless options[:from_src]
+    raise 'Binary installation not supported yet' unless options[:from_src]
 
     tool_install(version)
+  end
+  desc 'list', 'list versions'
+  option :installed, type: :boolean, default: false, aliases: '-i'
+  def list
+    if options[:installed]
+      list_installed_versions
+    else
+      list_versions
+    end
   end
 end
 
@@ -29,12 +72,14 @@ class App < Thor
   def self.exit_on_failure?
     true
   end
-  desc "clean", "clean the 3bc installation"
+  desc 'clean', 'clean the 3bc installation'
   def clean
     FileUtils.remove_dir(ROOT_DIR, true)
   end
-  desc "vm", "the virtual machine commands"
-  subcommand "vm", VM
+  desc 'vm', 'the virtual machine commands'
+  subcommand 'vm', VMCommands
+  desc 'config', 'the config options'
+  subcommand 'config', ConfigCommands
 end
 make_dirs
 App.start(ARGV)

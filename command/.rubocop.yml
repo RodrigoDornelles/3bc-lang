@@ -1,2 +1,2 @@
-StringLiterals:
-  EnforcedStyle: double_quotes
+Lint/UselessSetterCall: 
+  Enabled: false

@@ -11,13 +11,6 @@ def make_dirs
   Dir.mkdir("#{root_dir}/src") unless File.exist?("#{root_dir}/src")
 end
 
-def rmdir_all(dir)
-  until Dir.glob("#{dir}/**/*").select { |d| File.directory?(d) }.select { |d| Dir.empty?(d) }.empty?
-    Dir.glob("#{dir}/**/*").select do |d|
-      File.directory?(d)
-    end.sort.reverse.select { |d| Dir.empty?(d) }.each { |d| Dir.rmdir(d) }
-  end
-end
 ROOT_DIR = root_directory.freeze
 CONFIG_DIR = "#{ROOT_DIR}/config.toml".freeze
 LIB_DIR = "#{ROOT_DIR}/lib".freeze
