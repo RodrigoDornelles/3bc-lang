@@ -1,10 +1,15 @@
 require 'ffi'
+require './utils/config'
+require './utils/path'
 # The 3bc FFI Library
 class RawLib3bc
   extend FFI::Library
-  def initialize(path)
-    ffi_lib path
+
+  ffi_lib "#{BIN_DIR}/#{Config.new.local_version}/lib3bc.so"
+  class Lang3bcVM < FFI::Struct
+    layout \
+      :state, :int
   end
-  attach_method :driver_power_init, %i[int pointer], :pointer
-  attach_method :ds_program_fifo_line_add, [:pointer], :zero
+  attach_function :driver_power_init, %i[int pointer], :pointer
+  attach_function :driver_interrupt, [:pointer], :int
 end
