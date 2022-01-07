@@ -1,10 +1,16 @@
-require 'thor'
 require './utils/path'
+
+make_dirs
+
+require 'thor'
 require './tools/install'
 require './tools/list'
+require './tools/run'
+require './utils/log'
 require './utils/config'
 require 'fileutils'
-require 'colorize'
+
+
 def version_exists?(ver)
   Dir.entries(BIN_DIR).include?(ver)
 end
@@ -13,7 +19,7 @@ end
 class ConfigCommands < Thor
   desc 'global-get', 'get current global version'
   def global_set(version)
-    return puts("#{'error'.colorize(:red)}: version #{version} is not installed.") unless version_exists?(version)
+    return log_error("version #{version} is not installed.") unless version_exists?(version)
 
     config = Config.new
     config.global_version = version
@@ -25,7 +31,7 @@ class ConfigCommands < Thor
   end
   desc 'local-set [VERSION]', 'set local version'
   def local_set(version)
-    return puts("#{'error'.colorize(:red)}: version #{version} is not installed.") unless version_exists?(version)
+    return log_error("version #{version} is not installed.") unless version_exists?(version)
 
     config = Config.new
     config.local_version = version
@@ -56,6 +62,7 @@ class VMCommands < Thor
 
     tool_install(version)
   end
+
   desc 'list', 'list versions'
   option :installed, type: :boolean, default: false, aliases: '-i'
   def list
@@ -76,10 +83,13 @@ class App < Thor
   def clean
     FileUtils.remove_dir(ROOT_DIR, true)
   end
+  desc 'run <FILE>', 'run a 3bc file'
+  def run_(filename)
+    tool_run(filename)
+  end
   desc 'vm', 'the virtual machine commands'
   subcommand 'vm', VMCommands
   desc 'config', 'the config options'
   subcommand 'config', ConfigCommands
 end
-make_dirs
 App.start(ARGV)
