@@ -52,6 +52,6 @@ def tool_install(version)
     puts "      #{'Error'.colorize(:red)}: #{err}"
   end
   config = Config.new
-  
+
   config.global_version = version if config.global_version.nil?
 end

@@ -1,5 +1,5 @@
-require "json"
-require "net/http"
+require 'json'
+require 'net/http'
 include Net
 # A Tiny Github lib.
 class Github
@@ -11,6 +11,7 @@ class Github
   def repo_url
     "https://github.com/#{@user}/#{@repo}"
   end
+
   def fetch_releases
     uri = URI("https://api.github.com/repos/#{@user}/#{@repo}/releases")
     response = HTTP.get(uri)

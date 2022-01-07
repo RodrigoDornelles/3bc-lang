@@ -10,7 +10,6 @@ require './utils/log'
 require './utils/config'
 require 'fileutils'
 
-
 def version_exists?(ver)
   Dir.entries(BIN_DIR).include?(ver)
 end

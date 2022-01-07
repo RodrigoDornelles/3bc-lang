@@ -8,12 +8,12 @@ class CC
   end
 
   def find_compiler
-    if File.exist?("/usr/bin/clang")
-      "clang"
-    elsif File.exist?("/usr/bin/gcc")
-      "gcc"
+    if File.exist?('/usr/bin/clang')
+      'clang'
+    elsif File.exist?('/usr/bin/gcc')
+      'gcc'
     else
-      "cc"
+      'cc'
     end
   end
 

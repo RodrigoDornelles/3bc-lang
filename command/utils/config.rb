@@ -23,6 +23,7 @@ class Config
 
     val = cfg['global']['version']
     return nil if val == ''
+
     val
   end
 
@@ -42,6 +43,7 @@ class Config
     path = Base64.encode64(FileUtils.pwd).strip
     val = cfg['versions'][path]
     return nil if val == ''
+
     val
   end
 

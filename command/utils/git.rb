@@ -1,4 +1,4 @@
-require "open3"
+require 'open3'
 
 # The GIT Abstrations
 class Git
@@ -12,7 +12,7 @@ class Git
   end
 
   def pull
-    command = "git pull --rebase"
+    command = 'git pull --rebase'
     Open3.capture3(command, chdir: @path)
   end
 
