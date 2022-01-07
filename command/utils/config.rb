@@ -21,7 +21,9 @@ class Config
     cfg = parse
     return nil if cfg['global'].nil?
 
-    cfg['global']['version']
+    val = cfg['global']['version']
+    return nil if val == ''
+    val
   end
 
   def local_version=(version, path = FileUtils.pwd)
@@ -38,7 +40,9 @@ class Config
     return global_version if cfg['versions'].nil?
 
     path = Base64.encode64(FileUtils.pwd).strip
-    cfg['versions'][path]
+    val = cfg['versions'][path]
+    return nil if val == ''
+    val
   end
 
   def write(cfg)
