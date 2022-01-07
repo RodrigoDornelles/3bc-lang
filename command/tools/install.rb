@@ -43,7 +43,7 @@ def tool_install(version)
     nil
   end
   puts "   #{'Compile'.colorize(:cyan)} version #{version}"
-  _, err, status = CC.new('./src/3bc.c', '-shared -fPIC', "#{SRC_DIR}/#{version}",
+  _, err, status = CC.new('./src/3bc.c', '-shared -fPIC -O2', "#{SRC_DIR}/#{version}",
                           "#{BIN_DIR}/#{version}/lib3bc.so").compile
   if status.success?
     puts "      #{'Compiled'.colorize(:green)} version #{version}"
@@ -52,5 +52,6 @@ def tool_install(version)
     puts "      #{'Error'.colorize(:red)}: #{err}"
   end
   config = Config.new
-  (config.global_version = version) unless config.global_version.nil?
+  
+  config.global_version = version if config.global_version.nil?
 end
