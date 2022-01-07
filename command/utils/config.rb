@@ -35,7 +35,7 @@ class Config
 
   def local_version
     cfg = parse
-    return global_current_version if cfg['versions'].nil?
+    return global_version if cfg['versions'].nil?
 
     path = Base64.encode64(FileUtils.pwd).strip
     cfg['versions'][path]
