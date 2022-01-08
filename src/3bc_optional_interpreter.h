@@ -39,15 +39,22 @@ int interpreter_3bc(app_3bc_t app)
 {  
     char character = fgetc(app->tty_source.io.stream);
 
+#ifdef __nuttx__
+    driver_tty_output(app, app->tty_keylog, STRC, character);
+#endif
+
     /** end of file **/
     if (character == EOF && app->cache_l3.buffer.storage == NULL) {
         return EOF;
     }
 
     /** end of line **/
-    if(character == '\n' || character == '\0' || character == EOF) {
+    if(character == '\n' || character == '\r' || character == '\0' || character == EOF) {
         /** mark end of string **/
         {
+#ifdef __nuttx__
+            driver_tty_output(app, app->tty_keylog, STRC, '\n');
+#endif
             char* new_buffer = (char*) realloc(app->cache_l3.buffer.storage, sizeof(char) * (++app->cache_l3.buffer.size));   
             if (new_buffer == NULL) {
                 driver_program_error(app, ERROR_OUT_OF_MEMORY);
