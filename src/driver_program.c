@@ -24,7 +24,9 @@ void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
 
     switch((long) (error_code))
     {
+        #if defined(SIGSEGV)
         ERROR_LOG_3BC(SIGSEGV, "SEGMENT FAULT");
+        #endif
         ERROR_LOG_3BC(ERROR_CPU_ZERO, "CPU MODE IS NOT DEFINED"); 
         ERROR_LOG_3BC(ERROR_CPU_RESERVED, "CPU MODE IS RESERVED");
         ERROR_LOG_3BC(ERROR_INVALID_REGISTER, "INVALID CPU REGISTER");
