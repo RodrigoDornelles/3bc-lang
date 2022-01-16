@@ -167,6 +167,7 @@ void driver_tty_output_raw(app_3bc_t app, struct tty_3bc_s tty, const char* stri
     /** stream standard c output **/
     if (tty.type == STREAM_TYPE_COMPUTER_STD){
         fputs(string, tty.io.stream);
+        fflush(tty.io.stream);
         return;
     }
     #endif
