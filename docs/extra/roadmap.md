@@ -24,7 +24,6 @@ description: The expected future for language and community. (aka to do list)
  - [X] Full tests suite
  - [X] Support Framework Arduino
  - [X] Support WebAssembly
- - [ ] Playground web
 
 ## Year 2022 roadmap
 
@@ -32,6 +31,7 @@ description: The expected future for language and community. (aka to do list)
  - [ ] Support Visual environment
  - [ ] Support Cuda cores
  - [ ] Programming IDE
+ - [ ] Playground WEB
 
 ## Comunity roadmap
 
