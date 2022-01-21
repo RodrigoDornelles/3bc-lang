@@ -40,7 +40,9 @@ int interpreter_3bc(app_3bc_t app)
     char character = fgetc(app->tty_source.io.stream);
 
 #ifdef __nuttx__
-    driver_tty_output(app, app->tty_keylog, STRC, character);
+    if (app->tty_source.type != STREAM_TYPE_COMPUTER_FILE) {
+        driver_tty_output(app, app->tty_keylog, STRC, character);
+    }
 #endif
 
     /** end of file **/
@@ -53,7 +55,9 @@ int interpreter_3bc(app_3bc_t app)
         /** mark end of string **/
         {
 #ifdef __nuttx__
+        if (app->tty_source.type != STREAM_TYPE_COMPUTER_FILE) {
             driver_tty_output(app, app->tty_keylog, STRC, '\n');
+        }
 #endif
             char* new_buffer = (char*) realloc(app->cache_l3.buffer.storage, sizeof(char) * (++app->cache_l3.buffer.size));   
             if (new_buffer == NULL) {
