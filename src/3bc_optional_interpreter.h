@@ -37,7 +37,7 @@ bool interpreter_3bc_tokens(char* line, char** reg, char** mem, char** val, char
  */
 int interpreter_3bc(app_3bc_t app)
 {  
-    char character = fgetc(app->tty_source.io.stream);
+    int character = fgetc(app->tty_source.io.stream);
 
 #ifdef __nuttx__
     if (app->tty_source.type != STREAM_TYPE_COMPUTER_FILE) {
