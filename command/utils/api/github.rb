@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'json'
 require 'net/http'
-include Net
 # A Tiny Github lib.
 class Github
+  include Net
   def initialize(user, repo)
     @user = user
     @repo = repo

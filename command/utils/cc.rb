@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # C Compiler
 class CC
   def initialize(file, flags, path, out)

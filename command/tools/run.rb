@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './utils/config'
 require './utils/log'
 def tool_run(file)

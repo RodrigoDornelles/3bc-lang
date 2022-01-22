@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './utils/path'
 require 'toml'
 require 'fileutils'

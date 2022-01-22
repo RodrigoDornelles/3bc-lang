@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def root_directory
   home = Dir.home
   "#{home}/.3bc"
@@ -12,7 +14,7 @@ def make_dirs
 end
 
 ROOT_DIR = root_directory.freeze
-CONFIG_DIR = "#{ROOT_DIR}/config.toml".freeze
-LIB_DIR = "#{ROOT_DIR}/lib".freeze
-BIN_DIR = "#{ROOT_DIR}/bin".freeze
-SRC_DIR = "#{ROOT_DIR}/src".freeze
+CONFIG_DIR = "#{ROOT_DIR}/config.toml"
+LIB_DIR = "#{ROOT_DIR}/lib"
+BIN_DIR = "#{ROOT_DIR}/bin"
+SRC_DIR = "#{ROOT_DIR}/src"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './lib3bc/raw'
 require 'ffi'
 # The 3bc Driver Class
