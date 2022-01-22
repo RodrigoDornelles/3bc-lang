@@ -32,25 +32,22 @@ end
 
 def checkout(ok_, git, version)
   if ok_
-    puts "   #{'Checkout'.colorize(:cyan)} version #{version}"
     git.checkout(version)
-    puts "      #{'Checked out'.colorize(:green)} version #{version}"
     true
   else
-    puts "   #{'Failed to find'.colorize(:red)} version #{version}"
+    Message.new.cant_find(version)
     false
   end
 end
 
 def compile(version)
-  puts "   #{'Compile'.colorize(:cyan)} version #{version}"
+  Message.new.compile(version)
   _, err, status = CC.new('./src/3bc.c', '-shared -fPIC -O2', "#{SRC_DIR}/#{version}",
                           "#{BIN_DIR}/#{version}/lib3bc.so").compile
   if status.success?
-    puts "      #{'Compiled'.colorize(:green)} version #{version}"
+    Message.new.compiled(version)
   else
-    puts "      #{'Failed to compile'.colorize(:red)} version #{version}"
-    puts "      #{'Error'.colorize(:red)}: #{err}"
+    Message.new.compile_error(err, version)
   end
 end
 
@@ -61,11 +58,11 @@ def fetch(git, gh_, version)
     fetch_release(git, gh_, version)
     return true
   end
+  false
 end
 
 def tool_install(version)
-  puts "   #{'Installing'.colorize(:green)} version #{version}"
-  puts "   #{'Searching'.colorize(:cyan)} for version #{version}"
+  Message.new.installing(version)
   gh = Github.new('RodrigoDornelles', '3bc-lang')
   git = Git.new("#{SRC_DIR}/#{version}")
   ok = fetch(git, gh, version)
