@@ -45,9 +45,7 @@ activities outside of it.
 13. Participation on the project equates to agreement of this Code of Merit.
 
 14. No objectives beyond the stated objectives of this project are relevant
-to the project. ~Any intent to deviate the project from its original purpose
-of existence will constitute grounds for remedial action which may include
-expulsion from the project.~
+to the project.
 
 15. No contributors or members will be censored, that is, they will never be
 excluded from the community, modifying the 14th article of the original.
