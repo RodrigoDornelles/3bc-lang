@@ -28,3 +28,12 @@ jobs:
         run: |
           gcov unit.c
           bash <(curl -s https://codecov.io/bash)
+          
+  install_vm_test: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install 3bc vm
+        run: sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/rodrigodornelles/3bc-lang/master/scripts/install_vm.sh || curl -fsSL https://raw.githubusercontent.com/rodrigodornelles/3bc-lang/master/scripts/install_vm.sh)"
+
+      - name: Run test
+        run: echo '7.0.2,1.0.1'| 3bc
