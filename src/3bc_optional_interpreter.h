@@ -39,11 +39,11 @@ int interpreter_3bc(app_3bc_t app)
 {  
     int character = fgetc(app->tty_source.io.stream);
 
-#ifdef __nuttx__
-    if (app->tty_source.type != STREAM_TYPE_COMPUTER_FILE) {
+    #if defined(_3BC_NUTTX)
+    if (app->tty_source.type == STREAM_TYPE_COMPUTER_STD) {
         driver_tty_output(app, app->tty_keylog, STRC, character);
     }
-#endif
+    #endif
 
     /** end of file **/
     if (character == EOF && app->cache_l3.buffer.storage == NULL) {
@@ -52,13 +52,15 @@ int interpreter_3bc(app_3bc_t app)
 
     /** end of line **/
     if(character == '\n' || character == '\r' || character == '\0' || character == EOF) {
-        /** mark end of string **/
-        {
-#ifdef __nuttx__
-        if (app->tty_source.type != STREAM_TYPE_COMPUTER_FILE) {
+        /** REPL nuttx compatibily **/
+        #if defined(_3BC_NUTTX)
+        if (app->tty_source.type == STREAM_TYPE_COMPUTER_STD) {
             driver_tty_output(app, app->tty_keylog, STRC, '\n');
         }
-#endif
+        #endif
+
+        /** mark end of string **/
+        {
             char* new_buffer = (char*) realloc(app->cache_l3.buffer.storage, sizeof(char) * (++app->cache_l3.buffer.size));   
             if (new_buffer == NULL) {
                 driver_program_error(app, ERROR_OUT_OF_MEMORY);
