@@ -11,9 +11,6 @@
 #include "3bc_macros.h"
 
 /** libaries **/
-#if defined(_3BC_NUTTX)
-#include <nuttx/config.h>
-#endif
 #if !defined(_3BC_MOS6502)
 #include <math.h>
 #endif
@@ -37,6 +34,9 @@
 #endif
 #if defined(_3BC_ARDUINO)
 #include <Arduino.h>
+#endif
+#if defined(_3BC_NUTTX)
+#include <nuttx/config.h>
 #endif
 
 /** headers **/
