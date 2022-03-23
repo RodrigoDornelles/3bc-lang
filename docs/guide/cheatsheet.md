@@ -324,13 +324,6 @@ CheatSheet
 
 * **Number:** 0o37 0d31 0x1F
 
-* **Truth table**
-
-| aux | !aux |
-| :-: | :-: |
-| 0 | 1 |
-| 1 | 0 |
-
 ## MODE BOOLEAN AND ##
 
 | name | octal | bit | description |
@@ -338,15 +331,6 @@ CheatSheet
 | `math` | 1 | 001 | aux boolean and |
 
 * **Number:** 0o40 0d32 0x20
-
-* **Truth table**
-
-| aux | math | aux * math |
-| :-: | :--: | :--------: |
-| 0 | 0 | 0 |
-| 0 | 1 | 0 |
-| 1 | 0 | 0 |
-| 1 | 1 | 1 |
 
 ## MODE BOOLEAN OR ##
 
@@ -356,15 +340,6 @@ CheatSheet
 
 * **Number:** 0o41 0d33 0x21
 
-* **Truth table**
-
-| aux | math | aux + math |
-| :-: | :--: | :--------: |
-| 0 | 0 | 0 |
-| 0 | 1 | 1 |
-| 1 | 0 | 1 |
-| 1 | 1 | 1 |
-
 ## MODE BOOLEAN XOR ##
 
 | name | octal | bit | description |
@@ -372,15 +347,6 @@ CheatSheet
 | `math` | 1 | 001 | aux boolean xor |
 
 * **Number:** 0o42 0d34 0x22
-
-* **Truth table**
-
-| aux | math | aux (+) math |
-| :-: | :--: | :----------: |
-| 0 | 0 | 0 |
-| 0 | 1 | 1 |
-| 1 | 0 | 1 |
-| 1 | 1 | 0 |
 
 ## MODE BOOLEAN NAND ##
 
@@ -390,15 +356,6 @@ CheatSheet
 
 * **Number:** 0o43 0d35 0x23
 
-* **Truth table**
-
-| aux | math | !(aux * math) |
-| :-: | :--: | :-----------: |
-| 0 | 0 | 1 |
-| 0 | 1 | 1 |
-| 1 | 0 | 1 |
-| 1 | 1 | 0 |
-
 ## MODE BOOLEAN NOR ##
 
 | name | octal | bit | description |
@@ -407,15 +364,6 @@ CheatSheet
 
 * **Number:** 0o44 0d36 0x24
 
-* **Truth table**
-
-| aux | math | !(aux + math) |
-| :-: | :--: | :-----------: |
-| 0 | 0 | 1 |
-| 0 | 1 | 0 |
-| 1 | 0 | 0 |
-| 1 | 1 | 0 |
-
 ## MODE BOOLEAN XNOR ##
 
 | name | octal | bit | description |
@@ -423,15 +371,6 @@ CheatSheet
 | `math` | 1 | 001 | aux boolean xnor |
 
 * **Number:** 0o45 0d37 0x25
-
-* **Truth table**
-
-| aux | math | !(aux (+) math) |
-| :-: | :--: | :-----------: |
-| 0 | 0 | 1 |
-| 0 | 1 | 0 |
-| 1 | 0 | 0 |
-| 1 | 1 | 1 |
 
 ## MODE LOG BASE ##
 
