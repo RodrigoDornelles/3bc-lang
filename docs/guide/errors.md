@@ -1,7 +1,9 @@
 ---
-title: Errors
 description: all error codes, description and how to resolve them.
 ---
+
+Errors
+======
 
 | Code | Description | Solution |
 | :--: | :---------- | :------- |
