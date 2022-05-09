@@ -19,7 +19,7 @@ Personal Computers
 | GNU Linux | amd64 | :ok:  | :ok: | :ok: |
 | GNU Linux | arm | :ok:  | :ok: | :ok: |
 | GNU Linux | i386 | :ok: | :ok: | :ok: |
-| Mac OS X | amd |
+| Mac OS X | arm |
 | Mac OS X | amd64 | :ok: | :ok: | :ok: |
 | Mac OS X | i386 | :ok: | :ok: | :x: |
 | BSD Unix | arm |
@@ -31,7 +31,7 @@ Web Browser
 
 | system | architeture | working | running | released |
 | :----- | :---------: | :-----: | :-----: | :------: |
-| Browser | emscripten | :ok: |
+| Browser | emscripten | :ok: | :ok: | :ok: |
 | Browser | wasm |
 
 Embedded Systems
@@ -40,10 +40,14 @@ Embedded Systems
 | system | architeture | working | running | released |
 | :----- | :---------: | :-----: | :-----: | :------: |
 | AVR Libc | avr | :ok: |
-| Arduino | avr | :ok: | :ok: |
-| Arduino | risc-v | :ok: | :ok: |
+| Arduino | avr | :ok: | :ok: | :ok: |
+| Arduino | risc-v | :ok: | :ok: | :ok: |
 | Free RTOS | risc-v |
 | ESP IDF | risc-v |
+| NuttX | arm | :ok: |
+| NuttX | avr | :ok: |
+| NuttX | risc-v | :ok: |
+| ODroid | risc-v |
 
 Legacy Systems
 --------------
