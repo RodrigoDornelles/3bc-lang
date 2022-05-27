@@ -34,7 +34,7 @@ jobs:
       - name: Build project
         run: |
           cd bin/
-          ./arduino-cli compile --fqbn esp8266:esp8266:generic
+          ./arduino-cli compile --fqbn esp8266:esp8266:generic --verbose --log-level trace
   
   esp32: 
     runs-on: ubuntu-latest      
@@ -53,7 +53,7 @@ jobs:
           ./bin/arduino-cli config init
           ./bin/arduino-cli config set library.enable_unsafe_install true
           ./bin/arduino-cli config add board_manager.additional_urls https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json
-          ./bin/arduino-cli core install esp32:esp32
+          ./bin/arduino-cli core install esp32:esp32@1.0.6
 
       - name: Prepare project
         run: |
@@ -64,4 +64,4 @@ jobs:
       - name: Build project
         run: |
           cd bin/
-          ./arduino-cli compile --fqbn esp32:esp32:esp32
+          ./arduino-cli compile --fqbn esp32:esp32:esp32 --verbose --log-level trace

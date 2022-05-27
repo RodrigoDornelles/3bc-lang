@@ -37,7 +37,13 @@ bool interpreter_3bc_tokens(char* line, char** reg, char** mem, char** val, char
  */
 int interpreter_3bc(app_3bc_t app)
 {  
-    char character = fgetc(app->tty_source.io.stream);
+    int character = fgetc(app->tty_source.io.stream);
+
+    #if defined(_3BC_NUTTX)
+    if (app->tty_source.type == STREAM_TYPE_COMPUTER_STD) {
+        driver_tty_output(app, app->tty_keylog, STRC, character);
+    }
+    #endif
 
     /** end of file **/
     if (character == EOF && app->cache_l3.buffer.storage == NULL) {
@@ -45,7 +51,14 @@ int interpreter_3bc(app_3bc_t app)
     }
 
     /** end of line **/
-    if(character == '\n' || character == '\0' || character == EOF) {
+    if(character == '\n' || character == '\r' || character == '\0' || character == EOF) {
+        /** REPL nuttx compatibily **/
+        #if defined(_3BC_NUTTX)
+        if (app->tty_source.type == STREAM_TYPE_COMPUTER_STD) {
+            driver_tty_output(app, app->tty_keylog, STRC, '\n');
+        }
+        #endif
+
         /** mark end of string **/
         {
             char* new_buffer = (char*) realloc(app->cache_l3.buffer.storage, sizeof(char) * (++app->cache_l3.buffer.size));   

@@ -163,6 +163,14 @@ void driver_tty_output(app_3bc_t app, struct tty_3bc_s tty, register_3bc_t type,
 
 void driver_tty_output_raw(app_3bc_t app, struct tty_3bc_s tty, const char* string)
 {
+    #if defined(_3BC_NUTTX)
+    /** fix stream flush on nuttx when repl|output **/
+    if (tty.type == STREAM_TYPE_COMPUTER_STD){
+        fputs(string, tty.io.stream);
+        fflush(tty.io.stream);
+        return;
+    }
+    #endif
     #if defined(_3BC_COMPUTER)
     /** stream standard c output **/
     if (tty.type == STREAM_TYPE_COMPUTER_STD){

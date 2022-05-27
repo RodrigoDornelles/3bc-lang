@@ -35,6 +35,9 @@
 #if defined(_3BC_ARDUINO)
 #include <Arduino.h>
 #endif
+#if defined(_3BC_NUTTX)
+#include <nuttx/config.h>
+#endif
 
 /** headers **/
 #include "3bc_errors.h"

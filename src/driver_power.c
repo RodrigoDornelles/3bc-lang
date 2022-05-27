@@ -32,8 +32,13 @@ app_3bc_t driver_power_init()
     /**
      * Capture computer signals
      */
+    #if defined(SIGINT)
     signal(SIGINT, driver_power_signal);
+    #endif
+
+    #if defined(SIGSEGV)
     signal(SIGSEGV, driver_power_signal);
+    #endif
 
     if (argc > 1) {
         app->tty_source.type = STREAM_TYPE_COMPUTER_FILE;
