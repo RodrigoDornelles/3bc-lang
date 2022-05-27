@@ -34,7 +34,7 @@ jobs:
       - name: Build project
         run: |
           cd bin/
-          ./arduino-cli compile --fqbn esp8266:esp8266:generic
+          ./arduino-cli compile --fqbn esp8266:esp8266:generic --verbose --log-level trace
   
   esp32: 
     runs-on: ubuntu-latest      
@@ -64,4 +64,4 @@ jobs:
       - name: Build project
         run: |
           cd bin/
-          ./arduino-cli compile --fqbn esp32:esp32:generic
+          ./arduino-cli compile --fqbn esp32:esp32:esp32 --verbose --log-level trace
