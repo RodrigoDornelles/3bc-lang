@@ -64,4 +64,4 @@ jobs:
       - name: Build project
         run: |
           cd bin/
-          ./arduino-cli compile --fqbn esp32:esp32:esp32
+          ./arduino-cli compile --fqbn esp32:esp32:generic
