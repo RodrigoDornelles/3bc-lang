@@ -1,0 +1,75 @@
+#########################################
+# PROGRAM SIMULATE AN SIMPLE CALCULATOR #
+#########################################
+#
+# expected inputs and outputs
+#
+# I 1 + 1 =
+# O 2
+#
+# I 1 + 1 +
+# O 2 (ANS)
+#
+# I 42 / 7 =
+# O 6
+#
+#########################################
+#
+# address table
+#
+# :r0 acumulator
+# :r1 input
+#
+
+MODE NILL 0d0003    # MODE_INPUT
+NILL NILL :p_input  # procedure
+STRC :r1  NILL      # enter input
+
+# compares if :r1 == ' ' (0x20)
+MODE NILL 0d0008    # MODE_MEM_AUX
+PUSH :r1  NILL      # gap :r1
+MODE NILL 0d0012    # MODE_MATH_SUB
+MATH NILL ' '       # subtract ' '
+MODE NILL 0d0009    # MODE_JUMP
+ZGTO NILL :p_input  # true
+
+# compares if :r1 > '9' (0x39)
+MODE NILL 0d0008    # MODE_MEM_AUX
+PUSH :r1  NILL      # gap :r1
+MODE NILL 0d0012    # MODE_MATH_SUB
+MATH NILL '9'       # subtract '0'
+MODE NILL 0d0009    # MODE_JUMP
+PGTO NILL :j_error  # true
+
+# compares if :r1 < '0' (0x30)
+MODE NILL 0d0008    # MODE_MEM_AUX
+PUSH :r1  NILL      # gap :r1
+MODE NILL 0d0012    # MODE_MATH_SUB
+MATH NILL '0'       # subtract '0'
+MODE NILL 0d0009    # MODE_JUMP
+NGTO NILL :j_error  # true
+MODE NILL 0d0008    # MODE_MEM_AUX
+PULL :r1  NILL      # asci to integer
+
+# acumulate numbers
+MODE NILL 0d0008    # MODE_MEM_AUX
+PUSH :r0  NILL      # gap :r0
+MODE NILL 0d0019    # MODE_MATH_MULL_ADD
+NB10 :r1  NILL      # mul 10 and sum :r1
+MODE NILL 0d0008    # MODE_MEM_AUX
+PULL :r0   NILL     # storage :r0
+
+# repeats program
+MODE NILL 0d0009    # MODE_JUMP
+GOTO NILL :p_input  # head
+
+MODE NILL 0d0002
+NILL NILL :j_error
+STRC NILL '\n'
+STRC NILL 'E'
+STRC NILL 'r'
+STRC NILL 'r'
+STRC NILL '!'
+
+NILL NILL :j_exit
+STRI :r0 NILL
