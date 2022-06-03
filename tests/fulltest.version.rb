@@ -7,6 +7,7 @@ class TestVersion < Minitest::Test
     def setup
         @npm = File.read('./package.json').scan(/\"version\"\: \"(\d+\.\d+\.\d+)\"/).first.first rescue nil
         @arduino = File.read('./library.properties').scan(/version = (\d+\.\d+\.\d+)/).first.first rescue nil
+        @pkgbuild = File.read('./PKGBUILD').scan(/pkgver\=\"(\d+.\d+.\d+)\"/).first.first rescue nil
         @oficial = File.read('./src/3bc.h').scan(/\#define VERSION_3BC \"(\d+\.\d+\.\d+)\"/).first.first rescue nil
         @oficial_major = File.read('./src/3bc.h').scan(/\#define VERSION_3BC_MAJOR (\d+)/).first.first rescue nil
         @oficial_minor = File.read('./src/3bc.h').scan(/\#define VERSION_3BC_MINOR (\d+)/).first.first rescue nil
@@ -16,6 +17,7 @@ class TestVersion < Minitest::Test
     def test_verify_version
         refute_equal @npm, nil, "Invalid npm version"
         refute_equal @arduino, nil, "Invalid arduino version"
+        refute_equal @pkgbuild, nil, "Invalid pkgbuild version"
         refute_equal @oficial, nil, "Invalid oficial version" 
         refute_equal @oficial_major, nil, "Invalid oficial major version" 
         refute_equal @oficial_minor, nil, "Invalid oficial minor version" 
@@ -25,6 +27,7 @@ class TestVersion < Minitest::Test
     def test_some_version
         assert_equal @oficial, @npm, "Wrong npm version"
         assert_equal @oficial, @arduino, "Wrong arduino version"
+        assert_equal @oficial, @pkgbuild, "Wrong pkgbuild version"
         assert_equal @oficial, "#{@oficial_major}.#{@oficial_minor}.#{@oficial_patch}", "Wrong oficial version"
     end
 
