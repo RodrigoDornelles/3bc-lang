@@ -1,6 +1,6 @@
 # Maintainer: Rodrigo Dornelles <rodrigo@dornelles.me> 
 # Contributor: yxqsnz <yxqsnz@gmail.com>
-pkgname="3bc-git"
+pkgname="3bc-lang-git"
 pkgver="0.1.1"
 license=('GPL3')
 pkgrel=1
