@@ -1,4 +1,5 @@
 # Maintainer: yxqsnz <yxqsnz@gmail.com>
+# Maintainer: Rodrigo Dornelles <rodrigo@dornelles.me> 
 pkgname="3bc-git"
 pkgver="0.1.0"
 license=('GPL3')
