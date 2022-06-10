@@ -1,9 +1,9 @@
 #include "src/3bc.h"
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
     app_3bc_t VM = lang_3bc_init(argc, argv);
-    /** 
+    /**
      * put transpiled program here.
      * @example:*
     lang_3bc_line(VM, MODE, NILL, MODE_STRING);
@@ -22,6 +22,7 @@ int main(int argc, char **argv)
     lang_3bc_line(VM, STRC, NILL, '\n');
      */
 
-    while(lang_3bc_update(VM));
+    while (lang_3bc_update(VM))
+        ;
     return 0;
 }

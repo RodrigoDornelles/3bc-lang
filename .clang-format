@@ -1,0 +1,17 @@
+---
+# Classic style like webkit, but fits in an oldschool tty.
+BasedOnStyle: WebKit
+ColumnLimit: 80
+IndentWidth: 4
+UseTab: Never
+---
+# Nobody likes everything in a row unless you're a rubyist.
+Language: Cpp
+AllowShortBlocksOnASingleLine: Empty
+AllowShortFunctionsOnASingleLine: Empty
+AllowShortIfStatementsOnASingleLine: Never
+# Force pointers to the type for C++. blyat!
+DerivePointerAlignment: false
+PointerAlignment: Left
+PointerAlignment: Left
+...

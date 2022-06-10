@@ -11,12 +11,13 @@ static app_3bc_t* machines_array;
  */
 app_3bc_t ds_hypervisor_darray_new()
 {
-    app_3bc_t new_vm = (app_3bc_t) malloc(sizeof(struct app_3bc_s));
+    app_3bc_t new_vm = (app_3bc_t)malloc(sizeof(struct app_3bc_s));
 
     /** Suceful craete new machine **/
     if (new_vm != NULL) {
-        app_3bc_t* new_array = (app_3bc_t*) realloc(machines_array, sizeof(struct app_3bc_s) * (++machines_count));
-        
+        app_3bc_t* new_array = (app_3bc_t*)realloc(
+            machines_array, sizeof(struct app_3bc_s) * (++machines_count));
+
         /** not possible expand array **/
         if (new_array == NULL) {
             machines_count -= 1;

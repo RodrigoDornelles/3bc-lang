@@ -5,14 +5,14 @@
  * MACRO: lang_3bc_init
  */
 #if defined(_3BC_COMPUTER)
-app_3bc_t driver_power_init(int argc, char **argv)
+app_3bc_t driver_power_init(int argc, char** argv)
 #else
 app_3bc_t driver_power_init()
 #endif
 {
     app_3bc_t app = ds_hypervisor_darray_new();
 
-    #if defined(_3BC_COMPUTER)
+#if defined(_3BC_COMPUTER)
     /** TODO: move to driver_tty_init() **/
     app->tty_source.type = STREAM_TYPE_COMPUTER_STD;
     app->tty_source.io.file = stdin;
@@ -24,21 +24,21 @@ app_3bc_t driver_power_init()
     app->tty_keylog.io.tty = &app->tty_output;
     app->tty_error.type = STREAM_TYPE_COMPUTER_STD;
     app->tty_error.io.stream = stderr;
-    #endif
+#endif
 
     driver_tty_init();
 
-    #if defined(_3BC_COMPUTER)
-    /**
-     * Capture computer signals
-     */
-    #if defined(SIGINT)
+#if defined(_3BC_COMPUTER)
+/**
+ * Capture computer signals
+ */
+#if defined(SIGINT)
     signal(SIGINT, driver_power_signal);
-    #endif
+#endif
 
-    #if defined(SIGSEGV)
+#if defined(SIGSEGV)
     signal(SIGSEGV, driver_power_signal);
-    #endif
+#endif
 
     if (argc > 1) {
         app->tty_source.type = STREAM_TYPE_COMPUTER_FILE;
@@ -46,10 +46,11 @@ app_3bc_t driver_power_init()
     }
 
     /** file not found | forbidden **/
-    if (app->tty_source.type == STREAM_TYPE_COMPUTER_FILE && app->tty_source.io.file == NULL) {
+    if (app->tty_source.type == STREAM_TYPE_COMPUTER_FILE
+        && app->tty_source.io.file == NULL) {
         driver_program_error(app, ERROR_OPEN_FILE);
     }
-    #endif
+#endif
 
     return app;
 }
@@ -70,38 +71,37 @@ void driver_power_signal(int sig)
      *
      * Finally, C ANSI FOREACH!!!!
      */
-    while((app = *(apps++)) != NULL) 
-    {
-        switch (sig)
-        {
-            case SIGTERM:
-                driver_power_exit(app);
-                break;
+    while ((app = *(apps++)) != NULL) {
+        switch (sig) {
+        case SIGTERM:
+            driver_power_exit(app);
+            break;
 
-            #if defined(SIGINT)
-            case SIGINT:
-                driver_power_exit(app);
-                break;
-            #endif
-            
-            #if defined(SIGSEGV)
-            case SIGSEGV:
-                driver_program_error(app, (enum error_3bc_e) sig);
-                break;
-            #endif
+#if defined(SIGINT)
+        case SIGINT:
+            driver_power_exit(app);
+            break;
+#endif
+
+#if defined(SIGSEGV)
+        case SIGSEGV:
+            driver_program_error(app, (enum error_3bc_e)sig);
+            break;
+#endif
         }
     }
 
-    #if defined(SIGINT)
+#if defined(SIGINT)
     exit(sig);
-    #endif
+#endif
 }
 
 void driver_power_exit(app_3bc_t app)
-{   
-    if (app->state != FSM_3BC_STOPED) {   
+{
+    if (app->state != FSM_3BC_STOPED) {
         /** TODO: move driver_tty_exit **/
-        if (app->tty_source.type == STREAM_TYPE_COMPUTER_FILE && app->tty_source.io.file != NULL) {
+        if (app->tty_source.type == STREAM_TYPE_COMPUTER_FILE
+            && app->tty_source.io.file != NULL) {
             fclose(app->tty_source.io.file);
         }
         /** deallocate occupied memory **/

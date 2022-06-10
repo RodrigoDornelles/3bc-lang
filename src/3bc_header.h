@@ -3,7 +3,7 @@
 /**
  * for compilation in separate static libraries,
  * preserve native C names.
- * 
+ *
  * (required for avr compiler in arduino ide)
  */
 extern "C" {
@@ -91,18 +91,25 @@ void cpu_string_input_password(PARAMS_DEFINE);
 /************************************************************/
 void driver_tty_init(void);
 void driver_tty_exit(void);
-data_3bc_t driver_tty_input(app_3bc_t app, struct tty_3bc_s tty, register_3bc_t type);
-void driver_tty_output(app_3bc_t app, struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
-void driver_tty_output_raw(app_3bc_t app, struct tty_3bc_s tty,const char* string);
+data_3bc_t driver_tty_input(
+    app_3bc_t app, struct tty_3bc_s tty, register_3bc_t type);
+void driver_tty_output(
+    app_3bc_t app, struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val);
+void driver_tty_output_raw(
+    app_3bc_t app, struct tty_3bc_s tty, const char* string);
 /************************************************************/
 void driver_gpio_setup(app_3bc_t app, memory_conf_t conf, address_3bc_t pin);
-void driver_gpio_output(app_3bc_t app, memory_conf_t conf, address_3bc_t pin, data_3bc_t data);
-data_3bc_t driver_gpio_input(app_3bc_t app, memory_conf_t conf, address_3bc_t pin, data_3bc_t default_data);
+void driver_gpio_output(
+    app_3bc_t app, memory_conf_t conf, address_3bc_t pin, data_3bc_t data);
+data_3bc_t driver_gpio_input(app_3bc_t app, memory_conf_t conf,
+    address_3bc_t pin, data_3bc_t default_data);
 /************************************************************/
 bool driver_interrupt(app_3bc_t app);
 /************************************************************/
-void driver_memory_data_set(app_3bc_t app, address_3bc_t address, data_3bc_t value);
-void driver_memory_conf_set(app_3bc_t app, address_3bc_t address, data_3bc_t conf);
+void driver_memory_data_set(
+    app_3bc_t app, address_3bc_t address, data_3bc_t value);
+void driver_memory_conf_set(
+    app_3bc_t app, address_3bc_t address, data_3bc_t conf);
 data_3bc_t driver_memory_data_get(app_3bc_t app, address_3bc_t address);
 data_3bc_t driver_memory_conf_get(app_3bc_t app, address_3bc_t address);
 address_3bc_t driver_memory_pointer(app_3bc_t app, address_3bc_t address);
@@ -112,7 +119,7 @@ void driver_memory_free(app_3bc_t app, address_3bc_t address);
 void driver_mode_set(app_3bc_t app, cpumode_3bc_t value);
 /************************************************************/
 #ifdef SIGINT
-app_3bc_t driver_power_init(int argc, char **argv);
+app_3bc_t driver_power_init(int argc, char** argv);
 #else
 app_3bc_t driver_power_init();
 #endif
@@ -127,8 +134,10 @@ struct line_node_s* ds_procedure_lifo_pop(app_3bc_t app);
 /************************************************************/
 /** TODO: move **/
 int interpreter_3bc(app_3bc_t app);
-void custom_3bc_func_set(cpumode_3bc_t cpu_mode, register_3bc_t reg, function_3bc_t lambda);
-void custom_3bc_func_call(app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value);
+void custom_3bc_func_set(
+    cpumode_3bc_t cpu_mode, register_3bc_t reg, function_3bc_t lambda);
+void custom_3bc_func_call(
+    app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value);
 /************************************************************/
 data_aux_3bc_t driver_accumulator_get(app_3bc_t app);
 void driver_accumulator_set(app_3bc_t app, data_aux_3bc_t value);
@@ -143,22 +152,30 @@ struct label_node_s* ds_label_hash_search(app_3bc_t app, label_3bc_t label);
 /************************************************************/
 data_3bc_t ds_memory_llrbt_data_get(app_3bc_id app_id, address_3bc_t address);
 data_3bc_t ds_memory_llrbt_conf_get(app_3bc_id app_id, address_3bc_t address);
-void ds_memory_llrbt_data_set(app_3bc_id app_id, address_3bc_t address, data_3bc_t value);
-void ds_memory_llrbt_conf_set(app_3bc_id app_id, address_3bc_t address, data_3bc_t conf);
+void ds_memory_llrbt_data_set(
+    app_3bc_id app_id, address_3bc_t address, data_3bc_t value);
+void ds_memory_llrbt_conf_set(
+    app_3bc_id app_id, address_3bc_t address, data_3bc_t conf);
 struct memory_node_s* ds_memory_llrbt_create_node(address_3bc_t address);
 struct memory_node_s* ds_memory_llrbt_rotate_left(struct memory_node_s* node);
 struct memory_node_s* ds_memory_llrbt_rotate_right(struct memory_node_s* node);
-struct memory_node_s* ds_memory_llrbt_smallest_child(struct memory_node_s* node);
-struct memory_node_s* ds_memory_llrbt_access(app_3bc_t app, address_3bc_t address);
-struct memory_node_s* ds_memory_llrbt_insert(address_3bc_t address, struct memory_node_s* node);
-struct memory_node_s* ds_memory_llrbt_clear(address_3bc_t address, struct memory_node_s* node);
-void ds_memory_llrbt_swap_colors(struct memory_node_s* node1, struct memory_node_s* node2);
+struct memory_node_s* ds_memory_llrbt_smallest_child(
+    struct memory_node_s* node);
+struct memory_node_s* ds_memory_llrbt_access(
+    app_3bc_t app, address_3bc_t address);
+struct memory_node_s* ds_memory_llrbt_insert(
+    address_3bc_t address, struct memory_node_s* node);
+struct memory_node_s* ds_memory_llrbt_clear(
+    address_3bc_t address, struct memory_node_s* node);
+void ds_memory_llrbt_swap_colors(
+    struct memory_node_s* node1, struct memory_node_s* node2);
 void ds_memory_llrbt_destroy(app_3bc_t app);
 void ds_memory_llrbt_delete(struct memory_node_s* node);
 /************************************************************/
 void ds_program_fifo_resize(app_3bc_t app);
 void ds_program_fifo_destroy(app_3bc_t app);
-void ds_program_fifo_line_add(app_3bc_t app, register_3bc_t reg, address_3bc_t mem, data_3bc_t val);
+void ds_program_fifo_line_add(
+    app_3bc_t app, register_3bc_t reg, address_3bc_t mem, data_3bc_t val);
 bool ds_program_fifo_avaliable(app_3bc_t app);
 /************************************************************/
 #ifdef __cplusplus
