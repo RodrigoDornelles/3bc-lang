@@ -35,7 +35,7 @@ void cpu_test_scape_characters(PARAMS_DEFINE)
 
 int main(int argc, char** argv)
 {
-    struct app_3bc_s *const VM = lang_3bc_init(argc, argv);
+    struct app_3bc_s* const VM = lang_3bc_init(argc, argv);
     lang_3bc_custom(VM, MODE_CUSTOM_1, 1, &cpu_test_signal);
     lang_3bc_custom(VM, MODE_CUSTOM_1, 2, &cpu_test_none_tty);
     lang_3bc_custom(VM, MODE_CUSTOM_1, 3, &cpu_test_unsupported);

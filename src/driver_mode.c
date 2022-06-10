@@ -4,7 +4,7 @@
 /**
  * switch between cpu mode channels
  */
-void driver_mode_set(struct app_3bc_s *const app, cpumode_3bc_t value)
+void driver_mode_set(struct app_3bc_s* const app, cpumode_3bc_t value)
 {
     if (value >= MODE_END) {
         driver_program_error(app, ERROR_INVALID_CPU_MODE);

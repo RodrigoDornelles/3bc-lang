@@ -44,7 +44,7 @@ void driver_tty_exit()
  * TODO: More compatible tty
  */
 data_3bc_t driver_tty_input(
-    struct app_3bc_s *const app, struct tty_3bc_s tty, register_3bc_t type)
+    struct app_3bc_s* const app, struct tty_3bc_s tty, register_3bc_t type)
 {
     signed int value;
     char c[2] = "\0";
@@ -115,8 +115,8 @@ data_3bc_t driver_tty_input(
 /**
  * stream texts to outputs
  */
-void driver_tty_output(
-    struct app_3bc_s *const app, struct tty_3bc_s tty, register_3bc_t type, data_3bc_t val)
+void driver_tty_output(struct app_3bc_s* const app, struct tty_3bc_s tty,
+    register_3bc_t type, data_3bc_t val)
 {
     /** the size of the buffer is according to the memory */
     char output[sizeof(data_3bc_t) * 8 + 1];
@@ -171,7 +171,7 @@ void driver_tty_output(
 }
 
 void driver_tty_output_raw(
-    struct app_3bc_s *const app, struct tty_3bc_s tty, const char* string)
+    struct app_3bc_s* const app, struct tty_3bc_s tty, const char* string)
 {
 #if defined(_3BC_NUTTX)
     /** fix stream flush on nuttx when repl|output **/

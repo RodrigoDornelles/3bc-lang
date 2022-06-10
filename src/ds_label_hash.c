@@ -4,7 +4,7 @@
 /**
  * mark point to logical jumps
  */
-void ds_label_hash_insert(struct app_3bc_s *const app, label_3bc_t label)
+void ds_label_hash_insert(struct app_3bc_s* const app, label_3bc_t label)
 {
     unsigned char hash;
     struct label_node_s* new_node;
@@ -42,7 +42,8 @@ void ds_label_hash_insert(struct app_3bc_s *const app, label_3bc_t label)
 /**
  * find label in hash tabel
  */
-struct label_node_s* ds_label_hash_search(struct app_3bc_s *const app, label_3bc_t label)
+struct label_node_s* ds_label_hash_search(
+    struct app_3bc_s* const app, label_3bc_t label)
 {
     struct label_node_s* last_node
         = app->program.label_table[label % LABEL_HASH_SIZE];

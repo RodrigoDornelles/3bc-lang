@@ -3,14 +3,14 @@
 
 data_3bc_t ds_memory_llrbt_data_get(app_3bc_id app_id, address_3bc_t address)
 {
-    struct app_3bc_s *const app = ds_hypervisor_darray_get_one(app_id);
+    struct app_3bc_s* const app = ds_hypervisor_darray_get_one(app_id);
     struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     return node->data;
 }
 
 data_3bc_t ds_memory_llrbt_conf_get(app_3bc_id app_id, address_3bc_t address)
 {
-    struct app_3bc_s *const app = ds_hypervisor_darray_get_one(app_id);
+    struct app_3bc_s* const app = ds_hypervisor_darray_get_one(app_id);
     struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     return node->conf;
 }
@@ -18,7 +18,7 @@ data_3bc_t ds_memory_llrbt_conf_get(app_3bc_id app_id, address_3bc_t address)
 void ds_memory_llrbt_data_set(
     app_3bc_id app_id, address_3bc_t address, data_3bc_t value)
 {
-    struct app_3bc_s *const app = ds_hypervisor_darray_get_one(app_id);
+    struct app_3bc_s* const app = ds_hypervisor_darray_get_one(app_id);
     struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     node->data = value;
 }
@@ -26,7 +26,7 @@ void ds_memory_llrbt_data_set(
 void ds_memory_llrbt_conf_set(
     app_3bc_id app_id, address_3bc_t address, data_3bc_t conf)
 {
-    struct app_3bc_s *const app = ds_hypervisor_darray_get_one(app_id);
+    struct app_3bc_s* const app = ds_hypervisor_darray_get_one(app_id);
     struct memory_node_s* node = ds_memory_llrbt_access(app, address);
     node->conf = conf;
 }
@@ -141,7 +141,7 @@ struct memory_node_s* ds_memory_llrbt_clear(
  * TODO: unify function with ds_memory_llrbt_insert?
  */
 struct memory_node_s* ds_memory_llrbt_access(
-    struct app_3bc_s *const app, address_3bc_t address)
+    struct app_3bc_s* const app, address_3bc_t address)
 {
     struct memory_node_s* node = app->memory.root;
 
@@ -242,7 +242,7 @@ void ds_memory_llrbt_swap_colors(
     node2->color = color;
 }
 
-void ds_memory_llrbt_destroy(struct app_3bc_s *const app)
+void ds_memory_llrbt_destroy(struct app_3bc_s* const app)
 {
     ds_memory_llrbt_delete(app->memory.root);
 }

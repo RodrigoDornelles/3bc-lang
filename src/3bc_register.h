@@ -99,8 +99,8 @@
  * (required for avr compiler in arduino ide)
  */
 #ifdef _3BC_SCU_FIX
-void instruction_3bc(
-    struct app_3bc_s *const app, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
+void instruction_3bc(struct app_3bc_s* const app, register_3bc_t reg,
+    address_3bc_t address, data_3bc_t value)
 {
     if (reg == 0) {
         cpu_null(app, 0, 0, 0);
