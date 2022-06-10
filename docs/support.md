@@ -14,17 +14,20 @@ Personal Computers
 
 | system | architeture | working | running | released |
 | :----- | :---------: | :-----: | :-----: | :------: |
-| Windows | amd64 | :ok: | :ok:  | :ok:  |
 | Windows | i386 | :ok:  | :ok: | :ok: |
-| GNU Linux | amd64 | :ok:  | :ok: | :ok: |
+| Windows | amd64 | :ok: | :ok:  | :ok: |
 | GNU Linux | arm | :ok:  | :ok: | :ok: |
 | GNU Linux | i386 | :ok: | :ok: | :ok: |
-| Mac OS X | arm |
-| Mac OS X | amd64 | :ok: | :ok: | :ok: |
+| GNU Linux | amd64 | :ok:  | :ok: | :ok: |
+| GNU Linux | aarch64 | :ok: | :ok: | :ok: |
 | Mac OS X | i386 | :ok: | :ok: | :x: |
+| Mac OS X | amd64 | :ok: | :ok: | :ok: |
+| Mac OS X | aarch64 |
 | BSD Unix | arm |
-| BSD Unix | amd64 |
-| BSD Unix | i386 |
+| BSD Unix | amd64 | :ok: | :ok: | :ok: |
+| BSD Unix | i386 | :ok: | :ok: | :ok: |
+
+ * apple systems no longer support 32-bit programs.
 
 Web Browser 
 -----------
@@ -44,9 +47,9 @@ Embedded Systems
 | Arduino | risc-v | :ok: | :ok: | :ok: |
 | Free RTOS | risc-v |
 | ESP IDF | risc-v |
-| NuttX | arm | :ok: |
-| NuttX | avr | :ok: |
-| NuttX | risc-v | :ok: |
+| NuttX | arm | :ok: | :ok: |
+| NuttX | avr | :ok: | :ok: |
+| NuttX | risc-v | :ok: | :ok: |
 | ODroid | risc-v |
 
 Legacy Systems
