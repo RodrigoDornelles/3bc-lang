@@ -5,8 +5,8 @@
  * record program memory,
  * similar to writing a line on the punch card.
  */
-void ds_program_fifo_line_add(
-    app_3bc_t app, register_3bc_t reg, address_3bc_t mem, data_3bc_t val)
+void ds_program_fifo_line_add(struct app_3bc_s* const app, register_3bc_t reg,
+    address_3bc_t mem, data_3bc_t val)
 {
     /** register point label for jumps logical **/
     if (reg == NILL && mem == NILL && val != NILL) {
@@ -30,7 +30,7 @@ void ds_program_fifo_line_add(
  * Expand program memory,
  * provide more punch card lines.
  */
-void ds_program_fifo_resize(app_3bc_t app)
+void ds_program_fifo_resize(struct app_3bc_s* const app)
 {
     struct line_node_s* prev_line_node = app->program.tail;
     struct line_node_s* new_line_node
@@ -65,7 +65,7 @@ void ds_program_fifo_resize(app_3bc_t app)
 /**
  * eject punch card program
  */
-void ds_program_fifo_destroy(app_3bc_t app)
+void ds_program_fifo_destroy(struct app_3bc_s* const app)
 {
     struct line_node_s* node = app->program.head;
     struct line_node_s* prev;
@@ -79,7 +79,7 @@ void ds_program_fifo_destroy(app_3bc_t app)
 /**
  * check if there is tape program available
  */
-bool ds_program_fifo_avaliable(app_3bc_t app)
+bool ds_program_fifo_avaliable(struct app_3bc_s* const app)
 {
     /** waits for a label **/
     if (app->program.label_target != NILL) {

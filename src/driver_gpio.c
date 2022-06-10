@@ -9,7 +9,8 @@
  * Support microbit
  */
 
-void driver_gpio_setup(app_3bc_t app, memory_conf_t conf, address_3bc_t pin)
+void driver_gpio_setup(
+    struct app_3bc_s* const app, memory_conf_t conf, address_3bc_t pin)
 {
     /** nothing use gpio´s pins */
     if (conf == 0
@@ -37,8 +38,8 @@ void driver_gpio_setup(app_3bc_t app, memory_conf_t conf, address_3bc_t pin)
     }
 }
 
-void driver_gpio_output(
-    app_3bc_t app, memory_conf_t conf, address_3bc_t pin, data_3bc_t data)
+void driver_gpio_output(struct app_3bc_s* const app, memory_conf_t conf,
+    address_3bc_t pin, data_3bc_t data)
 {
     if (conf == 0) {
         return;
@@ -57,7 +58,7 @@ void driver_gpio_output(
     }
 }
 
-data_3bc_t driver_gpio_input(app_3bc_t app, memory_conf_t conf,
+data_3bc_t driver_gpio_input(struct app_3bc_s* const app, memory_conf_t conf,
     address_3bc_t pin, data_3bc_t default_data)
 {
     if (conf == 0) {

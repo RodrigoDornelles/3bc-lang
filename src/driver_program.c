@@ -2,7 +2,8 @@
 #define _3BC_SCU_FIX
 #include "3bc.h"
 
-void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
+void driver_program_error(
+    struct app_3bc_s* const app, enum error_3bc_e error_code)
 {
     /**
      * NOTE: if the current line does not exist,
@@ -79,7 +80,7 @@ void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
  * run processor instructions,
  * this is a core of virtual machine
  */
-void driver_program_tick(app_3bc_t app)
+void driver_program_tick(struct app_3bc_s* const app)
 {
     instruction_3bc(app, app->program.curr->column.reg,
         app->program.curr->column.adr, app->program.curr->column.dta);

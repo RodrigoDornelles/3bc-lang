@@ -9,7 +9,7 @@ extern volatile unsigned long timer0_overflow_count;
 /**
  * VM processor context manager, allows asychronism.
  */
-bool driver_interrupt(app_3bc_t app)
+bool driver_interrupt(struct app_3bc_s* const app)
 {
     switch (app->state) {
     /**

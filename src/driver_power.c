@@ -5,12 +5,12 @@
  * MACRO: lang_3bc_init
  */
 #if defined(_3BC_COMPUTER)
-app_3bc_t driver_power_init(int argc, char** argv)
+struct app_3bc_s* const driver_power_init(int argc, char** argv)
 #else
-app_3bc_t driver_power_init()
+struct app_3bc_s* const driver_power_init()
 #endif
 {
-    app_3bc_t app = ds_hypervisor_darray_new();
+    struct app_3bc_s* const app = ds_hypervisor_darray_new();
 
 #if defined(_3BC_COMPUTER)
     /** TODO: move to driver_tty_init() **/
@@ -63,8 +63,8 @@ app_3bc_t driver_power_init()
  */
 void driver_power_signal(int sig)
 {
-    app_3bc_t* apps = ds_hypervisor_darray_get_all();
-    app_3bc_t app;
+    struct app_3bc_s** apps = ds_hypervisor_darray_get_all();
+    struct app_3bc_s* app;
 
     /**
      * JOKE:
@@ -96,7 +96,7 @@ void driver_power_signal(int sig)
 #endif
 }
 
-void driver_power_exit(app_3bc_t app)
+void driver_power_exit(struct app_3bc_s* const app)
 {
     if (app->state != FSM_3BC_STOPED) {
         /** TODO: move driver_tty_exit **/

@@ -2,21 +2,22 @@
 #include "3bc.h"
 
 static app_3bc_id machines_count;
-static app_3bc_t* machines_array;
+static struct app_3bc_s** machines_array;
 
 /**
  * Expand number of virtual machines
  *
  * DATASTRUCT: Dynamic array
  */
-app_3bc_t ds_hypervisor_darray_new()
+struct app_3bc_s* const ds_hypervisor_darray_new()
 {
-    app_3bc_t new_vm = (app_3bc_t)malloc(sizeof(struct app_3bc_s));
+    struct app_3bc_s* new_vm
+        = (struct app_3bc_s* const)malloc(sizeof(struct app_3bc_s));
 
     /** Suceful craete new machine **/
     if (new_vm != NULL) {
-        app_3bc_t* new_array = (app_3bc_t*)realloc(
-            machines_array, sizeof(struct app_3bc_s) * (++machines_count));
+        struct app_3bc_s** new_array = (struct app_3bc_s**)realloc(
+            machines_array, sizeof(struct app_3bc_s*) * (++machines_count));
 
         /** not possible expand array **/
         if (new_array == NULL) {
@@ -45,7 +46,7 @@ app_3bc_t ds_hypervisor_darray_new()
 /**
  * RETURN: virutal machine by id
  */
-app_3bc_t ds_hypervisor_darray_get_one(app_3bc_id app)
+struct app_3bc_s* const ds_hypervisor_darray_get_one(app_3bc_id app)
 {
     return machines_array[app];
 }
@@ -53,7 +54,7 @@ app_3bc_t ds_hypervisor_darray_get_one(app_3bc_id app)
 /**
  *  RETURN: array of virtual machines
  */
-app_3bc_t* ds_hypervisor_darray_get_all()
+struct app_3bc_s** ds_hypervisor_darray_get_all()
 {
     return machines_array;
 }
