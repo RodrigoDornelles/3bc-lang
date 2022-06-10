@@ -32,7 +32,7 @@ union stream_file_u {
     struct tty_3bc_s* tty;
 };
 
-struct tty_3bc_s {   
+struct tty_3bc_s {
     enum stream_type_e type;
     union stream_file_u io;
 };
@@ -121,8 +121,8 @@ struct memory_node_s {
     memory_conf_t conf;
     data_3bc_t data;
     address_3bc_t address;
-    struct memory_node_s *left;
-    struct memory_node_s *right;
+    struct memory_node_s* left;
+    struct memory_node_s* right;
 };
 
 struct memory_3bc_s {
@@ -156,4 +156,5 @@ struct app_3bc_s {
 
 typedef struct app_3bc_s* app_3bc_t;
 
-typedef void (*function_3bc_t)(app_3bc_t, register_3bc_t, address_3bc_t, data_3bc_t);
+typedef void (*function_3bc_t)(
+    app_3bc_t, register_3bc_t, address_3bc_t, data_3bc_t);

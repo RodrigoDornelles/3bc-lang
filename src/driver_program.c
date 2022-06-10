@@ -8,26 +8,31 @@ void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
      * NOTE: if the current line does not exist,
      * it was because it was interpreting a line which failed.
      */
-    line_3bc_t error_line = app->program.curr != NULL && error_code >= ERROR_CPU_ZERO?
-        app->program.curr->line:
-        app->program.last_line;
+    line_3bc_t error_line
+        = app->program.curr != NULL && error_code >= ERROR_CPU_ZERO
+        ? app->program.curr->line
+        : app->program.last_line;
 
-    #ifdef _3BC_COMPACT
+#ifdef _3BC_COMPACT
     /** smaller log erros for economy rom memory **/
     char error_code_string[64];
-    snprintf(error_code_string, sizeof(error_code_string), "\n\n[3BC] %3d Fatal error 0x%06X in line: %6d\n", app->id, error_code, error_line);
+    snprintf(error_code_string, sizeof(error_code_string),
+        "\n\n[3BC] %3d Fatal error 0x%06X in line: %6d\n", app->id, error_code,
+        error_line);
     driver_tty_output_raw(app, app->tty_error, error_code_string);
-    #else
+#else
     char error_code_string[128];
-    snprintf(error_code_string, sizeof(error_code_string), "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM\n> MACHINE ID:\t%08d\n> ERROR LINE:\t%08d\n> ERROR CODE:\t0x%06X\n> DESCRIPTION: ", app->id, error_line, error_code);
+    snprintf(error_code_string, sizeof(error_code_string),
+        "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM\n> MACHINE ID:\t%08d\n> "
+        "ERROR LINE:\t%08d\n> ERROR CODE:\t0x%06X\n> DESCRIPTION: ",
+        app->id, error_line, error_code);
     driver_tty_output_raw(app, app->tty_error, error_code_string);
 
-    switch((long) (error_code))
-    {
-        #if defined(SIGSEGV)
+    switch ((long)(error_code)) {
+#if defined(SIGSEGV)
         ERROR_LOG_3BC(SIGSEGV, "SEGMENT FAULT");
-        #endif
-        ERROR_LOG_3BC(ERROR_CPU_ZERO, "CPU MODE IS NOT DEFINED"); 
+#endif
+        ERROR_LOG_3BC(ERROR_CPU_ZERO, "CPU MODE IS NOT DEFINED");
         ERROR_LOG_3BC(ERROR_CPU_RESERVED, "CPU MODE IS RESERVED");
         ERROR_LOG_3BC(ERROR_INVALID_REGISTER, "INVALID CPU REGISTER");
         ERROR_LOG_3BC(ERROR_INVALID_ADDRESS, "INVALID ADDRESS");
@@ -35,7 +40,8 @@ void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
         ERROR_LOG_3BC(ERROR_INVALID_CPU_MODE, "INVALID CPU MODE");
         ERROR_LOG_3BC(ERROR_INVALID_LABEL, "INVALID LABEL");
         ERROR_LOG_3BC(ERROR_INVALID_RETURN, "INVALID PROCEDURE RETURN");
-        ERROR_LOG_3BC(ERROR_PARAM_DUALITY, "DUALITY ADDRES WITH VALUE IS NOT ALLOWED");
+        ERROR_LOG_3BC(
+            ERROR_PARAM_DUALITY, "DUALITY ADDRES WITH VALUE IS NOT ALLOWED");
         ERROR_LOG_3BC(ERROR_PARAM_REQUIRE_ANY, "VALUE OR ADDRESS IS REQUIRED");
         ERROR_LOG_3BC(ERROR_PARAM_REQUIRE_VALUE, "VALUE IS REQUIRED");
         ERROR_LOG_3BC(ERROR_PARAM_REQUIRE_ADDRESS, "ADDRESS IS REQUIRED");
@@ -56,11 +62,12 @@ void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
         ERROR_LOG_3BC(ERROR_CHAR_SCAPE, "INVALID CHARACTER ESCAPE");
         ERROR_LOG_3BC(ERROR_CHAR_SIZE, "INVALID CHARACTER SIZE");
         ERROR_LOG_3BC(ERROR_COLUMNS, "WRONG NUMBER OF COLUMNS");
-        default: driver_tty_output_raw(app, app->tty_error, "UNKNOWN ERROR");
+    default:
+        driver_tty_output_raw(app, app->tty_error, "UNKNOWN ERROR");
     }
 
     driver_tty_output_raw(app, app->tty_error, "\n");
-    #endif
+#endif
 
     /** TODO: no closign when else **/
     if (error_code >= ERROR_CPU_ZERO) {
@@ -74,12 +81,8 @@ void driver_program_error(app_3bc_t app, enum error_3bc_e error_code)
  */
 void driver_program_tick(app_3bc_t app)
 {
-    instruction_3bc(
-        app,
-        app->program.curr->column.reg,
-        app->program.curr->column.adr,
-        app->program.curr->column.dta
-    );
+    instruction_3bc(app, app->program.curr->column.reg,
+        app->program.curr->column.adr, app->program.curr->column.dta);
 
     /** go next line **/
     app->program.curr = app->program.curr->next;

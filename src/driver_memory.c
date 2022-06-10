@@ -1,16 +1,18 @@
 #define _3BC_SCU_FIX_2
 #include "3bc.h"
 
-void driver_memory_data_set(app_3bc_t app, address_3bc_t address, data_3bc_t value)
+void driver_memory_data_set(
+    app_3bc_t app, address_3bc_t address, data_3bc_t value)
 {
     memory_conf_t conf = app->memory.conf_get(app->id, address);
 
     driver_gpio_output(app, conf, address, value);
-    
+
     app->memory.data_set(app->id, address, value);
 }
 
-void driver_memory_conf_set(app_3bc_t app, address_3bc_t address, data_3bc_t conf)
+void driver_memory_conf_set(
+    app_3bc_t app, address_3bc_t address, data_3bc_t conf)
 {
     data_3bc_t value = app->memory.data_get(app->id, address);
 
@@ -40,7 +42,7 @@ data_3bc_t driver_memory_conf_get(app_3bc_t app, address_3bc_t address)
 }
 
 /**
- * MACRO: POINTER 
+ * MACRO: POINTER
  */
 address_3bc_t driver_memory_pointer(app_3bc_t app, address_3bc_t address)
 {
@@ -48,19 +50,18 @@ address_3bc_t driver_memory_pointer(app_3bc_t app, address_3bc_t address)
 
     /**
      * JOKE:
-     * 
+     *
      * JAVA PROGRAMMER BE LIKE
      * omg i'm scared with null pointer!
      */
     if (ptr == NILL) {
         /** also apply to microsoft java devs (aka C#) */
         driver_program_error(app, ERROR_NULL_POINTER);
-    }
-    else if (ptr < 0) {
+    } else if (ptr < 0) {
         driver_program_error(app, ERROR_NUMBER_NEGATIVE);
     }
 
-    return (address_3bc_t) ptr;
+    return (address_3bc_t)ptr;
 }
 
 void driver_memory_validate(app_3bc_t app, memory_conf_t conf)
@@ -82,7 +83,9 @@ void driver_memory_validate(app_3bc_t app, memory_conf_t conf)
         driver_program_error(app, ERROR_MEMORY_CONFIG);
     }
     /** analogic required input or output **/
-    if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_ANAL) && !(BITFIELD_HAS(conf, MEM_CONFIG_GPIO_READ) || BITFIELD_HAS(conf, MEM_CONFIG_GPIO_SEND))) {
+    if (BITFIELD_HAS(conf, MEM_CONFIG_GPIO_ANAL)
+        && !(BITFIELD_HAS(conf, MEM_CONFIG_GPIO_READ)
+            || BITFIELD_HAS(conf, MEM_CONFIG_GPIO_SEND))) {
         driver_program_error(app, ERROR_MEMORY_CONFIG);
     }
 }

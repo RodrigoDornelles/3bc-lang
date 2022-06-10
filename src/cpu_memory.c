@@ -18,14 +18,16 @@ void cpu_memory_moff(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     /** config remove mask (and not) */
-    driver_memory_conf_set(app, address, driver_memory_conf_get(app, address) &~ value);
+    driver_memory_conf_set(
+        app, address, driver_memory_conf_get(app, address) & ~value);
 }
 
 void cpu_memory_muse(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     /** config append mask (or) */
-    driver_memory_conf_set(app, address, driver_memory_conf_get(app, address) | value);
+    driver_memory_conf_set(
+        app, address, driver_memory_conf_get(app, address) | value);
 }
 
 void cpu_memory_ptr_free(PARAMS_DEFINE)

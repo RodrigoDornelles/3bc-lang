@@ -15,16 +15,16 @@
 #include <math.h>
 #endif
 #include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <unistd.h>
 #include <errno.h>
 #include <limits.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #if defined(_3BC_COMPUTER)
-#include <time.h>
 #include <signal.h>
+#include <time.h>
 #endif
 #if defined(_3BC_PC_UNIX)
 #include <termios.h>
@@ -39,35 +39,41 @@
 #include <nuttx/config.h>
 #endif
 
-/** headers **/
+/** consts and types **/
 #include "3bc_errors.h"
 #include "3bc_types.h"
+
+/** functions prototypes **/
 #include "3bc_header.h"
+
+/* opcodes and witchcraft **/
 #include "3bc_register.h"
+
+/* some forbidden secret gimmicks **/
 #include "3bc_optional_custom.h"
 #include "3bc_optional_interpreter.h"
 
 /** compatibility fixes **/
 #include "3bc_support.h"
 
-/** program **/
+/** program code **/
 #if !defined(_3BC_SCU)
 #include "cpu_boolean.c"
 #include "cpu_common.c"
-#include "cpu_math.c"
 #include "cpu_jump.c"
+#include "cpu_math.c"
 #include "cpu_memory.c"
 #include "cpu_procedure.c"
 #include "cpu_sleep.c"
 #include "cpu_string.c"
 #include "driver_accumulator.c"
-#include "driver_tty.c"
 #include "driver_gpio.c"
 #include "driver_interrupt.c"
 #include "driver_memory.c"
 #include "driver_mode.c"
 #include "driver_power.c"
 #include "driver_program.c"
+#include "driver_tty.c"
 #include "ds_hypervisor_darray.c"
 #include "ds_label_hash.c"
 #include "ds_memory_llrbt.c"

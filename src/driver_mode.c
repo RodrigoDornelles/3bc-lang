@@ -19,5 +19,5 @@ void driver_mode_set(app_3bc_t app, cpumode_3bc_t value)
     }
 
     /** apply cpu mode **/
-    app->cpu_mode = value;    
+    app->cpu_mode = value;
 }

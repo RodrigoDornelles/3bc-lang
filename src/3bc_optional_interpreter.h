@@ -3,31 +3,40 @@
 /**
  * JOKE:
  *
- * anyone asks me why this code spaghetti, 
+ * anyone asks me why this code spaghetti,
  * easy, arduino-cli/arduino-ide forced me.
  */
 
-#if !(defined(ARDUINO) && defined(_3BC_SCU_FIX_2)) || (!defined(ARDUINO) && defined(_3BC_SCU_FIX))
+#if !(defined(ARDUINO) && defined(_3BC_SCU_FIX_2))                             \
+    || (!defined(ARDUINO) && defined(_3BC_SCU_FIX))
 
-#if (!defined(_3BC_ENABLE_INTERPRETER) && !defined(_3BC_DISABLE_INTERPRETER)) || (defined(_3BC_ENABLE_INTERPRETER) && defined(_3BC_DISABLE_INTERPRETER))
-#error "Required define '_3BC_ENABLE_INTERPRETER' or '_3BC_DISABLE_INTERPRETER' after include header '3bc.h'"
+#if (!defined(_3BC_ENABLE_INTERPRETER) && !defined(_3BC_DISABLE_INTERPRETER))  \
+    || (defined(_3BC_ENABLE_INTERPRETER) && defined(_3BC_DISABLE_INTERPRETER))
+#error                                                                         \
+    "Required define '_3BC_ENABLE_INTERPRETER' or '_3BC_DISABLE_INTERPRETER' after include header '3bc.h'"
 
 #elif defined(_3BC_DISABLE_INTERPRETER)
-int interpreter_3bc(app_3bc_t app) {
+int interpreter_3bc(app_3bc_t app)
+{
     return EOF;
 }
 
 #elif defined(_3BC_ENABLE_INTERPRETER)
 int interpreter_3bc(app_3bc_t app);
 char* interpreter_3bc_compiler(app_3bc_t app, char* line);
-bool interpreter_3bc_parser_strtol(app_3bc_t app, const char* string, signed long int* value);
-bool interpreter_3bc_parser_strchar(app_3bc_t app, const char* string, signed long int* value);
+bool interpreter_3bc_parser_strtol(
+    app_3bc_t app, const char* string, signed long int* value);
+bool interpreter_3bc_parser_strchar(
+    app_3bc_t app, const char* string, signed long int* value);
 bool interpreter_3bc_parser_strhash(const char* string, signed long int* value);
 int interpreter_3bc_parser_skip();
 int interpreter_3bc_read(app_3bc_t app);
-bool interpreter_3bc_syntax_registers(app_3bc_t app, const char* string, signed long int* value);
-bool interpreter_3bc_syntax_constants(app_3bc_t app, const char* string, signed long int* value);
-bool interpreter_3bc_tokens(char* line, char** reg, char** mem, char** val, char** line_end);
+bool interpreter_3bc_syntax_registers(
+    app_3bc_t app, const char* string, signed long int* value);
+bool interpreter_3bc_syntax_constants(
+    app_3bc_t app, const char* string, signed long int* value);
+bool interpreter_3bc_tokens(
+    char* line, char** reg, char** mem, char** val, char** line_end);
 
 /**
  *  Default entry point to the interpreter, works asynchronously.
@@ -36,14 +45,14 @@ bool interpreter_3bc_tokens(char* line, char** reg, char** mem, char** val, char
  * RETURN: 1 if the interpretation was successful.
  */
 int interpreter_3bc(app_3bc_t app)
-{  
+{
     int character = fgetc(app->tty_source.io.stream);
 
-    #if defined(_3BC_NUTTX)
+#if defined(_3BC_NUTTX)
     if (app->tty_source.type == STREAM_TYPE_COMPUTER_STD) {
         driver_tty_output(app, app->tty_keylog, STRC, character);
     }
-    #endif
+#endif
 
     /** end of file **/
     if (character == EOF && app->cache_l3.buffer.storage == NULL) {
@@ -51,17 +60,19 @@ int interpreter_3bc(app_3bc_t app)
     }
 
     /** end of line **/
-    if(character == '\n' || character == '\r' || character == '\0' || character == EOF) {
-        /** REPL nuttx compatibily **/
-        #if defined(_3BC_NUTTX)
+    if (character == '\n' || character == '\r' || character == '\0'
+        || character == EOF) {
+/** REPL nuttx compatibily **/
+#if defined(_3BC_NUTTX)
         if (app->tty_source.type == STREAM_TYPE_COMPUTER_STD) {
             driver_tty_output(app, app->tty_keylog, STRC, '\n');
         }
-        #endif
+#endif
 
         /** mark end of string **/
         {
-            char* new_buffer = (char*) realloc(app->cache_l3.buffer.storage, sizeof(char) * (++app->cache_l3.buffer.size));   
+            char* new_buffer = (char*)realloc(app->cache_l3.buffer.storage,
+                sizeof(char) * (++app->cache_l3.buffer.size));
             if (new_buffer == NULL) {
                 driver_program_error(app, ERROR_OUT_OF_MEMORY);
             }
@@ -74,8 +85,7 @@ int interpreter_3bc(app_3bc_t app)
         do {
             app->program.last_line += 1;
             line = interpreter_3bc_compiler(app, line);
-        }
-        while (line != NULL);
+        } while (line != NULL);
 
         /** reset buffer **/
         {
@@ -89,12 +99,13 @@ int interpreter_3bc(app_3bc_t app)
 
     /** expand the  buffer **/
     {
-        char* new_buffer = (char*) realloc(app->cache_l3.buffer.storage, sizeof(char) * (++app->cache_l3.buffer.size));
-            
+        char* new_buffer = (char*)realloc(app->cache_l3.buffer.storage,
+            sizeof(char) * (++app->cache_l3.buffer.size));
+
         if (new_buffer == NULL) {
             driver_program_error(app, ERROR_OUT_OF_MEMORY);
         }
-        
+
         app->cache_l3.buffer.storage = new_buffer;
         app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1] = character;
     }
@@ -123,18 +134,18 @@ char* interpreter_3bc_compiler(app_3bc_t app, char* line)
         return line;
     }
     /** parse string to register and validate **/
-    if (!interpreter_3bc_syntax_registers(app, text_reg, &reg)){
+    if (!interpreter_3bc_syntax_registers(app, text_reg, &reg)) {
         driver_program_error(app, ERROR_INVALID_REGISTER);
     }
     /** parse string to address and validate **/
-    if (!interpreter_3bc_syntax_constants(app, text_mem, &mem)){
+    if (!interpreter_3bc_syntax_constants(app, text_mem, &mem)) {
         driver_program_error(app, ERROR_INVALID_ADDRESS);
     }
     /** parse string to constant and validate **/
-    if (!interpreter_3bc_syntax_constants(app, text_val, &val)){
+    if (!interpreter_3bc_syntax_constants(app, text_val, &val)) {
         driver_program_error(app, ERROR_INVALID_CONSTANT);
     }
-    
+
     /** add new line **/
     ds_program_fifo_line_add(app, reg, mem, val);
 
@@ -144,14 +155,15 @@ char* interpreter_3bc_compiler(app_3bc_t app, char* line)
 /**
  * convert string in any numeric base
  */
-bool interpreter_3bc_parser_strtol(app_3bc_t app, const char* string, signed long int* value)
+bool interpreter_3bc_parser_strtol(
+    app_3bc_t app, const char* string, signed long int* value)
 {
     char* endptr = NULL;
     char decode[32];
     char type;
-    
+
     /** verify valid number **/
-    if (string[0] != '-' && !isdigit(string[0])){
+    if (string[0] != '-' && !isdigit(string[0])) {
         return false;
     }
 
@@ -159,12 +171,13 @@ bool interpreter_3bc_parser_strtol(app_3bc_t app, const char* string, signed lon
     strcpy(decode, string);
 
     /** custom base with sign **/
-    if(decode[0] == '-' && decode[1] == '0' && !isdigit(decode[2]) && decode[2] != '\0'){
+    if (decode[0] == '-' && decode[1] == '0' && !isdigit(decode[2])
+        && decode[2] != '\0') {
         type = tolower(decode[2]);
         memmove(&decode[2], &decode[3], sizeof(decode) - 3);
     }
     /** custom base whiout sign **/
-    else if(decode[0] == '0' && !isdigit(decode[1]) && decode[1] != '\0') {
+    else if (decode[0] == '0' && !isdigit(decode[1]) && decode[1] != '\0') {
         type = tolower(decode[1]);
         memmove(&decode[1], &decode[2], sizeof(decode) - 2);
     }
@@ -177,59 +190,57 @@ bool interpreter_3bc_parser_strtol(app_3bc_t app, const char* string, signed lon
     errno = 0;
 
     /** convert string to number **/
-    switch(type) {
-        case 'x':
-            /** base hexadecimal **/
-            *value = strtol(decode, &endptr, 16);
-            break;
+    switch (type) {
+    case 'x':
+        /** base hexadecimal **/
+        *value = strtol(decode, &endptr, 16);
+        break;
 
-        case 'i':
-        case 'd':
-            /** base decimal **/
-            *value = strtol(decode, &endptr, 10);
-            break;
+    case 'i':
+    case 'd':
+        /** base decimal **/
+        *value = strtol(decode, &endptr, 10);
+        break;
 
-        case 'o':
-            /** base octal **/
-            *value = strtol(decode, &endptr, 8);
-            break;
+    case 'o':
+        /** base octal **/
+        *value = strtol(decode, &endptr, 8);
+        break;
 
-        case 'b':
-            /** base binary **/
-            *value = strtol(decode, &endptr, 2);
-            break;
+    case 'b':
+        /** base binary **/
+        *value = strtol(decode, &endptr, 2);
+        break;
 
-        default:
-            /** base invalid **/
-            driver_program_error(app, ERROR_NUMBER_WRONG_BASE); 
+    default:
+        /** base invalid **/
+        driver_program_error(app, ERROR_NUMBER_WRONG_BASE);
     }
 
-    if (decode == endptr){
+    if (decode == endptr) {
         driver_program_error(app, ERROR_NUMBER_NO_DIGITS);
-    }
-    else if (errno == ERANGE && *value == LONG_MIN){
+    } else if (errno == ERANGE && *value == LONG_MIN) {
         driver_program_error(app, ERROR_NUMBER_UNDERFLOW);
-    }
-    else if (errno == ERANGE && *value == LONG_MAX){
+    } else if (errno == ERANGE && *value == LONG_MAX) {
         driver_program_error(app, ERROR_NUMBER_OVERFLOW);
     }
-    #if defined(EINVAL)
+#if defined(EINVAL)
     /** not in all c99 implementations **/
-    else if (errno == EINVAL){ 
-        driver_program_error(app, ERROR_NUMBER_WRONG_BASE); 
+    else if (errno == EINVAL) {
+        driver_program_error(app, ERROR_NUMBER_WRONG_BASE);
     }
-    #endif
-    else if (errno != 0 && *value == 0){
-        driver_program_error(app, ERROR_NUMBER_WRONG_BASE);    
-    }
-    else if (errno == 0 && *endptr != 0){
-        driver_program_error(app, ERROR_NUMBER_WRONG_BASE);    
+#endif
+    else if (errno != 0 && *value == 0) {
+        driver_program_error(app, ERROR_NUMBER_WRONG_BASE);
+    } else if (errno == 0 && *endptr != 0) {
+        driver_program_error(app, ERROR_NUMBER_WRONG_BASE);
     }
 
     return true;
 }
 
-bool interpreter_3bc_parser_strchar(app_3bc_t app, const char* string, signed long int* value)
+bool interpreter_3bc_parser_strchar(
+    app_3bc_t app, const char* string, signed long int* value)
 {
     /** not init with (') **/
     if (string[0] != 0x27) {
@@ -253,16 +264,30 @@ bool interpreter_3bc_parser_strchar(app_3bc_t app, const char* string, signed lo
     }
 
     /** scape controll char **/
-    switch (string[2]) 
-    {
-        case '0': *value = 0x00; break;
-        case 'a': *value = 0x07; break;
-        case 'b': *value = 0x08; break;
-        case 't': *value = 0x09; break;
-        case 'n': *value = 0x0A; break;
-        case '\'': *value = 0x27; break;
-        case '\\': *value = 0x5c; break;
-        default: driver_program_error(app, ERROR_CHAR_SCAPE);
+    switch (string[2]) {
+    case '0':
+        *value = 0x00;
+        break;
+    case 'a':
+        *value = 0x07;
+        break;
+    case 'b':
+        *value = 0x08;
+        break;
+    case 't':
+        *value = 0x09;
+        break;
+    case 'n':
+        *value = 0x0A;
+        break;
+    case '\'':
+        *value = 0x27;
+        break;
+    case '\\':
+        *value = 0x5c;
+        break;
+    default:
+        driver_program_error(app, ERROR_CHAR_SCAPE);
     }
 
     return true;
@@ -282,7 +307,8 @@ bool interpreter_3bc_parser_strhash(const char* string, signed long int* value)
     }
 
     /** djb2 algorithm **/
-    for(;(c = *string++); hash = ((hash << 5) + hash) + c);
+    for (; (c = *string++); hash = ((hash << 5) + hash) + c)
+        ;
     *value = hash % SHRT_MAX;
 
     return true;
@@ -305,11 +331,11 @@ int interpreter_3bc_parser_skip()
     return hash % SHRT_MAX;
 }
 
-bool interpreter_3bc_syntax_registers(app_3bc_t app, const char* string, signed long int* value)
+bool interpreter_3bc_syntax_registers(
+    app_3bc_t app, const char* string, signed long int* value)
 {
     /** mnemonic translate world to register **/
-    switch(PARSER_UNPACK(string))
-    {
+    switch (PARSER_UNPACK(string)) {
         PARSER_PACK('n', 'i', 'l', 'l', value, NILL);
         PARSER_PACK('m', 'o', 'd', 'e', value, MODE);
 
@@ -331,7 +357,7 @@ bool interpreter_3bc_syntax_registers(app_3bc_t app, const char* string, signed 
         PARSER_PACK('g', 'o', 't', 'o', value, GOTO);
         PARSER_PACK('f', 'g', 't', 'o', value, FGTO);
         PARSER_PACK('z', 'g', 't', 'o', value, ZGTO);
-        PARSER_PACK('p', 'g', 't', 'o', value, PGTO); 
+        PARSER_PACK('p', 'g', 't', 'o', value, PGTO);
         PARSER_PACK('n', 'g', 't', 'o', value, NGTO);
 
         PARSER_PACK('n', 'b', '0', '2', value, NB02);
@@ -361,29 +387,27 @@ bool interpreter_3bc_syntax_registers(app_3bc_t app, const char* string, signed 
     }
 
     /** passing register as numerical (octo, bin) **/
-    if(interpreter_3bc_parser_strtol(app, string, value)){
+    if (interpreter_3bc_parser_strtol(app, string, value)) {
         return true;
     }
 
     return false;
 }
 
-bool interpreter_3bc_syntax_constants(app_3bc_t app, const char* string, signed long int* value)
+bool interpreter_3bc_syntax_constants(
+    app_3bc_t app, const char* string, signed long int* value)
 {
-    switch(PARSER_UNPACK(string))
-    {
+    switch (PARSER_UNPACK(string)) {
         PARSER_PACK('n', 'i', 'l', 'l', value, NILL);
         PARSER_PACK('f', 'u', 'l', 'l', value, SHRT_MAX);
         PARSER_PACK('s', 'k', 'i', 'p', value, interpreter_3bc_parser_skip());
     }
 
-    if (interpreter_3bc_parser_strtol(app, string, value)){
+    if (interpreter_3bc_parser_strtol(app, string, value)) {
         return true;
-    }
-    else if (interpreter_3bc_parser_strchar(app, string, value)){
-        return true;    
-    }
-    else if (interpreter_3bc_parser_strhash(string, value)) {
+    } else if (interpreter_3bc_parser_strchar(app, string, value)) {
+        return true;
+    } else if (interpreter_3bc_parser_strhash(string, value)) {
         return true;
     }
 
@@ -397,12 +421,13 @@ bool interpreter_3bc_syntax_constants(app_3bc_t app, const char* string, signed 
  * REFERENCE: 'mem' receive the second column
  * REFERENCE: 'val' receive the thirdy column
  * REFERENCE: 'line_end' NULL if the string is used completely.
- * REFERENCE: 'line_end' Pointer to the rest of the text if there are still other lines.
- * RETURN: true if the number of columns is valid.
- * RETURN: true if the number of columns is valid.
- * 
+ * REFERENCE: 'line_end' Pointer to the rest of the text if there are still
+ * other lines. RETURN: true if the number of columns is valid. RETURN: true if
+ * the number of columns is valid.
+ *
  */
-bool interpreter_3bc_tokens(char* line, char** reg, char** mem, char** val, char** line_end)
+bool interpreter_3bc_tokens(
+    char* line, char** reg, char** mem, char** val, char** line_end)
 {
     unsigned char columns = 0;
     char* pointer = line;
@@ -413,13 +438,18 @@ bool interpreter_3bc_tokens(char* line, char** reg, char** mem, char** val, char
     *mem = NULL;
     *val = NULL;
 
-   do {
-        /** search for the beginning of the column **/ 
-        for (;strchr("\t. ", *pointer) != NULL && pointer[0] != '\0'; pointer++);
+    do {
+        /** search for the beginning of the column **/
+        for (; strchr("\t. ", *pointer) != NULL && pointer[0] != '\0';
+             pointer++)
+            ;
 
         /** skip comments **/
-        if(strchr("#;", *pointer) != NULL){
-            for(;pointer[0] != '\n' && pointer[0] != '\0' && pointer[0] != EOF; pointer++);
+        if (strchr("#;", *pointer) != NULL) {
+            for (;
+                 pointer[0] != '\n' && pointer[0] != '\0' && pointer[0] != EOF;
+                 pointer++)
+                ;
             break;
         }
 
@@ -436,19 +466,18 @@ bool interpreter_3bc_tokens(char* line, char** reg, char** mem, char** val, char
         }
 
         /** insert columun **/
-        switch (++columns)
-        {
-            case 1:
-                *reg = pointer;
-                break;
+        switch (++columns) {
+        case 1:
+            *reg = pointer;
+            break;
 
-            case 2:
-                *mem = pointer;
-                break;
+        case 2:
+            *mem = pointer;
+            break;
 
-            case 3:
-                *val = pointer;
-                break;
+        case 3:
+            *val = pointer;
+            break;
         }
 
         /** skip literal char **/
@@ -458,20 +487,20 @@ bool interpreter_3bc_tokens(char* line, char** reg, char** mem, char** val, char
                 if (pointer[0] == '\\') {
                     pointer++;
                 }
-            }
-            while(pointer[0] != '\'' && pointer[0] != '\0');
+            } while (pointer[0] != '\'' && pointer[0] != '\0');
         }
 
         /** skip other literals **/
-        for (;strchr("\t,. ", *pointer) == NULL && pointer[0] != '\0'; pointer++);
+        for (; strchr("\t,. ", *pointer) == NULL && pointer[0] != '\0';
+             pointer++)
+            ;
 
         /** mark end of column **/
         if (pointer[0] != '\0' && pointer[0] != ',') {
             pointer[0] = '\0';
             pointer++;
         }
-    }
-    while (pointer[0] != '\0');
+    } while (pointer[0] != '\0');
 
     /** validate number of columns **/
     return columns == 3 || columns == 0;
