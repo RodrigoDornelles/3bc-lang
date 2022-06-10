@@ -136,7 +136,7 @@
  * PARAMTERS MACROS
  */
 #define PARAMS_DEFINE                                                          \
-    app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value
+    struct app_3bc_s *const app, register_3bc_t reg, address_3bc_t address, data_3bc_t value
 #define VALIDATE_NOT_DUALITY                                                   \
     if (address != 0 && value != 0)                                            \
         driver_program_error(app, ERROR_PARAM_DUALITY);

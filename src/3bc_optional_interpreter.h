@@ -16,25 +16,25 @@
     "Required define '_3BC_ENABLE_INTERPRETER' or '_3BC_DISABLE_INTERPRETER' after include header '3bc.h'"
 
 #elif defined(_3BC_DISABLE_INTERPRETER)
-int interpreter_3bc(app_3bc_t app)
+int interpreter_3bc(struct app_3bc_s *const app)
 {
     return EOF;
 }
 
 #elif defined(_3BC_ENABLE_INTERPRETER)
-int interpreter_3bc(app_3bc_t app);
-char* interpreter_3bc_compiler(app_3bc_t app, char* line);
+int interpreter_3bc(struct app_3bc_s *const app);
+char* interpreter_3bc_compiler(struct app_3bc_s *const app, char* line);
 bool interpreter_3bc_parser_strtol(
-    app_3bc_t app, const char* string, signed long int* value);
+    struct app_3bc_s *const app, const char* string, signed long int* value);
 bool interpreter_3bc_parser_strchar(
-    app_3bc_t app, const char* string, signed long int* value);
+    struct app_3bc_s *const app, const char* string, signed long int* value);
 bool interpreter_3bc_parser_strhash(const char* string, signed long int* value);
 int interpreter_3bc_parser_skip();
-int interpreter_3bc_read(app_3bc_t app);
+int interpreter_3bc_read(struct app_3bc_s *const app);
 bool interpreter_3bc_syntax_registers(
-    app_3bc_t app, const char* string, signed long int* value);
+    struct app_3bc_s *const app, const char* string, signed long int* value);
 bool interpreter_3bc_syntax_constants(
-    app_3bc_t app, const char* string, signed long int* value);
+    struct app_3bc_s *const app, const char* string, signed long int* value);
 bool interpreter_3bc_tokens(
     char* line, char** reg, char** mem, char** val, char** line_end);
 
@@ -44,7 +44,7 @@ bool interpreter_3bc_tokens(
  * RETURN: EOF if there is nothing else to read.
  * RETURN: 1 if the interpretation was successful.
  */
-int interpreter_3bc(app_3bc_t app)
+int interpreter_3bc(struct app_3bc_s *const app)
 {
     int character = fgetc(app->tty_source.io.stream);
 
@@ -120,7 +120,7 @@ int interpreter_3bc(app_3bc_t app)
  * RETURN: NULL if the entire string is compiled.
  * RETURN: Pointer to the rest of the string that can be compiled.
  */
-char* interpreter_3bc_compiler(app_3bc_t app, char* line)
+char* interpreter_3bc_compiler(struct app_3bc_s *const app, char* line)
 {
     char *text_reg, *text_mem, *text_val;
     signed long int reg, mem, val;
@@ -156,7 +156,7 @@ char* interpreter_3bc_compiler(app_3bc_t app, char* line)
  * convert string in any numeric base
  */
 bool interpreter_3bc_parser_strtol(
-    app_3bc_t app, const char* string, signed long int* value)
+    struct app_3bc_s *const app, const char* string, signed long int* value)
 {
     char* endptr = NULL;
     char decode[32];
@@ -240,7 +240,7 @@ bool interpreter_3bc_parser_strtol(
 }
 
 bool interpreter_3bc_parser_strchar(
-    app_3bc_t app, const char* string, signed long int* value)
+    struct app_3bc_s *const app, const char* string, signed long int* value)
 {
     /** not init with (') **/
     if (string[0] != 0x27) {
@@ -332,7 +332,7 @@ int interpreter_3bc_parser_skip()
 }
 
 bool interpreter_3bc_syntax_registers(
-    app_3bc_t app, const char* string, signed long int* value)
+    struct app_3bc_s *const app, const char* string, signed long int* value)
 {
     /** mnemonic translate world to register **/
     switch (PARSER_UNPACK(string)) {
@@ -395,7 +395,7 @@ bool interpreter_3bc_syntax_registers(
 }
 
 bool interpreter_3bc_syntax_constants(
-    app_3bc_t app, const char* string, signed long int* value)
+    struct app_3bc_s *const app, const char* string, signed long int* value)
 {
     switch (PARSER_UNPACK(string)) {
         PARSER_PACK('n', 'i', 'l', 'l', value, NILL);

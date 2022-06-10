@@ -5,7 +5,7 @@
 
 #if !defined(_3BC_ENABLE_CUSTOM)
 void custom_3bc_func_call(
-    app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
+    struct app_3bc_s *const app, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
 {
     driver_program_error(app, ERROR_CPU_RESERVED);
 }
@@ -19,7 +19,7 @@ unsigned char last_func = 0;
  * DS: Dynamic Array
  *
  */
-void custom_3bc_func_set(app_3bc_t app, cpumode_3bc_t cpu_mode,
+void custom_3bc_func_set(struct app_3bc_s *const app, cpumode_3bc_t cpu_mode,
     register_3bc_t reg, function_3bc_t lambda)
 {
     unsigned char atual_func = ((cpu_mode / 10) - 1) * 6 + reg;
@@ -46,7 +46,7 @@ void custom_3bc_func_set(app_3bc_t app, cpumode_3bc_t cpu_mode,
 }
 
 void custom_3bc_func_call(
-    app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
+    struct app_3bc_s *const app, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
 {
     unsigned char atual_func = ((app->cpu_mode / 10) - 1) * 6 + reg;
 

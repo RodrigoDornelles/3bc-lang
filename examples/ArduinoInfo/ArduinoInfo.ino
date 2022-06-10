@@ -7,8 +7,8 @@
 void setup()
 {
     int count = 0;
-    app_3bc_t app;
-    app_3bc_t* apps;
+    struct app_3bc_s *const app;
+    struct app_3bc_s *const* apps;
 
     /** starts serial **/
     Serial.begin(SERIAL_SPEED);

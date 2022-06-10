@@ -100,7 +100,7 @@
  */
 #ifdef _3BC_SCU_FIX
 void instruction_3bc(
-    app_3bc_t app, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
+    struct app_3bc_s *const app, register_3bc_t reg, address_3bc_t address, data_3bc_t value)
 {
     if (reg == 0) {
         cpu_null(app, 0, 0, 0);

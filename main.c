@@ -2,7 +2,7 @@
 
 int main(int argc, char** argv)
 {
-    app_3bc_t VM = lang_3bc_init(argc, argv);
+    struct app_3bc_s *const VM = lang_3bc_init(argc, argv);
     /**
      * put transpiled program here.
      * @example:*

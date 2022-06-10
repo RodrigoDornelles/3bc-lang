@@ -2,7 +2,7 @@
 #include "3bc.h"
 
 void driver_memory_data_set(
-    app_3bc_t app, address_3bc_t address, data_3bc_t value)
+    struct app_3bc_s *const app, address_3bc_t address, data_3bc_t value)
 {
     memory_conf_t conf = app->memory.conf_get(app->id, address);
 
@@ -12,7 +12,7 @@ void driver_memory_data_set(
 }
 
 void driver_memory_conf_set(
-    app_3bc_t app, address_3bc_t address, data_3bc_t conf)
+    struct app_3bc_s *const app, address_3bc_t address, data_3bc_t conf)
 {
     data_3bc_t value = app->memory.data_get(app->id, address);
 
@@ -25,7 +25,7 @@ void driver_memory_conf_set(
     app->memory.data_set(app->id, address, value);
 }
 
-data_3bc_t driver_memory_data_get(app_3bc_t app, address_3bc_t address)
+data_3bc_t driver_memory_data_get(struct app_3bc_s *const app, address_3bc_t address)
 {
     data_3bc_t value = app->memory.data_get(app->id, address);
     memory_conf_t conf = app->memory.conf_get(app->id, address);
@@ -36,7 +36,7 @@ data_3bc_t driver_memory_data_get(app_3bc_t app, address_3bc_t address)
     return value;
 }
 
-data_3bc_t driver_memory_conf_get(app_3bc_t app, address_3bc_t address)
+data_3bc_t driver_memory_conf_get(struct app_3bc_s *const app, address_3bc_t address)
 {
     return app->memory.conf_get(app->id, address);
 }
@@ -44,7 +44,7 @@ data_3bc_t driver_memory_conf_get(app_3bc_t app, address_3bc_t address)
 /**
  * MACRO: POINTER
  */
-address_3bc_t driver_memory_pointer(app_3bc_t app, address_3bc_t address)
+address_3bc_t driver_memory_pointer(struct app_3bc_s *const app, address_3bc_t address)
 {
     register data_3bc_t ptr = driver_memory_data_get(app, address);
 
@@ -64,7 +64,7 @@ address_3bc_t driver_memory_pointer(app_3bc_t app, address_3bc_t address)
     return (address_3bc_t)ptr;
 }
 
-void driver_memory_validate(app_3bc_t app, memory_conf_t conf)
+void driver_memory_validate(struct app_3bc_s *const app, memory_conf_t conf)
 {
     /** optimize **/
     if (conf == 0) {
@@ -90,7 +90,7 @@ void driver_memory_validate(app_3bc_t app, memory_conf_t conf)
     }
 }
 
-void driver_memory_free(app_3bc_t app, address_3bc_t address)
+void driver_memory_free(struct app_3bc_s *const app, address_3bc_t address)
 {
     /** clear cache level 0 **/
     if (app->memory.cache != NULL && app->memory.cache->address == address) {

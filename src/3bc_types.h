@@ -154,7 +154,5 @@ struct app_3bc_s {
     struct memory_3bc_s memory;
 };
 
-typedef struct app_3bc_s* app_3bc_t;
-
 typedef void (*function_3bc_t)(
-    app_3bc_t, register_3bc_t, address_3bc_t, data_3bc_t);
+    struct app_3bc_s* const, register_3bc_t, address_3bc_t, data_3bc_t);
