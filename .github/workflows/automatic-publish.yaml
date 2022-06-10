@@ -1,14 +1,149 @@
 name: Automatic publish
+
 on:
-  release:
-    types: [published]
+  push:
+    tags: 
+      - "*.*.*"
+
 jobs:
-  npm: 
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Checkout libaries
+        run: >
+          sudo apt install -y gcc-9-multilib
+          gcc-9-multilib-i686-linux-gnu binutils-i686-linux-gnu
+          gcc-9-arm-linux-gnueabi gcc-arm-linux-gnueabi binutils-arm-linux-gnueabi
+          gcc-9-aarch64-linux-gnu gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
+          
+      - name: Build x86 32bits project
+        run: |
+          i686-linux-gnu-gcc-9 main.c -lm -Os -m32 -o 3bc
+          i686-linux-gnu-strip 3bc
+          tar -czf 3bc-linux-i686.tar.gz 3bc
+          rm 3bc
+  
+      - name: Build x86 64bits project
+        run: |
+          gcc main.c -lm -Os -m64 -o 3bc
+          strip 3bc
+          tar -czf 3bc-linux-amd64.tar.gz 3bc
+          rm 3bc
+          
+      - name: Build arm 32bits project
+        run: |
+          arm-linux-gnueabi-gcc main.c -lm -Os -march=armv7 -o 3bc
+          arm-linux-gnueabi-strip 3bc
+          tar -czf 3bc-linux-arm.tar.gz 3bc
+          rm 3bc
+
+      - name: Build arm 64bits project
+        run: |
+          aarch64-linux-gnu-gcc main.c -lm -Os -march=armv8-a -o 3bc
+          aarch64-linux-gnu-strip 3bc
+          tar -czf 3bc-linux-aarch64.tar.gz 3bc
+          rm 3bc
+
+      - name: Upload binaries to github
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            3bc-linux-arm.tar.gz
+            3bc-linux-i686.tar.gz
+            3bc-linux-amd64.tar.gz
+            3bc-linux-aarch64.tar.gz
+
+  macos10:
+    runs-on: macos-10.15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+                  
+      - name: Build 64bits project
+        run: |
+          gcc main.c -lm -Os -m64 -o 3bc
+          strip 3bc
+          tar -czf 3bc-macos10-amd64.tar.gz 3bc
+          rm 3bc
+
+      - name: Upload binaries to github
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            3bc-macos10-amd64.tar.gz
+
+  windows:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Checkout libaries
+        run: sudo apt install -y mingw-w64 minizip
+      
+      - name: Build 32bits project
+        run: |
+          i686-w64-mingw32-gcc main.c -Os -m32 -o 3bc.exe
+          i686-w64-mingw32-strip 3bc.exe
+          zip 3bc-windows-i686.zip 3bc.exe
+          rm 3bc.exe
+
+      - name: Build 64bits project
+        run: |
+          x86_64-w64-mingw32-gcc main.c -Os -m64 -o 3bc.exe
+          x86_64-w64-mingw32-strip 3bc.exe
+          zip 3bc-windows-amd64.zip 3bc.exe
+          rm 3bc.exe
+
+      - name: Upload binaries to github
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            3bc-windows-i686.zip
+            3bc-windows-amd64.zip
+            
+  freebsd:
+    runs-on: macos-10.15
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Building x86 32/64bits project
+        uses: vmactions/freebsd-vm@v0.1.5
+        with:
+          usesh: true
+          run: |
+            mkdir 32bits 64bits
+            clang main.c -m32 -Os -lm -o ./32bits/3bc
+            clang main.c -m64 -Os -lm -o ./64bits/3bc
+            strip ./32bits/3bc
+            strip ./64bits/3bc
+            
+      - name: Packaging project
+        run: |
+          tar -czf 3bc-bsd-i686.tar.gz ./32bits/3bc
+          tar -czf 3bc-bsd-amd64.tar.gz ./64bits/3bc
+
+
+      - name: Upload binaries to github
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            3bc-bsd-i686.tar.gz
+            3bc-bsd-amd64.tar.gz
+
+  nodejs: 
     runs-on: ubuntu-latest
     container: emscripten/emsdk     
     steps:
       - name: Checkout project
         uses: actions/checkout@v2
+      
+      - name: Checkout libaries
+        run: sudo apt search zip; sudo apt install -y zip
           
       - name: Prepare project folders
         run: mkdir bin glue full
@@ -32,7 +167,6 @@ jobs:
         run: |
           sed -i 's/module.wasm/..\/bin\/vm.wasm/' ./*/module.js
           sed -i 's/app.wasm/..\/bin\/vm.wasm/' ./*/app.js
-
       - uses: actions/setup-node@v2
         with:
           node-version: '16.x'
@@ -42,3 +176,19 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          
+      - name: Packaging project
+        run: |
+          mkdir npm
+          mv bin npm
+          mv glue npm
+          mv full npm
+          tar -czf 3bc-nodejs.tar.gz ./npm/*
+          zip -r 3bc-nodejs.zip ./npm/*
+
+      - name: Upload binaries to github
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            3bc-nodejs.zip
+            3bc-nodejs.tar.gz
