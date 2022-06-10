@@ -1,7 +1,7 @@
 #define _3BC_DISABLE_INTERPRETER
 #include <3bc.h>
 
-struct app_3bc_s *const VM;
+struct app_3bc_s* VM;
 
 void setup()
 { 
