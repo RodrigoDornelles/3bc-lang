@@ -29,4 +29,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: check limit of arguments per function
-        run: ruby -e 'raise (File.read("./src/3bc_header.h").delete("\n").squeeze(" ").scan(/[a-z0-9_]+\([a-z0-9\*,_ ]+\);/i).select {|f| f.count(",") > 2}.first or exit)'
+        run: ruby -e 'raise File.read("./src/3bc_header.h").match(/[\w+]+\(\s+[\w+* ]+(,\s+[\w+* ]+){2,}\);/mi).to_s'
