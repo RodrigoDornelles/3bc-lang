@@ -29,4 +29,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: check limit of arguments per function
-        run: ruby -e 'raise File.read("./src/3bc_header.h").match(/[\w+]+\(\s+[\w+* ]+(,\s+[\w+* ]+){2,}\);/mi).to_s'
+        run: |
+          File.read("./src/3bc_header.h").match(/[\w+]+\(\s+[\w+* ]+(,\s+[\w+* ]+){2,}\);/mi) {
+            |error| raise "\nfunction: #{error.to_s}\nbloated args: #{error.captures}"
+          }
