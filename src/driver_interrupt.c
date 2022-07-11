@@ -97,7 +97,7 @@ bool driver_interrupt(struct app_3bc_s* const app)
 #if defined(_3BC_PC_1970)
             unsigned long time_now = 0;
 #elif defined(_3BC_COMPUTER) && defined(CLOCKS_PER_SEC)
-            unsigned long time_now = clock() / (CLOCKS_PER_SEC / 1000 / 1000);
+            unsigned long time_now = clock() / (CLOCKS_PER_SEC / 1000);
 #elif defined(_3BC_ARDUINO) && defined(_3BC_AVR)
             unsigned long time_now = micros();
 #else

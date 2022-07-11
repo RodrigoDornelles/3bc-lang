@@ -298,7 +298,7 @@ bool interpreter_3bc_parser_strchar(
  */
 bool interpreter_3bc_parser_strhash(const char* string, signed long int* value)
 {
-    register unsigned long hash = 5381;
+    unsigned long hash = 5381;
     int c;
 
     /** is not hash **/
@@ -320,7 +320,7 @@ bool interpreter_3bc_parser_strhash(const char* string, signed long int* value)
 int interpreter_3bc_parser_skip()
 {
     static int counter = 0;
-    register unsigned long hash = 15376; /* hash to skip */
+    unsigned long hash = 15376; /* hash to skip */
     int c = (counter++) / 2; /** count after 2 calls **/
 
     do {
