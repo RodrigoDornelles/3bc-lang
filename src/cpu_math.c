@@ -23,7 +23,7 @@ void cpu_math_div(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
     {
-        register data_3bc_t divisor = GET_ANY_PARAM;
+        data_3bc_t divisor = GET_ANY_PARAM;
         if (divisor == 0) {
             driver_program_error(app, ERROR_NUMBER_ZERO);
         } else {
@@ -82,7 +82,7 @@ void cpu_math_logb(PARAMS_DEFINE)
     if (AUX == 0) {
         driver_program_error(app, ERROR_NUMBER_ZERO);
     } else {
-        register int base = GET_ANY_PARAM;
+        int base = GET_ANY_PARAM;
         switch (base) {
         case 2:
             driver_accumulator_set(
