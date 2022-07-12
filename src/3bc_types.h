@@ -13,7 +13,7 @@ typedef signed long data_aux_3bc_t;
 typedef unsigned long long app_3bc_id;
 #elif defined(__x86_64__)
 typedef unsigned long app_3bc_id;
-#elif defined (ESP_PLATFORM) || defined(ARDUINO_ARCH_RP2040)
+#elif defined(ESP_PLATFORM) || defined(ARDUINO_ARCH_RP2040)
 typedef unsigned int app_3bc_id;
 #else
 typedef unsigned char app_3bc_id;
