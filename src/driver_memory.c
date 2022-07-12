@@ -49,7 +49,7 @@ data_3bc_t driver_memory_conf_get(
 address_3bc_t driver_memory_pointer(
     struct app_3bc_s* const app, address_3bc_t address)
 {
-    register data_3bc_t ptr = driver_memory_data_get(app, address);
+    data_3bc_t ptr = driver_memory_data_get(app, address);
 
     /**
      * JOKE:
