@@ -1,5 +1,5 @@
-#define _3BC_SCU_FIX_2
-#define _3BC_SCU_FIX
+#define TBC_SOURCE_ENTRY
+#define TBC_SOURCE_REGISTERS
 #include "3bc.h"
 
 void driver_program_error(
@@ -14,7 +14,7 @@ void driver_program_error(
         ? app->program.curr->line
         : app->program.last_line;
 
-#ifdef _3BC_COMPACT
+#if defined(TBC_OPT_COMPACT)
     /** smaller log erros for economy rom memory **/
     char error_code_string[64];
     snprintf(error_code_string, sizeof(error_code_string),

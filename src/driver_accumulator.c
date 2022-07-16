@@ -1,4 +1,4 @@
-#define _3BC_SCU_FIX_2
+#define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
 data_aux_3bc_t driver_accumulator_get(struct app_3bc_s* const app)

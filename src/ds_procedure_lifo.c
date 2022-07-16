@@ -1,4 +1,4 @@
-#define _3BC_SCU_FIX_2
+#define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
 void ds_procedure_lifo_push(struct app_3bc_s* const app)

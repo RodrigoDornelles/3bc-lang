@@ -1,4 +1,4 @@
-#define _3BC_SCU_FIX_2
+#define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
 void cpu_null(PARAMS_DEFINE) { }
@@ -21,5 +21,5 @@ void cpu_not_exist(PARAMS_DEFINE)
 
 void cpu_mode_reserved(PARAMS_DEFINE)
 {
-    custom_3bc_func_call(app, reg, address, value);
+    driver_custom_call(app, reg, address, value);
 }

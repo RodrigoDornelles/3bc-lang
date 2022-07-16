@@ -1,10 +1,10 @@
-#define _3BC_SCU_FIX_2
+#define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
 /**
  * MACRO: lang_3bc_init
  */
-#if defined(_3BC_COMPUTER)
+#if defined(TBC_P_COMPUTER)
 struct app_3bc_s* const driver_power_init(int argc, char** argv)
 #else
 struct app_3bc_s* const driver_power_init()
@@ -12,7 +12,7 @@ struct app_3bc_s* const driver_power_init()
 {
     struct app_3bc_s* const app = ds_hypervisor_darray_new();
 
-#if defined(_3BC_COMPUTER)
+#if defined(TBC_P_COMPUTER)
     /** TODO: move to driver_tty_init() **/
     app->tty_source.type = STREAM_TYPE_COMPUTER_STD;
     app->tty_source.io.file = stdin;
@@ -28,7 +28,7 @@ struct app_3bc_s* const driver_power_init()
 
     driver_tty_init();
 
-#if defined(_3BC_COMPUTER)
+#if defined(TBC_P_COMPUTER)
 /**
  * Capture computer signals
  */

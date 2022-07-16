@@ -1,4 +1,4 @@
-#define _3BC_SCU_FIX_2
+#define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
 data_3bc_t ds_memory_llrbt_data_get(app_3bc_id app_id, address_3bc_t address)

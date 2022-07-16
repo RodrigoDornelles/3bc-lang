@@ -1,7 +1,7 @@
-#define _3BC_SCU_FIX_2
+#define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
-#if defined(_3BC_ARDUINO) && defined(_3BC_AVR)
+#if defined(TBC_ARCH_CPU_AVR)
 /** TODO: make compatible with xtensa **/
 extern volatile unsigned long timer0_overflow_count;
 #endif
@@ -23,11 +23,7 @@ bool driver_interrupt(struct app_3bc_s* const app)
      *  INTERPRETER CONTEXT
      */
     case FSM_3BC_READING:
-#if defined(_3BC_DISABLE_INTERPRETER)
-        switch (EOF)
-#else
-        switch (interpreter_3bc(app))
-#endif
+        switch (interpreter_ticket(app))
         {
         case 1:
             app->state = FSM_3BC_RUNNING;
@@ -67,11 +63,11 @@ bool driver_interrupt(struct app_3bc_s* const app)
     case FSM_3BC_WAITING:
         switch (app->cache_l1.sleep_mode) {
         case SLEEP_3BC_REAL_TICK: {
-#if defined(_3BC_PC_1970)
+#if defined(TBC_P_COMPUTER_OLD)
             unsigned long time_now = 0;
-#elif defined(_3BC_COMPUTER)
+#elif defined(TBC_P_COMPUTER)
             unsigned long time_now = clock();
-#elif defined(_3BC_ARDUINO) && defined(_3BC_AVR)
+#elif defined(TBC_ARCH_CPU_AVR)
             unsigned long time_now = timer0_overflow_count;
 #else
             unsigned long time_now = 0;
@@ -94,11 +90,11 @@ bool driver_interrupt(struct app_3bc_s* const app)
         }
 
         case SLEEP_3BC_MICROSECONDS: {
-#if defined(_3BC_PC_1970)
+#if defined(TBC_P_COMPUTER_OLD)
             unsigned long time_now = 0;
-#elif defined(_3BC_COMPUTER) && defined(CLOCKS_PER_SEC)
-            unsigned long time_now = clock() / (CLOCKS_PER_SEC / 1000 / 1000);
-#elif defined(_3BC_ARDUINO) && defined(_3BC_AVR)
+#elif defined(TBC_P_COMPUTER) && defined(CLOCKS_PER_SEC)
+            unsigned long time_now = clock() / (CLOCKS_PER_SEC / 1000000);
+#elif defined(TBC_USE_ARDUINO)
             unsigned long time_now = micros();
 #else
             unsigned long time_now = 0;
@@ -113,9 +109,9 @@ bool driver_interrupt(struct app_3bc_s* const app)
         }
 
         case SLEEP_3BC_MILLISECONDS: {
-#if defined(_3BC_PC_1970)
+#if defined(TBC_P_COMPUTER_OLD)
             unsigned long time_now = 0;
-#elif defined(_3BC_COMPUTER) && defined(CLOCKS_PER_SEC)
+#elif defined(TBC_P_COMPUTER) && defined(CLOCKS_PER_SEC)
             unsigned long time_now = clock() / (CLOCKS_PER_SEC / 1000);
 #elif defined(_3BC_ARDUINO)
             unsigned long time_now = millis();
@@ -132,9 +128,9 @@ bool driver_interrupt(struct app_3bc_s* const app)
         }
 
         case SLEEP_3BC_SECONDS: {
-#if defined(_3BC_PC_1970)
+#if defined(TBC_P_COMPUTER_OLD)
             unsigned long time_now = 0;
-#elif defined(_3BC_COMPUTER)
+#elif defined(TBC_P_COMPUTER)
             unsigned long time_now = time(NULL);
 #elif defined(_3BC_ARDUINO)
             unsigned long time_now = millis() / 1000;
