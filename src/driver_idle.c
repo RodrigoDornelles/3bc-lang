@@ -53,8 +53,9 @@ bool driver_idle(struct app_3bc_s* const app)
                     app->cache_l3.sleep_called = time_now.tv_nsec;
                 } 
                 /** one millisecond has passed **/
-                else if (((time_now.tv_nsec - app->cache_l3.sleep_called)/1000) >= 1){
-                    app->cache_l2.sleep_period -= 1;
+                else if ((time_now.tv_nsec - app->cache_l3.sleep_called) >= 1000){
+                    app->cache_l3.sleep_called = time_now.tv_nsec; /** reset ref **/
+                    app->cache_l2.sleep_period -= 1; /** decrease seconds left **/
                 }
 
                 return app->cache_l2.sleep_period;
@@ -84,8 +85,9 @@ bool driver_idle(struct app_3bc_s* const app)
                     app->cache_l3.sleep_called = time_now.tv_nsec;
                 } 
                 /** one millisecond has passed **/
-                else if (((time_now.tv_nsec - app->cache_l3.sleep_called)/1000000) >= 1){
-                    app->cache_l2.sleep_period -= 1;
+                else if ((time_now.tv_nsec - app->cache_l3.sleep_called) >= 1000000LU){
+                    app->cache_l3.sleep_called = time_now.tv_nsec; /** reset ref **/
+                    app->cache_l2.sleep_period -= 1; /** decrease seconds left **/
                 }
 
                 return app->cache_l2.sleep_period;
