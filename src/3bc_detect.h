@@ -1,4 +1,32 @@
 /**
+ *  _____                       _ _           
+ * /  __ \                     (_) |          
+ * | /  \/ ___  _ __ ___  _ __  _| | ___ _ __ 
+ * | |    / _ \| '_ ` _ \| '_ \| | |/ _ \ '__|
+ * | \__/\ (_) | | | | | | |_) | | |  __/ |   
+ *  \____/\___/|_| |_| |_| .__/|_|_|\___|_|   
+ *                       | |                  
+ *                       |_|     
+ *
+ * BRIEF: builder detection, for compatibility
+ * and resource optimization purposes.
+ */
+
+#if defined(__STDC_VERSION__)
+#if (__STDC_VERSION__ >= 201710L)
+#define TBC_CC_STD_17
+#elif (__STDC_VERSION__ >= 201112L)
+#define TBC_CC_STD_11
+#elif (__STDC_VERSION__ >= 199901L)
+#define TBC_CC_STD_99
+#else 
+#define TBC_CC_STD_89
+#endif
+#else
+#define TBC_CC_STD_89
+#endif
+
+/**
  * ______ _       ___ _____ ___  ______ ______________  ___
  * | ___ \ |     / _ \_   _/ _ \ |  ___|  _  | ___ \  \/  |
  * | |_/ / |    / /_\ \| |/ /_\ \| |_  | | | | |_/ / .  . |
@@ -133,27 +161,6 @@
  */
 
 /**
- * FEATURE: INTERPRETER
- *
- * BRIEF: language mnemonic analyzer, including
- * lexer, tokenizer, and compiler.
- */
-#if defined(TBC_SCU_FORCE) && !defined(TBC_SOURCE_ENTRY)
-#if defined(_3BC_ENABLE_INTERPRETER)
-#define TBC_INTERPRETER
-#elif !defined(_3BC_DISABLE_INTERPRETER)
-#if defined(TBC_PREFER_INTERPRETER)
-#define TBC_INTERPRETER
-#else 
-#error \
-    define '_3BC_ENABLE_INTERPRETER' \
-    or '_3BC_DISABLE_INTERPRETER' \
-    after include header '3bc.h'
-#endif
-#endif
-#endif
-
-/**
  * FEATURE: SEPARATE SOURCE COMPILATION
  *
  * BRIEF: that allows you to compile the software into pieces
@@ -180,6 +187,26 @@
 #define TBC_SOURCE_REGISTERS
 #endif
 
+/**
+ * FEATURE: INTERPRETER
+ *
+ * BRIEF: language mnemonic analyzer, including
+ * lexer, tokenizer, and compiler.
+ */
+#if !defined(TBC_SCU_OPTIONAL_FIX)
+#if defined(_3BC_ENABLE_INTERPRETER)
+#define TBC_INTERPRETER
+#elif !defined(_3BC_DISABLE_INTERPRETER)
+#if defined(TBC_PREFER_INTERPRETER)
+#define TBC_INTERPRETER
+#else 
+#error \
+    define '_3BC_ENABLE_INTERPRETER' \
+    or '_3BC_DISABLE_INTERPRETER' \
+    after include header '3bc.h'
+#endif
+#endif
+#endif
 
 /**
  * FEATURE: CUSTOM REGISTERS

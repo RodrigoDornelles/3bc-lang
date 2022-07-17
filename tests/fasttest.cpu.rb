@@ -377,7 +377,7 @@ class TestCpu < Minitest::Test
     end
 
     def test_mode_43
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => 'mode.0.43,real.0.2,fake.0.2,micr.0.2,mili.0.2,mode.0.2,strc.0.\'!\'')
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => 'mode.0.43,real.:t.0,fake.:t.0,micr.:t.0,mili.:t.0,seco.:t.0,mode.0.2,strc.0.\'!\'')
         assert_equal "!", stdout
         assert_equal 0, status
     end

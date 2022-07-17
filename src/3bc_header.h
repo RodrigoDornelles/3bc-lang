@@ -105,6 +105,8 @@ void driver_gpio_output(struct app_3bc_s* const app, memory_conf_t conf,
 data_3bc_t driver_gpio_input(struct app_3bc_s* const app, memory_conf_t conf,
     address_3bc_t pin, data_3bc_t default_data);
 /*****************************************************************************/
+bool driver_idle(struct app_3bc_s* const app);
+/*****************************************************************************/
 bool driver_interrupt(struct app_3bc_s* const app);
 /*****************************************************************************/
 void driver_memory_data_set(

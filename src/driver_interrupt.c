@@ -1,11 +1,6 @@
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
-#if defined(TBC_ARCH_CPU_AVR)
-/** TODO: make compatible with xtensa **/
-extern volatile unsigned long timer0_overflow_count;
-#endif
-
 /**
  * VM processor context manager, allows asychronism.
  */
@@ -61,95 +56,12 @@ bool driver_interrupt(struct app_3bc_s* const app)
      * SLEEP CONTEXT
      */
     case FSM_3BC_WAITING:
-        switch (app->cache_l1.sleep_mode) {
-        case SLEEP_3BC_REAL_TICK: {
-#if defined(TBC_P_COMPUTER_OLD)
-            unsigned long time_now = 0;
-#elif defined(TBC_P_COMPUTER)
-            unsigned long time_now = clock();
-#elif defined(TBC_ARCH_CPU_AVR)
-            unsigned long time_now = timer0_overflow_count;
-#else
-            unsigned long time_now = 0;
-#endif
-            if (app->cache_l3.sleep_called == 0) {
-                app->cache_l3.sleep_called = time_now;
-            } else if ((time_now - app->cache_l3.sleep_called)
-                > app->cache_l2.sleep_period) {
-                break;
-            }
-            return true;
+        if (!driver_idle(app)) {
+            app->state = FSM_3BC_RUNNING;
+            app->cache_l1.sleep_mode = SLEEP_3BC_NONE;
+            app->cache_l2.sleep_period = 0;
+            app->cache_l3.sleep_called = 0;
         }
-
-        case SLEEP_3BC_FAKE_TICK: {
-            app->cache_l2.sleep_period -= 1;
-            if (app->cache_l2.sleep_period == 0) {
-                break;
-            }
-            return true;
-        }
-
-        case SLEEP_3BC_MICROSECONDS: {
-#if defined(TBC_P_COMPUTER_OLD)
-            unsigned long time_now = 0;
-#elif defined(TBC_P_COMPUTER) && defined(CLOCKS_PER_SEC)
-            unsigned long time_now = clock() / (CLOCKS_PER_SEC / 1000000);
-#elif defined(TBC_USE_ARDUINO)
-            unsigned long time_now = micros();
-#else
-            unsigned long time_now = 0;
-#endif
-            if (app->cache_l3.sleep_called == 0) {
-                app->cache_l3.sleep_called = time_now;
-            } else if ((time_now - app->cache_l3.sleep_called)
-                > app->cache_l2.sleep_period) {
-                break;
-            }
-            return true;
-        }
-
-        case SLEEP_3BC_MILLISECONDS: {
-#if defined(TBC_P_COMPUTER_OLD)
-            unsigned long time_now = 0;
-#elif defined(TBC_P_COMPUTER) && defined(CLOCKS_PER_SEC)
-            unsigned long time_now = clock() / (CLOCKS_PER_SEC / 1000);
-#elif defined(_3BC_ARDUINO)
-            unsigned long time_now = millis();
-#else
-            unsigned long time_now = 0;
-#endif
-            if (app->cache_l3.sleep_called == 0) {
-                app->cache_l3.sleep_called = time_now;
-            } else if ((time_now - app->cache_l3.sleep_called)
-                > app->cache_l2.sleep_period) {
-                break;
-            }
-            return true;
-        }
-
-        case SLEEP_3BC_SECONDS: {
-#if defined(TBC_P_COMPUTER_OLD)
-            unsigned long time_now = 0;
-#elif defined(TBC_P_COMPUTER)
-            unsigned long time_now = time(NULL);
-#elif defined(_3BC_ARDUINO)
-            unsigned long time_now = millis() / 1000;
-#else
-            unsigned long time_now = 0;
-#endif
-            if (app->cache_l3.sleep_called == 0) {
-                app->cache_l3.sleep_called = time_now;
-            } else if ((time_now - app->cache_l3.sleep_called)
-                > app->cache_l2.sleep_period) {
-                break;
-            }
-            return true;
-        }
-        }
-        app->state = FSM_3BC_RUNNING;
-        app->cache_l1.sleep_mode = SLEEP_3BC_NONE;
-        app->cache_l2.sleep_period = 0;
-        app->cache_l3.sleep_called = 0;
         return true;
 
     /**

@@ -95,6 +95,7 @@
 #include "driver_accumulator.c"
 #include "driver_custom.c"
 #include "driver_gpio.c"
+#include "driver_idle.c"
 #include "driver_interrupt.c"
 #include "driver_memory.c"
 #include "driver_mode.c"
