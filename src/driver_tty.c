@@ -128,9 +128,9 @@ void driver_tty_output(struct app_3bc_s* const app, struct tty_3bc_s tty,
     }
 
     switch (type) {
-        default:
-            driver_program_error(app, ERROR_UNSUPPORTED);
-            break;
+    default:
+        driver_program_error(app, ERROR_UNSUPPORTED);
+        break;
 
 #if !defined(TBC_NOT_LOG2)
     case STRB: {

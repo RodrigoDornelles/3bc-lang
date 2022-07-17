@@ -18,8 +18,7 @@ bool driver_interrupt(struct app_3bc_s* const app)
      *  INTERPRETER CONTEXT
      */
     case FSM_3BC_READING:
-        switch (interpreter_ticket(app))
-        {
+        switch (interpreter_ticket(app)) {
         case 1:
             app->state = FSM_3BC_RUNNING;
             return true;

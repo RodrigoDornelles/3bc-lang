@@ -97,9 +97,11 @@ void cpu_math_logb(PARAMS_DEFINE)
 #endif
 
 #if defined(TBC_NOT_LOG)
-        default: driver_program_error(app, ERROR_UNSUPPORTED);
+        default:
+            driver_program_error(app, ERROR_UNSUPPORTED);
 #else
-        default: driver_accumulator_set(app,
+        default:
+            driver_accumulator_set(app,
                 (data_aux_3bc_t)trunc(log((double)AUX) / log((double)base)));
             break;
 #endif

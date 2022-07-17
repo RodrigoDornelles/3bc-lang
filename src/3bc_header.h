@@ -186,17 +186,22 @@ void ds_program_fifo_line_add(struct app_3bc_s* const app, register_3bc_t reg,
     address_3bc_t mem, data_3bc_t val);
 bool ds_program_fifo_avaliable(struct app_3bc_s* const app);
 /*****************************************************************************/
-bool interpreter_parser_strchar(struct app_3bc_s* const app, const char* string, signed long int* value);
+bool interpreter_parser_strchar(
+    struct app_3bc_s* const app, const char* string, signed long int* value);
 bool interpreter_parser_strhash(const char* string, signed long int* value);
-bool interpreter_parser_strtol(struct app_3bc_s* const app, const char* string, signed long int* value);
+bool interpreter_parser_strtol(
+    struct app_3bc_s* const app, const char* string, signed long int* value);
 int interpreter_parser_skip();
 /*****************************************************************************/
 char* interpreter_readln(struct app_3bc_s* const app, char* line);
 /*****************************************************************************/
-bool interpreter_syntax_constants(struct app_3bc_s* const app, const char* string, signed long int* value);
-bool interpreter_syntax_registers(struct app_3bc_s* const app, const char* string, signed long int* value);
+bool interpreter_syntax_constants(
+    struct app_3bc_s* const app, const char* string, signed long int* value);
+bool interpreter_syntax_registers(
+    struct app_3bc_s* const app, const char* string, signed long int* value);
 /*****************************************************************************/
-bool interpreter_tokens(char* line, char** reg, char** mem, char** val, char** line_end);
+bool interpreter_tokens(
+    char* line, char** reg, char** mem, char** val, char** line_end);
 /*****************************************************************************/
 int interpreter_ticket(struct app_3bc_s* const app);
 /*****************************************************************************/

@@ -1,12 +1,12 @@
 /**
- *  _____                       _ _           
- * /  __ \                     (_) |          
- * | /  \/ ___  _ __ ___  _ __  _| | ___ _ __ 
+ *  _____                       _ _
+ * /  __ \                     (_) |
+ * | /  \/ ___  _ __ ___  _ __  _| | ___ _ __
  * | |    / _ \| '_ ` _ \| '_ \| | |/ _ \ '__|
- * | \__/\ (_) | | | | | | |_) | | |  __/ |   
- *  \____/\___/|_| |_| |_| .__/|_|_|\___|_|   
- *                       | |                  
- *                       |_|     
+ * | \__/\ (_) | | | | | | |_) | | |  __/ |
+ *  \____/\___/|_| |_| |_| .__/|_|_|\___|_|
+ *                       | |
+ *                       |_|
  *
  * BRIEF: builder detection, for compatibility
  * and resource optimization purposes.
@@ -19,7 +19,7 @@
 #define TBC_CC_STD_11
 #elif (__STDC_VERSION__ >= 199901L)
 #define TBC_CC_STD_99
-#else 
+#else
 #define TBC_CC_STD_89
 #endif
 #else
@@ -152,12 +152,12 @@
 #endif
 
 /**
- * ______ _____  ___ _____ _   _______ _____ _____ 
+ * ______ _____  ___ _____ _   _______ _____ _____
  * |  ___|  ___|/ _ \_   _| | | | ___ \  ___/  ___|
- * | |_  | |__ / /_\ \| | | | | | |_/ / |__ \ `--. 
+ * | |_  | |__ / /_\ \| | | | | | |_/ / |__ \ `--.
  * |  _| |  __||  _  || | | | | |    /|  __| `--. \
  * | |   | |___| | | || | | |_| | |\ \| |___/\__/ /
- * \_|   \____/\_| |_/\_/  \___/\_| \_\____/\____/ 
+ * \_|   \____/\_| |_/\_/  \___/\_| \_\____/\____/
  */
 
 /**
@@ -199,9 +199,8 @@
 #elif !defined(_3BC_DISABLE_INTERPRETER)
 #if defined(TBC_PREFER_INTERPRETER)
 #define TBC_INTERPRETER
-#else 
-#error \
-    define '_3BC_ENABLE_INTERPRETER' \
+#else
+#error define '_3BC_ENABLE_INTERPRETER' \
     or '_3BC_DISABLE_INTERPRETER' \
     after include header '3bc.h'
 #endif
