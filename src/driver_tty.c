@@ -128,9 +128,11 @@ void driver_tty_output(struct app_3bc_s* const app, struct tty_3bc_s tty,
     }
 
     switch (type) {
-#if defined(_3BC_MOS6502)
-        driver_program_error(app, ERROR_UNSUPPORTED);
-#else
+        default:
+            driver_program_error(app, ERROR_UNSUPPORTED);
+            break;
+
+#if !defined(TBC_NOT_LOG2)
     case STRB: {
         /**
          * C It doesn't have printing of numbers with binary base,

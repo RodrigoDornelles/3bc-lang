@@ -26,7 +26,10 @@
  * TBC_KERNEL_NT        -> Microsoft kernel
  * TBC_KERNEL_UNIX      -> Bell Labs kernel
  *
+ * TBC_NOT_LOG          -> doesn't support logarithm
  * TBC_NOT_MATH         -> doesn't support math library
+ * TBC_NOT_LOG2         -> doesn't support base 2 logarithm
+ * TBC_NOT_LOG10        -> doesn't support base 10 logarithm
  *
  * TBC_OPT_COMPACT      -> optimize storage occupied
  *
@@ -47,6 +50,10 @@
 #if defined(__CC65_STD__) || defined(__CC65_STD_CC65__)
 #define TBC_ARCH_BITS_8
 #define TBC_ARCH_CPU_6502
+#define TBC_NOT_LOG
+#define TBC_NOT_MATH
+#define TBC_NOT_LOG2
+#define TBC_NOT_LOG10
 #define TBC_OPT_COMPACT
 #define TBC_P_COMPUTER
 #endif
@@ -57,6 +64,8 @@
 #if defined(ARDUINO_ARCH_AVR)
 #define TBC_ARCH_BITS_8
 #define TBC_ARCH_CPU_AVR
+#define TBC_SCU_FORCE
+#define TBC_NOT_LOG2
 #define TBC_OPT_COMPACT
 #define TBC_P_EMBEDDED
 #define TBC_USE_ARDUINO
@@ -65,6 +74,7 @@
 #if defined(ESP_PLATFORM)
 #define TBC_ARCH_BITS_32
 #define TBC_ARCH_CPU_RISCV
+#define TBC_SCU_FORCE
 #define TBC_OPT_COMPACT
 #define TBC_P_EMBEDDED
 #define TBC_USE_ARDUINO
@@ -128,6 +138,7 @@
  * BRIEF: language mnemonic analyzer, including
  * lexer, tokenizer, and compiler.
  */
+#if defined(TBC_SCU_FORCE) && !defined(TBC_SOURCE_ENTRY)
 #if defined(_3BC_ENABLE_INTERPRETER)
 #define TBC_INTERPRETER
 #elif !defined(_3BC_DISABLE_INTERPRETER)
@@ -140,6 +151,7 @@
     after include header '3bc.h'
 #endif
 #endif
+#endif
 
 /**
  * FEATURE: SEPARATE SOURCE COMPILATION
@@ -149,8 +161,13 @@
  *
  * JOKE: Arduino makes things always problematic for library creators,
  * don't blame me for "strange" solutions.
+ *
+ * DEFINES:
+ * TBC_SCU_FORCE            -> Compiler forces user to use SCU
+ * TBC_SCU_OPTIONAL_FIX     -> Fixture optional feats when SCU is forced
+ * TBC_SOURCE_REGISTERS     -> Include opcode registration in source code
  */
-#if defined(_3BC_SCU)
+#if defined(_3BC_SCU) || defined(TBC_SCU_FORCE)
 /** enable **/
 #define TBC_SCU
 /** fix problem with arduino cli compiler **/

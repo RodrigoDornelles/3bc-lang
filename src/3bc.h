@@ -13,7 +13,17 @@
 /** prepare **/
 #include "3bc_macros.h"
 
-/** libaries **/
+/**
+ *   ___  ______ _____ 
+ *  / _ \ | ___ \_   _|
+ * / /_\ \| |_/ / | |  
+ * |  _  || ___ \ | |  
+ * | | | || |_/ /_| |_ 
+ * \_| |_/\____/ \___/ 
+ *
+ * BRIEF: The Application binary interface helps
+ * to integrate virtual machine drivers with host system modules.
+ */                  
 #if !defined(TBC_NOT_MATH)
 #include <math.h>
 #endif
@@ -42,6 +52,15 @@
 #include <nuttx/config.h>
 #endif
 
+/**
+ *  _   _                _               
+ * | | | |              | |              
+ * | |_| | ___  __ _  __| | ___ _ __ ___ 
+ * |  _  |/ _ \/ _` |/ _` |/ _ \ '__/ __|
+ * | | | |  __/ (_| | (_| |  __/ |  \__ \
+ * \_| |_/\___|\__,_|\__,_|\___|_|  |___/
+ */                                   
+
 /** consts and types **/
 #include "3bc_errors.h"
 #include "3bc_types.h"
@@ -54,8 +73,16 @@
 
 /** compatibility fixes **/
 #include "3bc_support.h"
-
-/** program code **/
+/**
+ *  _____                            _____           _      
+ * /  ___|                          /  __ \         | |     
+ * \ `--.  ___  _   _ _ __ ___ ___  | /  \/ ___   __| | ___ 
+ *  `--. \/ _ \| | | | '__/ __/ _ \ | |    / _ \ / _` |/ _ \
+ * /\__/ / (_) | |_| | | | (_|  __/ | \__/\ (_) | (_| |  __/
+ * \____/ \___/ \__,_|_|  \___\___|  \____/\___/ \__,_|\___|
+ */                                                      
+                                                        
+/** default source **/
 #if !defined(TBC_SCU)
 #include "cpu_boolean.c"
 #include "cpu_common.c"
@@ -85,4 +112,10 @@
 #include "interpreter_ticket.c"
 #include "interpreter_tokens.c"
 #endif
+/** customizable source **/
+#if defined(TBC_SCU_FORCE)
+#include "driver_custom.c"
+#include "interpreter_ticket.c"
+#endif
+
 #endif
