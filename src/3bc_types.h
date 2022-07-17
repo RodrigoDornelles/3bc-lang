@@ -164,3 +164,11 @@ struct app_3bc_s {
 
 typedef void (*function_3bc_t)(
     struct app_3bc_s* const, register_3bc_t, address_3bc_t, data_3bc_t);
+
+/** GLOBAL TYPES **/
+union global_time_u {
+    struct timespec ts;
+    unsigned long count;
+    unsigned long micros;
+    unsigned long millis;
+};
