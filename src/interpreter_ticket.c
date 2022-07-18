@@ -9,7 +9,7 @@
  *                                    |___/             |___/
  * DESCRIPTION:
  * Code refers to the interpreter where accumulates buffer per machine cycle.
- *  
+ *
  * DATASTRUCT:
  * Linked list, first in, first out.
  *

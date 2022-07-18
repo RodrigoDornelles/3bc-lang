@@ -51,7 +51,7 @@ typedef unsigned long long app_3bc_id;
 typedef unsigned long app_3bc_id;
 #elif defined(TBC_ARCH_BITS_32) || defined(TBC_ARCH_BITS_16)
 typedef unsigned int app_3bc_id;
-#elif defined(TBC_ARCH_BITS_8) 
+#elif defined(TBC_ARCH_BITS_8)
 typedef unsigned char app_3bc_id;
 #else
 typedef unsigned short app_3bc_id;

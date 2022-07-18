@@ -9,7 +9,7 @@
  *                                    |___/             |___/
  * DESCRIPTION:
  * Code refers to the interpreter where slice row into columns.
- *  
+ *
  * DATASTRUCT:
  * Linked list, first in, first out.
  *
