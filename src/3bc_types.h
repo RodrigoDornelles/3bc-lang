@@ -43,14 +43,18 @@ typedef unsigned char label_3bc_t;
 typedef unsigned char memory_conf_t;
 typedef signed int data_3bc_t;
 typedef signed long data_aux_3bc_t;
-#if defined(__x86_64__)
+
+/** application 3bc id (depends of cpu size)**/
+#if defined(TBC_ARCH_BITS_64)
 typedef unsigned long long app_3bc_id;
-#elif defined(__x86_64__)
+#elif defined(TBC_ARCH_BITS_32) && !defined(TBC_OPT_COMPACT)
 typedef unsigned long app_3bc_id;
-#elif defined(ESP_PLATFORM) || defined(ARDUINO_ARCH_RP2040)
+#elif defined(TBC_ARCH_BITS_32) || defined(TBC_ARCH_BITS_16)
 typedef unsigned int app_3bc_id;
-#else
+#elif defined(TBC_ARCH_BITS_8) 
 typedef unsigned char app_3bc_id;
+#else
+typedef unsigned short app_3bc_id;
 #endif
 
 /** FILE/STREAM/INTERFACE TYPES **/
@@ -201,7 +205,9 @@ typedef void (*function_3bc_t)(
 
 /** GLOBAL TYPES **/
 union global_time_u {
+#if defined(TBC_P_COMPUTER)
     struct timespec ts;
+#endif
     unsigned long count;
     unsigned long micros;
     unsigned long millis;

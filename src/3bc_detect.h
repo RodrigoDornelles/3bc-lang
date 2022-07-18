@@ -30,7 +30,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- *
+ */
+
+#ifndef H_DETECT_TBC
+#define H_DETECT_TBC
+
+/**
  *  _____                       _ _
  * /  __ \                     (_) |
  * | /  \/ ___  _ __ ___  _ __  _| | ___ _ __
@@ -69,17 +74,6 @@
  * BRIEF: host platform detection, and resource adjustments.
  *
  * DEFINES:
- * TBC_ARCH_BITS_16     -> 16 bits cpu
- * TBC_ARCH_BITS_32     -> 32 bits cpu
- * TBC_ARCH_BITS_64     -> 64 bits cpu
- * TBC_ARCH_BITS_8      -> 8 bits cpu
- *
- * TBC_ARCH_CPU_6502    -> MOS Technology architeture
- * TBC_ARCH_CPU_ARM     -> Acorn RISC Machine architeture
- * TBC_ARCH_CPU_AVR     -> Microchip Technology architeture
- * TBC_ARCH_CPU_INTEL   -> Intel x86 or amd64 architeture
- * TBC_ARCH_CPU_RISCV   -> University of California, Berkeley architeture
- *
  * TBC_KERNEL_DARWIN    -> Apple kernel
  * TBC_KERNEL_HURD      -> Free Software kernel
  * TBC_KERNEL_LINUX     -> Linus Tovards kernel
@@ -108,8 +102,6 @@
  * PLATAFORM: OLD CLASSIC COMPUTERS
  */
 #if defined(__CC65_STD__) || defined(__CC65_STD_CC65__)
-#define TBC_ARCH_BITS_8
-#define TBC_ARCH_CPU_6502
 #define TBC_NOT_LOG
 #define TBC_NOT_MATH
 #define TBC_NOT_LOG2
@@ -122,8 +114,6 @@
  * PLATAFORM: EMBEDDED SYSTEMS
  */
 #if defined(ARDUINO_ARCH_AVR)
-#define TBC_ARCH_BITS_8
-#define TBC_ARCH_CPU_AVR
 #define TBC_SCU_FORCE
 #define TBC_NOT_LOG2
 #define TBC_OPT_COMPACT
@@ -132,8 +122,6 @@
 #endif
 
 #if defined(ESP_PLATFORM)
-#define TBC_ARCH_BITS_32
-#define TBC_ARCH_CPU_RISCV
 #define TBC_SCU_FORCE
 #define TBC_OPT_COMPACT
 #define TBC_P_EMBEDDED
@@ -181,6 +169,63 @@
 #define TBC_KERNEL_DARWIN
 #define TBC_PREFER_INTERPRETER
 #define TBC_P_COMPUTER
+#endif
+
+/**
+ *  _____ ______ _   _                  _     
+ * /  __ \| ___ \ | | |                | |    
+ * | /  \/| |_/ / | | |   __ _ _ __ ___| |__  
+ * | |    |  __/| | | |  / _` | '__/ __| '_ \ 
+ * | \__/\| |   | |_| | | (_| | | | (__| | | |
+ *  \____/\_|    \___/   \__,_|_|  \___|_| |_|
+ *
+ * DEFINES:
+ * TBC_ARCH_BITS_16     -> 16 bits cpu
+ * TBC_ARCH_BITS_32     -> 32 bits cpu
+ * TBC_ARCH_BITS_64     -> 64 bits cpu
+ * TBC_ARCH_BITS_8      -> 8 bits cpu
+ *
+ * TBC_ARCH_CPU_6502    -> MOS Technology architeture
+ * TBC_ARCH_CPU_ARM     -> Acorn RISC Machine architeture
+ * TBC_ARCH_CPU_AVR     -> Microchip Technology architeture
+ * TBC_ARCH_CPU_INTEL   -> Intel x86 or amd64 architeture
+ * TBC_ARCH_CPU_POWER   -> Apple, IBM and Motorola alliance architeture
+ * TBC_ARCH_CPU_RISCV   -> University of California, Berkeley architeture
+ */
+
+#if defined(__CC65_STD__) || defined(__CC65_STD_CC65__)
+#define TBC_ARCH_BITS_8
+#define TBC_ARCH_CPU_6502
+#endif
+
+#if defined(__arm__)
+#define TBC_ARCH_BITS_32
+#define TBC_ARCH_CPU_ARM
+#endif
+
+#if defined(__aarch64__)
+#define TBC_ARCH_BITS_64
+#define TBC_ARCH_CPU_ARM
+#endif
+
+#if defined(ARDUINO_ARCH_AVR)
+#define TBC_ARCH_BITS_8
+#define TBC_ARCH_CPU_AVR
+#endif
+
+#if defined(__x86_64__)
+#define TBC_ARCH_BITS_64
+#define TBC_ARCH_CPU_INTEL
+#endif
+
+#if defined(__ppc64__)
+#define TBC_ARCH_BITS_64
+#define TBC_ARCH_CPU_POWER
+#endif
+
+#if defined(ESP_PLATFORM)
+#define TBC_ARCH_BITS_32
+#define TBC_ARCH_CPU_RISCV
 #endif
 
 /**
@@ -246,4 +291,6 @@
  */
 #if defined(_3BC_ENABLE_CUSTOM)
 #define TBC_CUSTOM
+#endif
+
 #endif
