@@ -138,63 +138,68 @@ struct memory_node_s* ds_memory_llrbt_clear(
 }
 
 /**
- * TODO: unify function with ds_memory_llrbt_insert?
+ * JOKE: deliver us from recursive functions, a main();
+ * OPT1: cache node for reaccess same address.
+ *
  */
 struct memory_node_s* ds_memory_llrbt_access(
     struct app_3bc_s* const app, address_3bc_t address)
 {
     struct memory_node_s* node = app->memory.root;
 
-    /** consult cache level 0 reused address **/
+    /** consult cache level 0 reused address (OPT1) **/
     if (app->memory.cache != NULL && app->memory.cache->address == address) {
         return app->memory.cache;
     }
 
-    while (node != NULL && node->address != address) {
-
-        if (node->address < address) {
-            node = node->right;
-        }
-
-        else if (node->address > address) {
-            node = node->left;
-        }
-    }
-
+    /** first access **/
     if (node == NULL) {
-        app->memory.root = ds_memory_llrbt_insert(address, app->memory.root);
-        return ds_memory_llrbt_access(app, address);
+        /** insert **/
+        node = ds_memory_llrbt_create_node(address);
+        app->memory.root = node;
+    }
+    /** another accesses **/
+    else {
+        /** search by address **/
+        do {
+            /** less then actual node **/
+            if (address > node->address) {
+                /** insert **/
+                if (node->right == NULL) {
+                    node->right = ds_memory_llrbt_create_node(address);
+                    node = node->right;
+                }
+                /** next **/
+                else {
+                    node = node->right;
+                    //ds_memory_llrbt_balancer(node);
+                }
+            }
+            /** greater then actual node **/
+            else if (address < node->address) {
+                /** insert **/
+                if (node->left == NULL) {
+                    node->left = ds_memory_llrbt_create_node(address);
+                    node = node;
+                }
+                /** next **/
+                else {
+                    node = node->left;
+                    ds_memory_llrbt_balancer(node);
+                }
+            } 
+        }
+        while (node->address != address);
     }
 
+    /** OPT1 storage**/
     app->memory.cache = node;
-    return app->memory.cache;
+
+    return node;
 }
 
-struct memory_node_s* ds_memory_llrbt_insert(
-    address_3bc_t address, struct memory_node_s* node)
+void ds_memory_llrbt_balancer(struct memory_node_s* node)
 {
-    /**
-     * NORMAL INSERTION BINARY TREE ALGORITHM
-     */
-    if (node == NULL) {
-        return ds_memory_llrbt_create_node(address);
-    }
-    /** address smaller than the parent **/
-    if (node->address > address) {
-        node->left = ds_memory_llrbt_insert(address, node->left);
-    }
-    /** address greater than the parent **/
-    else if (node->address < address) {
-        node->right = ds_memory_llrbt_insert(address, node->right);
-    }
-    /**
-     * TODO: ????
-     * unless address exists see: ds_memory_llrbt_access
-     *   else {
-     *       return node;
-     *   }
-     */
-
     /**
      * case 1.
      * when right child is Red but left child is
@@ -205,7 +210,7 @@ struct memory_node_s* ds_memory_llrbt_insert(
         node = ds_memory_llrbt_rotate_left(node);
 
         /** swap the colors as the child node should always be red **/
-        ds_memory_llrbt_swap_colors(node, node->left);
+        //ds_memory_llrbt_swap_colors(node, node->left);
     }
 
     /**
@@ -230,8 +235,6 @@ struct memory_node_s* ds_memory_llrbt_insert(
         node->left->color = LLRBT_BLACK;
         node->right->color = LLRBT_BLACK;
     }
-
-    return node;
 }
 
 void ds_memory_llrbt_swap_colors(

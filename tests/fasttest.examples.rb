@@ -52,7 +52,7 @@ class TestExample < Minitest::Test
         assert_equal 0, status
     end
 
-    def test_invert_helper
+    def test_invert_text
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/invert_text.3bc", :stdin_data => 'socorram me subi no onibus em marrocos.')
         assert_equal "", stderr
         assert_equal "socorram me subi no onibus em marrocos..socorram me subino on ibus em marrocos", stdout
