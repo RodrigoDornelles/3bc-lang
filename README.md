@@ -6,7 +6,7 @@
 [![covarage](https://codecov.io/gh/RodrigoDornelles/3bc-lang/branch/master/graph/badge.svg?token=FS152PL31C)](https://codecov.io/gh/RodrigoDornelles/3bc-lang)
 [![Build Status](https://img.shields.io/github/checks-status/rodrigodornelles/3bc-lang/master)](https://github.com/rodrigodornelles/3bc-lang/actions)
 
-> Low level language, tiny virtual machine that works on computers and microcontrollers. (Friendly Punched cards)
+> Low-level language, tiny virtual machine, intermediate representation, embeddable, easy for beginners. (Friendly Punched cards)
 
 ## Documentation ##
 
