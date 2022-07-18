@@ -169,8 +169,7 @@ struct memory_node_s* ds_memory_llrbt_smallest_child(
     struct memory_node_s* node);
 struct memory_node_s* ds_memory_llrbt_access(
     struct app_3bc_s* const app, address_3bc_t address);
-struct memory_node_s* ds_memory_llrbt_insert(
-    address_3bc_t address, struct memory_node_s* node);
+void ds_memory_llrbt_balancer(struct memory_node_s* node);
 struct memory_node_s* ds_memory_llrbt_clear(
     address_3bc_t address, struct memory_node_s* node);
 void ds_memory_llrbt_swap_colors(
