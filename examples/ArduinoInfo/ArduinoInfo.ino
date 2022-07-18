@@ -1,17 +1,14 @@
 #define _3BC_DISABLE_INTERPRETER
 #include <3bc.h>
 
-/** TODO: auto detect **/
-#define SERIAL_SPEED 9600
 
 void setup()
 {
-    int count = 0;
-    struct app_3bc_s* app;
+    app_3bc_id count = 0;
     struct app_3bc_s** apps;
 
     /** starts serial **/
-    Serial.begin(SERIAL_SPEED);
+    Serial.begin(TBC_SERIAL_SPEED);
     while(!Serial);
 
     /** count limit of virtual machines **/

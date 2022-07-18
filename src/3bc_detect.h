@@ -293,4 +293,42 @@
 #define TBC_CUSTOM
 #endif
 
+/**
+ *  _____           _       _   _____                     _ 
+ * /  ___|         (_)     | | /  ___|                   | |
+ * \ `--.  ___ _ __ _  __ _| | \ `--. _ __   ___  ___  __| |
+ *  `--. \/ _ \ '__| |/ _` | |  `--. \ '_ \ / _ \/ _ \/ _` |
+ * /\__/ /  __/ |  | | (_| | | /\__/ / |_) |  __/  __/ (_| |
+ * \____/ \___|_|  |_|\__,_|_| \____/| .__/ \___|\___|\__,_|
+ *                                   | |                    
+ *                                   |_|                    
+ * BRIEF: helper to find serial speed according to hardware.
+ * TODO: improving this list is constant work.
+ */
+#if defined(__AVR_ATmega8__)
+#define TBC_SERIAL_SPEED 9600
+#elif defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny25__)
+#define TBC_SERIAL_SPEED 9600
+#elif defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny45__)
+#define TBC_SERIAL_SPEED 9600
+#elif defined(__AVR_ATtiny84__) || defined(__AVR_ATtiny85__)
+#define TBC_SERIAL_SPEED 9600
+#elif defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__)
+#define TBC_SERIAL_SPEED 9600
+#elif defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__)
+#define TBC_SERIAL_SPEED 9600
+#elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__)
+#define TBC_SERIAL_SPEED 9600
+#elif defined(__AVR_ATmega1280__)
+#define TBC_SERIAL_SPEED 9600
+#elif defined(__AVR_ATmega1284__) || defined(__AVR_ATmega1284P__)
+#define TBC_SERIAL_SPEED 9600
+#elif defined(__AVR_ATmega2560__)
+#define TBC_SERIAL_SPEED 115200
+#elif defined(ESP8266)
+#define TBC_SERIAL_SPEED 9600
+#elif defined(ESP32)
+#define TBC_SERIAL_SPEED 115200
+#endif
+
 #endif
