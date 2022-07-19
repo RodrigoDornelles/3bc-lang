@@ -39,7 +39,7 @@
 /**
  * MACRO: lang_3bc_init
  */
-#if defined(TBC_P_COMPUTER)
+#if !defined(TBC_NOT_ARGCV)
 struct app_3bc_s* const driver_power_init(int argc, char** argv)
 #else
 struct app_3bc_s* const driver_power_init()

@@ -158,7 +158,7 @@ void driver_memory_free(struct app_3bc_s* const app, address_3bc_t address);
 /*****************************************************************************/
 void driver_mode_set(struct app_3bc_s* const app, cpumode_3bc_t value);
 /*****************************************************************************/
-#ifdef SIGINT
+#if !defined(TBC_NOT_ARGCV)
 struct app_3bc_s* const driver_power_init(int argc, char** argv);
 #else
 struct app_3bc_s* const driver_power_init();

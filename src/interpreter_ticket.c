@@ -54,6 +54,7 @@ int interpreter_ticket(struct app_3bc_s* const app)
 /**
  * Default entry point to the interpreter, works asynchronously.
  *
+ * RETURN: CR if does nothing.
  * RETURN: EOF if there is nothing else to read.
  * RETURN: 1 if the interpretation was successful.
  */
@@ -67,20 +68,18 @@ int interpreter_ticket(struct app_3bc_s* const app)
     }
 #endif
 
+    /** does nothing **/
+    if (character == '\r') {
+        return '\r';
+    }
+
     /** end of file **/
     if (character == EOF && app->cache_l3.buffer.storage == NULL) {
         return EOF;
     }
 
     /** end of line **/
-    if (character == '\n' || character == '\r' || character == '\0'
-        || character == EOF) {
-/** REPL nuttx compatibily **/
-#if defined(_3BC_NUTTX)
-        if (app->tty_source.type == STREAM_TYPE_COMPUTER_STD) {
-            driver_tty_output(app, app->tty_keylog, STRC, '\n');
-        }
-#endif
+    if (character == '\n' || character == '\0' || character == EOF) {
 
         /** mark end of string **/
         {

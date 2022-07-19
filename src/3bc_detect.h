@@ -84,6 +84,7 @@
  * TBC_NOT_MATH         -> doesn't support math library
  * TBC_NOT_LOG2         -> doesn't support base 2 logarithm
  * TBC_NOT_LOG10        -> doesn't support base 10 logarithm
+ * TBC_NOT_ARGCV        -> doesn't support argc and argv on main entry
  *
  * TBC_OPT_COMPACT      -> optimize storage occupied
  *
@@ -172,6 +173,15 @@
 #endif
 
 /**
+ * PLATAFORM: Browser/NodeJS
+ */
+#if defined(EMSCRIPTEN)
+#define TBC_USE_POSIX
+#define TBC_PREFER_INTERPRETER
+#define TBC_P_WEBASSEMBLY
+#endif
+
+/**
  *  _____ ______ _   _                  _
  * /  __ \| ___ \ | | |                | |
  * | /  \/| |_/ / | | |   __ _ _ __ ___| |__
@@ -191,6 +201,7 @@
  * TBC_ARCH_CPU_INTEL   -> Intel x86 or amd64 architeture
  * TBC_ARCH_CPU_POWER   -> Apple, IBM and Motorola alliance architeture
  * TBC_ARCH_CPU_RISCV   -> University of California, Berkeley architeture
+ * TBC_ARCH_CPU_WASM    -> Web Assembly vitual machine architeture
  */
 
 #if defined(__CC65_STD__) || defined(__CC65_STD_CC65__)
@@ -226,6 +237,11 @@
 #if defined(ESP_PLATFORM)
 #define TBC_ARCH_BITS_32
 #define TBC_ARCH_CPU_RISCV
+#endif
+
+#if defined(EMSCRIPTEN)
+#define TBC_ARCH_BITS_32
+#define TBC_ARCH_CPU_WASM
 #endif
 
 /**

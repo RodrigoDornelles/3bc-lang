@@ -55,12 +55,13 @@ bool driver_idle(struct app_3bc_s* const app)
 {
     switch (app->cache_l1.sleep_mode) {
     case SLEEP_3BC_REAL_TICK:
-#if defined(TBC_P_COMPUTER_OLD)
-        return false;
-#elif defined(TBC_ARCH_CPU_AVR)
+#if defined(TBC_ARCH_CPU_AVR)
         global_time.count = timer0_overflow_count;
 #elif defined(TBC_P_COMPUTER)
         global_time.count = clock();
+#else
+#warning "[3BC] UNSUPPORTED: SLEEP_3BC_REAL_TICK"
+driver_program_error(app, ERROR_UNSUPPORTED);
 #endif
         if (app->cache_l3.sleep_called == 0) {
             app->cache_l3.sleep_called = global_time.count;
@@ -75,9 +76,8 @@ bool driver_idle(struct app_3bc_s* const app)
         return app->cache_l2.sleep_period--;
 
     case SLEEP_3BC_MICROSECONDS:
-#if defined(TBC_P_COMPUTER_OLD)
-        return false;
-#elif defined(TBC_USE_ARDUINO)
+#if defined(TBC_USE_ARDUINO)
+
         /**
          * AVR chips provide 8 microsecond accuracy in this vm.
          */
@@ -111,13 +111,13 @@ bool driver_idle(struct app_3bc_s* const app)
         }
 
         return app->cache_l2.sleep_period;
-
+#else
+#warning "[3BC] UNSUPPORTED: SLEEP_3BC_MICROSECONDS"
+driver_program_error(app, ERROR_UNSUPPORTED);
 #endif
 
     case SLEEP_3BC_MILLISECONDS:
-#if defined(TBC_P_COMPUTER_OLD)
-        return false;
-#elif defined(TBC_USE_ARDUINO)
+#if defined(TBC_USE_ARDUINO)
         /**
          * AVR chips provide 12 microsecond accuracy in this vm.
          */
@@ -155,12 +155,13 @@ bool driver_idle(struct app_3bc_s* const app)
         }
 
         return app->cache_l2.sleep_period;
+#else
+#warning "[3BC] UNSUPPORTED: SLEEP_3BC_MILLISECONDS"
+driver_program_error(app, ERROR_UNSUPPORTED);
 #endif
 
     case SLEEP_3BC_SECONDS:
-#if defined(TBC_P_COMPUTER_OLD)
-        return false;
-#elif defined(TBC_USE_ARDUINO)
+#if defined(TBC_USE_ARDUINO)
         /**
          * AVR chips has dedicated timekeeping hardware,
          * which provides 1 millisecond accuracy.
@@ -207,7 +208,9 @@ bool driver_idle(struct app_3bc_s* const app)
         }
 
         return app->cache_l2.sleep_period;
-
+#else
+#warning "[3BC] UNSUPPORTED: SLEEP_3BC_SECONDS"
+driver_program_error(app, ERROR_UNSUPPORTED);
 #endif
     }
 }

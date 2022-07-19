@@ -155,13 +155,13 @@ jobs:
         run: emcc main.c -lm -O0 -s WASM=0 -s MODULARIZE=0 -s EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o full/app.js
         
       - name: Build full javascript module
-        run: emcc main.c -lm -O0 -s WASM=0 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o full/module.js
+        run: emcc main.c -lm -O0 -s WASM=0 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o full/module.mjs
 
       - name: Made javascript glue app
         run: emcc main.c -lm -O0 -s WASM=1 -s MODULARIZE=0 -s EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o glue/app.js
         
       - name: Made javascript glue module
-        run: emcc main.c -lm -O0 -s WASM=1 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o glue/module.js
+        run: emcc main.c -lm -O0 -s WASM=1 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o glue/module.mjs
 
       - name: Made links with binary
         run: |
