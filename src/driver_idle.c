@@ -61,7 +61,7 @@ bool driver_idle(struct app_3bc_s* const app)
         global_time.count = clock();
 #else
 #warning "[3BC] UNSUPPORTED: SLEEP_3BC_REAL_TICK"
-driver_program_error(app, ERROR_UNSUPPORTED);
+        driver_program_error(app, ERROR_UNSUPPORTED);
 #endif
         if (app->cache_l3.sleep_called == 0) {
             app->cache_l3.sleep_called = global_time.count;
@@ -113,7 +113,7 @@ driver_program_error(app, ERROR_UNSUPPORTED);
         return app->cache_l2.sleep_period;
 #else
 #warning "[3BC] UNSUPPORTED: SLEEP_3BC_MICROSECONDS"
-driver_program_error(app, ERROR_UNSUPPORTED);
+        driver_program_error(app, ERROR_UNSUPPORTED);
 #endif
 
     case SLEEP_3BC_MILLISECONDS:
@@ -157,7 +157,7 @@ driver_program_error(app, ERROR_UNSUPPORTED);
         return app->cache_l2.sleep_period;
 #else
 #warning "[3BC] UNSUPPORTED: SLEEP_3BC_MILLISECONDS"
-driver_program_error(app, ERROR_UNSUPPORTED);
+        driver_program_error(app, ERROR_UNSUPPORTED);
 #endif
 
     case SLEEP_3BC_SECONDS:
@@ -210,7 +210,7 @@ driver_program_error(app, ERROR_UNSUPPORTED);
         return app->cache_l2.sleep_period;
 #else
 #warning "[3BC] UNSUPPORTED: SLEEP_3BC_SECONDS"
-driver_program_error(app, ERROR_UNSUPPORTED);
+        driver_program_error(app, ERROR_UNSUPPORTED);
 #endif
     }
 }
