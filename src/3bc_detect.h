@@ -117,6 +117,7 @@
 #if defined(ARDUINO_ARCH_AVR)
 #define TBC_SCU_FORCE
 #define TBC_NOT_LOG2
+#define TBC_NOT_ARGCV
 #define TBC_OPT_COMPACT
 #define TBC_P_EMBEDDED
 #define TBC_USE_ARDUINO
@@ -124,6 +125,7 @@
 
 #if defined(ESP_PLATFORM)
 #define TBC_SCU_FORCE
+#define TBC_NOT_ARGCV
 #define TBC_OPT_COMPACT
 #define TBC_P_EMBEDDED
 #define TBC_USE_ARDUINO
