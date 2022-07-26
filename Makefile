@@ -21,7 +21,7 @@ docs: clean-docs
 	@cd docs && jekyll build
 
 docs-serve: clean-docs
-	@cd docs && bundle exec jekyll serve --watch --incremental --livereload
+	@cd docs && bundle exec jekyll serve --watch --livereload
 	
 clean: clean-build clean-test clean-docs clean-test
 	@echo done!
