@@ -15,6 +15,11 @@ p {text-align: justify;}
 ul {text-align: left;}
 pre {text-align: left;}
 
+li strong a {
+    gap: 0.3rem;
+    display: flex;
+}
+
 .btn {
     display: flex;
     overflow: hidden;
