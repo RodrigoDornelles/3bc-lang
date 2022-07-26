@@ -18,10 +18,16 @@ all:
 	##################################
 
 docs: clean-docs
+	@cd docs && jekyll build
+
+docs-serve: clean-docs
 	@cd docs && bundle exec jekyll serve --watch --incremental --livereload
 	
-clean: clean-test clean-docs clean-test
-	@rm -f *.bin *.out *.s *.bin *.exe *.o *.a *.so *.wasm *.js *.html 3bc main unit 2>/dev/null; true
+clean: clean-build clean-test clean-docs clean-test
+	@echo done!
+
+clean-build:
+	@rm -f *.bin *.out *.s *.bin *.exe *.o *.a *.so *.dylib *.wasm *.js *.html 3bc main unit 2>/dev/null; true
 
 clean-docs:
 	@rm -Rf docs/_site/* 2>/dev/null; true
