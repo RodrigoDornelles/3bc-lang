@@ -13,6 +13,9 @@ bin/
 main
 *.o
 *.s
+*.so
+*.dll
+*.dylib
 3bc
 
 # Jekyll files
