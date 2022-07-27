@@ -12,10 +12,10 @@ CC := ${CC_LD}
 LD := ${CC_LD}
 endif
 ifdef CC_TARGET
-CC_TARGET :=  $(addprefix -target , ${CC_TARGET})
+CC_TARGET_PREFIX := $(addprefix -target , ${CC_TARGET})
 endif
 ifdef LD_TARGET
-LD_TARGET :=  $(addprefix -target , ${LD_TARGET})
+LD_TARGET_PREFIX := $(addprefix -target , ${LD_TARGET})
 endif
 
 all:
@@ -36,8 +36,8 @@ all:
 	##################################
 
 build:
-	${CC} ${CC_FLAGS} ${CC_TARGET} -c ${CC_SOURCES}
-	(${LD} *.o ${LD_TARGET} ${TARGET} -o ${CC_OUTPUT} && rm *.o) || (rm *.o && false)
+	${CC} ${CC_FLAGS} ${CC_TARGET_PREFIX} -c ${CC_SOURCES}
+	(${LD} *.o ${LD_TARGET_PREFIX} ${TARGET} -o ${CC_OUTPUT} && rm *.o) || (rm *.o && false)
 
 docs: clean-docs
 	@cd docs && jekyll build
