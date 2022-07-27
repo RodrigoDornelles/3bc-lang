@@ -3,6 +3,7 @@
 CC_SOURCES ?= main.c
 CC_OUTPUT ?= 3bc
 CC_FLAGS ?= -Os
+CC_OBJECTS ?= $(CC_SOURCES:.c=.o)
 LD_FLAGS ?= -lc -lm
 ifdef CC_LD_TARGET
 CC_TARGET := $(CC_LD_TARGET)
@@ -43,8 +44,8 @@ all:
 	##################################
 
 build:
-	(${CC} ${CC_FLAGS} ${CC_TARGET_PREFIX} -c ${CC_SOURCES}) || (rm *.o && false)
-	(${LD} *.o ${LD_TARGET_PREFIX} ${LD_FLAGS} -o ${CC_OUTPUT}) || (rm *.o && false)
+	(${CC} ${CC_FLAGS} ${CC_TARGET_PREFIX} -c ${CC_SOURCES} -o ${CC_OBJECTS}) || (make clean-objects && false)
+	(${LD} ${CC_OBJECTS} ${LD_TARGET_PREFIX} ${LD_FLAGS} -o ${CC_OUTPUT}) || (make clean-objects && false)
 	${ZIP_COMMAND}
 	make clean-objects
 
@@ -58,7 +59,7 @@ clean: clean-zip clean-objects clean-build clean-test clean-docs clean-test
 	@echo done!
 
 clean-objects:
-	@rm -f *.o 2>/dev/null; true
+	@rm -f *.o *.obj 2>/dev/null; true
 
 clean-build:
 	@rm -f *.bin *.out *.s *.bin *.exe *.a *.so *.dylib *.wasm *.js *.html 3bc main unit 2>/dev/null; true
