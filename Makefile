@@ -1,21 +1,29 @@
 .PHONY: docs tests
 
+CC_SOURCES ?= main.c
+CC_OUTPUT ?= 3bc
+LD_FLAGS ?= -lc -lm
+
 all:
 	##################################
 	##              ##    ##        ## [3BC Language]
 	##              ##    ##        ## 
 	##              ##    ##    ###### Choose a target:
 	############    ##    ##    ###### 
-	############    ##    ##    ###### > make docs
+	############    ##    ##    ###### > make build
 	##              ##    ##        ## > make tests
 	##              ##    ##        ## > make clean
-	##              ##    ############
+	##              ##    ############ > make docs
 	############    ##              ##
 	############    ##              ##
 	##              ##    ######    ##
 	##              ##    ######    ##
 	##              ##              ##
 	##################################
+
+build:
+	${CC} ${CC_FLAGS} -c ${CC_SOURCES}
+	(${LD} *.o ${LD_FLAGS} -o ${CC_OUTPUT} && rm *.o) || (rm *.o && false)
 
 docs: clean-docs
 	@cd docs && jekyll build
