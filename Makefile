@@ -17,6 +17,12 @@ endif
 ifdef LD_TARGET
 LD_TARGET_PREFIX := $(addprefix -target , ${LD_TARGET})
 endif
+ifdef ZIP
+ZIP_COMMAND := zip ${ZIP}  ${CC_OUTPUT} && make clean-build
+endif
+ifdef TAR
+ZIP_COMMAND := tar -czf ${TAR}.tar.gz ${CC_OUTPUT} && make clean-build
+endif
 
 all:
 	##################################
@@ -36,8 +42,10 @@ all:
 	##################################
 
 build:
-	${CC} ${CC_FLAGS} ${CC_TARGET_PREFIX} -c ${CC_SOURCES}
-	(${LD} *.o ${LD_TARGET_PREFIX} ${TARGET} -o ${CC_OUTPUT} && rm *.o) || (rm *.o && false)
+	(${CC} ${CC_FLAGS} ${CC_TARGET_PREFIX} -c ${CC_SOURCES}) || (rm *.o && false)
+	(${LD} *.o ${LD_TARGET_PREFIX} ${LD_FLAGS} -o ${CC_OUTPUT}) || (rm *.o && false)
+	${ZIP_COMMAND}
+	rm *.o || true
 
 docs: clean-docs
 	@cd docs && jekyll build
@@ -45,11 +53,14 @@ docs: clean-docs
 docs-serve: clean-docs
 	@cd docs && bundle exec jekyll serve --watch --livereload
 	
-clean: clean-build clean-test clean-docs clean-test
+clean: clean-zip clean-build clean-test clean-docs clean-test
 	@echo done!
 
 clean-build:
 	@rm -f *.bin *.out *.s *.bin *.exe *.o *.a *.so *.dylib *.wasm *.js *.html 3bc main unit 2>/dev/null; true
+
+clean-zip:
+	@rm -f *.zip *.tar *.tar.*; true
 
 clean-docs:
 	@rm -Rf docs/_site/* 2>/dev/null; true
