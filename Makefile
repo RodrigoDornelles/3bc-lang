@@ -3,6 +3,20 @@
 CC_SOURCES ?= main.c
 CC_OUTPUT ?= 3bc
 LD_FLAGS ?= -lc -lm
+ifdef CC_LD_TARGET
+CC_TARGET := $(CC_LD_TARGET)
+LD_TARGET := $(CC_LD_TARGET)
+endif
+ifdef CC_LD
+CC := ${CC_LD}
+LD := ${CC_LD}
+endif
+ifdef CC_TARGET
+CC_TARGET :=  $(addprefix -target , ${CC_TARGET})
+endif
+ifdef LD_TARGET
+LD_TARGET :=  $(addprefix -target , ${LD_TARGET})
+endif
 
 all:
 	##################################
@@ -22,8 +36,8 @@ all:
 	##################################
 
 build:
-	${CC} ${CC_FLAGS} -c ${CC_SOURCES}
-	(${LD} *.o ${LD_FLAGS} -o ${CC_OUTPUT} && rm *.o) || (rm *.o && false)
+	${CC} ${CC_FLAGS} ${CC_TARGET} -c ${CC_SOURCES}
+	(${LD} *.o ${LD_TARGET} ${TARGET} -o ${CC_OUTPUT} && rm *.o) || (rm *.o && false)
 
 docs: clean-docs
 	@cd docs && jekyll build
