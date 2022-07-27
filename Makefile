@@ -1,6 +1,7 @@
 .PHONY: docs tests
 
-CC_SOURCES ?= main.c
+CXX_SOURCES ?= main/unit.c
+CC_SOURCES ?= main/interpreter.c
 CC_OUTPUT ?= 3bc
 CC_FLAGS ?= -Os
 CC_OBJECTS ?= $(CC_SOURCES:.c=.o)
@@ -59,7 +60,7 @@ clean: clean-zip clean-objects clean-build clean-test clean-docs clean-test
 	@echo done!
 
 clean-objects:
-	@rm -f *.o *.obj 2>/dev/null; true
+	@rm -f *.o *.obj src/*.o src/*.obj main/*.o main/*.obj 2>/dev/null; true
 
 clean-build:
 	@rm -f *.bin *.out *.s *.bin *.exe *.a *.so *.dylib *.wasm *.js *.html 3bc main unit 2>/dev/null; true
@@ -75,10 +76,10 @@ clean-test:
 
 tests: clean-test
 	@echo " > running fasts tests...\n > to use the full test suite, run: make tests-full\n"
-	@${CXX} -w -coverage main.c -O0 -lm -o 3bc.test.bin
+	@${CXX} -w -coverage ${CXX_SOURCES} -O0 -lm -o 3bc.test.bin
 	@ruby -Ilib -e 'ARGV.each { |f| require f }' ./tests/fasttest.*.rb
 
 tests-full: clean-test
 	@echo " > running full tests suite...\n"
-	@${CXX} -w -coverage unit.c -O0 -lm -o 3bc.test.bin
+	@${CXX} -w -coverage ${CXX_SOURCES} -O0 -lm -o 3bc.test.bin
 	@ruby -Ilib -e 'ARGV.each { |f| require f }' ./tests/*.*.rb
