@@ -57,6 +57,7 @@ docs-serve: clean-docs
 	@cd docs && bundle exec jekyll serve --watch --livereload
 	
 clean: clean-zip clean-objects clean-build clean-test clean-docs clean-test
+	@rm -f *.log 2>/dev/null; true
 	@echo done!
 
 clean-objects:
