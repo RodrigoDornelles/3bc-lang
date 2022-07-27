@@ -2,6 +2,7 @@
 
 CC_SOURCES ?= main.c
 CC_OUTPUT ?= 3bc
+CC_FLAGS ?= -Os
 LD_FLAGS ?= -lc -lm
 ifdef CC_LD_TARGET
 CC_TARGET := $(CC_LD_TARGET)
@@ -45,7 +46,7 @@ build:
 	(${CC} ${CC_FLAGS} ${CC_TARGET_PREFIX} -c ${CC_SOURCES}) || (rm *.o && false)
 	(${LD} *.o ${LD_TARGET_PREFIX} ${LD_FLAGS} -o ${CC_OUTPUT}) || (rm *.o && false)
 	${ZIP_COMMAND}
-	rm *.o || true
+	make clean-objects
 
 docs: clean-docs
 	@cd docs && jekyll build
@@ -53,14 +54,17 @@ docs: clean-docs
 docs-serve: clean-docs
 	@cd docs && bundle exec jekyll serve --watch --livereload
 	
-clean: clean-zip clean-build clean-test clean-docs clean-test
+clean: clean-zip clean-objects clean-build clean-test clean-docs clean-test
 	@echo done!
 
+clean-objects:
+	@rm -f *.o 2>/dev/null; true
+
 clean-build:
-	@rm -f *.bin *.out *.s *.bin *.exe *.o *.a *.so *.dylib *.wasm *.js *.html 3bc main unit 2>/dev/null; true
+	@rm -f *.bin *.out *.s *.bin *.exe *.a *.so *.dylib *.wasm *.js *.html 3bc main unit 2>/dev/null; true
 
 clean-zip:
-	@rm -f *.zip *.tar *.tar.*; true
+	@rm -f *.zip *.tar *.tar.* 2>/dev/null; true
 
 clean-docs:
 	@rm -Rf docs/_site/* 2>/dev/null; true
