@@ -186,6 +186,7 @@ void driver_accumulator_set(struct app_3bc_s* const app, data_aux_3bc_t value);
 struct app_3bc_s* const ds_hypervisor_darray_new(void);
 struct app_3bc_s* const ds_hypervisor_darray_get_one(app_3bc_id app);
 struct app_3bc_s** ds_hypervisor_darray_get_all(void);
+void ds_hypervisor_darray_kill_all(void);
 /*****************************************************************************/
 void ds_label_hash_jump(label_3bc_t label);
 void ds_label_hash_insert(struct app_3bc_s* const app, label_3bc_t label);

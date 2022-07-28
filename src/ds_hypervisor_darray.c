@@ -95,3 +95,16 @@ struct app_3bc_s** ds_hypervisor_darray_get_all()
 {
     return machines_array;
 }
+
+void ds_hypervisor_darray_kill_all()
+{
+    do {
+        /** free each machine **/
+        free(machines_array[--machines_count]);
+    }
+    while (machines_count);
+
+    /** reset hypervisor **/
+    free(machines_array);
+    machines_array = NULL;
+}

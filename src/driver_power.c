@@ -125,6 +125,7 @@ void driver_power_signal(int sig)
         }
     }
 
+    ds_hypervisor_darray_kill_all();
 #if defined(SIGINT)
     exit(sig);
 #endif
