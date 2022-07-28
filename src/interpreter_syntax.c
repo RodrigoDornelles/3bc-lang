@@ -36,8 +36,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  *
  * NOTE:
- * The number 0x202020 is equivalent to (32|32<<8|32<<16|32<<64),
+ * The number 0x202020 is equivalent to (32|32<<8|32<<16|32<<24),
  * makes the 4 characters are forced to be lowercase at the same time.
+ *
+ * The expression ('b'|('a'<<8)|((long)'a'<<16)|((long)'z'<<24))
+ * it's like a 'baaz' multichar without the worry of incompatibility,
+ * or bigendian/litleendian issues.
  *
  */
 
