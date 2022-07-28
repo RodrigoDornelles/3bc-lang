@@ -8,7 +8,6 @@ for target in ENV["TARGETS"].split(" ") do
     zip = target["windows"]? "ZIP": "TAR"
     cmd = <<-BASH.strip.delete "\n"
         make build
-        CC_LD="./zig cc"
         CC_OUTPUT="3bc#{ext}"
         CC_SOURCES="main/lib.c"
         CC_FLAGS="-fPIC -Os -lm"
