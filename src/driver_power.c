@@ -99,28 +99,27 @@ struct app_3bc_s* const driver_power_init()
 void driver_power_signal(int sig)
 {
     struct app_3bc_s** apps = ds_hypervisor_darray_get_all();
-    struct app_3bc_s* app;
 
     /**
      * JOKE:
      *
      * Finally, C ANSI FOREACH!!!!
      */
-    while ((app = *(apps++)) != NULL) {
+    for(;*apps; apps++) {
         switch (sig) {
         case SIGTERM:
-            driver_power_exit(app);
+            driver_power_exit(*apps);
             break;
 
 #if defined(SIGINT)
         case SIGINT:
-            driver_power_exit(app);
+            driver_power_exit(*apps);
             break;
 #endif
 
 #if defined(SIGSEGV)
         case SIGSEGV:
-            driver_program_error(app, (enum error_3bc_e)sig);
+            driver_program_error(*apps, (enum error_3bc_e)sig);
             break;
 #endif
         }
