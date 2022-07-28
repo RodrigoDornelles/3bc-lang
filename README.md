@@ -8,6 +8,17 @@
 
 > Low-level language, tiny virtual machine, intermediate representation, embeddable, easy for beginners. (Friendly Punched cards)
 
+## Directory structure ##
+
+```
+docs/           Website made with jekyll (Ruby)
+examples/       Syntax sampling codes (3bc, Arduino with C++)
+main/           Embbed programs sampling Codes (C)
+scripts/        Development and installation tools (Bash, Ruby)
+src/            Library source code (C)
+tests/          Language work check (Ruby)
+```
+
 ## Documentation ##
 
 * **[Tutorial :us:](https://3bc-lang.org/guide/tutorial-en-us)**
@@ -20,17 +31,12 @@
 * **[Download last version](https://3bc-lang.org/download)**
 * **[List of early developers](https://3bc-lang.org/extra/early-adopters)**
 
-## About project ##
+## How to build
 
-| Common questions | answer |
-| :--------------- | :----- |
-| What is the purpose of the language? | the idea is to be a low level, simple and intuitive language that anyone can learn! (and that can even be read on punched cards) |
-| Do you need knowledge of **C** to understand 3BC? | No, they have different syntaxes |
-| What is the language's typing level ? | There is no distinction of types, they are just data |
-| Does it have garbage collector? | No, the developer has full control over the memory, this follows the same philosophy as **C** "freedom with responsibility" |
-| Does it work as a compiler? | No, it currently works as an interpreter (although a very fast one), or also by packaging bytecode with a vm in a single binary. |
-| What are the influences? | Languages **Cobol**, **Ruby** and **Java**; Assembly´s **WASM**, **ARM** and **x86** |
-| Is it more compact than **Lua**? | Yeah, because it has the same performance target as the Arduino Uno microcontroller. And this impacts it's size (depending on the CPU's architecture, 20KiB ROM and 300 bytes RAM ) |
+```BASH
+git clone https://github.com/RodrigoDornelles/3bc-lang
+make build
+```
 
 -----------------------------------------------------------------------------------------
 ![3bc lang logo](/docs/images/3bc-logo-small.png)
