@@ -49,6 +49,16 @@
 #include "3bc.h"
 
 #if defined(TBC_INTERPRETER) && !defined(TBC_SCU_OPTIONAL_FIX)
+
+/**
+ * Checks menomics and literal expressions of the first column only.
+ *
+ * NOTE:
+ * This method does not need to be protected,
+ * as it will be executed only if there are 3 columns,
+ * which would be at least 5 characters.
+ *
+ */
 bool interpreter_syntax_registers(struct app_3bc_s* const app,
     const char* const string, signed long int* value)
 {
@@ -191,28 +201,43 @@ bool interpreter_syntax_registers(struct app_3bc_s* const app,
     return false;
 }
 
+/**
+ * Checks menomics and literal expressions of the second and last column.
+ */
 bool interpreter_syntax_constants(struct app_3bc_s* const app,
     const char* const string, signed long int* value)
 {
-    /** LITERAL EXPRESSIONS FOR CONSTANTS **/
+    /** is safe! **/
     if (interpreter_parser_strtol(app, string, value)) {
         return true;
-    } else if (interpreter_parser_strchar(app, string, value)) {
-        return true;
-    } else if (interpreter_parser_strhash(string, value)) {
+    } 
+    /** is safe! **/
+    if (interpreter_parser_strhash(string, value)) {
         return true;
     }
+    /** prevent memory invasion **/
+    if (string[1] == '\0' || string[2] == '\0') {
+        return false;
+    }
+    /** is not safe, but now it's protected. **/
+    if (interpreter_parser_strchar(app, string, value)) {
+        return true;
+    }
+    /** more memory prevention, remembering previous results **/
+    if (string[3] == '\0') {
+        return false;
+    }
 
-    /** KEYWORDS FOR CONSTANTS **/
+    /** is not safe! **/
     switch (string[0] | (string[1] << 8) | (string[2] << 16) | (string[3] << 24)
         | 0x20202020) {
 
-    /** MNEMONIC: NILL **/
+    /** MNEMONIC NILL **/
     case ('n' | ('i' << 8) | ((long)'l' << 16) | ((long)'l' << 24)):
         *value = NILL;
         return true;
 
-    /** MAGICALMNEMONIC: NILL **/
+    /** MAGICAL MNEMONIC NILL **/
     case ('s' | ('k' << 8) | ((long)'i' << 16) | ((long)'p' << 24)):
         *value = interpreter_parser_skip();
         return true;
