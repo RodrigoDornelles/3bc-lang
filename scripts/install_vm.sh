@@ -1,4 +1,4 @@
-#! /usr/bin/bash
+#!/usr/bin/env bash
 
 function req {
    wget -qo- -O - "$1" 2>/dev/null || curl -fsSL "$1"

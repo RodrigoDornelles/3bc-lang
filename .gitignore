@@ -25,6 +25,13 @@ bin/
 Gemfile.lock
 _site/
 
+# Log reports
+*.log
+
+# Compressed files
+*.tar.gz
+*.zip
+
 # IDE FILES
 .vscode
 
