@@ -237,6 +237,11 @@ bool interpreter_syntax_constants(struct app_3bc_s* const app,
         *value = NILL;
         return true;
 
+    /** MNEMONIC NILL **/
+    case ('f' | ('u' << 8) | ((long)'l' << 16) | ((long)'l' << 24)):
+        *value = 1023;
+        return true;
+
     /** MAGICAL MNEMONIC NILL **/
     case ('s' | ('k' << 8) | ((long)'i' << 16) | ((long)'p' << 24)):
         *value = interpreter_parser_skip();
