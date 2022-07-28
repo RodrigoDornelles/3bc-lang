@@ -85,7 +85,7 @@ struct app_3bc_s* const ds_hypervisor_darray_new()
  */
 struct app_3bc_s* const ds_hypervisor_darray_get_one(app_3bc_id app)
 {
-    return machines_array[app - 1];
+    return machines_array[app];
 }
 
 /**
