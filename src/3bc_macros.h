@@ -70,13 +70,6 @@
 /**
  * FUNCTIONS MACROS
  */
-#define PARSER_UNPACK(c)                                                       \
-    (tolower(c[0]) | tolower(c[1]) << 8 | (long)tolower(c[2]) << 16            \
-        | (long)tolower(c[3]) << 24)
-#define PARSER_PACK(c1, c2, c3, c4, v, r)                                      \
-    case (c1 | c2 << 8 | (long)c3 << 16 | (long)c4 << 24):                     \
-        *v = r;                                                                \
-        return (true)
 #define ERROR_LOG_3BC(a, b)                                                    \
     case (a):                                                                  \
         driver_tty_output_raw(app, app->tty_error, (b));                       \

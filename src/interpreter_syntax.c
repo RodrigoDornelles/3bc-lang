@@ -34,89 +34,183 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * NOTE:
+ * The number 0x202020 is equivalent to (32|32<<8|32<<16|32<<64),
+ * makes the 4 characters are forced to be lowercase at the same time.
+ *
  */
 
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
 #if defined(TBC_INTERPRETER) && !defined(TBC_SCU_OPTIONAL_FIX)
-bool interpreter_syntax_registers(
-    struct app_3bc_s* const app, const char* string, signed long int* value)
+bool interpreter_syntax_registers(struct app_3bc_s* const app,
+    const char* const string, signed long int* value)
 {
-    /** mnemonic translate world to register **/
-    switch (PARSER_UNPACK(string)) {
-        PARSER_PACK('n', 'i', 'l', 'l', value, NILL);
-        PARSER_PACK('m', 'o', 'd', 'e', value, MODE);
-
-        PARSER_PACK('s', 't', 'r', 'b', value, STRB);
-        PARSER_PACK('s', 't', 'r', 'i', value, STRI);
-        PARSER_PACK('s', 't', 'r', 'c', value, STRC);
-        PARSER_PACK('s', 't', 'r', 'o', value, STRO);
-        PARSER_PACK('s', 't', 'r', 'x', value, STRX);
-
-        PARSER_PACK('f', 'r', 'e', 'e', value, FREE);
-        PARSER_PACK('a', 'l', 'o', 'c', value, ALOC);
-        PARSER_PACK('p', 'u', 'l', 'l', value, PULL);
-        PARSER_PACK('s', 'p', 'i', 'n', value, SPIN);
-        PARSER_PACK('p', 'u', 's', 'h', value, PUSH);
-
-        PARSER_PACK('m', 'o', 'f', 'f', value, MOFF);
-        PARSER_PACK('m', 'u', 's', 'e', value, MUSE);
-
-        PARSER_PACK('g', 'o', 't', 'o', value, GOTO);
-        PARSER_PACK('f', 'g', 't', 'o', value, FGTO);
-        PARSER_PACK('z', 'g', 't', 'o', value, ZGTO);
-        PARSER_PACK('p', 'g', 't', 'o', value, PGTO);
-        PARSER_PACK('n', 'g', 't', 'o', value, NGTO);
-
-        PARSER_PACK('n', 'b', '0', '2', value, NB02);
-        PARSER_PACK('n', 'b', '0', '8', value, NB08);
-        PARSER_PACK('n', 'b', '1', '0', value, NB10);
-        PARSER_PACK('n', 'b', '1', '6', value, NB16);
-
-        PARSER_PACK('m', 'a', 't', 'h', value, MATH);
-
-        PARSER_PACK('c', 'a', 'l', 'l', value, CALL);
-        PARSER_PACK('f', 'c', 'a', 'l', value, FCAL);
-        PARSER_PACK('z', 'c', 'a', 'l', value, ZCAL);
-        PARSER_PACK('p', 'c', 'a', 'l', value, PCAL);
-        PARSER_PACK('n', 'c', 'a', 'l', value, NCAL);
-
-        PARSER_PACK('f', 'r', 'e', 't', value, FRET);
-        PARSER_PACK('z', 'r', 'e', 't', value, ZRET);
-        PARSER_PACK('p', 'r', 'e', 't', value, PRET);
-        PARSER_PACK('n', 'r', 'e', 't', value, NRET);
-        PARSER_PACK('b', 'a', 'c', 'k', value, BACK);
-
-        PARSER_PACK('r', 'e', 'a', 'l', value, REAL);
-        PARSER_PACK('f', 'a', 'k', 'e', value, FAKE);
-        PARSER_PACK('m', 'i', 'c', 'r', value, MICR);
-        PARSER_PACK('m', 'i', 'l', 'i', value, MILI);
-        PARSER_PACK('s', 'e', 'c', 'o', value, SECO);
-    }
-
     /** passing register as numerical (octo, bin) **/
     if (interpreter_parser_strtol(app, string, value)) {
+        return true;
+    }
+
+    /** mnemonic translate world to register **/
+    switch (string[0] | (string[1] << 8) | (string[2] << 16) | (string[3] << 24)
+        | 0x20202020) {
+    case ('n' | ('i' << 8) | ((long)'l' << 16) | ((long)'l' << 24)):
+        *value = NILL;
+        return true;
+    case ('m' | ('o' << 8) | ((long)'d' << 16) | ((long)'e' << 24)):
+        *value = MODE;
+        return true;
+
+    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'b' << 24):
+        *value = STRB;
+        return true;
+    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'i' << 24):
+        *value = STRI;
+        return true;
+    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'c' << 24):
+        *value = STRC;
+        return true;
+    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'o' << 24):
+        *value = STRO;
+        return true;
+    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'x' << 24):
+        *value = STRX;
+        return true;
+
+    case ('f' | 'r' << 8) | ((long)'e' << 16) | ((long)'e' << 24):
+        *value = FREE;
+        return true;
+    case ('a' | 'l' << 8) | ((long)'o' << 16) | ((long)'c' << 24):
+        *value = ALOC;
+        return true;
+    case ('p' | 'u' << 8) | ((long)'l' << 16) | ((long)'l' << 24):
+        *value = PULL;
+        return true;
+    case ('s' | 'p' << 8) | ((long)'i' << 16) | ((long)'n' << 24):
+        *value = SPIN;
+        return true;
+    case ('p' | 'u' << 8) | ((long)'s' << 16) | ((long)'h' << 24):
+        *value = PUSH;
+        return true;
+
+    case ('m' | 'o' << 8) | ((long)'f' << 16) | ((long)'f' << 24):
+        *value = MOFF;
+        return true;
+    case ('m' | 'u' << 8) | ((long)'s' << 16) | ((long)'e' << 24):
+        *value = MUSE;
+        return true;
+
+    case ('g' | 'o' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
+        *value = GOTO;
+        return true;
+    case ('f' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
+        *value = FGTO;
+        return true;
+    case ('z' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
+        *value = ZGTO;
+        return true;
+    case ('p' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
+        *value = PGTO;
+        return true;
+    case ('n' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
+        *value = NGTO;
+        return true;
+
+    case ('n' | 'b' << 8) | ((long)'0' << 16) | ((long)'2' << 24):
+        *value = NB02;
+        return true;
+    case ('n' | 'b' << 8) | ((long)'0' << 16) | ((long)'8' << 24):
+        *value = NB08;
+        return true;
+    case ('n' | 'b' << 8) | ((long)'1' << 16) | ((long)'0' << 24):
+        *value = NB10;
+        return true;
+    case ('n' | 'b' << 8) | ((long)'1' << 16) | ((long)'6' << 24):
+        *value = NB16;
+        return true;
+
+    case ('m' | 'a' << 8) | ((long)'t' << 16) | ((long)'h' << 24):
+        *value = MATH;
+        return true;
+
+    case ('c' | 'a' << 8) | ((long)'l' << 16) | ((long)'l' << 24):
+        *value = CALL;
+        return true;
+    case ('f' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
+        *value = FCAL;
+        return true;
+    case ('z' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
+        *value = ZCAL;
+        return true;
+    case ('p' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
+        *value = PCAL;
+        return true;
+    case ('n' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
+        *value = NCAL;
+        return true;
+
+    case ('f' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
+        *value = FRET;
+        return true;
+    case ('z' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
+        *value = ZRET;
+        return true;
+    case ('p' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
+        *value = PRET;
+        return true;
+    case ('n' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
+        *value = NRET;
+        return true;
+    case ('b' | 'a' << 8) | ((long)'c' << 16) | ((long)'k' << 24):
+        *value = BACK;
+        return true;
+
+    case ('r' | 'e' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
+        *value = REAL;
+        return true;
+    case ('f' | 'a' << 8) | ((long)'k' << 16) | ((long)'e' << 24):
+        *value = FAKE;
+        return true;
+    case ('m' | 'i' << 8) | ((long)'c' << 16) | ((long)'r' << 24):
+        *value = MICR;
+        return true;
+    case ('m' | 'i' << 8) | ((long)'l' << 16) | ((long)'i' << 24):
+        *value = MILI;
+        return true;
+    case ('s' | 'e' << 8) | ((long)'c' << 16) | ((long)'o' << 24):
+        *value = SECO;
         return true;
     }
 
     return false;
 }
 
-bool interpreter_syntax_constants(
-    struct app_3bc_s* const app, const char* string, signed long int* value)
+bool interpreter_syntax_constants(struct app_3bc_s* const app,
+    const char* const string, signed long int* value)
 {
-    switch (PARSER_UNPACK(string)) {
-        PARSER_PACK('n', 'i', 'l', 'l', value, NILL);
-        PARSER_PACK('f', 'u', 'l', 'l', value, SHRT_MAX);
-        PARSER_PACK('s', 'k', 'i', 'p', value, interpreter_parser_skip());
-    }
-
+    /** LITERAL EXPRESSIONS FOR CONSTANTS **/
     if (interpreter_parser_strtol(app, string, value)) {
         return true;
     } else if (interpreter_parser_strchar(app, string, value)) {
         return true;
     } else if (interpreter_parser_strhash(string, value)) {
+        return true;
+    }
+
+    /** KEYWORDS FOR CONSTANTS **/
+    switch (string[0] | (string[1] << 8) | (string[2] << 16) | (string[3] << 24)
+        | 0x20202020) {
+
+    /** MNEMONIC: NILL **/
+    case ('n' | ('i' << 8) | ((long)'l' << 16) | ((long)'l' << 24)):
+        *value = NILL;
+        return true;
+
+    /** MAGICALMNEMONIC: NILL **/
+    case ('s' | ('k' << 8) | ((long)'i' << 16) | ((long)'p' << 24)):
+        *value = interpreter_parser_skip();
         return true;
     }
 
