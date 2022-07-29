@@ -79,6 +79,7 @@
  * TBC_KERNEL_LINUX     -> Linus Tovards kernel
  * TBC_KERNEL_NT        -> Microsoft kernel
  * TBC_KERNEL_UNIX      -> Bell Labs kernel
+ * TBC_KERNEL_NUTTX     -> Apache foundation kernel
  *
  * TBC_NOT_LOG          -> doesn't support logarithm
  * TBC_NOT_MATH         -> doesn't support math library
@@ -109,6 +110,8 @@
 #define TBC_NOT_LOG10
 #define TBC_OPT_COMPACT
 #define TBC_P_COMPUTER
+#define TBC_P_COMPUTER_OLD
+#define TBC_USE_CONIO
 #endif
 
 /**

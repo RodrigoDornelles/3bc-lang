@@ -38,10 +38,6 @@
 #define LLRBT_BLACK (false)
 #define LLRBT_RED (true)
 
-#ifndef SIGTERM
-#define SIGTERM (15)
-#endif
-
 #ifndef AUX
 #define AUX (driver_accumulator_get(app))
 #endif

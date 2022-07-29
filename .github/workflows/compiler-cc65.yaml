@@ -25,7 +25,9 @@ jobs:
           make
 
       - name: Build project
-        run: ./cc65/bin/cl65 programs/interpreter.c -t apple2 -D_3BC_ENABLE_INTERPRETER
+        run: >- 
+          ./cc65/bin/cl65 -t apple2 -D_3BC_DISABLE_INTERPRETER
+          programs/interpreter.c
 
   commodore64: 
     runs-on: ubuntu-latest      
@@ -45,4 +47,6 @@ jobs:
           make
 
       - name: Build project
-        run: ./cc65/bin/cl65 programs/interpreter.c -t c64 -D_3BC_ENABLE_INTERPRETER
+        run: >-
+          ./cc65/bin/cl65 -t c64 -D_3BC_DISABLE_INTERPRETER
+          programs/interpreter.c

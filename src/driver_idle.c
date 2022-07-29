@@ -57,7 +57,7 @@ bool driver_idle(struct app_3bc_s* const app)
     case SLEEP_3BC_REAL_TICK:
 #if defined(TBC_ARCH_CPU_AVR)
         global_time.count = timer0_overflow_count;
-#elif defined(TBC_P_COMPUTER)
+#elif defined(TBC_P_COMPUTER) && !defined(TBC_P_COMPUTER_OLD)
         global_time.count = clock();
 #else
 #warning "[3BC] UNSUPPORTED: SLEEP_3BC_REAL_TICK"

@@ -86,6 +86,11 @@
 #include <nuttx/config.h>
 #endif
 
+/** TODO: move to supporting file **/
+#ifndef SIGTERM
+#define SIGTERM (15)
+#endif
+
 /**
  *  _   _                _
  * | | | |              | |
