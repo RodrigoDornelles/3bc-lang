@@ -71,4 +71,11 @@ class TestExtra < Minitest::Test
         assert_equal "2", stdout
         assert_equal 0, status
     end
+
+    def test_ignore_carrier_return
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => "mo\rde.0.2,stri.0.4\r2")
+        assert_equal "", stderr
+        assert_equal "42", stdout
+        assert_equal 0, status
+    end
 end

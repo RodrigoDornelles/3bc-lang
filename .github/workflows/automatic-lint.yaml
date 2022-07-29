@@ -22,4 +22,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: test format
-        run: clang-format --dry-run -ferror-limit=1 --Werror --verbose -i *.c src/*.c src/*.h
+        run: clang-format --dry-run -ferror-limit=1 --Werror --verbose -i programs/*.c src/*.c src/*.h

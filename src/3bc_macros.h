@@ -1,88 +1,36 @@
 /**
- * MACROS ENVIRONMENT (DETECT PLATAFORM/ARCHITECTURE)
- */
-
-/** Atmel AVR **/
-#if defined(ARDUINO_ARCH_AVR)
-#define _3BC_AVR
-#elif defined(__AVR_ATmega8__)
-#define _3BC_AVR
-#elif defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny25__)
-#define _3BC_AVR
-#elif defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny45__)
-#define _3BC_AVR
-#elif defined(__AVR_ATtiny84__) || defined(__AVR_ATtiny85__)
-#define _3BC_AVR
-#elif defined(__AVR_ATmega328__) || defined(__AVR_ATmega328P__)
-#define _3BC_AVR
-#elif defined(__AVR_ATmega644__) || defined(__AVR_ATmega644A__)                \
-    || defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644PA__)
-#define _3BC_AVR
-#elif defined(__AVR_ATmega1280__) || defined(__AVR_ATmega1284__)               \
-    || defined(__AVR_ATmega1284P__)
-#define _3BC_AVR
-#elif defined(__AVR_ATmega2560__)
-#define _3BC_AVR
-#endif
-
-#if defined(__CC65_STD__) || defined(__CC65_STD_CC65__)
-#define _3BC_MOS6502
-#endif
-
-#if defined(__nuttx__)
-#define _3BC_NUTTX
-#endif
-
-/**
- * PLATAFORM: ARDUINO
+ *  ___________  _____   _
+ * |____ | ___ \/  __ \ | |
+ *     / / |_/ /| /  \/ | | __ _ _ __   __ _ _   _  __ _  __ _  ___
+ *     \ \ ___ \| |     | |/ _` | '_ \ / _` | | | |/ _` |/ _` |/ _ \
+ * .___/ / |_/ /| \__/\ | | (_| | | | | (_| | |_| | (_| | (_| |  __/
+ * \____/\____/  \____/ |_|\__,_|_| |_|\__, |\__,_|\__,_|\__, |\___|
+ *                                     __/ |             __/ |
+ *                                    |___/             |___/
+ * DESCRIPTION:
+ * Header refers to usefull macros.
  *
- * NOTE: _3BC_SCU allows arduino IDE compilation in parts.
- * NOTE: _3BC_COMPACT reduces rom size.
+ * BRIEF:
+ * Low-level language, tiny virtual machine, intermediate representation,
+ * embeddable, easy for beginners. (Friendly Punched cards)
+ *
+ * AUTHOR:
+ * Copyright (C) 2020 Rodrigo Dornelles.
+ *
+ * LICENSE:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#if defined(ARDUINO)
-#define _3BC_SCU
-#define _3BC_COMPACT
-#define _3BC_ARDUINO
-/**
- * PLATAFORM: OLD COMPUTER
- */
-#elif defined(_3BC_MOS6502)
-#define _3BC_COMPACT
-#define _3BC_COMPUTER
-#define _3BC_PC_1970
-#if !defined(_3BC_ENABLE_INTERPRETER) && !defined(_3BC_DISABLE_INTERPRETER)
-#define _3BC_DISABLE_INTERPRETER
-#endif
-#elif defined(_3BC_NUTTX)
-/**
- * PLATAFORM: NUTTX RTOS
- */
-#define _3BC_COMPUTER
-#if !defined(_3BC_ENABLE_INTERPRETER) && !defined(_3BC_DISABLE_INTERPRETER)
-#define _3BC_ENABLE_INTERPRETER
-#endif
-#define _3BC_PC_UNIX
-/**
- * PLATAFORM: MODERN COMPUTER
- */
-#else
-#define _3BC_COMPUTER
-#if !defined(_3BC_ENABLE_INTERPRETER) && !defined(_3BC_DISABLE_INTERPRETER)
-#define _3BC_ENABLE_INTERPRETER
-#endif
-#if defined(_WIN32)
-#define _3BC_PC_WINDOWS
-#else
-#define _3BC_PC_UNIX
-#endif
-#endif
-
-/**
- * PARTITIONED COMPILATION
- */
-#ifndef _3BC_SCU
-#define _3BC_SCU_FIX
-#endif
 
 /**
  * CONSTS MACROS
@@ -95,7 +43,7 @@
 #endif
 
 #ifndef LABEL_HASH_SIZE
-#ifdef _3BC_ARDUINO
+#ifdef TBC_OPT_COMPACT
 #define LABEL_HASH_SIZE (8)
 #else
 #define LABEL_HASH_SIZE (128)
@@ -118,13 +66,6 @@
 /**
  * FUNCTIONS MACROS
  */
-#define PARSER_UNPACK(c)                                                       \
-    (tolower(c[0]) | tolower(c[1]) << 8 | (long)tolower(c[2]) << 16            \
-        | (long)tolower(c[3]) << 24)
-#define PARSER_PACK(c1, c2, c3, c4, v, r)                                      \
-    case (c1 | c2 << 8 | (long)c3 << 16 | (long)c4 << 24):                     \
-        *v = r;                                                                \
-        return (true)
 #define ERROR_LOG_3BC(a, b)                                                    \
     case (a):                                                                  \
         driver_tty_output_raw(app, app->tty_error, (b));                       \
@@ -261,4 +202,4 @@
     ;                                                                          \
     a->t.type = STREAM_TYPE_FUNCTION_CALL;                                     \
     a->t.io.lambda = l;
-#define lang_3bc_custom custom_3bc_func_set
+#define lang_3bc_custom driver_custom_set

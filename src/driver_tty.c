@@ -1,14 +1,52 @@
-#define _3BC_SCU_FIX_2
+/**
+ *  ___________  _____   _
+ * |____ | ___ \/  __ \ | |
+ *     / / |_/ /| /  \/ | | __ _ _ __   __ _ _   _  __ _  __ _  ___
+ *     \ \ ___ \| |     | |/ _` | '_ \ / _` | | | |/ _` |/ _` |/ _ \
+ * .___/ / |_/ /| \__/\ | | (_| | | | | (_| | |_| | (_| | (_| |  __/
+ * \____/\____/  \____/ |_|\__,_|_| |_|\__, |\__,_|\__,_|\__, |\___|
+ *                                     __/ |             __/ |
+ *                                    |___/             |___/
+ * DESCRIPTION:
+ * Code refers to input and outputs texts or buffers in teletype terminals.
+ *
+ * BRIEF:
+ * Low-level language, tiny virtual machine, intermediate representation,
+ * embeddable, easy for beginners. (Friendly Punched cards)
+ *
+ * AUTHOR:
+ * Copyright (C) 2020 Rodrigo Dornelles.
+ *
+ * LICENSE:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * JOKE:
+ * _\|/_ weedend alert! _\|/_
+ * this code was written in a 4:20 mode.
+ */
+
+#define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
-#if defined(_3BC_PC_UNIX)
+#if defined(TBC_USE_POSIX)
 struct termios term_old_attr;
 struct termios term_new_attr;
 #endif
 
 void driver_tty_init()
 {
-#if defined(_3BC_PC_UNIX)
+#if defined(TBC_USE_POSIX)
     /**
      * Turn possible terminal uncannonical mode
      * without conio.h in linux/unix builds
@@ -26,13 +64,13 @@ void driver_tty_init()
 
 void driver_tty_exit()
 {
-#if defined(_3BC_COMPUTER)
+#if defined(TBC_P_COMPUTER)
     /** clear buffers **/
     fflush(stderr);
     fflush(stdout);
 #endif
 
-#if defined(_3BC_PC_UNIX)
+#if defined(TBC_USE_POSIX)
     /** reset terminal to default mode (linux/unix) **/
     tcsetattr(STDIN_FILENO, TCSANOW, &term_old_attr);
 #endif
@@ -54,13 +92,13 @@ data_3bc_t driver_tty_input(
         invalid = false;
 
 /** capture input **/
-#if defined(_3BC_PC_1970)
+#if defined(TBC_P_COMPUTER_OLD)
         c[0] = cgetc();
-#elif defined(_3BC_PC_UNIX)
+#elif defined(TBC_USE_POSIX)
         tcsetattr(STDIN_FILENO, TCSANOW, &term_new_attr);
         c[0] = getchar();
         tcsetattr(STDIN_FILENO, TCSANOW, &term_old_attr);
-#elif defined(_3BC_PC_WINDOWS)
+#elif defined(TBC_USE_CONIO)
         /** exclusive function of the conio.h library **/
         c[0] = getch();
 #endif
@@ -128,10 +166,11 @@ void driver_tty_output(struct app_3bc_s* const app, struct tty_3bc_s tty,
     }
 
     switch (type) {
-#if defined(_3BC_MOS6502)
+    case STRB: {
+#if defined(TBC_NOT_LOG2)
+#warning "[3BC] UNSUPPORTED: STRB OUTPUT"
         driver_program_error(app, ERROR_UNSUPPORTED);
 #else
-    case STRB: {
         /**
          * C It doesn't have printing of numbers with binary base,
          * this is very very sad. makes me want to use java!
@@ -147,8 +186,8 @@ void driver_tty_output(struct app_3bc_s* const app, struct tty_3bc_s tty,
         /** end of output **/
         output[pos] = '\0';
         break;
-    }
 #endif
+    }
 
     case STRC:
         snprintf(output, sizeof(output), "%c", val);
@@ -181,7 +220,7 @@ void driver_tty_output_raw(
         return;
     }
 #endif
-#if defined(_3BC_COMPUTER)
+#if defined(TBC_P_COMPUTER)
     /** stream standard c output **/
     if (tty.type == STREAM_TYPE_COMPUTER_STD) {
         fputs(string, tty.io.stream);

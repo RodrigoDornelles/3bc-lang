@@ -6,105 +6,46 @@ on:
       - "*.*.*"
 
 jobs:
-  linux:
-    runs-on: ubuntu-latest
+  desktop:
+    runs-on: macos-latest
+    env:
+      CC_LD: "./zig cc"
+      TARGETS: >-
+        i386-linux-gnu x86_64-linux-gnu arm-linux-musleabi aarch64-linux-gnu powerpc-linux-musl
+        powerpc64-linux-musl riscv64-linux-musl x86_64-macos aarch64-macos
+        i386-windows x86_64-windows aarch64-windows
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - name: Checkout libaries
-        run: >
-          sudo apt install -y gcc-9-multilib
-          gcc-9-multilib-i686-linux-gnu binutils-i686-linux-gnu
-          gcc-9-arm-linux-gnueabi gcc-arm-linux-gnueabi binutils-arm-linux-gnueabi
-          gcc-9-aarch64-linux-gnu gcc-aarch64-linux-gnu binutils-aarch64-linux-gnu
+      - name: Checkout project
+        uses: actions/checkout@v3
+        with:
+          repository: 'rodrigodornelles/3bc-lang'
+          ref: 'develop'
           
-      - name: Build x86 32bits project
-        run: |
-          i686-linux-gnu-gcc-9 main.c -lm -Os -m32 -o 3bc
-          i686-linux-gnu-strip 3bc
-          tar -czf 3bc-linux-i686.tar.gz 3bc
-          rm 3bc
-  
-      - name: Build x86 64bits project
-        run: |
-          gcc main.c -lm -Os -m64 -o 3bc
-          strip 3bc
-          tar -czf 3bc-linux-amd64.tar.gz 3bc
-          rm 3bc
+      - name: Checkout zig lang
+        run: >- 
+          wget -qO- https://ziglang.org/download/0.9.1/zig-macos-x86_64-0.9.1.tar.xz |
+          tar xvz --strip-components 1
           
-      - name: Build arm 32bits project
-        run: |
-          arm-linux-gnueabi-gcc main.c -lm -Os -march=armv7 -o 3bc
-          arm-linux-gnueabi-strip 3bc
-          tar -czf 3bc-linux-arm.tar.gz 3bc
-          rm 3bc
+      - name: Building interpreter's binaries
+        run: ./scripts/cc_interpreter.rb 
 
-      - name: Build arm 64bits project
-        run: |
-          aarch64-linux-gnu-gcc main.c -lm -Os -march=armv8-a -o 3bc
-          aarch64-linux-gnu-strip 3bc
-          tar -czf 3bc-linux-aarch64.tar.gz 3bc
-          rm 3bc
-
-      - name: Upload binaries to github
+      - name: Building dynamic libaries
+        run: ./scripts/cc_dynamiclib.rb 
+          
+      - name: General report
+        run: tail -n +1 *.log
+        
+      - name: Upload binaries and libaries to github (tarballs)
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            3bc-linux-arm.tar.gz
-            3bc-linux-i686.tar.gz
-            3bc-linux-amd64.tar.gz
-            3bc-linux-aarch64.tar.gz
+          files: "*.tar.gz"
 
-  macos10:
-    runs-on: macos-10.15
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-                  
-      - name: Build 64bits project
-        run: |
-          gcc main.c -lm -Os -m64 -o 3bc
-          strip 3bc
-          tar -czf 3bc-macos10-amd64.tar.gz 3bc
-          rm 3bc
-
-      - name: Upload binaries to github
+      - name: Upload binaries and libaries to github (zippies)
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            3bc-macos10-amd64.tar.gz
+          files: "*.zip"
 
-  windows:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - name: Checkout libaries
-        run: sudo apt install -y mingw-w64 minizip
-      
-      - name: Build 32bits project
-        run: |
-          i686-w64-mingw32-gcc main.c -Os -m32 -o 3bc.exe
-          i686-w64-mingw32-strip 3bc.exe
-          zip 3bc-windows-i686.zip 3bc.exe
-          rm 3bc.exe
-
-      - name: Build 64bits project
-        run: |
-          x86_64-w64-mingw32-gcc main.c -Os -m64 -o 3bc.exe
-          x86_64-w64-mingw32-strip 3bc.exe
-          zip 3bc-windows-amd64.zip 3bc.exe
-          rm 3bc.exe
-
-      - name: Upload binaries to github
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            3bc-windows-i686.zip
-            3bc-windows-amd64.zip
-            
   freebsd:
     runs-on: macos-10.15
     steps:
@@ -117,23 +58,22 @@ jobs:
           usesh: true
           run: |
             mkdir 32bits 64bits
-            clang main.c -m32 -Os -lm -o ./32bits/3bc
-            clang main.c -m64 -Os -lm -o ./64bits/3bc
+            clang programs/interpreter.c -m32 -Os -lm -o ./32bits/3bc
+            clang programs/interpreter.c -m64 -Os -lm -o ./64bits/3bc
             strip ./32bits/3bc
             strip ./64bits/3bc
             
       - name: Packaging project
         run: |
-          tar -czf 3bc-bsd-i686.tar.gz ./32bits/3bc
-          tar -czf 3bc-bsd-amd64.tar.gz ./64bits/3bc
+          tar -czf bsd-i386-interpreter-3bc.tar.gz ./32bits/3bc
+          tar -czf bsd-x86_64-interpreter-3bc.tar.gz ./64bits/3bc
 
 
       - name: Upload binaries to github
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            3bc-bsd-i686.tar.gz
-            3bc-bsd-amd64.tar.gz
+            *.tar.gz
 
   nodejs: 
     runs-on: ubuntu-latest
@@ -149,19 +89,19 @@ jobs:
         run: mkdir bin glue full
 
       - name: Build webassembly binary
-        run: emcc main.c -lm -Os -s WASM=1 -o bin/vm.wasm
+        run: emcc programs/interpreter.c -lm -Os -s WASM=1 -o bin/vm.wasm
         
       - name: Build full javascript app
-        run: emcc main.c -lm -O0 -s WASM=0 -s MODULARIZE=0 -s EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o full/app.js
+        run: emcc programs/interpreter.c -lm -O0 -s WASM=0 -s MODULARIZE=0 -s EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o full/app.js
         
       - name: Build full javascript module
-        run: emcc main.c -lm -O0 -s WASM=0 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o full/module.js
+        run: emcc programs/interpreter.c -lm -O0 -s WASM=0 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o full/module.js
 
       - name: Made javascript glue app
-        run: emcc main.c -lm -O0 -s WASM=1 -s MODULARIZE=0 -s EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o glue/app.js
+        run: emcc programs/interpreter.c -lm -O0 -s WASM=1 -s MODULARIZE=0 -s EXIT_RUNTIME=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o glue/app.js
         
       - name: Made javascript glue module
-        run: emcc main.c -lm -O0 -s WASM=1 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o glue/module.js
+        run: emcc programs/interpreter.c -lm -O0 -s WASM=1 -s MODULARIZE=1 -s EXIT_RUNTIME=1 -s EXPORT_ES6=1 -s FORCE_FILESYSTEM=1 -s WASM_ASYNC_COMPILATION=0 -o glue/module.js
 
       - name: Made links with binary
         run: |
@@ -189,6 +129,4 @@ jobs:
       - name: Upload binaries to github
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            3bc-nodejs.zip
-            3bc-nodejs.tar.gz
+          files: "*.tar.gz"

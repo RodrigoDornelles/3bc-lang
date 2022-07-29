@@ -1,10 +1,43 @@
-#define _3BC_SCU_FIX_2
-#include "3bc.h"
+/**
+ *  ___________  _____   _
+ * |____ | ___ \/  __ \ | |
+ *     / / |_/ /| /  \/ | | __ _ _ __   __ _ _   _  __ _  __ _  ___
+ *     \ \ ___ \| |     | |/ _` | '_ \ / _` | | | |/ _` |/ _` |/ _ \
+ * .___/ / |_/ /| \__/\ | | (_| | | | | (_| | |_| | (_| | (_| |  __/
+ * \____/\____/  \____/ |_|\__,_|_| |_|\__, |\__,_|\__,_|\__, |\___|
+ *                                     __/ |             __/ |
+ *                                    |___/             |___/
+ * DESCRIPTION:
+ * Code refers to the managing contexts and interrupt's of the virtual machine.
+ *
+ * BRIEF:
+ * Low-level language, tiny virtual machine, intermediate representation,
+ * embeddable, easy for beginners. (Friendly Punched cards)
+ *
+ * AUTHOR:
+ * Copyright (C) 2020 Rodrigo Dornelles.
+ *
+ * LICENSE:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * JOKE:
+ * _\|/_ weedend alert! _\|/_
+ * this code was written in a 4:20 mode.
+ */
 
-#if defined(_3BC_ARDUINO) && defined(_3BC_AVR)
-/** TODO: make compatible with xtensa **/
-extern volatile unsigned long timer0_overflow_count;
-#endif
+#define TBC_SOURCE_ENTRY
+#include "3bc.h"
 
 /**
  * VM processor context manager, allows asychronism.
@@ -23,12 +56,7 @@ bool driver_interrupt(struct app_3bc_s* const app)
      *  INTERPRETER CONTEXT
      */
     case FSM_3BC_READING:
-#if defined(_3BC_DISABLE_INTERPRETER)
-        switch (EOF)
-#else
-        switch (interpreter_3bc(app))
-#endif
-        {
+        switch (interpreter_ticket(app)) {
         case 1:
             app->state = FSM_3BC_RUNNING;
             return true;
@@ -65,95 +93,12 @@ bool driver_interrupt(struct app_3bc_s* const app)
      * SLEEP CONTEXT
      */
     case FSM_3BC_WAITING:
-        switch (app->cache_l1.sleep_mode) {
-        case SLEEP_3BC_REAL_TICK: {
-#if defined(_3BC_PC_1970)
-            unsigned long time_now = 0;
-#elif defined(_3BC_COMPUTER)
-            unsigned long time_now = clock();
-#elif defined(_3BC_ARDUINO) && defined(_3BC_AVR)
-            unsigned long time_now = timer0_overflow_count;
-#else
-            unsigned long time_now = 0;
-#endif
-            if (app->cache_l3.sleep_called == 0) {
-                app->cache_l3.sleep_called = time_now;
-            } else if ((time_now - app->cache_l3.sleep_called)
-                > app->cache_l2.sleep_period) {
-                break;
-            }
-            return true;
+        if (!driver_idle(app)) {
+            app->state = FSM_3BC_RUNNING;
+            app->cache_l1.sleep_mode = SLEEP_3BC_NONE;
+            app->cache_l2.sleep_period = 0;
+            app->cache_l3.sleep_called = 0;
         }
-
-        case SLEEP_3BC_FAKE_TICK: {
-            app->cache_l2.sleep_period -= 1;
-            if (app->cache_l2.sleep_period == 0) {
-                break;
-            }
-            return true;
-        }
-
-        case SLEEP_3BC_MICROSECONDS: {
-#if defined(_3BC_PC_1970)
-            unsigned long time_now = 0;
-#elif defined(_3BC_COMPUTER) && defined(CLOCKS_PER_SEC)
-            unsigned long time_now = clock() / (CLOCKS_PER_SEC / 1000 / 1000);
-#elif defined(_3BC_ARDUINO) && defined(_3BC_AVR)
-            unsigned long time_now = micros();
-#else
-            unsigned long time_now = 0;
-#endif
-            if (app->cache_l3.sleep_called == 0) {
-                app->cache_l3.sleep_called = time_now;
-            } else if ((time_now - app->cache_l3.sleep_called)
-                > app->cache_l2.sleep_period) {
-                break;
-            }
-            return true;
-        }
-
-        case SLEEP_3BC_MILLISECONDS: {
-#if defined(_3BC_PC_1970)
-            unsigned long time_now = 0;
-#elif defined(_3BC_COMPUTER) && defined(CLOCKS_PER_SEC)
-            unsigned long time_now = clock() / (CLOCKS_PER_SEC / 1000);
-#elif defined(_3BC_ARDUINO)
-            unsigned long time_now = millis();
-#else
-            unsigned long time_now = 0;
-#endif
-            if (app->cache_l3.sleep_called == 0) {
-                app->cache_l3.sleep_called = time_now;
-            } else if ((time_now - app->cache_l3.sleep_called)
-                > app->cache_l2.sleep_period) {
-                break;
-            }
-            return true;
-        }
-
-        case SLEEP_3BC_SECONDS: {
-#if defined(_3BC_PC_1970)
-            unsigned long time_now = 0;
-#elif defined(_3BC_COMPUTER)
-            unsigned long time_now = time(NULL);
-#elif defined(_3BC_ARDUINO)
-            unsigned long time_now = millis() / 1000;
-#else
-            unsigned long time_now = 0;
-#endif
-            if (app->cache_l3.sleep_called == 0) {
-                app->cache_l3.sleep_called = time_now;
-            } else if ((time_now - app->cache_l3.sleep_called)
-                > app->cache_l2.sleep_period) {
-                break;
-            }
-            return true;
-        }
-        }
-        app->state = FSM_3BC_RUNNING;
-        app->cache_l1.sleep_mode = SLEEP_3BC_NONE;
-        app->cache_l2.sleep_period = 0;
-        app->cache_l3.sleep_called = 0;
         return true;
 
     /**

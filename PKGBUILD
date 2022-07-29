@@ -12,7 +12,7 @@ md5sums=("SKIP")
 
 build() {
   cd "${srcdir}/3bc"
-  gcc -o 3bc -O2 -lm main.c 
+  gcc -o 3bc -O2 -lm programs/interpreter.c 
 }
 package() {
    cd "${srcdir}/3bc" 

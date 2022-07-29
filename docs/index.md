@@ -25,7 +25,7 @@ permalink: /
 {% for main in site.data.main_plataforms %}
 {% assign asset = release.assets | where: "name",  main.name | first %}
 
-<div class="col s12 m4">
+<div class="col s4">
 {% include btn_download.rhtml title=main.title %}
 </div>
 

@@ -1,5 +1,39 @@
-#define _3BC_SCU_FIX_2
-#define _3BC_SCU_FIX
+/**
+ *  ___________  _____   _
+ * |____ | ___ \/  __ \ | |
+ *     / / |_/ /| /  \/ | | __ _ _ __   __ _ _   _  __ _  __ _  ___
+ *     \ \ ___ \| |     | |/ _` | '_ \ / _` | | | |/ _` |/ _` |/ _ \
+ * .___/ / |_/ /| \__/\ | | (_| | | | | (_| | |_| | (_| | (_| |  __/
+ * \____/\____/  \____/ |_|\__,_|_| |_|\__, |\__,_|\__,_|\__, |\___|
+ *                                     __/ |             __/ |
+ *                                    |___/             |___/
+ * DESCRIPTION:
+ * Code refers to the counter program executor and error handler.
+ *
+ * BRIEF:
+ * Low-level language, tiny virtual machine, intermediate representation,
+ * embeddable, easy for beginners. (Friendly Punched cards)
+ *
+ * AUTHOR:
+ * Copyright (C) 2020 Rodrigo Dornelles.
+ *
+ * LICENSE:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+#define TBC_SOURCE_ENTRY
+#define TBC_SOURCE_REGISTERS
 #include "3bc.h"
 
 void driver_program_error(
@@ -14,7 +48,7 @@ void driver_program_error(
         ? app->program.curr->line
         : app->program.last_line;
 
-#ifdef _3BC_COMPACT
+#if defined(TBC_OPT_COMPACT)
     /** smaller log erros for economy rom memory **/
     char error_code_string[64];
     snprintf(error_code_string, sizeof(error_code_string),

@@ -64,4 +64,4 @@ strc nill '.'
 strc nill 0x0A
 
 mode nill 0d4
-strc full 0
+strc full nill

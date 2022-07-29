@@ -1,15 +1,12 @@
 title: 3BC LANG
-
 author: Rodrigo Dornelles
-
+locale: en
 baseurl: "/"
 url: "https://3bc-lang.org"
-
 description: >- 
-  3BC Lang is Low level language,
-  tiny virtual machine that works on computers and microcontrollers.
-  (Friendly Punched cards)
-
+  3BC Lang is Low-level language,
+  tiny virtual machine, intermediate representation,
+  embeddable, easy for beginners. (Friendly Punched cards)
 plugins:
   - jekyll-optional-front-matter
   - jekyll-titles-from-headings
