@@ -1,3 +1,4 @@
+#!/usr/bin/env 3bc
 MODE	NILL	0d06
 ALOC	:a1	    0d07
 ALOC	:a2	    0d00

@@ -1,3 +1,4 @@
+#!/usr/bin/env 3bc
 MODE NILL 0x6 #MODE_MEMORY 
 ALOC 0X01 'A' 
 ALOC 0X02 'B' 

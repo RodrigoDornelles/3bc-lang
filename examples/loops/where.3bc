@@ -1,3 +1,5 @@
+#!/usr/bin/env 3bc
+
 MODE NILL 0d6 
 ALOC :var 3
 

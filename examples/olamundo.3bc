@@ -1,4 +1,4 @@
-mode nill 0d2
+#!/usr/bin/env 3bc
 strc nill 'o'
 strc nill 'l'
 strc nill 'a'

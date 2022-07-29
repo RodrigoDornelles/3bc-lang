@@ -1,3 +1,4 @@
+#!/usr/bin/env 3bc
 # goto entry point
 MODE NILL 0d9
 GOTO NILL :main
