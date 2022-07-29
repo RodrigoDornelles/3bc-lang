@@ -46,6 +46,6 @@ Directly download interpreter as **executable** command for mac/linux/bsd.
 sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/RodrigoDornelles/3bc-lang/master/scripts/install_vm.sh || curl -fsSL https://raw.githubusercontent.com/RodrigoDornelles/3bc-lang/master/scripts/install_vm.sh)"
 ```
 
------------------------------------------------------------------------------------------
+-------------------------------------------------
 ![3bc lang logo](/docs/images/3bc-logo-small.png)
 This project is licensed under **GNU GPL 3.0 or higher**, please read the [LICENSE.txt](LICENSE.txt) file.
