@@ -13,7 +13,7 @@ for target in ENV["TARGETS"].split(" ") do
         CC_FLAGS="-fPIC -Os -lm"
         CC_LD_TARGET="#{target}"
         LD_FLAGS="-shared"
-        #{zip}="#{name}"
+        #{zip}="#{name}-3bc"
     BASH
     cmd = system cmd, :out => File::NULL, :err => (open "#{name}.log", 'a')
     puts "#{(cmd)? done: error} #{name}"

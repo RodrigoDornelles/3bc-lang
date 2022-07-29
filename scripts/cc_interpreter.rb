@@ -9,7 +9,7 @@ for target in ENV["TARGETS"].split(" ") do
         make build
         CC_OUTPUT="3bc#{ext}"
         CC_LD_TARGET="#{target}"
-        #{zip}="#{name}"
+        #{zip}="#{name}-3bc"
     BASH
     cmd = system cmd, :out => File::NULL, :err => (open "#{name}.log", 'a')
     puts "#{(cmd)? done: error} #{name}"
