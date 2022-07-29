@@ -166,12 +166,11 @@ void driver_tty_output(struct app_3bc_s* const app, struct tty_3bc_s tty,
     }
 
     switch (type) {
-    default:
-        driver_program_error(app, ERROR_UNSUPPORTED);
-        break;
-
-#if !defined(TBC_NOT_LOG2)
     case STRB: {
+#if defined(TBC_NOT_LOG2)
+#warning "[3BC] UNSUPPORTED: STRB OUTPUT"
+        driver_program_error(app, ERROR_UNSUPPORTED);
+#else
         /**
          * C It doesn't have printing of numbers with binary base,
          * this is very very sad. makes me want to use java!
@@ -187,8 +186,8 @@ void driver_tty_output(struct app_3bc_s* const app, struct tty_3bc_s tty,
         /** end of output **/
         output[pos] = '\0';
         break;
-    }
 #endif
+    }
 
     case STRC:
         snprintf(output, sizeof(output), "%c", val);

@@ -17,6 +17,8 @@ bin/
 *.dll
 *.dylib
 3bc
+programs/*
+!programs/*.c
 
 # Jekyll files
 .jekyll-cache/
