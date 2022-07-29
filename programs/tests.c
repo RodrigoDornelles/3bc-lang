@@ -1,5 +1,5 @@
 #define _3BC_ENABLE_CUSTOM
-#include "src/3bc.h"
+#include "../src/3bc.h"
 
 void print_char(char* buffer)
 {

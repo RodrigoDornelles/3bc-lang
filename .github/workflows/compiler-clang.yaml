@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Build project
-        run: emcc main.c -lm -O0 -s WASM=1
+        run: emcc programs/interpreter.c -lm -O0 -s WASM=1
   asmjs: 
     runs-on: ubuntu-latest
     container: emscripten/emsdk
@@ -24,4 +24,4 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Build project
-        run: emcc main.c -lm -O0 -s WASM=0
+        run: emcc programs/interpreter.c -lm -O0 -s WASM=0

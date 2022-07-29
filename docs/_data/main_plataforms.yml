@@ -1,8 +1,8 @@
-- name: 3bc-windows-i686.zip
+- name: windows-i386-interpreter-3bc.zip
   title: Windows
 
-- name: 3bc-linux-i686.tar.gz
+- name: linux-i386-interpreter-3bc.tar.gz
   title: Linux
 
-- name: 3bc-macos10-amd64.tar.gz
+- name: macos-x86_64-interpreter-3bc.tar.gz
   title: Mac OSX

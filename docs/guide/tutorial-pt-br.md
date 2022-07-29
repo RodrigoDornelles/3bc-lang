@@ -1,5 +1,5 @@
-Tutorial em português :brazil:
-==============================
+Tutorial em português
+=====================
 
 3BC é uma linguagem de programação em baixo nível e de fácil aprendizado, que trabalha na forma de uma máquina virtual semelhante a um computador da década de 60, mas com uma arquitetura muito inusitada que possui processadores de apenas **3 bits**.
 

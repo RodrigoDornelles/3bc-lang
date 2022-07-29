@@ -1,3 +1,37 @@
+/**
+ *  ___________  _____   _
+ * |____ | ___ \/  __ \ | |
+ *     / / |_/ /| /  \/ | | __ _ _ __   __ _ _   _  __ _  __ _  ___
+ *     \ \ ___ \| |     | |/ _` | '_ \ / _` | | | |/ _` |/ _` |/ _ \
+ * .___/ / |_/ /| \__/\ | | (_| | | | | (_| | |_| | (_| | (_| |  __/
+ * \____/\____/  \____/ |_|\__,_|_| |_|\__, |\__,_|\__,_|\__, |\___|
+ *                                     __/ |             __/ |
+ *                                    |___/             |___/
+ * DESCRIPTION:
+ * Header refers to type definitions.
+ *
+ * BRIEF:
+ * Low-level language, tiny virtual machine, intermediate representation,
+ * embeddable, easy for beginners. (Friendly Punched cards)
+ *
+ * AUTHOR:
+ * Copyright (C) 2020 Rodrigo Dornelles.
+ *
+ * LICENSE:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "3bc.h"
 
 /** PRIMITIVE TYPES **/
@@ -9,14 +43,18 @@ typedef unsigned char label_3bc_t;
 typedef unsigned char memory_conf_t;
 typedef signed int data_3bc_t;
 typedef signed long data_aux_3bc_t;
-#if defined(__x86_64__)
+
+/** application 3bc id (depends of cpu size)**/
+#if defined(TBC_ARCH_BITS_64)
 typedef unsigned long long app_3bc_id;
-#elif defined(__x86_64__)
+#elif defined(TBC_ARCH_BITS_32) && !defined(TBC_OPT_COMPACT)
 typedef unsigned long app_3bc_id;
-#elif defined(ESP_PLATFORM) || defined(ARDUINO_ARCH_RP2040)
+#elif defined(TBC_ARCH_BITS_32) || defined(TBC_ARCH_BITS_16)
 typedef unsigned int app_3bc_id;
-#else
+#elif defined(TBC_ARCH_BITS_8)
 typedef unsigned char app_3bc_id;
+#else
+typedef unsigned short app_3bc_id;
 #endif
 
 /** FILE/STREAM/INTERFACE TYPES **/
@@ -164,3 +202,13 @@ struct app_3bc_s {
 
 typedef void (*function_3bc_t)(
     struct app_3bc_s* const, register_3bc_t, address_3bc_t, data_3bc_t);
+
+/** GLOBAL TYPES **/
+union global_time_u {
+#if defined(TBC_P_COMPUTER)
+    struct timespec ts;
+#endif
+    unsigned long count;
+    unsigned long micros;
+    unsigned long millis;
+};

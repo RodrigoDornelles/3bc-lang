@@ -9,11 +9,16 @@ bin/
 *.bin
 *.app
 *.exe
+*.obj
 *.out
-main
 *.o
 *.s
+*.so
+*.dll
+*.dylib
 3bc
+programs/*
+!programs/*.c
 
 # Jekyll files
 .jekyll-cache/
@@ -21,6 +26,13 @@ main
 .jekyll-metadata
 Gemfile.lock
 _site/
+
+# Log reports
+*.log
+
+# Compressed files
+*.tar.gz
+*.zip
 
 # IDE FILES
 .vscode

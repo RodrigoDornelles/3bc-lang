@@ -1,10 +1,45 @@
-#define _3BC_SCU_FIX_2
+/**
+ *  ___________  _____   _
+ * |____ | ___ \/  __ \ | |
+ *     / / |_/ /| /  \/ | | __ _ _ __   __ _ _   _  __ _  __ _  ___
+ *     \ \ ___ \| |     | |/ _` | '_ \ / _` | | | |/ _` |/ _` |/ _ \
+ * .___/ / |_/ /| \__/\ | | (_| | | | | (_| | |_| | (_| | (_| |  __/
+ * \____/\____/  \____/ |_|\__,_|_| |_|\__, |\__,_|\__,_|\__, |\___|
+ *                                     __/ |             __/ |
+ *                                    |___/             |___/
+ * DESCRIPTION:
+ * Code refers startup, shutdown and system signals
+ * received by virtual machines.
+ *
+ * BRIEF:
+ * Low-level language, tiny virtual machine, intermediate representation,
+ * embeddable, easy for beginners. (Friendly Punched cards)
+ *
+ * AUTHOR:
+ * Copyright (C) 2020 Rodrigo Dornelles.
+ *
+ * LICENSE:
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License,
+ * or any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+#define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
 /**
  * MACRO: lang_3bc_init
  */
-#if defined(_3BC_COMPUTER)
+#if !defined(TBC_NOT_ARGCV)
 struct app_3bc_s* const driver_power_init(int argc, char** argv)
 #else
 struct app_3bc_s* const driver_power_init()
@@ -12,7 +47,7 @@ struct app_3bc_s* const driver_power_init()
 {
     struct app_3bc_s* const app = ds_hypervisor_darray_new();
 
-#if defined(_3BC_COMPUTER)
+#if defined(TBC_P_COMPUTER)
     /** TODO: move to driver_tty_init() **/
     app->tty_source.type = STREAM_TYPE_COMPUTER_STD;
     app->tty_source.io.file = stdin;
@@ -28,7 +63,7 @@ struct app_3bc_s* const driver_power_init()
 
     driver_tty_init();
 
-#if defined(_3BC_COMPUTER)
+#if defined(TBC_P_COMPUTER)
 /**
  * Capture computer signals
  */
@@ -64,33 +99,33 @@ struct app_3bc_s* const driver_power_init()
 void driver_power_signal(int sig)
 {
     struct app_3bc_s** apps = ds_hypervisor_darray_get_all();
-    struct app_3bc_s* app;
 
     /**
      * JOKE:
      *
      * Finally, C ANSI FOREACH!!!!
      */
-    while ((app = *(apps++)) != NULL) {
+    for (; *apps; apps++) {
         switch (sig) {
         case SIGTERM:
-            driver_power_exit(app);
+            driver_power_exit(*apps);
             break;
 
 #if defined(SIGINT)
         case SIGINT:
-            driver_power_exit(app);
+            driver_power_exit(*apps);
             break;
 #endif
 
 #if defined(SIGSEGV)
         case SIGSEGV:
-            driver_program_error(app, (enum error_3bc_e)sig);
+            driver_program_error(*apps, (enum error_3bc_e)sig);
             break;
 #endif
         }
     }
 
+    ds_hypervisor_darray_kill_all();
 #if defined(SIGINT)
     exit(sig);
 #endif

@@ -164,7 +164,7 @@ class TestFails < Minitest::Test
     end
 
     def test_invalid_char_size
-        for console_input in ["0.0.'aa'", "0.0.'a"]
+        for console_input in ["0.0.'aaa'", "0.0.'aa"]
         stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => console_input)
         assert_match /ERROR CODE\:(\t| )?(0x3BC01B)/, stderr
         assert_equal 15, status.exitstatus

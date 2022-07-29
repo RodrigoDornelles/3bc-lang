@@ -1,4 +1,4 @@
-#include "src/3bc.h"
+#include "../src/3bc.h"
 
 int main(int argc, char** argv)
 {
