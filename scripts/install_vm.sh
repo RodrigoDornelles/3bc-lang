@@ -9,20 +9,20 @@ function get_release() {
 function get_arch {
   case $(uname -m) in
     x86_64)
-      echo "amd64"
+      echo "x86_64"
       ;;
     i*86)
-      echo "i686"
+      echo "i386"
       ;;
     *)
-      echo "amd64"
+      echo "x86_64"
       ;;
   esac
 }
 function get_os() {
   case $(uname) in
     Darwin)
-      echo "macos10"
+      echo "macos"
       ;;
     Linux)
       echo "linux"
@@ -33,7 +33,7 @@ function get_os() {
 function main {
   RELEASE=$(get_release)
   echo "info: installing release ${RELEASE}"
-  DOWNLOAD_URL="https://github.com/RodrigoDornelles/3bc-lang/releases/download/${RELEASE}/3bc-$(get_os)-$(get_arch).tar.gz"
+  DOWNLOAD_URL="https://github.com/RodrigoDornelles/3bc-lang/releases/download/${RELEASE}/$(get_os)-$(get_arch)-interpreter-3bc.tar.gz"
   echo "info: downloading ${DOWNLOAD_URL}"
   req "${DOWNLOAD_URL}" | tar -xz -C /usr/local/bin
   chmod +x /usr/local/bin/3bc
