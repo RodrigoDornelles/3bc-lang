@@ -74,7 +74,8 @@ int interpreter_ticket(struct app_3bc_s* const app)
     }
 
     /** end of file **/
-    if ((character == EOF || character == -1) && app->cache_l3.buffer.storage == NULL) {
+    if ((character == EOF || character == -1)
+        && app->cache_l3.buffer.storage == NULL) {
         return EOF;
     }
 
