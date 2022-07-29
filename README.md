@@ -33,7 +33,7 @@ tests/          Language work check (Ruby)
 
 ## How to build ##
 
-Download interpreter source code and manually compile from scratch.
+Download interpreter **source code** and manually compile from scratch.
 
 ```BASH
 git clone https://github.com/RodrigoDornelles/3bc-lang
@@ -42,7 +42,7 @@ make build
 
 ## Hot to install ##
 
-Directly download interpreter as executable command for mac/linux/bsd.
+Directly download interpreter as **executable** command for mac/linux/bsd.
 
 ```BASH
 sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/RodrigoDornelles/3bc-lang/master/scripts/install_vm.sh || curl -fsSL https://raw.githubusercontent.com/RodrigoDornelles/3bc-lang/master/scripts/install_vm.sh)"
