@@ -9,7 +9,7 @@ for target in ENV["TARGETS"].split(" ") do
     cmd = <<-BASH.strip.delete "\n"
         make build
         CC_OUTPUT="3bc#{ext}"
-        CC_SOURCES="main/lib.c"
+        CC_SOURCES="programs/libary.c"
         CC_FLAGS="-fPIC -Os -lm"
         CC_LD_TARGET="#{target}"
         LD_FLAGS="-shared"

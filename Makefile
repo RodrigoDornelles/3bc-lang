@@ -1,7 +1,7 @@
 .PHONY: docs tests
 
-CXX_SOURCES ?= main/unit.c
-CC_SOURCES ?= main/interpreter.c
+CXX_SOURCES ?= programs/tests.c
+CC_SOURCES ?= programs/interpreter.c
 CC_OUTPUT ?= 3bc
 CC_FLAGS ?= -Os
 CC_OBJECTS ?= $(CC_SOURCES:.c=.o)

@@ -13,7 +13,7 @@
 ```
 docs/           Website made with jekyll (Ruby)
 examples/       Syntax sampling codes (3bc, Arduino with C++)
-main/           Embbed programs sampling Codes (C)
+programs/       Embbed programs sampling codes (C)
 scripts/        Development and installation tools (Bash, Ruby)
 src/            Library source code (C)
 tests/          Language work check (Ruby)
@@ -31,11 +31,21 @@ tests/          Language work check (Ruby)
 * **[Download last version](https://3bc-lang.org/download)**
 * **[List of early developers](https://3bc-lang.org/extra/early-adopters)**
 
-## How to build
+## How to build ##
+
+Download interpreter source code and manually compile from scratch.
 
 ```BASH
 git clone https://github.com/RodrigoDornelles/3bc-lang
 make build
+```
+
+## Hot to install ##
+
+Directly download interpreter as executable command for mac/linux/bsd.
+
+```BASH
+sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/RodrigoDornelles/3bc-lang/master/scripts/install_vm.sh || curl -fsSL https://raw.githubusercontent.com/RodrigoDornelles/3bc-lang/master/scripts/install_vm.sh)"
 ```
 
 -----------------------------------------------------------------------------------------
