@@ -131,6 +131,14 @@
 #define TBC_USE_ARDUINO
 #endif
 
+#if defined(ARDUINO_ARCH_ESP8266)
+#define TBC_SCU_FORCE
+#define TBC_NOT_ARGCV
+#define TBC_OPT_COMPACT
+#define TBC_P_EMBEDDED
+#define TBC_USE_ARDUINO
+#endif
+
 /**
  * PLATAFORM: KERNEL NUTTX
  *
@@ -236,7 +244,7 @@
 #define TBC_ARCH_CPU_POWER
 #endif
 
-#if defined(ESP_PLATFORM)
+#if defined(ESP_PLATFORM) || defined(ARDUINO_ARCH_ESP8266)
 #define TBC_ARCH_BITS_32
 #define TBC_ARCH_CPU_RISCV
 #endif
