@@ -105,7 +105,7 @@ void driver_power_signal(int sig)
      *
      * Finally, C ANSI FOREACH!!!!
      */
-    for(;*apps; apps++) {
+    for (; *apps; apps++) {
         switch (sig) {
         case SIGTERM:
             driver_power_exit(*apps);

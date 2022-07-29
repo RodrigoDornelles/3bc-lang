@@ -210,7 +210,7 @@ bool interpreter_syntax_constants(struct app_3bc_s* const app,
     /** is safe! **/
     if (interpreter_parser_strtol(app, string, value)) {
         return true;
-    } 
+    }
     /** is safe! **/
     if (interpreter_parser_strhash(string, value)) {
         return true;

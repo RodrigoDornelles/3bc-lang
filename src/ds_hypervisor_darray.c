@@ -52,7 +52,7 @@ struct app_3bc_s* const ds_hypervisor_darray_new()
     /** successful craete new machine **/
     if (new_vm != NULL) {
         /** expand hypervisor **/
-        struct app_3bc_s** new_array = (struct app_3bc_s**) realloc(
+        struct app_3bc_s** new_array = (struct app_3bc_s**)realloc(
             machines_array, (sizeof(struct app_3bc_s*) * (machines_count + 2)));
 
         /** not possible expand array **/
@@ -101,8 +101,7 @@ void ds_hypervisor_darray_kill_all()
     do {
         /** free each machine **/
         free(machines_array[--machines_count]);
-    }
-    while (machines_count);
+    } while (machines_count);
 
     /** reset hypervisor **/
     free(machines_array);

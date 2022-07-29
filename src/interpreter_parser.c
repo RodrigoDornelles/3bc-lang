@@ -194,7 +194,7 @@ bool interpreter_parser_strhash(const char* string, signed long int* value)
     }
 
     /** djb2 algorithm **/
-    for (;(c = *string); string++) {
+    for (; (c = *string); string++) {
 
         /** ignore break line **/
         if (c == '\n') {
