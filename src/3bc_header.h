@@ -230,10 +230,10 @@ int interpreter_parser_skip();
 /*****************************************************************************/
 char* interpreter_readln(struct app_3bc_s* const app, char* line);
 /*****************************************************************************/
-bool interpreter_syntax_constants(
-    struct app_3bc_s* const app, const char* const string, signed long int* value);
-bool interpreter_syntax_registers(
-    struct app_3bc_s* const app, const char* const string, signed long int* value);
+bool interpreter_syntax_constants(struct app_3bc_s* const app,
+    const char* const string, signed long int* value);
+bool interpreter_syntax_registers(struct app_3bc_s* const app,
+    const char* const string, signed long int* value);
 /*****************************************************************************/
 bool interpreter_tokens(
     char* line, char** reg, char** mem, char** val, char** line_end);
