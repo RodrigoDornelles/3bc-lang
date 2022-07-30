@@ -18,9 +18,6 @@ jobs:
     steps:
       - name: Checkout project
         uses: actions/checkout@v3
-        with:
-          repository: 'rodrigodornelles/3bc-lang'
-          ref: 'develop'
           
       - name: Checkout zig lang
         run: >- 
