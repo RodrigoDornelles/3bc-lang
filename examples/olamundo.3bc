@@ -1,4 +1,5 @@
 #!/usr/bin/env 3bc
+mode nill 0d2
 strc nill 'o'
 strc nill 'l'
 strc nill 'a'
