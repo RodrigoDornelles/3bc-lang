@@ -1,3 +1,4 @@
+#!/usr/bin/env 3bc
 MODE NILL 0d2
 NILL NILL :do
 STRC NILL '\n' 

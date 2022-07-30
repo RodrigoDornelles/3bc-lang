@@ -1,3 +1,4 @@
+#!/usr/bin/env 3bc
 mode nill 0d2
 strc nill 'h'
 strc nill 'e'

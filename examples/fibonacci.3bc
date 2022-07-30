@@ -1,3 +1,4 @@
+#!/usr/bin/env 3bc
 # PRINT STREAM "FIB:"
 MODE    NILL    0d02
 STRC    NILL    'F'
