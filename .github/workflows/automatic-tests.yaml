@@ -24,7 +24,8 @@ jobs:
       - name: Run full tests suite
         run: make tests-full
 
-      - name: Report tests
+      - name: "Report tests (TODO: replace to codacy)"
+        if: false
         run: |
           gcov unit.c
           bash <(curl -s https://codecov.io/bash)
