@@ -186,6 +186,16 @@
 #endif
 
 /**
+ * PLATAFORM: KERNEL UNIX
+ */
+#if defined(__unix__) || defined(BSD)
+#define TBC_USE_POSIX
+#define TBC_KERNEL_UNIX
+#define TBC_PREFER_INTERPRETER
+#define TBC_P_COMPUTER
+#endif
+
+/**
  * PLATAFORM: Browser/NodeJS
  */
 #if defined(EMSCRIPTEN)
