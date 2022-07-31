@@ -4,6 +4,7 @@ gem "jekyll", "~> 3.9.0"
 
 group :jekyll_plugins do
   gem "github-pages", "~> 209"
+  gem 'jekyll-optional-front-matter'
 end
 
 platforms :mingw, :x64_mingw, :mswin, :jruby do

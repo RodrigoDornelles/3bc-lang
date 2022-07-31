@@ -1,0 +1,26 @@
+---
+title: Download
+description: See all changelogs and download the latest version of 3BC language.
+click_here: https://3bc-lang.org/download
+redirect_from: ['changelogs', 'docs/changelogs', 'extra/changelogs']
+---
+
+{% assign first_release = site.github.releases | first %}
+{% for release in site.github.releases %}
+
+<h2>{{ release.name }}</h2>
+
+{% if first_release.tag_name == release.tag_name %}
+    <h3>CLI Interpreter</h3>
+    {% include download_list.rhtml type='interpreter' %}
+
+    <h3>Dynamic Libary</h3>
+    {% include download_list.rhtml type='libary' %}
+{% else %}
+<details>
+    <summary>Download</summary>
+    {% include download_list.rhtml %}
+</details>
+{% endif %}
+<br/><br/>
+{% endfor %}

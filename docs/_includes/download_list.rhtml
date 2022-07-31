@@ -1,0 +1,33 @@
+
+{% if include.type %}
+<table>
+    <tr>
+      <th>System</th>
+      <th>Architeture</th>
+      <th>Download</th>
+    </tr>
+{% assign assets = release.assets | where_exp: "item", "item.name contains include.type" %}
+{% for asset in assets %}
+{% assign plataform = asset.name | split: "-" | first | capitalize %}
+{% assign architeture = asset.name | split: "-" | slice: 1 %}
+    <tr>
+      <td><strong>{{ plataform }}</strong></td>
+      <td>{{ architeture }}</td>
+      <td width="128px">{% include download_btn.rhtml %}</td>
+    </tr>
+{% endfor %}
+</table>
+{% else %}
+<table>
+  <tr>
+    <th>File name</th>
+    <th>Download</th>
+  </tr>
+{% for asset in assets %}
+  <tr>
+    <td><strong>{{ asset.name }}</strong></td>
+    <td width="128px">{% include download_btn.rhtml %}</td>
+  </tr>
+{% endfor %}
+</table>
+{% endif %}

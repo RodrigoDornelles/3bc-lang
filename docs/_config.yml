@@ -7,6 +7,23 @@ description: >-
   3BC Lang is Low-level language,
   tiny virtual machine, intermediate representation,
   embeddable, easy for beginners. (Friendly Punched cards)
+  
+description_pt: >-
+  3BC Lang &eacute;
+  uma linguagem de baixo n&iacute;vel,
+  incorpor&aacute;vel,<br/>
+  micro-m&aacute;quinavirtual,
+  representa&ccedil;&atilde;o intermedi&aacute;ria,
+  f&aacute;cil para iniciantes.
+  (amig&aacute;vel para cart&otilde;es perfurados)
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      layout: "default"
+
 plugins:
   - jekyll-optional-front-matter
   - jekyll-titles-from-headings

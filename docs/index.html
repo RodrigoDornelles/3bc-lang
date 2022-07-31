@@ -1,0 +1,93 @@
+---
+title: 3BC Language
+---
+
+<h1>{{ page.title }}</h1>
+
+<section class="row">
+    <div class="col s12 m6">
+        <img
+            width="240px"
+            class="img-center"
+            alt="3BC LANGUAGE LOGO"
+            src="images/3bc-logo-mid.png"
+        />
+    </div>
+    <div class="col s12 m6">
+        <h2>Download last version!</h2>
+{% assign release = site.github.releases | first %}
+        <ul>
+            <li>
+                <strong>Released:</strong>
+                &nbsp;{{ release.name }}
+            </li>
+            <li>
+                <strong>Date published:</strong>
+                &nbsp;{{ release.created_at | date_to_long_string }}
+            </li>
+            <li>
+                <a href="download.html">
+                    Browse for all download versions.
+                </a>
+            </li>
+        </ul>
+
+        <div class="row">
+{% for main in site.data.main_plataforms %}
+{% assign asset = release.assets | where: "name",  main.name | first %}
+            <div class="col s4">
+                {% include download_btn.rhtml title=main.title %}
+            </div>
+{% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="row">
+    <div class="col s12 m6 push-m6" markdown="1">
+        <h2>Documentation</h2>
+        <ul>
+            <li>
+                <a href="guide/tutorial-en-us" title="english manual">
+                    <strong>Tutorial :us:</strong>
+                </a>
+            </li>
+            <li>
+                <a href="guide/tutorial-pt-br" title="manual em portugues">
+                    <strong>Tutorial :brazil:</strong>
+                </a>
+            </li>
+            <li>
+                <a href="guide/tutorial-en-us" title="Cheatsheets guide">
+                    <strong>Cheatsheet</strong>
+                </a>
+            </li>
+            <li>
+                <a href="{{ site.github.clone_url }}" title="Source code repositorys">
+                    <strong>Source code</strong>
+                </a>
+            </li>
+            <li>
+                <a href="support" title="Supported platafforms list">
+                    <strong>Platafform Support</strong>
+                </a>
+            </li>
+            <li>
+                <a href="extra/roadmap" title="Community and project goals">
+                    <strong>Ambient Roadmap</strong>
+                </a>
+            </li>
+            <li>
+                <a href="extra/early-adopters" title="Tribute to the first programmers">
+                    <strong>List of early developers</strong>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="col s12 m6 pull-m6" markdown="1">
+        <h2>About</h2>
+        <p>{{ site.description }}</p>
+        <hr/>
+        <p>{{ site.description_pt }}</p>
+    </div>
+</section>
