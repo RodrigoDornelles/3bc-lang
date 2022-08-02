@@ -23,7 +23,7 @@
     <th>File name</th>
     <th>Download</th>
   </tr>
-{% for asset in assets %}
+{% for asset in release.assets %}
   <tr>
     <td><strong>{{ asset.name }}</strong></td>
     <td width="128px">{% include download_btn.rhtml %}</td>
