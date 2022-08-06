@@ -36,6 +36,7 @@ title: 3BC Language
 {% for main in site.data.main_plataforms %}
 {% assign asset = release.assets | where: "name",  main.name | first %}
             <div class="col s4">
+                <strong>{{ main.title }}</strong><br/>
                 {% include download_btn.rhtml title=main.title %}
             </div>
 {% endfor %}
@@ -58,7 +59,7 @@ title: 3BC Language
                 </a>
             </li>
             <li>
-                <a href="guide/tutorial-en-us" title="Cheatsheets guide">
+                <a href="guide/cheatsheet" title="Cheatsheets guide">
                     <strong>Cheatsheet</strong>
                 </a>
             </li>
