@@ -1,3 +1,13 @@
+body{
+    transition: color 1s ease, background-color 1s ease;
+}
+.dark {
+    background-color: #202123;
+    color: #fff;
+}
+.theme{
+    cursor: pointer;
+}
 h1 {
     font-size: 2em;
     line-height: 80%;

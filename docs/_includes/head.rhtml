@@ -16,6 +16,11 @@
         M.Tabs.init(document.querySelectorAll('.tabs'), {swipeable: false});
         M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
     });
+
+    function themeMode(){ 
+        const body = document.querySelector('body'); 
+        body.classList.toggle('dark');
+    }
 </script>
 
 <!-- FAVICON -->
