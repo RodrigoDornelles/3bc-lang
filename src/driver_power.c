@@ -74,7 +74,7 @@ struct app_3bc_s* const driver_power_init()
 #if defined(SIGSEGV)
     signal(SIGSEGV, driver_power_signal);
 #endif
-
+#if !defined(TBC_NOT_ARGCV)
     if (argc > 1) {
         app->tty_source.type = STREAM_TYPE_COMPUTER_FILE;
         app->tty_source.io.file = fopen(argv[argc - 1], "r");
@@ -85,6 +85,7 @@ struct app_3bc_s* const driver_power_init()
         && app->tty_source.io.file == NULL) {
         driver_program_error(app, ERROR_OPEN_FILE);
     }
+#endif
 #endif
 
     return app;
