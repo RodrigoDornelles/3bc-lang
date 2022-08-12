@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- FAV ICON -->       
+<!-- FAV ICON -->
 
 <!-- MATERIALIZE CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize/dist/css/materialize.min.css">
@@ -13,13 +13,21 @@
 <!-- MATERILIZE SCRIPT -->
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        M.Tabs.init(document.querySelectorAll('.tabs'), {swipeable: false});
+        M.Tabs.init(document.querySelectorAll('.tabs'), { swipeable: false });
         M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
     });
 
-    function themeMode(){ 
-        const body = document.querySelector('body'); 
-        body.classList.toggle('dark');
+    function themeMode() {
+        const body = document.querySelector("body");
+        const iconTheme = document.querySelector(".bright");
+        body.classList.toggle("dark");
+
+        if (iconTheme.innerText === "brightness_4") {
+            iconTheme.innerText = "brightness_high";
+            return;
+        }
+
+        iconTheme.innerText = "brightness_4";
     }
 </script>
 
