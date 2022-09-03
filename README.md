@@ -11,10 +11,11 @@
 
 ## Documentation ##
 
-* **[Tutorial :us:](https://3bc-lang.org/guide/tutorial-en-us)**
-* **[Tutorial :brazil:](https://3bc-lang.org/guide/tutorial-pt-br)**
-* **[Cheatsheet](https://3bc-lang.org/guide/cheatsheet)**
-* **[List of early developers](https://3bc-lang.org/extra/early-adopters)**
+* **[Tutorial :us:](docs/guide/tutorial-en-us.md)**
+* **[Tutorial :brazil:](docs/guide/tutorial-pt-br.md)**
+* **[Cheatsheet :book:](docs/guide/cheatsheet.md)**
+* **[List of early developers :trophy:](docs/extra/early-adopters.md)**
+* **[Visit the official website :globe_with_meridians:](https://3bc-lang.org)**
 
 ## Directory structure ##
 
