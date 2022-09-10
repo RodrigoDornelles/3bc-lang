@@ -51,6 +51,45 @@
 #if defined(TBC_INTERPRETER) && !defined(TBC_SCU_OPTIONAL_FIX)
 
 /**
+ * BRIEF:
+ * representation of the menomonics for registers
+ * with their respective opcodes.
+ *
+ * JOKE:
+ * why you need for CPP if C language is already 'complete and total'?
+ * { .keyword.name = "mode", .opcode = 7 } <-- not allowed in C++
+ */
+static const struct tbc_keyword_opcode_st keywords_opcode[] = {
+    /** COMMON CPU MODES **/
+    { "nill", 0 }, { "mode", 7 },
+    /** CPU MODE 1..5 **/
+    { "strb", 1 }, { "stro", 2 }, { "stri", 3 }, { "strx", 4 }, { "strc", 5 },
+    /** CPU MODE 6..8 **/
+    { "free", 1 }, { "aloc", 2 },
+    /** CPU MODE 6**/
+    { "moff", 3 }, { "muse", 4 },
+    /** CPU MODE 7,8 **/
+    { "pull", 3 }, { "spin", 4 }, { "push", 5 },
+    /** CPU MODE 9 **/
+    { "goto", 1 }, { "fgto", 2 }, { "zgto", 3 }, { "pgto", 4 }, { "ngto", 5 },
+    /** CPU MODE 11..18,21..29,31..39 **/
+    { "math", 1 },
+    /** CPU MODE 29 **/
+    { "nb02", 1 }, { "nb08", 2 }, { "nb10", 3 }, { "nb16", 4 },
+    /** CPU MODE 41 **/
+    { "back", 1 }, { "fret", 2 }, { "zret", 3 }, { "pret", 4 }, { "nret", 5 },
+    /** CPU MODE 42 **/
+    { "call", 1 }, { "fcal", 2 }, { "zcal", 3 }, { "pcal", 4 }, { "ncal", 5 },
+    /** CPU MODE 43,44 **/
+    { "seco", 5 },
+    /** CPU MODE 43 **/
+    { "real", 1 }, { "fake", 2 }, { "micr", 3 }, { "mili", 4 }
+};
+
+static const char keywords_opcode_size
+    = sizeof(keywords_opcode) / sizeof(struct tbc_keyword_opcode_st);
+
+/**
  * Checks menomics and literal expressions of the first column only.
  *
  * NOTE:
@@ -62,140 +101,29 @@
 bool interpreter_syntax_registers(struct app_3bc_s* const app,
     const char* const string, signed long int* value)
 {
+    tbc_u8_t i = 0;
+    union tbc_keyword_ut key;
+
     /** passing register as numerical (octo, bin) **/
     if (interpreter_parser_strtol(app, string, value)) {
         return true;
     }
 
-    /** mnemonic translate world to register **/
-    switch (string[0] | (string[1] << 8) | (string[2] << 16) | (string[3] << 24)
-        | 0x20202020) {
-    case ('n' | ('i' << 8) | ((long)'l' << 16) | ((long)'l' << 24)):
-        *value = NILL;
-        return true;
-    case ('m' | ('o' << 8) | ((long)'d' << 16) | ((long)'e' << 24)):
-        *value = MODE;
-        return true;
+    /** copy keyname **/
+    memcpy(key.name, string, 5);
+    /** force to lowercase **/
+    key.compare |= 0x20202020;
 
-    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'b' << 24):
-        *value = STRB;
-        return true;
-    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'i' << 24):
-        *value = STRI;
-        return true;
-    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'c' << 24):
-        *value = STRC;
-        return true;
-    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'o' << 24):
-        *value = STRO;
-        return true;
-    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'x' << 24):
-        *value = STRX;
-        return true;
-
-    case ('f' | 'r' << 8) | ((long)'e' << 16) | ((long)'e' << 24):
-        *value = FREE;
-        return true;
-    case ('a' | 'l' << 8) | ((long)'o' << 16) | ((long)'c' << 24):
-        *value = ALOC;
-        return true;
-    case ('p' | 'u' << 8) | ((long)'l' << 16) | ((long)'l' << 24):
-        *value = PULL;
-        return true;
-    case ('s' | 'p' << 8) | ((long)'i' << 16) | ((long)'n' << 24):
-        *value = SPIN;
-        return true;
-    case ('p' | 'u' << 8) | ((long)'s' << 16) | ((long)'h' << 24):
-        *value = PUSH;
-        return true;
-
-    case ('m' | 'o' << 8) | ((long)'f' << 16) | ((long)'f' << 24):
-        *value = MOFF;
-        return true;
-    case ('m' | 'u' << 8) | ((long)'s' << 16) | ((long)'e' << 24):
-        *value = MUSE;
-        return true;
-
-    case ('g' | 'o' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
-        *value = GOTO;
-        return true;
-    case ('f' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
-        *value = FGTO;
-        return true;
-    case ('z' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
-        *value = ZGTO;
-        return true;
-    case ('p' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
-        *value = PGTO;
-        return true;
-    case ('n' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
-        *value = NGTO;
-        return true;
-
-    case ('n' | 'b' << 8) | ((long)'0' << 16) | ((long)'2' << 24):
-        *value = NB02;
-        return true;
-    case ('n' | 'b' << 8) | ((long)'0' << 16) | ((long)'8' << 24):
-        *value = NB08;
-        return true;
-    case ('n' | 'b' << 8) | ((long)'1' << 16) | ((long)'0' << 24):
-        *value = NB10;
-        return true;
-    case ('n' | 'b' << 8) | ((long)'1' << 16) | ((long)'6' << 24):
-        *value = NB16;
-        return true;
-
-    case ('m' | 'a' << 8) | ((long)'t' << 16) | ((long)'h' << 24):
-        *value = MATH;
-        return true;
-
-    case ('c' | 'a' << 8) | ((long)'l' << 16) | ((long)'l' << 24):
-        *value = CALL;
-        return true;
-    case ('f' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
-        *value = FCAL;
-        return true;
-    case ('z' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
-        *value = ZCAL;
-        return true;
-    case ('p' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
-        *value = PCAL;
-        return true;
-    case ('n' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
-        *value = NCAL;
-        return true;
-
-    case ('f' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
-        *value = FRET;
-        return true;
-    case ('z' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
-        *value = ZRET;
-        return true;
-    case ('p' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
-        *value = PRET;
-        return true;
-    case ('n' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
-        *value = NRET;
-        return true;
-    case ('b' | 'a' << 8) | ((long)'c' << 16) | ((long)'k' << 24):
-        *value = BACK;
-        return true;
-
-    case ('r' | 'e' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
-        *value = REAL;
-        return true;
-    case ('f' | 'a' << 8) | ((long)'k' << 16) | ((long)'e' << 24):
-        *value = FAKE;
-        return true;
-    case ('m' | 'i' << 8) | ((long)'c' << 16) | ((long)'r' << 24):
-        *value = MICR;
-        return true;
-    case ('m' | 'i' << 8) | ((long)'l' << 16) | ((long)'i' << 24):
-        *value = MILI;
-        return true;
-    case ('s' | 'e' << 8) | ((long)'c' << 16) | ((long)'o' << 24):
-        *value = SECO;
-        return true;
+    /** each register menomonic **/
+    while (i < keywords_opcode_size) {
+        /** compare keywords are same **/
+        if (keywords_opcode[i].keyword.compare == key.compare) {
+            /** get value **/
+            *value = keywords_opcode[i].opcode;
+            return true;
+        }
+        /** increment before **/
+        i++;
     }
 
     return false;

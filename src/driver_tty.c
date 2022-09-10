@@ -134,15 +134,32 @@ data_3bc_t driver_tty_input(
             break;
 
         case STRI:
-            invalid |= !sscanf(c, "%d", &value);
+            /** verify is a decimal number and cast **/
+            invalid |= (c[0] < 0x30 || c[0] > 0x39);
+            value = (c[0] - '0');
             break;
 
         case STRO:
-            invalid |= !sscanf(c, "%o", &value);
+            /** verify is a octal number and cast **/
+            invalid = (c[0] < 0x30 || c[0] > 0x37);
+            value = (c[0] - '0');
             break;
 
         case STRX:
-            invalid |= !sscanf(c, "%x", &value);
+            /** add upcase bit **/
+            c[0] |= 0x20;
+            /** [0-9] casting hexadecimal**/
+            if (c[0] >= 0x30 && c[0] <= 0x39) {
+                value = (c[0] - '0');
+                break;
+            }
+            /** [A-F] casting hexadecimal **/
+            if (c[0] >= 0x61 && c[0] <= 0x66) {
+                value = (c[0] - 'a' + 0xa);
+                break;
+            }
+            /** verified that it is wrong! */
+            invalid |= true;
             break;
         }
     } while (invalid);

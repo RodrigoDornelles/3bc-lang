@@ -79,4 +79,11 @@ class TestExample < Minitest::Test
         assert_equal "HelloWorld", stdout
         assert_equal 0, status
     end
+
+    def test_ola_mundo
+        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/olamundo.3bc")
+        assert_equal "", stderr
+        assert_equal "ola mundo!", stdout
+        assert_equal 0, status
+    end
 end
