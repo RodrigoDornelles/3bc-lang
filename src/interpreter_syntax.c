@@ -57,7 +57,7 @@
  *
  * JOKE:
  * why you need for CPP if C language is already 'complete and total'?
- * { .ketword.name = "mode", .opcode = 7 } <-- not allowed in C++
+ * { .keyword.name = "mode", .opcode = 7 } <-- not allowed in C++
  */
 static const struct tbc_keyword_opcode_st keywords_opcode[] = {
     /** COMMON CPU MODES **/
@@ -102,7 +102,7 @@ bool interpreter_syntax_registers(struct app_3bc_s* const app,
     const char* const string, signed long int* value)
 {
     tbc_u8_t i = 0;
-    tbc_keyword_ut key;
+    union tbc_keyword_ut key;
 
     /** passing register as numerical (octo, bin) **/
     if (interpreter_parser_strtol(app, string, value)) {
