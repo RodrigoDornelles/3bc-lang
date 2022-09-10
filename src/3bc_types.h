@@ -35,7 +35,11 @@
 #ifndef H_TYPES_TBC
 #define H_TYPES_TBC
 
-#include "3bc_detect.h"
+#ifndef H_DETECT_TBC
+#warning "[3BC] it is recommended to \
+include '3bc_detect.h' \
+before '3bc_types.h'"
+#endif
 
 /**
  * ______     _           _ _   _             _____
@@ -177,7 +181,7 @@ typedef tbc_u16_t app_3bc_id;
 #elif defined(TBC_ARCH_BITS_8)
 typedef tbc_u8_t app_3bc_id;
 #else
-typedef tbc_u8_t app_3bc_id;
+typedef tbc_u16_t app_3bc_id;
 #endif
 
 /** FILE/STREAM/INTERFACE TYPES **/
