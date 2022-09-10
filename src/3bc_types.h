@@ -38,19 +38,20 @@
 #include "3bc_detect.h"
 
 /**
- * ______     _           _ _   _             _____                     
- * | ___ \   (_)         (_) | (_)           |_   _|                    
- * | |_/ / __ _ _ __ ___  _| |_ ___   _____    | |_   _ _ __   ___  ___ 
+ * ______     _           _ _   _             _____
+ * | ___ \   (_)         (_) | (_)           |_   _|
+ * | |_/ / __ _ _ __ ___  _| |_ ___   _____    | |_   _ _ __   ___  ___
  * |  __/ '__| | '_ ` _ \| | __| \ \ / / _ \   | | | | | '_ \ / _ \/ __|
  * | |  | |  | | | | | | | | |_| |\ V /  __/   | | |_| | |_) |  __/\__ \
  * \_|  |_|  |_|_| |_| |_|_|\__|_| \_/ \___|   \_/\__, | .__/ \___||___/
- *                                                 __/ | |              
- *                                                |___/|_|              
+ *                                                 __/ | |
+ *                                                |___/|_|
  *
  * BRIEF:
  * fixed size types 'non-iso' including (ANSI).
  */
 #if defined(TBC_CC_STD_99)
+#include <inttypes.h>
 /** signed 8 bits **/
 typedef int8_t tbc_i8_t;
 /** signed 16 bits **/
@@ -58,7 +59,7 @@ typedef int16_t tbc_i16_t;
 /** signed 32 bits **/
 typedef int32_t tbc_i32_t;
 /** signed 64 bits **/
-typedef int64_t tbc_u64_t;
+typedef int64_t tbc_i64_t;
 /** unsigned 8 bits **/
 typedef uint8_t tbc_u8_t;
 /** unsigned 16 bits **/
@@ -128,6 +129,33 @@ typedef unsigned int tbc_u16_t;
 /** unsigned 32 bits **/
 typedef unsigned long tbc_u32_t;
 #endif
+
+/**
+ *  _   __                                 _       _____
+ * | | / /                                | |     |_   _|
+ * | |/ /  ___ _   ___      _____  _ __ __| |___    | |_   _ _ __   ___  ___
+ * |    \ / _ \ | | \ \ /\ / / _ \| '__/ _` / __|   | | | | | '_ \ / _ \/ __|
+ * | |\  \  __/ |_| |\ V  V / (_) | | | (_| \__ \   | | |_| | |_) |  __/\__ \
+ * \_| \_/\___|\__, | \_/\_/ \___/|_|  \__,_|___/   \_/\__, | .__/ \___||___/
+ *              __/ |                                   __/ | |
+ *             |___/                                   |___/|_|
+ *
+ * BRIEF:
+ * types used to name and compare menemonics,
+ * and also configure their opcode in the compiler.
+ */
+
+/** mnemonic name as number **/
+union tbc_keyword_ut {
+    char name[5];
+    tbc_u32_t compare;
+};
+
+/** mnemonic represents opcode **/
+struct tbc_keyword_opcode_st {
+    union tbc_keyword_ut keyword;
+    tbc_u8_t opcode;
+};
 
 /** APPLICATION TYPES **/
 typedef unsigned short int line_3bc_t;
