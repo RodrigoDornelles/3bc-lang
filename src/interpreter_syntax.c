@@ -54,6 +54,10 @@
  * BRIEF:
  * representation of the menomonics for registers
  * with their respective opcodes.
+ *
+ * JOKE:
+ * why you need for CPP if C language is already 'complete and total'?
+ * { .ketword.name = "mode", .opcode = 7 } <-- not allowed in C++
  */
 static const struct tbc_keyword_opcode_st keywords_opcode[] = {
     /** COMMON CPU MODES **/
