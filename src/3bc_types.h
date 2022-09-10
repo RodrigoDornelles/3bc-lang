@@ -183,6 +183,9 @@ struct memory_3bc_s {
 /** APLICATION **/
 struct app_3bc_s {
     app_3bc_id id;
+#if defined(TBC_BEX_ACTIVE)
+    bool leader;
+#endif
     enum fsm_3bc_e state;
     data_aux_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;

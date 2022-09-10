@@ -144,6 +144,7 @@ void driver_power_exit(struct app_3bc_s* const app)
         ds_program_fifo_destroy(app);
 
         driver_tty_exit();
+        /** TODO: move to driver_interrupt.c **/
         app->state = FSM_3BC_STOPED;
     }
 }

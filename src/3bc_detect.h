@@ -112,6 +112,7 @@
 #define TBC_P_COMPUTER
 #define TBC_P_COMPUTER_OLD
 #define TBC_USE_CONIO
+#define TBC_PREFER_HBEX_LINEAR
 #endif
 
 /**
@@ -124,6 +125,7 @@
 #define TBC_OPT_COMPACT
 #define TBC_P_EMBEDDED
 #define TBC_USE_ARDUINO
+#define TBC_PREFER_HBEX_LINEAR
 #endif
 
 #if defined(ESP_PLATFORM)
@@ -132,6 +134,7 @@
 #define TBC_OPT_COMPACT
 #define TBC_P_EMBEDDED
 #define TBC_USE_ARDUINO
+#define TBC_PREFER_HBEX_B2A
 #endif
 
 #if defined(ARDUINO_ARCH_ESP8266)
@@ -140,6 +143,7 @@
 #define TBC_OPT_COMPACT
 #define TBC_P_EMBEDDED
 #define TBC_USE_ARDUINO
+#define TBC_PREFER_HBEX_B2P
 #endif
 
 /**
@@ -153,6 +157,7 @@
 #define TBC_PREFER_INTERPRETER
 #define TBC_P_EMBEDDED
 #define TBC_USE_POSIX
+#define TBC_PREFER_HBEX_B2P
 #endif
 
 /**
@@ -163,6 +168,7 @@
 #define TBC_PREFER_INTERPRETER
 #define TBC_P_COMPUTER
 #define TBC_USE_POSIX
+#define TBC_PREFER_HBEX_B10A
 #endif
 
 /**
@@ -173,6 +179,7 @@
 #define TBC_PREFER_INTERPRETER
 #define TBC_P_COMPUTER
 #define TBC_USE_CONIO
+#define TBC_PREFER_HBEX_B10A
 #endif
 
 /**
@@ -183,6 +190,7 @@
 #define TBC_KERNEL_DARWIN
 #define TBC_PREFER_INTERPRETER
 #define TBC_P_COMPUTER
+#define TBC_PREFER_HBEX_B10A
 #endif
 
 /**
@@ -193,6 +201,7 @@
 #define TBC_KERNEL_UNIX
 #define TBC_PREFER_INTERPRETER
 #define TBC_P_COMPUTER
+#define TBC_PREFER_HBEX_B10A
 #endif
 
 /**
@@ -202,6 +211,7 @@
 #define TBC_USE_POSIX
 #define TBC_PREFER_INTERPRETER
 #define TBC_P_WEBASSEMBLY
+#define TBC_PREFER_HBEX_B10A  
 #endif
 
 /**
