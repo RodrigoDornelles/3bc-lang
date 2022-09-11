@@ -32,7 +32,7 @@
             iconDark;
 
         /** remember theme session **/
-        iconTheme.innerText = sessionTheme ?? iconLight;
+        iconTheme.innerText = sessionTheme ?? iconDark;
         body.classList.toggle(classDark, sessionTheme === iconLight);
 
         /** toggle theme button **/
