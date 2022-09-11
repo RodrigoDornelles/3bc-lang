@@ -1,4 +1,4 @@
-body{
+.anim-dark{
     transition: color 1s ease, background-color 1s ease;
 }
 
