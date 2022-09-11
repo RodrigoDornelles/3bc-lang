@@ -1,9 +1,24 @@
-h1 {
-    font-size: 2em;
-    line-height: 80%;
-    margin-top: 1.8rem;
-    margin-bottom: 1.8rem;
+.anim-dark {
+  transition: color 1s ease, background-color 1s ease;
 }
+
+.dark {
+  background-color: #202123;
+  color: #fff;
+}
+
+.theme {
+  cursor: pointer;
+  user-select: none;
+}
+
+h1 {
+  font-size: 2em;
+  line-height: 80%;
+  margin-top: 1.8rem;
+  margin-bottom: 1.8rem;
+}
+
 h2 {font-size: 1.5em;}
 h3 {font-size: 1.17em;}
 h4 {font-size: 1.12em;}
@@ -16,85 +31,85 @@ ul {text-align: left;}
 pre {text-align: left;}
 
 li strong a {
-    gap: 0.3rem;
-    display: flex;
+  gap: 0.3rem;
+  display: flex;
 }
 
 .btn {
-    display: flex;
-    overflow: hidden;
-    position: relative;
-    background-color: #008234;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  background-color: #008234;
 }
 
 .btn span {
-    z-index: 10;
+  z-index: 10;
 }
 
 .btn::after {
-    top: 0;
-    right: 0;
-    z-index: 5;
-    content: "";
-    display: block;
-    position: absolute;
-    border-top: 16px solid transparent;
-    border-right: 32px solid #f0d313;
-    border-bottom: 16px solid transparent;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  content: "";
+  display: block;
+  position: absolute;
+  border-top: 16px solid transparent;
+  border-right: 32px solid #f0d313;
+  border-bottom: 16px solid transparent;
 }
 
 .btn::before{
-    top: 6px;
-    right: -10px;
-    z-index: 7;
-    content: "";
-    display: block;
-    position: absolute;
-    border: 10px solid #00349e;
-    border-radius: 100%;
+  top: 6px;
+  right: -10px;
+  z-index: 7;
+  content: "";
+  display: block;
+  position: absolute;
+  border: 10px solid #00349e;
+  border-radius: 100%;
 }
 
 /** materialize roadmap fix **/
 [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-    position: initial;
-    opacity: initial;
-    pointer-events: initial;
-    margin-right: 8px;
+  position: initial;
+  opacity: initial;
+  pointer-events: initial;
+  margin-right: 8px;
 }
 
 nav {
-    background: linear-gradient(-45deg, #f0d313, #008234,#00349e, #008234, #f0d313, #008234);
-    animation: 3s linear 0s infinite running brazil-anim;
-    background-size: 600% 600%;
+  background: linear-gradient(-45deg, #f0d313, #008234,#00349e, #008234, #f0d313, #008234);
+  animation: 3s linear 0s infinite running brazil-anim;
+  background-size: 600% 600%;
 }
 
 @keyframes brazil-anim {
-    from {background-position: 100% 100%;}
-	to {background-position: 4% 4%;}
+  from {background-position: 100% 100%;}
+  to {background-position: 4% 4%;}
 }
 
 img[alt$=">"] {
-    float: right;
-    margin-left: 20px;
-    max-width: 30%;
+  float: right;
+  margin-left: 20px;
+  max-width: 30%;
 }
 
 img[alt$="<"] {
-    float: left;
-    margin-right: 20px;
-    max-width: 30%;
+  float: left;
+  margin-right: 20px;
+  max-width: 30%;
 }
 
 img[alt$="><"] {
-    display: block;
-    max-width: 50vmax;
-    height: auto;
-    margin: auto;
-    float: none!important;
+  display: block;
+  max-width: 50vmax;
+  height: auto;
+  margin: auto;
+  float: none;
 }
 
 @media print {
-    .dont-print {
-        display: none;
-    }
+  .dont-print {
+      display: none;
+  }
 }
