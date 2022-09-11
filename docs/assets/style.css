@@ -1,4 +1,4 @@
-.anim-dark{
+.anim-dark {
     transition: color 1s ease, background-color 1s ease;
 }
 
@@ -7,7 +7,7 @@
     color: #fff;
 }
 
-.theme{
+.theme {
     cursor: pointer;
     user-select: none;
 }
@@ -82,7 +82,8 @@ nav {
     background-size: 600% 600%;
 }
 
-@keyframes brazil-anim {
+@keyframes brazil-anim
+{
     from {background-position: 100% 100%;}
 	to {background-position: 4% 4%;}
 }
@@ -107,7 +108,8 @@ img[alt$="><"] {
     float: none!important;
 }
 
-@media print {
+@media print
+{
     .dont-print {
         display: none;
     }
