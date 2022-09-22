@@ -9,4 +9,4 @@ RUN ./zig-linux-x86_64-0.9.1/zig cc src/programs/interpreter.c --target=x86_64-l
 # Stage 2
 FROM scratch
 COPY --from=compiler /tbc /tbc
-CMD ["/tbc"]
+ENTRYPOINT ["/tbc"]
