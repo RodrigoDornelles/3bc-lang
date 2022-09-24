@@ -12,7 +12,7 @@ jobs:
       CC_LD: "./zig cc"
       TARGETS: >-
         i386-linux-gnu x86_64-linux-gnu arm-linux-musleabi aarch64-linux-gnu powerpc-linux-musl
-        powerpc64-linux-musl riscv64-linux-musl x86_64-macos aarch64-macos
+        powerpc64-linux-musl riscv64-linux-musl mips-linux-musl x86_64-macos aarch64-macos
         i386-windows x86_64-windows aarch64-windows
 
     steps:
