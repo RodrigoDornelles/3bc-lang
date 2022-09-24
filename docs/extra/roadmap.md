@@ -14,7 +14,8 @@ description: The expected future for language and community. (aka to do list)
 - [X] VM Labels
 - [X] VM Conditional Jumps
 - [X] Textual Interpreter
-- [X] Support i686 _(macos, linux, windows)_
+- [X] Support amd64 _(macos, linux, windows)_
+- [X] Support i686 _(linux, windows)_
 - [X] Support avr _(arduino)_
 
 ## Year 2021 roadmap
@@ -33,7 +34,7 @@ description: The expected future for language and community. (aka to do list)
 
  - [ ] VM Function calls
  - [ ] VM Stack management
- - [X] Support arm (docker linux)
+ - [X] Support arm _(docker linux)_
  - [X] Support z390x _(docker linux)_
  - [X] Support riscv64 _(linux, docker linux)_
  - [X] Support mips _(linux)_
@@ -41,7 +42,8 @@ description: The expected future for language and community. (aka to do list)
  - [X] Support powerpc _(linux)_
  - [X] Support powerpc64 _(linux, docker linux)_
  - [X] Support aarch64 _(macos, linux, docker linux, windows)_
- - [X] Support i386  _(macos, bsd, linux, docker linux, windows)_<br/>_better portability backwards compared with i686_
+ - [X] Support amd64 _(bsd, docker linux)_
+ - [X] Support i386  _(bsd, linux, docker linux, windows)_<br/>_better portability backwards compared with i686_
 
 ##  come soon roadmap 
 
