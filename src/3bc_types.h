@@ -152,7 +152,7 @@ typedef unsigned long tbc_u32_t;
 /** mnemonic name as number **/
 union tbc_keyword_ut {
     char name[5];
-    tbc_u32_t compare;
+    tbc_i32_t compare;
 };
 
 /** mnemonic represents opcode **/

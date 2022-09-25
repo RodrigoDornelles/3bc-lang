@@ -55,42 +55,32 @@
  * representation of the menomonics for registers
  * with their respective opcodes.
  *
+ * NOTE:
+ * must be ordered.
+ *
  * JOKE:
  * why you need for CPP if C language is already 'complete and total'?
  * { .keyword.name = "mode", .opcode = 7 } <-- not allowed in C++
  */
-static const struct tbc_keyword_opcode_st keywords_opcode[] = {
-    /** COMMON CPU MODES **/
-    { "nill", 0 }, { "mode", 7 },
-    /** CPU MODE 1..5 **/
-    { "strb", 1 }, { "stro", 2 }, { "stri", 3 }, { "strx", 4 }, { "strc", 5 },
-    /** CPU MODE 6..8 **/
-    { "free", 1 }, { "aloc", 2 },
-    /** CPU MODE 6**/
-    { "moff", 3 }, { "muse", 4 },
-    /** CPU MODE 7,8 **/
-    { "pull", 3 }, { "spin", 4 }, { "push", 5 },
-    /** CPU MODE 9 **/
-    { "goto", 1 }, { "fgto", 2 }, { "zgto", 3 }, { "pgto", 4 }, { "ngto", 5 },
-    /** CPU MODE 11..18,21..29,31..39 **/
-    { "math", 1 },
-    /** CPU MODE 29 **/
-    { "nb02", 1 }, { "nb08", 2 }, { "nb10", 3 }, { "nb16", 4 },
-    /** CPU MODE 41 **/
-    { "back", 1 }, { "fret", 2 }, { "zret", 3 }, { "pret", 4 }, { "nret", 5 },
-    /** CPU MODE 42 **/
-    { "call", 1 }, { "fcal", 2 }, { "zcal", 3 }, { "pcal", 4 }, { "ncal", 5 },
-    /** CPU MODE 43,44 **/
-    { "seco", 5 },
-    /** CPU MODE 43 **/
-    { "real", 1 }, { "fake", 2 }, { "micr", 3 }, { "mili", 4 }
-};
+static const struct tbc_keyword_opcode_st keywords_opcode[] = { { "aloc", 2 },
+    { "back", 1 }, { "call", 1 }, { "fake", 2 }, { "fcal", 2 }, { "fgto", 2 },
+    { "free", 1 }, { "fret", 2 }, { "goto", 1 }, { "math", 1 }, { "micr", 3 },
+    { "mili", 4 }, { "mode", 7 }, { "moff", 3 }, { "muse", 4 }, { "nb02", 1 },
+    { "nb08", 2 }, { "nb10", 3 }, { "nb16", 4 }, { "ncal", 5 }, { "ngto", 5 },
+    { "nill", 0 }, { "nret", 5 }, { "pcal", 4 }, { "pgto", 4 }, { "pret", 4 },
+    { "pull", 3 }, { "push", 5 }, { "real", 1 }, { "seco", 5 }, { "spin", 4 },
+    { "strb", 1 }, { "strc", 5 }, { "stri", 3 }, { "stro", 2 }, { "strx", 4 },
+    { "zcal", 3 }, { "zgto", 3 }, { "zret", 3 } };
 
 static const char keywords_opcode_size
     = sizeof(keywords_opcode) / sizeof(struct tbc_keyword_opcode_st);
 
 /**
  * Checks menomics and literal expressions of the first column only.
+ *
+ * NOTE:
+ * This algorithm has endians-independent math.
+ * https://developer.ibm.com/articles/au-endianc
  *
  * NOTE:
  * This method does not need to be protected,
@@ -101,32 +91,61 @@ static const char keywords_opcode_size
 bool interpreter_syntax_registers(struct app_3bc_s* const app,
     const char* const string, signed long int* value)
 {
-    tbc_u8_t i = 0;
+    tbc_i8_t mid;
+    tbc_i32_t result;
+    tbc_i8_t low = 0;
+    bool success = false;
     union tbc_keyword_ut key;
+    tbc_i8_t high = keywords_opcode_size;
 
-    /** passing register as numerical (octo, bin) **/
-    if (interpreter_parser_strtol(app, string, value)) {
-        return true;
-    }
-
-    /** copy keyname **/
-    memcpy(key.name, string, 5);
-    /** force to lowercase **/
-    key.compare |= 0x20202020;
-
-    /** each register menomonic **/
-    while (i < keywords_opcode_size) {
-        /** compare keywords are same **/
-        if (keywords_opcode[i].keyword.compare == key.compare) {
-            /** get value **/
-            *value = keywords_opcode[i].opcode;
-            return true;
+    /** single return point **/
+    do {
+        /** passing register as numerical (octo, bin) **/
+        if (interpreter_parser_strtol(app, string, value)) {
+            success = true;
+            break;
         }
-        /** increment before **/
-        i++;
-    }
 
-    return false;
+        /** copy reversed **/
+        key.name[0] = string[3];
+        key.name[1] = string[2];
+        key.name[2] = string[1];
+        key.name[3] = string[0];
+
+        /** force to lowercase **/
+        key.compare |= 0x20202020;
+
+        /** binary search **/
+        do {
+            /** find middle **/
+            mid = (low + high) / 2;
+
+            /** force litle endian sub **/
+            result = 0;
+            result |= keywords_opcode[mid].keyword.name[3];
+            result |= keywords_opcode[mid].keyword.name[2] << 8;
+            result |= keywords_opcode[mid].keyword.name[1] << 16;
+            result |= keywords_opcode[mid].keyword.name[0] << 24;
+            result -= *(tbc_i32_t*)&key.compare;
+
+            /** found **/
+            if (result == 0) {
+                *value = keywords_opcode[mid].opcode;
+                success = true;
+                break;
+            }
+            /** on left **/
+            if (result > 0) {
+                high = mid - 1;
+            }
+            /** on right **/
+            if (result < 0) {
+                low = mid + 1;
+            }
+        } while (low <= high);
+    } while (0);
+
+    return success;
 }
 
 /**
