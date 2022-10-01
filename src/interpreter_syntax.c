@@ -173,6 +173,10 @@ bool interpreter_syntax_constants(struct app_3bc_s* const app,
     
     /** single return point **/
     do {
+        /** prevent ilegal pointer **/
+        if (string == NULL) {
+            break;
+        }
         /** is safe! **/
         if (interpreter_parser_strtol(app, string, value)) {
             success = true;
