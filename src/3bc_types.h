@@ -32,9 +32,136 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "3bc.h"
+#ifndef H_TYPES_TBC
+#define H_TYPES_TBC
 
-/** PRIMITIVE TYPES **/
+#ifndef H_DETECT_TBC
+#warning "[3BC] it is recommended to \
+include '3bc_detect.h' \
+before '3bc_types.h'"
+#endif
+
+/**
+ * ______     _           _ _   _             _____
+ * | ___ \   (_)         (_) | (_)           |_   _|
+ * | |_/ / __ _ _ __ ___  _| |_ ___   _____    | |_   _ _ __   ___  ___
+ * |  __/ '__| | '_ ` _ \| | __| \ \ / / _ \   | | | | | '_ \ / _ \/ __|
+ * | |  | |  | | | | | | | | |_| |\ V /  __/   | | |_| | |_) |  __/\__ \
+ * \_|  |_|  |_|_| |_| |_|_|\__|_| \_/ \___|   \_/\__, | .__/ \___||___/
+ *                                                 __/ | |
+ *                                                |___/|_|
+ *
+ * BRIEF:
+ * fixed size types 'non-iso' including (ANSI).
+ */
+#if defined(TBC_CC_STD_99)
+#include <inttypes.h>
+/** signed 8 bits **/
+typedef int8_t tbc_i8_t;
+/** signed 16 bits **/
+typedef int16_t tbc_i16_t;
+/** signed 32 bits **/
+typedef int32_t tbc_i32_t;
+/** signed 64 bits **/
+typedef int64_t tbc_i64_t;
+/** unsigned 8 bits **/
+typedef uint8_t tbc_u8_t;
+/** unsigned 16 bits **/
+typedef uint16_t tbc_u16_t;
+/** unsigned 32 bits **/
+typedef uint32_t tbc_u32_t;
+/** unsigned 64 bits **/
+typedef uint64_t tbc_u64_t;
+#elif defined(TBC_ARCH_BITS_64)
+/** signed 8 bits **/
+typedef signed char tbc_i8_t;
+/** signed 16 bits **/
+typedef signed short tbc_i16_t;
+/** signed 32 bits **/
+typedef signed int tbc_i32_t;
+/** signed 64 bits **/
+typedef signed long tbc_i64_t;
+/** unsigned 8 bits **/
+typedef unsigned char tbc_u8_t;
+/** unsigned 16 bits **/
+typedef unsigned short tbc_u16_t;
+/** unsigned 32 bits **/
+typedef unsigned int tbc_u32_t;
+/** unsigned 64 bits **/
+typedef unsigned long tbc_u64_t;
+#elif defined(TBC_ARCH_BITS_32)
+/** signed 8 bits **/
+typedef signed char tbc_i8_t;
+/** signed 16 bits **/
+typedef signed short tbc_i16_t;
+/** signed 32 bits **/
+typedef signed int tbc_i32_t;
+/** signed 64 bits **/
+typedef signed long long tbc_i64_t;
+/** unsigned 8 bits **/
+typedef unsigned char tbc_u8_t;
+/** unsigned 16 bits **/
+typedef unsigned short tbc_u16_t;
+/** unsigned 32 bits **/
+typedef unsigned int tbc_u32_t;
+/** unsigned 64 bits **/
+typedef unsigned long long tbc_u64_t;
+#elif defined(TBC_ARCH_BITS_16)
+/** signed 8 bits **/
+typedef signed char tbc_i8_t;
+/** signed 16 bits **/
+typedef signed short tbc_i16_t;
+/** signed 32 bits **/
+typedef signed int tbc_i32_t;
+/** unsigned 8 bits **/
+typedef unsigned char tbc_u8_t;
+/** unsigned 16 bits **/
+typedef unsigned short tbc_u16_t;
+/** unsigned 32 bits **/
+typedef unsigned int tbc_u32_t;
+#elif defined(TBC_ARCH_BITS_8)
+/** signed 8 bits **/
+typedef signed char tbc_i8_t;
+/** signed 16 bits **/
+typedef signed int tbc_i16_t;
+/** signed 32 bits **/
+typedef signed long tbc_i32_t;
+/** unsigned 8 bits **/
+typedef unsigned char tbc_u8_t;
+/** unsigned 16 bits **/
+typedef unsigned int tbc_u16_t;
+/** unsigned 32 bits **/
+typedef unsigned long tbc_u32_t;
+#endif
+
+/**
+ *  _   __                                 _       _____
+ * | | / /                                | |     |_   _|
+ * | |/ /  ___ _   ___      _____  _ __ __| |___    | |_   _ _ __   ___  ___
+ * |    \ / _ \ | | \ \ /\ / / _ \| '__/ _` / __|   | | | | | '_ \ / _ \/ __|
+ * | |\  \  __/ |_| |\ V  V / (_) | | | (_| \__ \   | | |_| | |_) |  __/\__ \
+ * \_| \_/\___|\__, | \_/\_/ \___/|_|  \__,_|___/   \_/\__, | .__/ \___||___/
+ *              __/ |                                   __/ | |
+ *             |___/                                   |___/|_|
+ *
+ * BRIEF:
+ * types used to name and compare menemonics,
+ * and also configure their opcode in the compiler.
+ */
+
+/** mnemonic name as number **/
+union tbc_keyword_ut {
+    char name[5];
+    tbc_i32_t compare;
+};
+
+/** mnemonic represents opcode **/
+struct tbc_keyword_opcode_st {
+    union tbc_keyword_ut keyword;
+    tbc_u8_t opcode;
+};
+
+/** APPLICATION TYPES **/
 typedef unsigned short int line_3bc_t;
 typedef unsigned char cpumode_3bc_t;
 typedef unsigned char register_3bc_t;
@@ -46,15 +173,20 @@ typedef signed long data_aux_3bc_t;
 
 /** application 3bc id (depends of cpu size)**/
 #if defined(TBC_ARCH_BITS_64)
-typedef unsigned long long app_3bc_id;
+#define TBC_ID_64_BITS
+typedef tbc_u64_t app_3bc_id;
+#define TBC_ID_32_BITS
 #elif defined(TBC_ARCH_BITS_32) && !defined(TBC_OPT_COMPACT)
-typedef unsigned long app_3bc_id;
+typedef tbc_u32_t app_3bc_id;
 #elif defined(TBC_ARCH_BITS_32) || defined(TBC_ARCH_BITS_16)
-typedef unsigned int app_3bc_id;
+#define TBC_ID_16_BITS
+typedef tbc_u16_t app_3bc_id;
 #elif defined(TBC_ARCH_BITS_8)
-typedef unsigned char app_3bc_id;
+#define TBC_ID_8_BITS
+typedef tbc_u8_t app_3bc_id;
 #else
-typedef unsigned short app_3bc_id;
+#define TBC_ID_16_BITS
+typedef tbc_u16_t app_3bc_id;
 #endif
 
 /** FILE/STREAM/INTERFACE TYPES **/
@@ -212,3 +344,5 @@ union global_time_u {
     unsigned long micros;
     unsigned long millis;
 };
+
+#endif

@@ -57,6 +57,7 @@ int interpreter_ticket(struct app_3bc_s* const app)
  * RETURN: CR if does nothing.
  * RETURN: EOF if there is nothing else to read.
  * RETURN: 1 if the interpretation was successful.
+ * TODO: refactor single point of return, no implicit outputs.
  */
 int interpreter_ticket(struct app_3bc_s* const app)
 {
@@ -88,9 +89,11 @@ int interpreter_ticket(struct app_3bc_s* const app)
                 sizeof(char) * (++app->cache_l3.buffer.size));
             if (new_buffer == NULL) {
                 driver_program_error(app, ERROR_OUT_OF_MEMORY);
+            } else {
+                app->cache_l3.buffer.storage = new_buffer;
+                app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1]
+                    = '\0';
             }
-            app->cache_l3.buffer.storage = new_buffer;
-            app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1] = '\0';
         }
 
         /** insert to vm **/
@@ -117,10 +120,11 @@ int interpreter_ticket(struct app_3bc_s* const app)
 
         if (new_buffer == NULL) {
             driver_program_error(app, ERROR_OUT_OF_MEMORY);
+        } else {
+            app->cache_l3.buffer.storage = new_buffer;
+            app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1]
+                = character;
         }
-
-        app->cache_l3.buffer.storage = new_buffer;
-        app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1] = character;
     }
 
     return 0;

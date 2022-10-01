@@ -52,11 +52,15 @@
 #if defined(__STDC_VERSION__)
 #if (__STDC_VERSION__ >= 201710L)
 #define TBC_CC_STD_17
+#define TBC_CC_STD_11
+#define TBC_CC_STD_99
 #elif (__STDC_VERSION__ >= 201112L)
 #define TBC_CC_STD_11
+#define TBC_CC_STD_99
 #elif (__STDC_VERSION__ >= 199901L)
 #define TBC_CC_STD_99
 #else
+#warning "__STDC_VERSION__ not recognized."
 #define TBC_CC_STD_89
 #endif
 #else

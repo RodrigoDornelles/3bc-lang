@@ -36,33 +36,56 @@
 #define TBC_SOURCE_REGISTERS
 #include "3bc.h"
 
+/**
+ * header used before error description.
+ *
+ * TODO:
+ * more readable and move to 3bc_errors.h
+ *
+ * NOTE:
+ * the size of the ID depends on the architecture.
+ *
+ * NOTE:
+ * there is _3BC_COMPACT which makes information simpler (takes up less space).
+ *
+ */
+#if defined(TBC_OPT_COMPACT)
+static const char error_header[]
+    = "\n\n[3BC] %3d Fatal error 0x%06X in line: %06u\n";
+#else
+static const char error_header[]
+    = "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM\n> MACHINE ID:\t"
+#if defined(TBC_ID_64_BITS) || defined(TBC_ID_32_BITS)
+      "%08lu"
+#elif defined(TBC_ID_16_BITS) || defined(TBC_ID_8_BITS)
+      "%08u"
+#endif
+      "\n> ERROR LINE:\t%08u\n> ERROR CODE:\t0x%06X\n> DESCRIPTION: ";
+#endif
+
 void driver_program_error(
     struct app_3bc_s* const app, enum error_3bc_e error_code)
 {
     /**
      * NOTE: if the current line does not exist,
      * it was because it was interpreting a line which failed.
+     *
+     * TODO:
+     * safer and remove ternaries.
      */
     line_3bc_t error_line
         = app->program.curr != NULL && error_code >= ERROR_CPU_ZERO
         ? app->program.curr->line
         : app->program.last_line;
 
-#if defined(TBC_OPT_COMPACT)
-    /** smaller log erros for economy rom memory **/
-    char error_code_string[64];
-    snprintf(error_code_string, sizeof(error_code_string),
-        "\n\n[3BC] %3d Fatal error 0x%06X in line: %6d\n", app->id, error_code,
-        error_line);
-    driver_tty_output_raw(app, app->tty_error, error_code_string);
-#else
-    char error_code_string[128];
-    snprintf(error_code_string, sizeof(error_code_string),
-        "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM\n> MACHINE ID:\t%08d\n> "
-        "ERROR LINE:\t%08d\n> ERROR CODE:\t0x%06X\n> DESCRIPTION: ",
-        app->id, error_line, error_code);
+    /** print header of error**/
+    char error_code_string[sizeof(error_header) + 11];
+    snprintf(error_code_string, sizeof(error_header), error_header, app->id,
+        error_line, error_code);
     driver_tty_output_raw(app, app->tty_error, error_code_string);
 
+    /** TODO: not use macros and move to 3bc_errors.h **/
+#if !defined(TBC_OPT_COMPACT)
     switch ((long)(error_code)) {
 #if defined(SIGSEGV)
         ERROR_LOG_3BC(SIGSEGV, "SEGMENT FAULT");

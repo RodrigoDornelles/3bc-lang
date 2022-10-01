@@ -43,6 +43,7 @@
 /**
  * Interpret text and insert to virtual machine.
  *
+ * TODO: refactor single point of return, no implicit outputs.
  * EXAMPLE: interpreter_compiler(app, "MODE 0 2");
  * RETURN: NULL if the entire string is compiled.
  * RETURN: Pointer to the rest of the string that can be compiled.
@@ -65,16 +66,16 @@ char* interpreter_readln(struct app_3bc_s* const app, char* line)
         driver_program_error(app, ERROR_INVALID_REGISTER);
     }
     /** parse string to address and validate **/
-    if (!interpreter_syntax_constants(app, text_mem, &mem)) {
+    else if (!interpreter_syntax_constants(app, text_mem, &mem)) {
         driver_program_error(app, ERROR_INVALID_ADDRESS);
     }
     /** parse string to constant and validate **/
-    if (!interpreter_syntax_constants(app, text_val, &val)) {
+    else if (!interpreter_syntax_constants(app, text_val, &val)) {
         driver_program_error(app, ERROR_INVALID_CONSTANT);
+    } else {
+        /** add new line **/
+        ds_program_fifo_line_add(app, reg, mem, val);
     }
-
-    /** add new line **/
-    ds_program_fifo_line_add(app, reg, mem, val);
 
     return line;
 }

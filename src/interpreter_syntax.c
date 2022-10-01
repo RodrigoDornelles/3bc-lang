@@ -51,7 +51,51 @@
 #if defined(TBC_INTERPRETER) && !defined(TBC_SCU_OPTIONAL_FIX)
 
 /**
+ * BRIEF:
+ * representation of the menomonics for registers
+ * with their respective opcodes.
+ *
+ * NOTE:
+ * must be ordered.
+ *
+ * JOKE:
+ * why you need for CPP if C language is already 'complete and total'?
+ * { .keyword.name = "mode", .opcode = 7 } <-- not allowed in C++
+ */
+static const struct tbc_keyword_opcode_st opcodes_register[] = { { "aloc", 2 },
+    { "back", 1 }, { "call", 1 }, { "fake", 2 }, { "fcal", 2 }, { "fgto", 2 },
+    { "free", 1 }, { "fret", 2 }, { "goto", 1 }, { "math", 1 }, { "micr", 3 },
+    { "mili", 4 }, { "mode", 7 }, { "moff", 3 }, { "muse", 4 }, { "nb02", 1 },
+    { "nb08", 2 }, { "nb10", 3 }, { "nb16", 4 }, { "ncal", 5 }, { "ngto", 5 },
+    { "nill", 0 }, { "nret", 5 }, { "pcal", 4 }, { "pgto", 4 }, { "pret", 4 },
+    { "pull", 3 }, { "push", 5 }, { "real", 1 }, { "seco", 5 }, { "spin", 4 },
+    { "strb", 1 }, { "strc", 5 }, { "stri", 3 }, { "stro", 2 }, { "strx", 4 },
+    { "zcal", 3 }, { "zgto", 3 }, { "zret", 3 } };
+
+static const tbc_i8_t opcodes_register_size
+    = sizeof(opcodes_register) / sizeof(struct tbc_keyword_opcode_st);
+
+/**
+ * BRIEF:
+ * representation of the menomonics for constant
+ * with their respective opcodes.
+ */
+
+/** nill (0) constant menomonic **/
+static const union tbc_keyword_ut opcode_constant_nill = { "nill" };
+
+/** full (1023) constant menomonic **/
+static const union tbc_keyword_ut opcode_constant_full = { "full" };
+
+/** skip (?) magic menomonic **/
+static const union tbc_keyword_ut opcode_constant_skip = { "skip" };
+
+/**
  * Checks menomics and literal expressions of the first column only.
+ *
+ * NOTE:
+ * This algorithm has endians-independent math.
+ * https://developer.ibm.com/articles/au-endianc
  *
  * NOTE:
  * This method does not need to be protected,
@@ -62,143 +106,61 @@
 bool interpreter_syntax_registers(struct app_3bc_s* const app,
     const char* const string, signed long int* value)
 {
-    /** passing register as numerical (octo, bin) **/
-    if (interpreter_parser_strtol(app, string, value)) {
-        return true;
-    }
+    tbc_i8_t mid;
+    tbc_i32_t result;
+    tbc_i8_t low = 0;
+    bool success = false;
+    union tbc_keyword_ut key;
+    tbc_i8_t high = opcodes_register_size;
 
-    /** mnemonic translate world to register **/
-    switch (string[0] | (string[1] << 8) | (string[2] << 16) | (string[3] << 24)
-        | 0x20202020) {
-    case ('n' | ('i' << 8) | ((long)'l' << 16) | ((long)'l' << 24)):
-        *value = NILL;
-        return true;
-    case ('m' | ('o' << 8) | ((long)'d' << 16) | ((long)'e' << 24)):
-        *value = MODE;
-        return true;
+    /** single return point **/
+    do {
+        /** passing register as numerical (octo, bin) **/
+        if (interpreter_parser_strtol(app, string, value)) {
+            success = true;
+            break;
+        }
 
-    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'b' << 24):
-        *value = STRB;
-        return true;
-    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'i' << 24):
-        *value = STRI;
-        return true;
-    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'c' << 24):
-        *value = STRC;
-        return true;
-    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'o' << 24):
-        *value = STRO;
-        return true;
-    case ('s' | 't' << 8) | ((long)'r' << 16) | ((long)'x' << 24):
-        *value = STRX;
-        return true;
+        /** copy reversed **/
+        key.name[0] = string[3];
+        key.name[1] = string[2];
+        key.name[2] = string[1];
+        key.name[3] = string[0];
 
-    case ('f' | 'r' << 8) | ((long)'e' << 16) | ((long)'e' << 24):
-        *value = FREE;
-        return true;
-    case ('a' | 'l' << 8) | ((long)'o' << 16) | ((long)'c' << 24):
-        *value = ALOC;
-        return true;
-    case ('p' | 'u' << 8) | ((long)'l' << 16) | ((long)'l' << 24):
-        *value = PULL;
-        return true;
-    case ('s' | 'p' << 8) | ((long)'i' << 16) | ((long)'n' << 24):
-        *value = SPIN;
-        return true;
-    case ('p' | 'u' << 8) | ((long)'s' << 16) | ((long)'h' << 24):
-        *value = PUSH;
-        return true;
+        /** force to lowercase **/
+        key.compare |= 0x20202020;
 
-    case ('m' | 'o' << 8) | ((long)'f' << 16) | ((long)'f' << 24):
-        *value = MOFF;
-        return true;
-    case ('m' | 'u' << 8) | ((long)'s' << 16) | ((long)'e' << 24):
-        *value = MUSE;
-        return true;
+        /** binary search **/
+        do {
+            /** find middle **/
+            mid = (low + high) / 2;
 
-    case ('g' | 'o' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
-        *value = GOTO;
-        return true;
-    case ('f' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
-        *value = FGTO;
-        return true;
-    case ('z' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
-        *value = ZGTO;
-        return true;
-    case ('p' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
-        *value = PGTO;
-        return true;
-    case ('n' | 'g' << 8) | ((long)'t' << 16) | ((long)'o' << 24):
-        *value = NGTO;
-        return true;
+            /** force litle endian sub **/
+            result = 0;
+            result |= opcodes_register[mid].keyword.name[3];
+            result |= opcodes_register[mid].keyword.name[2] << 8;
+            result |= opcodes_register[mid].keyword.name[1] << 16;
+            result |= opcodes_register[mid].keyword.name[0] << 24;
+            result -= *(tbc_i32_t*)&key.compare;
 
-    case ('n' | 'b' << 8) | ((long)'0' << 16) | ((long)'2' << 24):
-        *value = NB02;
-        return true;
-    case ('n' | 'b' << 8) | ((long)'0' << 16) | ((long)'8' << 24):
-        *value = NB08;
-        return true;
-    case ('n' | 'b' << 8) | ((long)'1' << 16) | ((long)'0' << 24):
-        *value = NB10;
-        return true;
-    case ('n' | 'b' << 8) | ((long)'1' << 16) | ((long)'6' << 24):
-        *value = NB16;
-        return true;
+            /** found **/
+            if (result == 0) {
+                *value = opcodes_register[mid].opcode;
+                success = true;
+                break;
+            }
+            /** on left **/
+            if (result > 0) {
+                high = mid - 1;
+            }
+            /** on right **/
+            if (result < 0) {
+                low = mid + 1;
+            }
+        } while (low <= high);
+    } while (0);
 
-    case ('m' | 'a' << 8) | ((long)'t' << 16) | ((long)'h' << 24):
-        *value = MATH;
-        return true;
-
-    case ('c' | 'a' << 8) | ((long)'l' << 16) | ((long)'l' << 24):
-        *value = CALL;
-        return true;
-    case ('f' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
-        *value = FCAL;
-        return true;
-    case ('z' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
-        *value = ZCAL;
-        return true;
-    case ('p' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
-        *value = PCAL;
-        return true;
-    case ('n' | 'c' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
-        *value = NCAL;
-        return true;
-
-    case ('f' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
-        *value = FRET;
-        return true;
-    case ('z' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
-        *value = ZRET;
-        return true;
-    case ('p' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
-        *value = PRET;
-        return true;
-    case ('n' | 'r' << 8) | ((long)'e' << 16) | ((long)'t' << 24):
-        *value = NRET;
-        return true;
-    case ('b' | 'a' << 8) | ((long)'c' << 16) | ((long)'k' << 24):
-        *value = BACK;
-        return true;
-
-    case ('r' | 'e' << 8) | ((long)'a' << 16) | ((long)'l' << 24):
-        *value = REAL;
-        return true;
-    case ('f' | 'a' << 8) | ((long)'k' << 16) | ((long)'e' << 24):
-        *value = FAKE;
-        return true;
-    case ('m' | 'i' << 8) | ((long)'c' << 16) | ((long)'r' << 24):
-        *value = MICR;
-        return true;
-    case ('m' | 'i' << 8) | ((long)'l' << 16) | ((long)'i' << 24):
-        *value = MILI;
-        return true;
-    case ('s' | 'e' << 8) | ((long)'c' << 16) | ((long)'o' << 24):
-        *value = SECO;
-        return true;
-    }
-
-    return false;
+    return success;
 }
 
 /**
@@ -207,47 +169,74 @@ bool interpreter_syntax_registers(struct app_3bc_s* const app,
 bool interpreter_syntax_constants(struct app_3bc_s* const app,
     const char* const string, signed long int* value)
 {
-    /** is safe! **/
-    if (interpreter_parser_strtol(app, string, value)) {
-        return true;
-    }
-    /** is safe! **/
-    if (interpreter_parser_strhash(string, value)) {
-        return true;
-    }
-    /** prevent memory invasion **/
-    if (string[1] == '\0' || string[2] == '\0') {
-        return false;
-    }
-    /** is not safe, but now it's protected. **/
-    if (interpreter_parser_strchar(app, string, value)) {
-        return true;
-    }
-    /** more memory prevention, remembering previous results **/
-    if (string[3] == '\0') {
-        return false;
-    }
+    bool success = false;
 
-    /** is not safe! **/
-    switch (string[0] | (string[1] << 8) | (string[2] << 16) | (string[3] << 24)
-        | 0x20202020) {
+    /** single return point **/
+    do {
+        /** prevent ilegal pointer **/
+        if (string == NULL) {
+            break;
+        }
+        /** is safe! **/
+        if (interpreter_parser_strtol(app, string, value)) {
+            success = true;
+            break;
+        }
+        /** is safe! **/
+        if (interpreter_parser_strhash(string, value)) {
+            success = true;
+            break;
+        }
+        /** prevent memory invasion **/
+        if (string[1] == '\0' || string[2] == '\0') {
+            break;
+        }
+        /** is not safe, but now it's protected. **/
+        if (interpreter_parser_strchar(app, string, value)) {
+            success = true;
+            break;
+        }
+        /** more memory prevention, remembering previous results **/
+        if (string[3] == '\0') {
+            break;
+        }
 
-    /** MNEMONIC NILL **/
-    case ('n' | ('i' << 8) | ((long)'l' << 16) | ((long)'l' << 24)):
-        *value = NILL;
-        return true;
+        /** menomonics **/
+        {
+            /** copy normal **/
+            union tbc_keyword_ut key;
+            key.name[0] = string[0];
+            key.name[1] = string[1];
+            key.name[2] = string[2];
+            key.name[3] = string[3];
 
-    /** MNEMONIC NILL **/
-    case ('f' | ('u' << 8) | ((long)'l' << 16) | ((long)'l' << 24)):
-        *value = 1023;
-        return true;
+            /** force to lowercase **/
+            key.compare |= 0x20202020;
 
-    /** MAGICAL MNEMONIC NILL **/
-    case ('s' | ('k' << 8) | ((long)'i' << 16) | ((long)'p' << 24)):
-        *value = interpreter_parser_skip();
-        return true;
-    }
+            /** integer compare menomonics 'NILL' **/
+            if (key.compare == opcode_constant_nill.compare) {
+                *value = NILL;
+                success = true;
+                break;
+            }
 
-    return false;
+            /** integer compare menomonics 'SKIP' **/
+            if (key.compare == opcode_constant_skip.compare) {
+                *value = interpreter_parser_skip();
+                success = true;
+                break;
+            }
+
+            /** integer compare menomonics 'FULL' **/
+            if (key.compare == opcode_constant_full.compare) {
+                *value = 1023;
+
+                success = true;
+                break;
+            }
+        }
+    } while (0);
+
+    return success;
 }
 #endif
