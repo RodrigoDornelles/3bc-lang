@@ -173,14 +173,19 @@ typedef signed long data_aux_3bc_t;
 
 /** application 3bc id (depends of cpu size)**/
 #if defined(TBC_ARCH_BITS_64)
+#define TBC_ID_64_BITS
 typedef tbc_u64_t app_3bc_id;
+#define TBC_ID_32_BITS
 #elif defined(TBC_ARCH_BITS_32) && !defined(TBC_OPT_COMPACT)
 typedef tbc_u32_t app_3bc_id;
 #elif defined(TBC_ARCH_BITS_32) || defined(TBC_ARCH_BITS_16)
+#define TBC_ID_16_BITS
 typedef tbc_u16_t app_3bc_id;
 #elif defined(TBC_ARCH_BITS_8)
+#define TBC_ID_8_BITS
 typedef tbc_u8_t app_3bc_id;
 #else
+#define TBC_ID_16_BITS
 typedef tbc_u16_t app_3bc_id;
 #endif
 
