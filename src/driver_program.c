@@ -63,9 +63,6 @@ static const char error_header[]
       "\n> ERROR LINE:\t%08u\n> ERROR CODE:\t0x%06X\n> DESCRIPTION: ";
 #endif
 
-/** 11 is padding of zeros missing **/
-static const tbc_u8_t error_header_size = sizeof(error_header) + 11;
-
 void driver_program_error(
     struct app_3bc_s* const app, enum error_3bc_e error_code)
 {
@@ -82,8 +79,8 @@ void driver_program_error(
         : app->program.last_line;
 
     /** print header of error**/
-    char error_code_string[error_header_size];
-    snprintf(error_code_string, error_header_size, error_header, app->id,
+    char error_code_string[sizeof(error_header) + 11];
+    snprintf(error_code_string, sizeof(error_header), error_header, app->id,
         error_line, error_code);
     driver_tty_output_raw(app, app->tty_error, error_code_string);
 
