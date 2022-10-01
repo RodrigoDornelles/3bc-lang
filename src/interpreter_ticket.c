@@ -89,10 +89,10 @@ int interpreter_ticket(struct app_3bc_s* const app)
                 sizeof(char) * (++app->cache_l3.buffer.size));
             if (new_buffer == NULL) {
                 driver_program_error(app, ERROR_OUT_OF_MEMORY);
-            }
-            else {
+            } else {
                 app->cache_l3.buffer.storage = new_buffer;
-                app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1] = '\0';
+                app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1]
+                    = '\0';
             }
         }
 
@@ -120,12 +120,11 @@ int interpreter_ticket(struct app_3bc_s* const app)
 
         if (new_buffer == NULL) {
             driver_program_error(app, ERROR_OUT_OF_MEMORY);
-        }
-        else {
+        } else {
             app->cache_l3.buffer.storage = new_buffer;
-            app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1] = character;
+            app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1]
+                = character;
         }
-        
     }
 
     return 0;

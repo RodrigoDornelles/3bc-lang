@@ -36,7 +36,6 @@
 #define TBC_SOURCE_REGISTERS
 #include "3bc.h"
 
-
 /**
  * header used before error description.
  *
@@ -47,20 +46,21 @@
  * the size of the ID depends on the architecture.
  *
  * NOTE:
- * there is _3BC_COMPACT which makes information simpler (takes up less space). 
+ * there is _3BC_COMPACT which makes information simpler (takes up less space).
  *
  */
 #if defined(TBC_OPT_COMPACT)
-static const char error_header[] = "\n\n[3BC] %3d Fatal error 0x%06X in line: %06u\n";
+static const char error_header[]
+    = "\n\n[3BC] %3d Fatal error 0x%06X in line: %06u\n";
 #else
-static const char error_header[] = 
-    "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM\n> MACHINE ID:\t"
+static const char error_header[]
+    = "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM\n> MACHINE ID:\t"
 #if defined(TBC_ID_64_BITS) || defined(TBC_ID_32_BITS)
-    "%08lu"
+      "%08lu"
 #elif defined(TBC_ID_16_BITS) || defined(TBC_ID_8_BITS)
-    "%08u"
+      "%08u"
 #endif
-    "\n> ERROR LINE:\t%08u\n> ERROR CODE:\t0x%06X\n> DESCRIPTION: ";
+      "\n> ERROR LINE:\t%08u\n> ERROR CODE:\t0x%06X\n> DESCRIPTION: ";
 #endif
 
 /** 11 is padding of zeros missing **/
@@ -83,7 +83,8 @@ void driver_program_error(
 
     /** print header of error**/
     char error_code_string[error_header_size];
-    snprintf(error_code_string, error_header_size, error_header, app->id, error_line, error_code);
+    snprintf(error_code_string, error_header_size, error_header, app->id,
+        error_line, error_code);
     driver_tty_output_raw(app, app->tty_error, error_code_string);
 
     /** TODO: not use macros and move to 3bc_errors.h **/

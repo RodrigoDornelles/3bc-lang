@@ -72,8 +72,7 @@ char* interpreter_readln(struct app_3bc_s* const app, char* line)
     /** parse string to constant and validate **/
     else if (!interpreter_syntax_constants(app, text_val, &val)) {
         driver_program_error(app, ERROR_INVALID_CONSTANT);
-    }
-    else {
+    } else {
         /** add new line **/
         ds_program_fifo_line_add(app, reg, mem, val);
     }

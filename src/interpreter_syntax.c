@@ -82,13 +82,13 @@ static const tbc_i8_t opcodes_register_size
  */
 
 /** nill (0) constant menomonic **/
-static const union tbc_keyword_ut opcode_constant_nill = {"nill"};
+static const union tbc_keyword_ut opcode_constant_nill = { "nill" };
 
 /** full (1023) constant menomonic **/
-static const union tbc_keyword_ut opcode_constant_full = {"full"};
+static const union tbc_keyword_ut opcode_constant_full = { "full" };
 
 /** skip (?) magic menomonic **/
-static const union tbc_keyword_ut opcode_constant_skip = {"skip"};
+static const union tbc_keyword_ut opcode_constant_skip = { "skip" };
 
 /**
  * Checks menomics and literal expressions of the first column only.
@@ -170,7 +170,7 @@ bool interpreter_syntax_constants(struct app_3bc_s* const app,
     const char* const string, signed long int* value)
 {
     bool success = false;
-    
+
     /** single return point **/
     do {
         /** prevent ilegal pointer **/
@@ -230,13 +230,12 @@ bool interpreter_syntax_constants(struct app_3bc_s* const app,
             /** integer compare menomonics 'FULL' **/
             if (key.compare == opcode_constant_full.compare) {
                 *value = 1023;
-                
+
                 success = true;
                 break;
             }
         }
-    }
-    while(0);
+    } while (0);
 
     return success;
 }
