@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- FAV ICON -->       
+<!-- FAV ICON -->
 
 <!-- MATERIALIZE CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@materializecss/materialize/dist/css/materialize.min.css">
@@ -10,11 +10,38 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/material-icons@4.5.4/index.min.css">
 <script src="https://cdn.jsdelivr.net/npm/@materializecss/materialize/dist/js/materialize.min.js"></script>
 
-<!-- MATERILIZE SCRIPT -->
 <script>
+    /** MATERIALZIE **/
     document.addEventListener('DOMContentLoaded', () => {
-        M.Tabs.init(document.querySelectorAll('.tabs'), {swipeable: false});
+        M.Tabs.init(document.querySelectorAll('.tabs'), { swipeable: false });
         M.Sidenav.init(document.querySelectorAll('.sidenav'), {});
+    });
+
+    /** DARK MODE **/
+    document.addEventListener('DOMContentLoaded', () => {
+        const classDark = "dark";
+        const classAnim = "anim-dark"
+        const iconDark = "brightness_4";
+        const iconLight = "brightness_high";
+        const body = document.querySelector("body");
+        const iconBtn = document.querySelector(".theme");
+        const iconTheme = document.querySelector(".bright");
+        const sessionTheme = localStorage.getItem('theme');
+        const toggleTheme = () => (iconTheme.innerText === iconDark)?
+            iconLight:
+            iconDark;
+
+        /** remember theme session **/
+        iconTheme.innerText = sessionTheme ?? iconDark;
+        body.classList.toggle(classDark, sessionTheme === iconLight);
+
+        /** toggle theme button **/
+        iconBtn.addEventListener("click", () => {
+            body.classList.add(classAnim);
+            iconTheme.innerText = toggleTheme();
+            localStorage.setItem('theme', iconTheme.innerText);
+            body.classList.toggle(classDark, iconTheme.innerText === iconLight);
+        });
     });
 </script>
 
