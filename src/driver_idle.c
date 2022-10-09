@@ -95,7 +95,8 @@ bool driver_idle(struct app_3bc_s* const app)
 
         return app->cache_l2.sleep_period;
 
-#elif defined(TBC_P_COMPUTER) && defined(CLOCK_REALTIME)
+#elif defined(TBC_P_COMPUTER) && defined(CLOCK_REALTIME)                       \
+    && !defined(TBC_NOT_CLOCK)
         clock_gettime(CLOCK_REALTIME, &global_time.ts);
 
         /** first :D **/
@@ -135,7 +136,8 @@ bool driver_idle(struct app_3bc_s* const app)
 
         return app->cache_l2.sleep_period;
 
-#elif defined(TBC_P_COMPUTER) && defined(CLOCK_REALTIME)
+#elif defined(TBC_P_COMPUTER) && defined(CLOCK_REALTIME)                       \
+    && !defined(TBC_NOT_CLOCK)
         /**
          * TODO: 40 milliseconds is not such a good precision,
          * the algorithm should be improved for this case.
@@ -179,7 +181,8 @@ bool driver_idle(struct app_3bc_s* const app)
         }
         return app->cache_l2.sleep_period;
 
-#elif defined(TBC_P_COMPUTER) && defined(CLOCK_REALTIME)
+#elif defined(TBC_P_COMPUTER) && defined(CLOCK_REALTIME)                       \
+    && !defined(TBC_NOT_CLOCK)
         /**
          * this method loses an accuracy of 50 milliseconds,
          * in better performance tradeoff.
