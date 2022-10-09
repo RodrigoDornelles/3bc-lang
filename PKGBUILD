@@ -1,7 +1,7 @@
 # Maintainer: Rodrigo Dornelles <rodrigo@dornelles.me> 
 # Contributor: yxqsnz <yxqsnz@gmail.com>
 pkgname="3bc-lang-git"
-pkgver="0.1.3"
+pkgver="0.1.4"
 license=('GPL3')
 pkgrel=1
 pkgdesc="Low level language, tiny virtual machine that works on computers and microcontrollers. (Friendly Punched cards)"
