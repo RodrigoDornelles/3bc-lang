@@ -93,7 +93,7 @@ data_3bc_t driver_tty_input(
 
 /** capture input **/
 #if defined(TBC_NOT_FILES)
-        
+
 #elif defined(TBC_P_COMPUTER_OLD)
         c[0] = cgetc();
 #elif defined(TBC_USE_POSIX)
