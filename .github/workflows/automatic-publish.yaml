@@ -101,7 +101,7 @@ jobs:
           files: |
             *.tar.gz
 
-  nodejs: 
+  emscripten: 
     runs-on: ubuntu-latest
     container: emscripten/emsdk     
     steps:
@@ -149,8 +149,8 @@ jobs:
           mv bin npm
           mv glue npm
           mv full npm
-          tar -czf 3bc-nodejs.tar.gz ./npm/*
-          zip -r 3bc-nodejs.zip ./npm/*
+          tar -czf 3bc-web-emscripten.tar.gz ./npm/*
+          zip -r 3bc-web-emscripten.zip ./npm/*
 
       - name: Upload binaries to github
         uses: softprops/action-gh-release@v1
