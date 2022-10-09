@@ -26,4 +26,4 @@ The opposite, the founder of the language is a militant against the fascist gove
 
 Brazilian flags buttons also green and yellow colors are to show pride in being a national technology like [Lua](https://lua.org) and [Elixir](https://elixir-lang.org).
 
-A way of protest against the distorted values of our nationalism.
+Is a way of protest against the distorted values of our nationalism.
