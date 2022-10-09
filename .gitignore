@@ -9,6 +9,7 @@ bin/
 *.bin
 *.app
 *.exe
+*.nes
 *.obj
 *.out
 *.o

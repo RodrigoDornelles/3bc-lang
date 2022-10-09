@@ -50,3 +50,25 @@ jobs:
         run: >-
           ./cc65/bin/cl65 -t c64 -D_3BC_DISABLE_INTERPRETER
           programs/interpreter.c
+
+  nes: 
+    runs-on: ubuntu-latest      
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Checkout cc65
+        uses: actions/checkout@v2
+        with:
+          repository: cc65/cc65
+          path: cc65
+
+      - name: Build cc65
+        run: |
+          cd cc65
+          make
+
+      - name: Build project
+        run: >-
+          ./cc65/bin/cl65 -t nes -D_3BC_DISABLE_INTERPRETER -D__NES__
+          programs/interpreter.c

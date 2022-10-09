@@ -90,6 +90,7 @@
  * TBC_NOT_LOG2         -> doesn't support base 2 logarithm
  * TBC_NOT_LOG10        -> doesn't support base 10 logarithm
  * TBC_NOT_ARGCV        -> doesn't support argc and argv on main entry
+ * TBC_NOT_FILES        -> doesn't support files.
  *
  * TBC_OPT_COMPACT      -> optimize storage occupied
  *
@@ -116,6 +117,11 @@
 #define TBC_P_COMPUTER
 #define TBC_P_COMPUTER_OLD
 #define TBC_USE_CONIO
+#endif
+
+#if defined(__NES__)
+#define TBC_NOT_FILES
+#define TBC_NOT_CLOCK
 #endif
 
 /**
