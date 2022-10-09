@@ -72,6 +72,7 @@ jobs:
             linux/mips64le,linux/ppc64le,linux/s390x
 
   freebsd:
+    if: false
     runs-on: macos-10.15
     steps:
       - name: Checkout project
