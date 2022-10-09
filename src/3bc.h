@@ -36,10 +36,10 @@
 #define _LANG_3BC_H
 
 /** library info **/
-#define VERSION_3BC "0.1.3"
+#define VERSION_3BC "0.1.4"
 #define VERSION_3BC_MAJOR 0
 #define VERSION_3BC_MINOR 1
-#define VERSION_3BC_PATCH 3
+#define VERSION_3BC_PATCH 4
 
 /** environment check **/
 #include "3bc_detect.h"
