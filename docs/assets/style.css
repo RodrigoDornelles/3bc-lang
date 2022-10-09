@@ -23,45 +23,16 @@ h1 {
   margin-bottom: 1.8rem;
 }
 
-h2 {
-  font-size: 1.5em;
-}
-
-h3 {
-  font-size: 1.17em;
-}
-
-h4 {
-  font-size: 1.12em;
-}
-
-h5 {
-  font-size: .83em;
-}
-
-h6 {
-  font-size: .75em;
-}
-
-blockquote p {
-  text-align: left;
-}
-
-a {
-  color: #008234;
-}
-
-p {
-  text-align: justify;
-}
-
-ul {
-  text-align: left;
-}
-
-pre {
-  text-align: left;
-}
+h2 {font-size: 1.5em;}
+h3 {font-size: 1.17em;}
+h4 {font-size: 1.12em;}
+h5 {font-size: .83em;}
+h6 {font-size: .75em;}
+blockquote p {text-align: left;}
+a {color: #008234;}
+p {text-align: justify;}
+ul {text-align: left;}
+pre {text-align: left;}
 
 li strong a {
   gap: 0.3rem;
@@ -91,7 +62,7 @@ li strong a {
   border-bottom: 16px solid transparent;
 }
 
-.btn::before {
+.btn::before{
   top: 6px;
   right: -10px;
   z-index: 7;
@@ -103,8 +74,7 @@ li strong a {
 }
 
 /** materialize roadmap fix **/
-[type="checkbox"]:not(:checked),
-[type="checkbox"]:checked {
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
   position: initial;
   opacity: initial;
   pointer-events: initial;
@@ -112,19 +82,14 @@ li strong a {
 }
 
 nav {
-  background: linear-gradient(-45deg, #f0d313, #008234, #00349e, #008234, #f0d313, #008234);
+  background: linear-gradient(-45deg, #f0d313, #008234,#00349e, #008234, #f0d313, #008234);
   animation: 3s linear 0s infinite running brazil-anim;
   background-size: 600% 600%;
 }
 
 @keyframes brazil-anim {
-  from {
-    background-position: 100% 100%;
-  }
-
-  to {
-    background-position: 4% 4%;
-  }
+  from {background-position: 100% 100%;}
+  to {background-position: 4% 4%;}
 }
 
 img[alt$=">"] {
@@ -149,6 +114,6 @@ img[alt$="><"] {
 
 @media print {
   .dont-print {
-    display: none;
+      display: none;
   }
 }
