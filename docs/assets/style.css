@@ -2,13 +2,13 @@
   transition: color 1s ease, background-color 1s ease;
 }
 
-ul li a strong {
-  color: #f0d313;
-}
-
 .dark {
   background-color: #202123;
   color: #fff;
+}
+
+.dark section div ul li a{
+  color: #f0d313;
 }
 
 .theme {
