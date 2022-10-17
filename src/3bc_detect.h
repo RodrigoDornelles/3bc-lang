@@ -122,6 +122,7 @@
 #if defined(__NES__)
 #define TBC_NOT_FILES
 #define TBC_NOT_CLOCK
+#define TBC_CONSOLE_NES
 #endif
 
 /**

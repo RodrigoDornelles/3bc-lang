@@ -85,6 +85,9 @@
 #if defined(TBC_KERNEL_NUTTX)
 #include <nuttx/config.h>
 #endif
+#if defined(TBC_CONSOLE_NES)
+#include "mos6502_nes/screen.c"
+#endif
 
 /** TODO: move to supporting file **/
 #ifndef SIGTERM
