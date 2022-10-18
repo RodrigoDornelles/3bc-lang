@@ -203,7 +203,7 @@ bool interpreter_parser_strhash(const char* string, signed long int* value)
 
         /** (hash * 33) + c **/
         hash = ((hash << 5) + hash) + c;
-        string++;
+        ++string;
     }
 
     *value = hash % SHRT_MAX;

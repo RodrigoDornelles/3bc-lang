@@ -68,7 +68,7 @@ void driver_custom_set(struct app_3bc_s* const app, cpumode_3bc_t cpu_mode,
         while (last_func <= actual_func)
         {
             new_array[last_func] = NULL;
-            last_func++;
+            ++last_func;
         }
 
         custom_funcs = new_array;

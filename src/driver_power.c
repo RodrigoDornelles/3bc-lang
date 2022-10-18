@@ -124,7 +124,7 @@ void driver_power_signal(int sig)
             break;
 #endif
         }
-        apps++;
+        ++apps;
     }
 
     ds_hypervisor_darray_kill_all();

@@ -71,9 +71,9 @@ void ds_label_hash_insert(struct app_3bc_s* const app, label_3bc_t label)
     }
 
     last_node = app->program.label_table[hash];
-    while ( last_node->next != NULL)
-        ;
+    while ( last_node->next != NULL) {
         last_node = last_node->next;
+    }
     last_node->next = new_node;
 }
 
