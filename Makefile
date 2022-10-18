@@ -49,6 +49,7 @@ build:
 	(${LD} ${CC_OBJECTS} ${LD_TARGET_PREFIX} ${LD_FLAGS} -o ${CC_OUTPUT}) || (make clean-objects && false)
 	${ZIP_COMMAND}
 	make clean-objects
+	make install-hooks
 
 docs: clean-docs
 	@cd docs && jekyll build
@@ -84,3 +85,6 @@ tests-full: clean-test
 	@echo " > running full tests suite...\n"
 	@${CXX} -w -coverage ${CXX_SOURCES} -O0 -lm -o 3bc.test.bin
 	@ruby -Ilib -e 'ARGV.each { |f| require f }' ./tests/*.*.rb
+
+install-hooks:
+	@cp .commit-msg .git/hooks/commit-msg
