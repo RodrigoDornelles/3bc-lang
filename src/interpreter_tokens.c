@@ -71,7 +71,8 @@ bool interpreter_tokens(
 
         /** skip comments **/
         if (strchr("#;", *pointer) != NULL) {
-            while (pointer[0] != '\n' && pointer[0] != '\0' && pointer[0] != EOF) {
+            while (
+                pointer[0] != '\n' && pointer[0] != '\0' && pointer[0] != EOF) {
                 ++pointer;
             }
 
