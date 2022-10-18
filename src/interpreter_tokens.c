@@ -65,13 +65,13 @@ bool interpreter_tokens(
 
     do {
         /** search for the beginning of the column **/
-        while (strchr("\t. ", *pointer) != NULL && pointer[0] != '\0'){
+        while (strchr("\t. ", *pointer) != NULL && pointer[0] != '\0') {
             ++pointer;
         }
 
         /** skip comments **/
         if (strchr("#;", *pointer) != NULL) {
-            while (pointer[0] != '\n' && pointer[0] != '\0' && pointer[0] != EOF){
+            while (pointer[0] != '\n' && pointer[0] != '\0' && pointer[0] != EOF) {
                 ++pointer;
             }
 
