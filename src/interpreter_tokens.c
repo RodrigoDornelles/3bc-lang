@@ -65,16 +65,15 @@ bool interpreter_tokens(
 
     do {
         /** search for the beginning of the column **/
-        for (; strchr("\t. ", *pointer) != NULL && pointer[0] != '\0';
-             pointer++)
+        while (strchr("\t. ", *pointer) != NULL && pointer[0] != '\0')
             ;
+            pointer++;
 
         /** skip comments **/
         if (strchr("#;", *pointer) != NULL) {
-            for (;
-                 pointer[0] != '\n' && pointer[0] != '\0' && pointer[0] != EOF;
-                 pointer++)
+            while (pointer[0] != '\n' && pointer[0] != '\0' && pointer[0] != EOF)
                 ;
+                pointer++;
             break;
         }
 
@@ -116,9 +115,9 @@ bool interpreter_tokens(
         }
 
         /** skip other literals **/
-        for (; strchr("\t,. ", *pointer) == NULL && pointer[0] != '\0';
-             pointer++)
+        while (strchr("\t,. ", *pointer) == NULL && pointer[0] != '\0')
             ;
+            pointer++;
 
         /** mark end of column **/
         if (pointer[0] != '\0' && pointer[0] != ',') {
