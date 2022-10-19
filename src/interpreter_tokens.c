@@ -117,7 +117,7 @@ bool interpreter_tokens(
         }
 
         /** skip other literals **/
-        while (strchr("\t,. ", *pointer) == NULL && pointer[0] != '\0'){
+        while (strchr("\t,. ", *pointer) == NULL && pointer[0] != '\0') {
             ++pointer;
         }
 
