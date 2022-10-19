@@ -106,7 +106,7 @@ void driver_power_signal(int sig)
      *
      * Finally, C ANSI FOREACH!!!!
      */
-    for (; *apps; apps++) {
+    while (*apps) {
         switch (sig) {
         case SIGTERM:
             driver_power_exit(*apps);
@@ -124,6 +124,7 @@ void driver_power_signal(int sig)
             break;
 #endif
         }
+        ++apps;
     }
 
     ds_hypervisor_darray_kill_all();
