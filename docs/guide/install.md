@@ -5,6 +5,12 @@ description: How to install simply in just one step
 Installation guide
 ==================
 
+Arch based Linux distros
+------------------------
+
+```BASH
+paru 3bc-lang
+```
 
 Linux / Mac OSX
 ---------------
