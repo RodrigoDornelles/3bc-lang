@@ -194,7 +194,7 @@ bool interpreter_parser_strhash(const char* string, signed long int* value)
     }
 
     /** djb2 algorithm **/
-    for (; (c = *string); string++) {
+    while ((c = *string)) {
 
         /** ignore break line **/
         if (c == '\n') {
@@ -203,6 +203,7 @@ bool interpreter_parser_strhash(const char* string, signed long int* value)
 
         /** (hash * 33) + c **/
         hash = ((hash << 5) + hash) + c;
+        ++string;
     }
 
     *value = hash % SHRT_MAX;

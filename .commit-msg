@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+
+require './scripts/commit_message_hook'
+
+message = File.read(ARGV[0])
+
+response = CommitMessageHook.call(message)
+
+response.fetch(:errors).each { |error| puts error }
+
+exit 0 if response.fetch(:success)
+exit 1
