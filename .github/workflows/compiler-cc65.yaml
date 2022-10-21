@@ -70,5 +70,4 @@ jobs:
 
       - name: Build project
         run: >-
-          ./cc65/bin/cl65 -t nes -D_3BC_DISABLE_INTERPRETER -D__NES__
-          programs/interpreter.c
+          ./cc65/bin/cl65 -t nes programs/interpreter_6502.c

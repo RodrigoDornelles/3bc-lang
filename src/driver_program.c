@@ -51,7 +51,7 @@
  */
 #if defined(TBC_OPT_COMPACT)
 static const char error_header[]
-    = "\n\n[3BC] %3d Fatal error 0x%06X in line: %06u\n";
+    = "\n\n[3BC] %03d Fatal error 0x%06X in line: %06u\n";
 #else
 static const char error_header[]
     = "\n[3BC] CRITICAL ERROR ABORTED THE PROGRAM\n> MACHINE ID:\t"
@@ -82,7 +82,7 @@ void driver_program_error(
     char error_code_string[sizeof(error_header) + 11];
     snprintf(error_code_string, sizeof(error_header), error_header, app->id,
         error_line, error_code);
-    driver_tty_output_raw(app, app->tty_error, error_code_string);
+    driver_tty_output_raw(app, app->cout.tty_error, error_code_string);
 
     /** TODO: not use macros and move to 3bc_errors.h **/
 #if !defined(TBC_OPT_COMPACT)

@@ -58,9 +58,9 @@ void ds_program_fifo_line_add(struct app_3bc_s* const app, register_3bc_t reg,
 
     /** register program bytecode **/
     ds_program_fifo_resize(app);
-    app->program.tail->column.reg = reg;
-    app->program.tail->column.adr = mem;
-    app->program.tail->column.dta = val;
+    //app->program.tail->column.reg = reg;
+    //app->program.tail->column.adr = mem;
+    //app->program.tail->column.dta = val;
 }
 
 /**
@@ -71,7 +71,7 @@ void ds_program_fifo_resize(struct app_3bc_s* const app)
 {
     struct line_node_s* prev_line_node = app->program.tail;
     struct line_node_s* new_line_node
-        = (struct line_node_s*)malloc(sizeof(struct line_node_s));
+        =  (struct line_node_s*)malloc(sizeof(struct line_node_s));
 
     /** was not possible expand program **/
     if (new_line_node == NULL) {
@@ -80,23 +80,23 @@ void ds_program_fifo_resize(struct app_3bc_s* const app)
 
     /** first line program **/
     if (app->program.head == NULL) {
-        app->program.head = new_line_node;
+        //app->program.head = new_line_node;
     }
 
     /** current line program **/
     if (app->program.curr == NULL) {
-        app->program.curr = new_line_node;
+        //app->program.curr = new_line_node;
     }
 
     /** link line program **/
     if (prev_line_node != NULL) {
-        prev_line_node->next = new_line_node;
+        //prev_line_node->next = new_line_node;
     }
 
     /** last line program **/
-    app->program.tail = new_line_node;
-    app->program.tail->next = NULL;
-    app->program.tail->line = app->program.last_line;
+    //app->program.tail = new_line_node;
+    //app->program.tail->next = NULL;
+    //app->program.tail->line = app->program.last_line;
 }
 
 /**

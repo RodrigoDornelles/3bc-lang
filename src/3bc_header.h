@@ -175,8 +175,8 @@ struct line_node_s* ds_procedure_lifo_pop(struct app_3bc_s* const app);
 /*****************************************************************************/
 /** TODO: move **/
 int interpreter(struct app_3bc_s* const app);
-void driver_custom_set(
-    cpumode_3bc_t cpu_mode, register_3bc_t reg, function_3bc_t lambda);
+void driver_custom_set(struct app_3bc_s* const app, cpumode_3bc_t cpu_mode,
+    register_3bc_t reg, function_3bc_t lambda);
 void driver_custom_call(struct app_3bc_s* const app, register_3bc_t reg,
     address_3bc_t address, data_3bc_t value);
 /*****************************************************************************/

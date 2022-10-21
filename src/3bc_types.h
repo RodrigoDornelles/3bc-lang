@@ -312,6 +312,19 @@ struct memory_3bc_s {
     void (*conf_set)(app_3bc_id, address_3bc_t, data_3bc_t);
 };
 
+/** TODO: refactor: https://github.com/RodrigoDornelles/3bc-lang/issues/308 **/
+union tty_cin_u {
+    struct tty_3bc_s tty_input;
+    struct tty_3bc_s tty_source;
+};
+
+union tty_cout_u {
+    struct tty_3bc_s tty_debug;
+    struct tty_3bc_s tty_output;
+    struct tty_3bc_s tty_keylog;
+    struct tty_3bc_s tty_error;
+};
+
 /** APLICATION **/
 struct app_3bc_s {
     app_3bc_id id;
@@ -322,12 +335,13 @@ struct app_3bc_s {
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
     union cache_l3_u cache_l3;
-    struct tty_3bc_s tty_input;
-    struct tty_3bc_s tty_debug;
-    struct tty_3bc_s tty_output;
-    struct tty_3bc_s tty_source;
-    struct tty_3bc_s tty_keylog;
-    struct tty_3bc_s tty_error;
+#if defined(TBC_OPT_ULTRA_COMPACT)
+    union tty_cin_u cin;
+    union tty_cout_u cout;
+#else
+    struct tty_cin_s cin;
+    struct tty_cout_s cout;
+#endif
     struct program_3bc_s program;
     struct memory_3bc_s memory;
 };

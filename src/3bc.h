@@ -86,7 +86,7 @@
 #include <nuttx/config.h>
 #endif
 #if defined(TBC_CONSOLE_NES)
-#include "mos6502_nes/screen.c"
+#include <nes.h>
 #endif
 
 /** TODO: move to supporting file **/

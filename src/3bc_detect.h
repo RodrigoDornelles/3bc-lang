@@ -120,9 +120,12 @@
 #endif
 
 #if defined(__NES__)
+#define TBC_NOT_ARGCV
 #define TBC_NOT_FILES
 #define TBC_NOT_CLOCK
 #define TBC_CONSOLE_NES
+#define TBC_OPT_ULTRA_COMPACT
+#undef TBC_P_COMPUTER
 #endif
 
 /**
