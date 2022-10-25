@@ -6,13 +6,6 @@
 /** fist column of opcode **/
 typedef tbc_u8_t tbc_register_t;
 
-#ifdef __cplusplus
-#define tbc_cpumode_et enum ___tbc_cpumode_e
-#else
-/** third column of opcode | cpu context **/
-typedef enum  ___tbc_cpumode_e tbc_cpumode_et;
-#endif
-
 enum  ___tbc_cpumode_e {
     TBC_MODE_EMPUTY, /**< CPU MODE: 0**/
     TBC_MODE_DEBUG, /**< CPU MODE: 1**/
@@ -60,6 +53,9 @@ enum  ___tbc_cpumode_e {
     TBC_MODE_SLEEP, /**< CPU MODE: 43**/
     TBC_MODE_END /**< CPU MODE: 44**/
 };
+
+/** third column of opcode | cpu context **/
+typedef enum  ___tbc_cpumode_e tbc_cpumode_et;
 
 #define NILL ((tbc_register_t)0) /**< OPCODE: 0 **/
 #define MODE ((tbc_register_t)7) /**< OPCODE: 7 **/

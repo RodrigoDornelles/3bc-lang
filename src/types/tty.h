@@ -1,31 +1,15 @@
 #ifndef H_TTY_TYPES_TBC
 #define H_TTY_TYPES_TBC
 
-/** TODO: remove it**/
-typedef FILE file_t; 
 /**
  * NOTE: mixed type
  * when can be primitive, struct, union...
  */
 typedef FILE tbc_file_mt;
-
-#ifdef __cplusplus
-#define tbc_stream_type_et enum ___tbc_stream_type_e
-#define tbc_stream_io_ut union ___tbc_stream_io_u
-#define tbc_tty_st struct ___tbc_tty_s
-#else
-typedef enum ___tbc_stream_type_e tbc_stream_type_et;
 typedef union ___tbc_stream_io_u tbc_stream_io_ut;
 typedef struct ___tbc_tty_s tbc_tty_st;
-#endif
 
-#if defined(__cplusplus) && defined(TBC_OPT_ULTRA_COMPACT)
-#define tbc_cin_mt union ___tbc_cin_u
-#define tbc_cout_mt union ___tbc_cout_u
-#elif defined(__cplusplus) && !defined(TBC_OPT_ULTRA_COMPACT)
-#define tbc_cin_mt struct ___tbc_cin_s
-#define tbc_cout_mt struct ___tbc_cout_s
-#elif defined(TBC_OPT_ULTRA_COMPACT)
+#if defined(TBC_OPT_ULTRA_COMPACT)
 /**
  * C STANDARD INPUT
  *
@@ -68,6 +52,8 @@ enum ___tbc_stream_type_e {
     STREAM_TYPE_CLONE_TTY
 };
 
+typedef enum ___tbc_stream_type_e tbc_stream_type_et;
+
 union ___tbc_stream_io_u {
     tbc_file_mt* file;
     tbc_file_mt* stream;
@@ -103,5 +89,6 @@ struct ___tbc_cout_s {
     tbc_tty_st tty_keylog;
     tbc_tty_st tty_error;
 };
+
 
 #endif
