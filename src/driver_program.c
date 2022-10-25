@@ -64,7 +64,7 @@ static const char error_header[]
 #endif
 
 void driver_program_error(
-    struct app_3bc_s* const app, enum error_3bc_e error_code)
+    struct app_3bc_s* const app, tbc_error_et error_code)
 {
     /**
      * NOTE: if the current line does not exist,
@@ -121,10 +121,10 @@ void driver_program_error(
         ERROR_LOG_3BC(ERROR_CHAR_SIZE, "INVALID CHARACTER SIZE");
         ERROR_LOG_3BC(ERROR_COLUMNS, "WRONG NUMBER OF COLUMNS");
     default:
-        driver_tty_output_raw(app, app->tty_error, "UNKNOWN ERROR");
+        driver_tty_output_raw(app, app->cout.tty_error, "UNKNOWN ERROR");
     }
 
-    driver_tty_output_raw(app, app->tty_error, "\n");
+    driver_tty_output_raw(app, app->cout.tty_error, "\n");
 #endif
 
     /** TODO: no closign when else **/

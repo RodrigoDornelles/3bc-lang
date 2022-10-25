@@ -68,7 +68,7 @@
  */
 #define ERROR_LOG_3BC(a, b)                                                    \
     case (a):                                                                  \
-        driver_tty_output_raw(app, app->tty_error, (b));                       \
+        driver_tty_output_raw(app, app->cout.tty_error, (b));                       \
         break;
 #define LLRBT_IS_RED(n) (n == NULL ? false : n->color == LLRBT_RED)
 #define POINTER(a) (driver_memory_pointer(app, a))

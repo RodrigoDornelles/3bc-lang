@@ -78,12 +78,12 @@ clean-test:
 
 tests: clean-test
 	@echo " > running fasts tests...\n > to use the full test suite, run: make tests-full\n"
-	@${CXX} -w -coverage ${CXX_SOURCES} -O0 -lm -o 3bc.test.bin
+	@${CXX} -w -coverage ${CXX_SOURCES} -std=c++11 -O0 -lm -o 3bc.test.bin
 	@ruby -Ilib -e 'ARGV.each { |f| require f }' ./tests/fasttest.*.rb
 
 tests-full: clean-test
 	@echo " > running full tests suite...\n"
-	@${CXX} -w -coverage ${CXX_SOURCES} -O0 -lm -o 3bc.test.bin
+	@${CXX} -w -coverage ${CXX_SOURCES} -std=c++11 -O0 -lm -o 3bc.test.bin
 	@ruby -Ilib -e 'ARGV.each { |f| require f }' ./tests/*.*.rb
 
 install-hooks:

@@ -6,7 +6,7 @@ int main(int argc, char** argv)
     /**
      * put transpiled program here.
      * @example:*
-    lang_3bc_line(VM, MODE, NILL, MODE_STRING);
+    lang_3bc_line(VM, MODE, NILL, TBC_MODE_STRING);
     lang_3bc_line(VM, STRC, NILL, 'H');
     lang_3bc_line(VM, STRC, NILL, 'E');
     lang_3bc_line(VM, STRC, NILL, 'L');

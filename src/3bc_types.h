@@ -35,104 +35,10 @@
 #ifndef H_TYPES_TBC
 #define H_TYPES_TBC
 
-#ifndef H_DETECT_TBC
-#warning "[3BC] it is recommended to \
-include '3bc_detect.h' \
-before '3bc_types.h'"
-#endif
-
-/**
- * ______     _           _ _   _             _____
- * | ___ \   (_)         (_) | (_)           |_   _|
- * | |_/ / __ _ _ __ ___  _| |_ ___   _____    | |_   _ _ __   ___  ___
- * |  __/ '__| | '_ ` _ \| | __| \ \ / / _ \   | | | | | '_ \ / _ \/ __|
- * | |  | |  | | | | | | | | |_| |\ V /  __/   | | |_| | |_) |  __/\__ \
- * \_|  |_|  |_|_| |_| |_|_|\__|_| \_/ \___|   \_/\__, | .__/ \___||___/
- *                                                 __/ | |
- *                                                |___/|_|
- *
- * BRIEF:
- * fixed size types 'non-iso' including (ANSI).
- */
-#if defined(TBC_CC_STD_99)
-#include <inttypes.h>
-/** signed 8 bits **/
-typedef int8_t tbc_i8_t;
-/** signed 16 bits **/
-typedef int16_t tbc_i16_t;
-/** signed 32 bits **/
-typedef int32_t tbc_i32_t;
-/** signed 64 bits **/
-typedef int64_t tbc_i64_t;
-/** unsigned 8 bits **/
-typedef uint8_t tbc_u8_t;
-/** unsigned 16 bits **/
-typedef uint16_t tbc_u16_t;
-/** unsigned 32 bits **/
-typedef uint32_t tbc_u32_t;
-/** unsigned 64 bits **/
-typedef uint64_t tbc_u64_t;
-#elif defined(TBC_ARCH_BITS_64)
-/** signed 8 bits **/
-typedef signed char tbc_i8_t;
-/** signed 16 bits **/
-typedef signed short tbc_i16_t;
-/** signed 32 bits **/
-typedef signed int tbc_i32_t;
-/** signed 64 bits **/
-typedef signed long tbc_i64_t;
-/** unsigned 8 bits **/
-typedef unsigned char tbc_u8_t;
-/** unsigned 16 bits **/
-typedef unsigned short tbc_u16_t;
-/** unsigned 32 bits **/
-typedef unsigned int tbc_u32_t;
-/** unsigned 64 bits **/
-typedef unsigned long tbc_u64_t;
-#elif defined(TBC_ARCH_BITS_32)
-/** signed 8 bits **/
-typedef signed char tbc_i8_t;
-/** signed 16 bits **/
-typedef signed short tbc_i16_t;
-/** signed 32 bits **/
-typedef signed int tbc_i32_t;
-/** signed 64 bits **/
-typedef signed long long tbc_i64_t;
-/** unsigned 8 bits **/
-typedef unsigned char tbc_u8_t;
-/** unsigned 16 bits **/
-typedef unsigned short tbc_u16_t;
-/** unsigned 32 bits **/
-typedef unsigned int tbc_u32_t;
-/** unsigned 64 bits **/
-typedef unsigned long long tbc_u64_t;
-#elif defined(TBC_ARCH_BITS_16)
-/** signed 8 bits **/
-typedef signed char tbc_i8_t;
-/** signed 16 bits **/
-typedef signed short tbc_i16_t;
-/** signed 32 bits **/
-typedef signed int tbc_i32_t;
-/** unsigned 8 bits **/
-typedef unsigned char tbc_u8_t;
-/** unsigned 16 bits **/
-typedef unsigned short tbc_u16_t;
-/** unsigned 32 bits **/
-typedef unsigned int tbc_u32_t;
-#elif defined(TBC_ARCH_BITS_8)
-/** signed 8 bits **/
-typedef signed char tbc_i8_t;
-/** signed 16 bits **/
-typedef signed int tbc_i16_t;
-/** signed 32 bits **/
-typedef signed long tbc_i32_t;
-/** unsigned 8 bits **/
-typedef unsigned char tbc_u8_t;
-/** unsigned 16 bits **/
-typedef unsigned int tbc_u16_t;
-/** unsigned 32 bits **/
-typedef unsigned long tbc_u32_t;
-#endif
+#include "3bc_detect.h"
+#include "types/primitive.h"
+#include "types/fsm.h"
+#include "types/tty.h"
 
 /**
  *  _   __                                 _       _____
@@ -189,43 +95,6 @@ typedef tbc_u8_t app_3bc_id;
 typedef tbc_u16_t app_3bc_id;
 #endif
 
-/** FILE/STREAM/INTERFACE TYPES **/
-typedef FILE file_t;
-
-enum stream_type_e {
-    STREAM_TYPE_NONE = 0,
-    STREAM_TYPE_SILENT,
-    STREAM_TYPE_ARDUINO_SERIAL,
-    STREAM_TYPE_ARDUINO_FILE,
-    STREAM_TYPE_COMPUTER_STD,
-    STREAM_TYPE_COMPUTER_FILE,
-    STREAM_TYPE_FUNCTION_CALL,
-    STREAM_TYPE_CLONE_TTY
-};
-
-union stream_file_u {
-    file_t* file;
-    file_t* stream;
-    void (*lambda)(char*);
-    struct tty_3bc_s* tty;
-};
-
-struct tty_3bc_s {
-    enum stream_type_e type;
-    union stream_file_u io;
-};
-
-/** FSM INTERRUPTS **/
-enum fsm_3bc_e {
-    FSM_3BC_DEFAULT = 0,
-    FSM_3BC_READING,
-    FSM_3BC_RUNNING,
-    FSM_3BC_WAITING,
-    FSM_3BC_IO_READ,
-    FSM_3BC_IO_SEND,
-    FSM_3BC_EXITING,
-    FSM_3BC_STOPED
-};
 
 /** DS PROCEDURE LIFO **/
 struct procedure_3bc_s {
@@ -312,36 +181,18 @@ struct memory_3bc_s {
     void (*conf_set)(app_3bc_id, address_3bc_t, data_3bc_t);
 };
 
-/** TODO: refactor: https://github.com/RodrigoDornelles/3bc-lang/issues/308 **/
-union tty_cin_u {
-    struct tty_3bc_s tty_input;
-    struct tty_3bc_s tty_source;
-};
-
-union tty_cout_u {
-    struct tty_3bc_s tty_debug;
-    struct tty_3bc_s tty_output;
-    struct tty_3bc_s tty_keylog;
-    struct tty_3bc_s tty_error;
-};
-
 /** APLICATION **/
 struct app_3bc_s {
     app_3bc_id id;
-    enum fsm_3bc_e state;
+    tbc_app_fsm_et state;
     data_aux_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
-    enum error_3bc_e error_code;
+    tbc_error_et error_code;
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
     union cache_l3_u cache_l3;
-#if defined(TBC_OPT_ULTRA_COMPACT)
-    union tty_cin_u cin;
-    union tty_cout_u cout;
-#else
-    struct tty_cin_s cin;
-    struct tty_cout_s cout;
-#endif
+    tbc_cin_mt cin;
+    tbc_cout_mt cout;
     struct program_3bc_s program;
     struct memory_3bc_s memory;
 };
