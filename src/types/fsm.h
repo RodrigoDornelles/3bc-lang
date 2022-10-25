@@ -1,9 +1,11 @@
 #ifndef H_FSM_TYPES_TBC
 #define H_FSM_TYPES_TBC
 
-enum ___tbc_app_fsm_e: unsigned int;
-
+#ifdef __cplusplus
+#define tbc_app_fsm_et enum ___tbc_app_fsm_e
+#else
 typedef enum ___tbc_app_fsm_e tbc_app_fsm_et;
+#endif
 
 /** FSM INTERRUPTS **/
 enum ___tbc_app_fsm_e {

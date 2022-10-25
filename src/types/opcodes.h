@@ -5,10 +5,15 @@
 
 /** fist column of opcode **/
 typedef tbc_u8_t tbc_register_t;
-/** third column of opcode | cpu context **/
-typedef enum tbc_cpumode_e tbc_cpumode_et;
 
-enum tbc_cpumode_e {
+#ifdef __cplusplus
+#define tbc_cpumode_et enum ___tbc_cpumode_e
+#else
+/** third column of opcode | cpu context **/
+typedef enum  ___tbc_cpumode_e tbc_cpumode_et;
+#endif
+
+enum  ___tbc_cpumode_e {
     TBC_MODE_EMPUTY, /**< CPU MODE: 0**/
     TBC_MODE_DEBUG, /**< CPU MODE: 1**/
     TBC_MODE_STRING, /**< CPU MODE: 2**/
@@ -56,9 +61,8 @@ enum tbc_cpumode_e {
     TBC_MODE_END /**< CPU MODE: 44**/
 };
 
-
 #define NILL ((tbc_register_t)0) /**< OPCODE: 0 **/
-#define MODE ((tbc_register_t)3) /**< OPCODE: 7 **/
+#define MODE ((tbc_register_t)7) /**< OPCODE: 7 **/
 #define STRB ((tbc_register_t)1) /**< OPCODE: 1 **/
 #define FREE ((tbc_register_t)1) /**< OPCODE: 1 **/
 #define MATH ((tbc_register_t)1) /**< OPCODE: 1 **/
