@@ -48,7 +48,7 @@ void cpu_procedure_back(PARAMS_DEFINE)
     VALIDATE_NOT_VALUES
     VALIDATE_NOT_ADRESS
     app->program.curr = ds_procedure_lifo_pop(app);
-    driver_mode_set(app, MODE_PROCEDURE);
+    driver_mode_set(app, TBC_MODE_PROCEDURE);
 }
 
 void cpu_procedure_fcal(PARAMS_DEFINE)
@@ -97,7 +97,7 @@ void cpu_procedure_fret(PARAMS_DEFINE)
     VALIDATE_NOT_ADRESS
     if (AUX != 0) {
         app->program.curr = ds_procedure_lifo_pop(app);
-        driver_mode_set(app, MODE_PROCEDURE);
+        driver_mode_set(app, TBC_MODE_PROCEDURE);
     }
 }
 
@@ -107,7 +107,7 @@ void cpu_procedure_zret(PARAMS_DEFINE)
     VALIDATE_NOT_ADRESS
     if (AUX == 0) {
         app->program.curr = ds_procedure_lifo_pop(app);
-        driver_mode_set(app, MODE_PROCEDURE);
+        driver_mode_set(app, TBC_MODE_PROCEDURE);
     }
 }
 
@@ -117,7 +117,7 @@ void cpu_procedure_pret(PARAMS_DEFINE)
     VALIDATE_NOT_ADRESS
     if (AUX > 0) {
         app->program.curr = ds_procedure_lifo_pop(app);
-        driver_mode_set(app, MODE_PROCEDURE);
+        driver_mode_set(app, TBC_MODE_PROCEDURE);
     }
 }
 
@@ -127,6 +127,6 @@ void cpu_procedure_nret(PARAMS_DEFINE)
     VALIDATE_NOT_ADRESS
     if (AUX < 0) {
         app->program.curr = ds_procedure_lifo_pop(app);
-        driver_mode_set(app, MODE_PROCEDURE);
+        driver_mode_set(app, TBC_MODE_PROCEDURE);
     }
 }

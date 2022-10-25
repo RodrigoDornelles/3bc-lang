@@ -8,7 +8,7 @@
  *                                     __/ |             __/ |
  *                                    |___/             |___/
  * DESCRIPTION:
- * Code refers cpu mode management in virtual machine.
+ * Header refers to errors codes and messages.
  *
  * BRIEF:
  * Low-level language, tiny virtual machine, intermediate representation,
@@ -32,26 +32,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#define TBC_SOURCE_ENTRY
-#include "3bc.h"
+#ifndef H_ERRORS_TBC
+#define H_ERRORS_TBC
 
-/**
- * switch between cpu mode channels
- */
-void driver_mode_set(struct app_3bc_s* const app, cpumode_3bc_t value)
-{
-    if (value >= TBC_MODE_END) {
-        driver_program_error(app, ERROR_INVALID_CPU_MODE);
-    }
+enum ___tbc_error_e {
+    ERROR_CPU_ZERO = 0x3bc000,
+    ERROR_CPU_RESERVED,
+    ERROR_INVALID_REGISTER,
+    ERROR_INVALID_ADDRESS,
+    ERROR_INVALID_CONSTANT,
+    ERROR_INVALID_CPU_MODE,
+    ERROR_INVALID_LABEL,
+    ERROR_INVALID_RETURN,
+    ERROR_PARAM_DUALITY,
+    ERROR_PARAM_REQUIRE_ANY,
+    ERROR_PARAM_REQUIRE_VALUE,
+    ERROR_PARAM_REQUIRE_ADDRESS,
+    ERROR_PARAM_BLOCKED_VALUE,
+    ERROR_PARAM_BLOCKED_ADDRESS,
+    ERROR_NUMBER_NO_DIGITS,
+    ERROR_NUMBER_UNDERFLOW,
+    ERROR_NUMBER_OVERFLOW,
+    ERROR_NUMBER_WRONG_BASE,
+    ERROR_NUMBER_NEGATIVE,
+    ERROR_NUMBER_ZERO,
+    ERROR_OUT_OF_MEMORY,
+    ERROR_NONE_TTY,
+    ERROR_UNSUPPORTED,
+    ERROR_MEMORY_CONFIG,
+    ERROR_OPEN_FILE,
+    ERROR_NULL_POINTER,
+    ERROR_CHAR_SCAPE,
+    ERROR_CHAR_SIZE,
+    ERROR_COLUMNS
+};
 
-    /** after cpu mode change **/
-    switch (app->cpu_mode) {
-    }
+typedef enum ___tbc_error_e tbc_error_et;
 
-    /** before cpu mode change **/
-    switch (value) {
-    }
-
-    /** apply cpu mode **/
-    app->cpu_mode = value;
-}
+#endif

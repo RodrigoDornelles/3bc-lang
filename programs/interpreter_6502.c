@@ -36,7 +36,7 @@ void main (void)
     waitvsync();
 
     lang_3bc_print(VM, tty_debug, &str_put);
-    lang_3bc_line(VM, MODE, NILL, MODE_DEBUG);
+    lang_3bc_line(VM, MODE, NILL, TBC_MODE_DEBUG);
     lang_3bc_line(VM, STRC, NILL, 'H');
     lang_3bc_line(VM, STRC, NILL, 'E');
     lang_3bc_line(VM, STRC, NILL, 'L');

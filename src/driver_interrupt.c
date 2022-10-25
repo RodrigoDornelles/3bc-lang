@@ -73,7 +73,7 @@ bool driver_interrupt(struct app_3bc_s* const app)
     case FSM_3BC_RUNNING:
         if (!ds_program_fifo_avaliable(app)) {
             app->state = FSM_3BC_READING;
-        } else if (app->cpu_mode == MODE_SLEEP
+        } else if (app->cpu_mode == TBC_MODE_SLEEP
             && app->cache_l1.sleep_mode != SLEEP_3BC_NONE) {
             app->state = FSM_3BC_WAITING;
         }

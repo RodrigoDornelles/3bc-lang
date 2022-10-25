@@ -61,11 +61,11 @@ int interpreter_ticket(struct app_3bc_s* const app)
  */
 int interpreter_ticket(struct app_3bc_s* const app)
 {
-    int character = fgetc(app->tty_source.io.stream);
+    int character = fgetc(app->cin.tty_source.io.stream);
 
 #if defined(_3BC_NUTTX)
-    if (app->tty_source.type == STREAM_TYPE_COMPUTER_STD) {
-        driver_tty_output(app, app->tty_keylog, STRC, character);
+    if (app->cout.tty_source.type == STREAM_TYPE_COMPUTER_STD) {
+        driver_tty_output(app, app->cout.tty_keylog, STRC, character);
     }
 #endif
 

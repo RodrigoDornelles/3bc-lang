@@ -82,7 +82,7 @@ void driver_tty_exit()
  * TODO: More compatible tty
  */
 data_3bc_t driver_tty_input(
-    struct app_3bc_s* const app, struct tty_3bc_s tty, register_3bc_t type)
+    struct app_3bc_s* const app, tbc_tty_st tty, register_3bc_t type)
 {
     signed int value;
     char c[2] = "\0";
@@ -172,7 +172,7 @@ data_3bc_t driver_tty_input(
 /**
  * stream texts to outputs
  */
-void driver_tty_output(struct app_3bc_s* const app, struct tty_3bc_s tty,
+void driver_tty_output(struct app_3bc_s* const app, tbc_tty_st tty,
     register_3bc_t type, data_3bc_t val)
 {
     /** the size of the buffer is according to the memory */
@@ -229,7 +229,7 @@ void driver_tty_output(struct app_3bc_s* const app, struct tty_3bc_s tty,
 }
 
 void driver_tty_output_raw(
-    struct app_3bc_s* const app, struct tty_3bc_s tty, const char* string)
+    struct app_3bc_s* const app, tbc_tty_st tty, const char* string)
 {
 #if defined(_3BC_NUTTX) && !defined(TBC_NOT_FILES)
     /** fix stream flush on nuttx when repl|output **/
