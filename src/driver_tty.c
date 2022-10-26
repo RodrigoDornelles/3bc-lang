@@ -249,7 +249,7 @@ void driver_tty_output_raw(
     if (tty.type == STREAM_TYPE_CLONE_TTY) {
         driver_tty_output_raw(app, *tty.io.tty, string);
     } else if (tty.type == STREAM_TYPE_FUNCTION_CALL) {
-        tty.io.lambda((char*)string);
+        tty.io.lambda.func_pstr_rv((char*)string);
         return;
     } else if (tty.type == STREAM_TYPE_NONE) {
         driver_program_error(app, ERROR_NONE_TTY);

@@ -1,11 +1,25 @@
 #ifndef H_TTY_TYPES_TBC
 #define H_TTY_TYPES_TBC
 
+#include "func.h"
+
+enum ___tbc_stream_type_e {
+    STREAM_TYPE_NONE = 0,
+    STREAM_TYPE_SILENT,
+    STREAM_TYPE_ARDUINO_SERIAL,
+    STREAM_TYPE_ARDUINO_FILE,
+    STREAM_TYPE_COMPUTER_STD,
+    STREAM_TYPE_COMPUTER_FILE,
+    STREAM_TYPE_FUNCTION_CALL,
+    STREAM_TYPE_CLONE_TTY
+};
+
 /**
  * NOTE: mixed type
  * when can be primitive, struct, union...
  */
 typedef FILE tbc_file_mt;
+typedef enum ___tbc_stream_type_e tbc_stream_type_et;
 typedef union ___tbc_stream_io_u tbc_stream_io_ut;
 typedef struct ___tbc_tty_s tbc_tty_st;
 
@@ -41,23 +55,10 @@ typedef struct ___tbc_cin_s tbc_cin_mt;
 typedef struct ___tbc_cout_s tbc_cout_mt;
 #endif
 
-enum ___tbc_stream_type_e {
-    STREAM_TYPE_NONE = 0,
-    STREAM_TYPE_SILENT,
-    STREAM_TYPE_ARDUINO_SERIAL,
-    STREAM_TYPE_ARDUINO_FILE,
-    STREAM_TYPE_COMPUTER_STD,
-    STREAM_TYPE_COMPUTER_FILE,
-    STREAM_TYPE_FUNCTION_CALL,
-    STREAM_TYPE_CLONE_TTY
-};
-
-typedef enum ___tbc_stream_type_e tbc_stream_type_et;
-
 union ___tbc_stream_io_u {
     tbc_file_mt* file;
     tbc_file_mt* stream;
-    void (*lambda)(char*);
+    tbc_func_ft lambda;
     tbc_tty_st* tty;
 };
 
@@ -89,6 +90,5 @@ struct ___tbc_cout_s {
     tbc_tty_st tty_keylog;
     tbc_tty_st tty_error;
 };
-
 
 #endif
