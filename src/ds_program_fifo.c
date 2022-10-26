@@ -80,23 +80,23 @@ void ds_program_fifo_resize(struct app_3bc_s* const app)
 
     /** first line program **/
     if (app->program.head == NULL) {
-        //app->program.head = new_line_node;
+        app->program.head = new_line_node;
     }
 
     /** current line program **/
     if (app->program.curr == NULL) {
-        //app->program.curr = new_line_node;
+        app->program.curr = new_line_node;
     }
 
     /** link line program **/
     if (prev_line_node != NULL) {
-        //prev_line_node->next = new_line_node;
+        prev_line_node->next = new_line_node;
     }
 
     /** last line program **/
-    //app->program.tail = new_line_node;
-    //app->program.tail->next = NULL;
-    //app->program.tail->line = app->program.last_line;
+    app->program.tail = new_line_node;
+    app->program.tail->next = NULL;
+    app->program.tail->line = app->program.last_line;
 }
 
 /**
