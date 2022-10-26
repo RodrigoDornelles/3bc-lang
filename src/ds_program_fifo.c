@@ -58,9 +58,9 @@ void ds_program_fifo_line_add(struct app_3bc_s* const app, register_3bc_t reg,
 
     /** register program bytecode **/
     ds_program_fifo_resize(app);
-    //app->program.tail->column.reg = reg;
-    //app->program.tail->column.adr = mem;
-    //app->program.tail->column.dta = val;
+    app->program.tail->column.reg = reg;
+    app->program.tail->column.adr = mem;
+    app->program.tail->column.dta = val;
 }
 
 /**
