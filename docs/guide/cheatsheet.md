@@ -124,7 +124,7 @@ CheatSheet
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
-| `free` | 1 | 001 | realese memory |
+| `free` | 1 | 001 | release memory |
 | `aloc` | 2 | 010 | reserve memory and set a value |
 | `moff` | 3 | 011 | memory config remove mask |
 | `muse` | 4 | 100 | memory config append mask |
@@ -135,7 +135,7 @@ CheatSheet
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
-| `free` | 1 | 001 | realese memory in pointer |
+| `free` | 1 | 001 | release memory in pointer |
 | `aloc` | 2 | 010 | set a value in pointer |
 | `pull` | 3 | 011 | pull aux memory to address pointer memory (ptr <- aux) |
 | `spin` | 4 | 100 | inverse values inner memory pointer and aux (ptr <-> aux) |
@@ -148,7 +148,7 @@ CheatSheet
 
 | name | octal | bit | description |
 | :--: | :---: | :-: | :---------- |
-| `free` | 1 | 001 | realese memory aux |
+| `free` | 1 | 001 | release memory aux |
 | `aloc` | 2 | 010 | set a value in aux memory |
 | `pull` | 3 | 011 | pull aux memory to address memory (addr <- aux) |
 | `spin` | 4 | 100 | inverse values inner memory and aux (addr <-> aux) |
@@ -424,4 +424,4 @@ CheatSheet
 
 * **Number:** 0o53 0d43 0xB
 
-* **Note**: there may be an inaccuracy for values ​​less than 1 millisecond (depends of hardware).
+* **Note**: there may be an inaccuracy for values ??less than 1 millisecond (depends of hardware).
