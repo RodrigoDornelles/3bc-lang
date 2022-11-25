@@ -3,12 +3,48 @@
 
 #include "primitive.h"
 
-/** fist column of opcode **/
-typedef tbc_u8_t tbc_register_t;
-/** third column of opcode | cpu context **/
-typedef enum tbc_cpumode_e tbc_cpumode_et;
+#define NILL ((tbc_register_t)0) /**< OPCODE: 0 **/
+#define MODE ((tbc_register_t)7) /**< OPCODE: 7 **/
+#define STRB ((tbc_register_t)1) /**< OPCODE: 1 **/
+#define FREE ((tbc_register_t)1) /**< OPCODE: 1 **/
+#define MATH ((tbc_register_t)1) /**< OPCODE: 1 **/
+#define GOTO ((tbc_register_t)1) /**< OPCODE: 1 **/
+#define NB02 ((tbc_register_t)1) /**< OPCODE: 1 **/
+#define CALL ((tbc_register_t)1) /**< OPCODE: 1 **/
+#define BACK ((tbc_register_t)1) /**< OPCODE: 1 **/
+#define FAKE ((tbc_register_t)1) /**< OPCODE: 1 **/
+#define STRO ((tbc_register_t)2) /**< OPCODE: 2 **/
+#define ALOC ((tbc_register_t)2) /**< OPCODE: 2 **/
+#define FGTO ((tbc_register_t)2) /**< OPCODE: 2 **/
+#define NB08 ((tbc_register_t)2) /**< OPCODE: 2 **/
+#define STOP ((tbc_register_t)2) /**< OPCODE: 2 **/
+#define FRET ((tbc_register_t)2) /**< OPCODE: 2 **/
+#define FCAL ((tbc_register_t)2) /**< OPCODE: 2 **/
+#define REAL ((tbc_register_t)2) /**< OPCODE: 2 **/
+#define STRI ((tbc_register_t)3) /**< OPCODE: 3 **/
+#define MOFF ((tbc_register_t)3) /**< OPCODE: 3 **/
+#define PULL ((tbc_register_t)3) /**< OPCODE: 3 **/
+#define ZGTO ((tbc_register_t)3) /**< OPCODE: 3 **/
+#define NB10 ((tbc_register_t)3) /**< OPCODE: 3 **/
+#define ZRET ((tbc_register_t)3) /**< OPCODE: 3 **/
+#define ZCAL ((tbc_register_t)3) /**< OPCODE: 3 **/
+#define MICR ((tbc_register_t)3) /**< OPCODE: 3 **/
+#define STRX ((tbc_register_t)4) /**< OPCODE: 4 **/
+#define PGTO ((tbc_register_t)4) /**< OPCODE: 4 **/
+#define MUSE ((tbc_register_t)4) /**< OPCODE: 4 **/
+#define SPIN ((tbc_register_t)4) /**< OPCODE: 4 **/
+#define NB16 ((tbc_register_t)4) /**< OPCODE: 4 **/
+#define PRET ((tbc_register_t)4) /**< OPCODE: 4 **/
+#define PCAL ((tbc_register_t)4) /**< OPCODE: 4 **/
+#define MILI ((tbc_register_t)4) /**< OPCODE: 4 **/
+#define STRC ((tbc_register_t)5) /**< OPCODE: 5 **/
+#define NGTO ((tbc_register_t)5) /**< OPCODE: 5 **/
+#define PUSH ((tbc_register_t)5) /**< OPCODE: 5 **/
+#define NRET ((tbc_register_t)5) /**< OPCODE: 5 **/
+#define NCAL ((tbc_register_t)5) /**< OPCODE: 5 **/
+#define SECO ((tbc_register_t)5) /**< OPCODE: 5 **/
 
-enum tbc_cpumode_e {
+enum  ___tbc_cpumode_e {
     TBC_MODE_EMPUTY, /**< CPU MODE: 0**/
     TBC_MODE_DEBUG, /**< CPU MODE: 1**/
     TBC_MODE_STRING, /**< CPU MODE: 2**/
@@ -56,46 +92,10 @@ enum tbc_cpumode_e {
     TBC_MODE_END /**< CPU MODE: 44**/
 };
 
+/** fist column of opcode **/
+typedef tbc_u8_t tbc_register_t;
 
-#define NILL ((tbc_register_t)0) /**< OPCODE: 0 **/
-#define MODE ((tbc_register_t)3) /**< OPCODE: 7 **/
-#define STRB ((tbc_register_t)1) /**< OPCODE: 1 **/
-#define FREE ((tbc_register_t)1) /**< OPCODE: 1 **/
-#define MATH ((tbc_register_t)1) /**< OPCODE: 1 **/
-#define GOTO ((tbc_register_t)1) /**< OPCODE: 1 **/
-#define NB02 ((tbc_register_t)1) /**< OPCODE: 1 **/
-#define CALL ((tbc_register_t)1) /**< OPCODE: 1 **/
-#define BACK ((tbc_register_t)1) /**< OPCODE: 1 **/
-#define FAKE ((tbc_register_t)1) /**< OPCODE: 1 **/
-#define STRO ((tbc_register_t)2) /**< OPCODE: 2 **/
-#define ALOC ((tbc_register_t)2) /**< OPCODE: 2 **/
-#define FGTO ((tbc_register_t)2) /**< OPCODE: 2 **/
-#define NB08 ((tbc_register_t)2) /**< OPCODE: 2 **/
-#define STOP ((tbc_register_t)2) /**< OPCODE: 2 **/
-#define FRET ((tbc_register_t)2) /**< OPCODE: 2 **/
-#define FCAL ((tbc_register_t)2) /**< OPCODE: 2 **/
-#define REAL ((tbc_register_t)2) /**< OPCODE: 2 **/
-#define STRI ((tbc_register_t)3) /**< OPCODE: 3 **/
-#define MOFF ((tbc_register_t)3) /**< OPCODE: 3 **/
-#define PULL ((tbc_register_t)3) /**< OPCODE: 3 **/
-#define ZGTO ((tbc_register_t)3) /**< OPCODE: 3 **/
-#define NB10 ((tbc_register_t)3) /**< OPCODE: 3 **/
-#define ZRET ((tbc_register_t)3) /**< OPCODE: 3 **/
-#define ZCAL ((tbc_register_t)3) /**< OPCODE: 3 **/
-#define MICR ((tbc_register_t)3) /**< OPCODE: 3 **/
-#define STRX ((tbc_register_t)4) /**< OPCODE: 4 **/
-#define PGTO ((tbc_register_t)4) /**< OPCODE: 4 **/
-#define MUSE ((tbc_register_t)4) /**< OPCODE: 4 **/
-#define SPIN ((tbc_register_t)4) /**< OPCODE: 4 **/
-#define NB16 ((tbc_register_t)4) /**< OPCODE: 4 **/
-#define PRET ((tbc_register_t)4) /**< OPCODE: 4 **/
-#define PCAL ((tbc_register_t)4) /**< OPCODE: 4 **/
-#define MILI ((tbc_register_t)4) /**< OPCODE: 4 **/
-#define STRC ((tbc_register_t)5) /**< OPCODE: 5 **/
-#define NGTO ((tbc_register_t)5) /**< OPCODE: 5 **/
-#define PUSH ((tbc_register_t)5) /**< OPCODE: 5 **/
-#define NRET ((tbc_register_t)5) /**< OPCODE: 5 **/
-#define NCAL ((tbc_register_t)5) /**< OPCODE: 5 **/
-#define SECO ((tbc_register_t)5) /**< OPCODE: 5 **/
+/** third column of opcode | cpu context **/
+typedef enum  ___tbc_cpumode_e tbc_cpumode_et;
 
 #endif

@@ -35,10 +35,8 @@
 #ifndef H_ERRORS_TBC
 #define H_ERRORS_TBC
 
-typedef enum __tbc_error_e tbc_error_et;
-
 enum ___tbc_error_e {
-    ERROR_CPU_ZERO = 1,
+    ERROR_CPU_ZERO = 0x3bc000,
     ERROR_CPU_RESERVED,
     ERROR_INVALID_REGISTER,
     ERROR_INVALID_ADDRESS,
@@ -68,5 +66,7 @@ enum ___tbc_error_e {
     ERROR_CHAR_SIZE,
     ERROR_COLUMNS
 };
+
+typedef enum ___tbc_error_e tbc_error_et;
 
 #endif

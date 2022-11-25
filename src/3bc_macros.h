@@ -200,6 +200,6 @@
 #define lang_3bc_line ds_program_fifo_line_add
 #define lang_3bc_print(a, t, l)                                                \
     ;                                                                          \
-    a->cout.t.type = STREAM_TYPE_FUNCTION_CALL;                                     \
-    a->cout.t.io.lambda = l;
+    a->cout.t.type = STREAM_TYPE_FUNCTION_CALL;                                \
+    a->cout.t.io.lambda.ptr = (void*) l;
 #define lang_3bc_custom driver_custom_set

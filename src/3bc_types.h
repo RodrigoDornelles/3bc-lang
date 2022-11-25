@@ -37,6 +37,7 @@
 
 #include "3bc_detect.h"
 #include "types/primitive.h"
+#include "types/opcodes.h"
 #include "types/fsm.h"
 #include "types/tty.h"
 
