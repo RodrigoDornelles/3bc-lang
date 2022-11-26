@@ -34,7 +34,7 @@
 
 #include "3bc.h"
 
-#include "types/opcodes.h"
+#include "types/types_opcodes.h"
 
 /**
  * case of separate compilation in different statistical libraries,

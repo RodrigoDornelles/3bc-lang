@@ -1,5 +1,5 @@
-#ifndef H_PRIMITIVE_TYPES_TBC
-#define H_PRIMITIVE_TYPES_TBC
+#ifndef H_TYPES_PRIMITIVE_TBC
+#define H_TYPES_PRIMITIVE_TBC
 
 #if defined(TBC_CC_STD_99)
 #include <inttypes.h>

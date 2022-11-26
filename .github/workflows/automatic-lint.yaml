@@ -22,7 +22,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: test format
-        run: clang-format --dry-run -ferror-limit=1 --Werror --verbose -i programs/*.c src/*.c src/*.h
+        run: >-
+          find src/ -type f -name "*.c" -or -name "*.h" |
+          xargs clang-format --dry-run -ferror-limit=1 --Werror --verbose -i
 
   clang-tidy:
     runs-on: ubuntu-latest

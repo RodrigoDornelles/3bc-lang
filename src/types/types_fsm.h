@@ -1,11 +1,5 @@
-#ifndef H_FSM_TYPES_TBC
-#define H_FSM_TYPES_TBC
-
-#ifdef __cplusplus
-#define tbc_app_fsm_et enum ___tbc_app_fsm_e
-#else
-typedef enum ___tbc_app_fsm_e tbc_app_fsm_et;
-#endif
+#ifndef H_TYPES_FSM_TBC
+#define H_TYPES_FSM_TBC
 
 /** FSM INTERRUPTS **/
 enum ___tbc_app_fsm_e {
@@ -18,5 +12,7 @@ enum ___tbc_app_fsm_e {
     FSM_3BC_EXITING,
     FSM_3BC_STOPED
 };
+
+typedef enum ___tbc_app_fsm_e tbc_app_fsm_et;
 
 #endif

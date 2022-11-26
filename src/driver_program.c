@@ -80,7 +80,7 @@ void driver_program_error(
 
     /** print header of error**/
     char error_code_string[sizeof(error_header) + 11];
-    snprintf(error_code_string, sizeof(error_header), error_header, app->id,
+    snprintf(error_code_string, sizeof(error_code_string), error_header, app->id,
         error_line, error_code);
     driver_tty_output_raw(app, app->cout.tty_error, error_code_string);
 
