@@ -27,16 +27,15 @@ void main (void)
     unsigned char XSize, YSize, i;
     struct app_3bc_s *const VM = &instance;
     sys_common_pfa888_install(VM);
+    sys_common_cof2020_install(VM);
     VM->cin.tty_source.io.buf = (tbc_u8_t*) prog;
 
-    lang_3bc_print(VM, tty_debug, &str_put);
-
     for (i = 0; i < 8; ++i) {
+        waitvsync();
         VM->pkg_func.prog.load(VM);
         instruction_3bc(VM);
         VM->pkg_func.prog.next(VM);
-        waitvsync();
     }
-    
+
     while(1) {};
 }
