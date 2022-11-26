@@ -11,7 +11,8 @@ enum ___tbc_stream_type_e {
     STREAM_TYPE_COMPUTER_STD,
     STREAM_TYPE_COMPUTER_FILE,
     STREAM_TYPE_FUNCTION_CALL,
-    STREAM_TYPE_CLONE_TTY
+    STREAM_TYPE_CLONE_TTY,
+    STREAM_TYPE_FIXED_ARRAY_1D
 };
 
 /**
@@ -60,6 +61,7 @@ union ___tbc_stream_io_u {
     tbc_file_mt* stream;
     tbc_func_ft lambda;
     tbc_tty_st* tty;
+    tbc_u8_t* buf;
 };
 
 struct ___tbc_tty_s {
