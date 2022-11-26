@@ -9,7 +9,10 @@ static void sys_common_pfa888_insert(tbc_app_st *const self);
 static void sys_common_pfa3912_load(tbc_app_st *const self);
 static void sys_common_pfa3912_insert(tbc_app_st *const self);
 
-/** @brief program counter index */
+/** 
+ * @brief program counter index
+ * @todo move to application struct
+ */
 static tbc_line_t pc_index;
 
 /**
