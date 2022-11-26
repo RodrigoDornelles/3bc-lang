@@ -43,9 +43,12 @@
  * (required for avr compiler in arduino ide)
  */
 #ifdef TBC_SOURCE_REGISTERS
-void instruction_3bc(struct app_3bc_s* const app, register_3bc_t reg,
-    address_3bc_t address, data_3bc_t value)
+void instruction_3bc(struct app_3bc_s* const app)
 {
+    register_3bc_t reg = app->cache_l0.reg;
+    address_3bc_t address = app->cache_l0.adr;
+    data_3bc_t value = app->cache_l0.dta;
+    
     if (reg == 0) {
         cpu_null(app, 0, 0, 0);
     } else if (reg == 7) {

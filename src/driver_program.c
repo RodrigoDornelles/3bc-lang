@@ -139,8 +139,10 @@ void driver_program_error(
  */
 void driver_program_tick(struct app_3bc_s* const app)
 {
-    instruction_3bc(app, app->program.curr->column.reg,
-        app->program.curr->column.adr, app->program.curr->column.dta);
+    app->cache_l0.reg = app->program.curr->column.reg;
+    app->cache_l0.adr = app->program.curr->column.adr;
+    app->cache_l0.dta = app->program.curr->column.dta;
+    instruction_3bc(app);
 
     /** go next line **/
     app->program.curr = app->program.curr->next;
