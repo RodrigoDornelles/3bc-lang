@@ -1,7 +1,7 @@
-#ifndef H_TTY_TYPES_TBC
-#define H_TTY_TYPES_TBC
+#ifndef H_TYPES_TTY_TBC
+#define H_TYPES_TTY_TBC
 
-#include "func.h"
+#include "types_func.h"
 
 enum ___tbc_stream_type_e {
     STREAM_TYPE_NONE = 0,

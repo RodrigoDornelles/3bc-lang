@@ -1,5 +1,5 @@
-#ifndef H_FUNC_TYPES_TBC
-#define H_FUNC_TYPES_TBC
+#ifndef H_TYPES_FUNC_TBC
+#define H_TYPES_FUNC_TBC
 
 typedef union ___tbc_func_u tbc_func_ft;
 

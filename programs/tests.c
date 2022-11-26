@@ -30,11 +30,7 @@ void cpu_test_unsupported(PARAMS_DEFINE)
 void cpu_test_scape_characters(PARAMS_DEFINE)
 {
     app->cout.tty_output.type = STREAM_TYPE_FUNCTION_CALL;
-<<<<<<< HEAD
-    app->cout.tty_output.io.lambda = &print_char;
-=======
     app->cout.tty_output.io.lambda.ptr = (void*) &print_char;
->>>>>>> afd87efc06b0669489ec4f6696fbb61906f3fed6
 }
 
 int main(int argc, char** argv)

@@ -36,10 +36,10 @@
 #define H_TYPES_TBC
 
 #include "3bc_detect.h"
-#include "types/primitive.h"
-#include "types/opcodes.h"
-#include "types/fsm.h"
-#include "types/tty.h"
+#include "types/types_primitive.h"
+#include "types/types_opcodes.h"
+#include "types/types_fsm.h"
+#include "types/types_tty.h"
 
 /**
  *  _   __                                 _       _____

@@ -1,7 +1,7 @@
-#ifndef H_OPCODES_TYPES_TBC
-#define H_OPCODES_TYPES_TBC
+#ifndef H_TYPES_OPCODES_TBC
+#define H_TYPES_OPCODES_TBC
 
-#include "primitive.h"
+#include "types_primitive.h"
 
 #define NILL ((tbc_register_t)0) /**< OPCODE: 0 **/
 #define MODE ((tbc_register_t)7) /**< OPCODE: 7 **/

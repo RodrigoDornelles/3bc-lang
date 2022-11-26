@@ -1,5 +1,5 @@
-#ifndef H_FSM_TYPES_TBC
-#define H_FSM_TYPES_TBC
+#ifndef H_TYPES_FSM_TBC
+#define H_TYPES_FSM_TBC
 
 /** FSM INTERRUPTS **/
 enum ___tbc_app_fsm_e {
