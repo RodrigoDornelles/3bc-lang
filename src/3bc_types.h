@@ -35,11 +35,15 @@
 #ifndef H_TYPES_TBC
 #define H_TYPES_TBC
 
+/** TODO: move **/
+typedef struct app_3bc_s tbc_app_st;
+
 #include "3bc_detect.h"
-#include "types/primitive.h"
-#include "types/opcodes.h"
-#include "types/fsm.h"
-#include "types/tty.h"
+#include "types/types_primitive.h"
+#include "types/types_opcodes.h"
+#include "types/types_fsm.h"
+#include "types/types_pkg.h"
+#include "types/types_tty.h"
 
 /**
  *  _   __                                 _       _____
@@ -77,6 +81,9 @@ typedef unsigned char label_3bc_t;
 typedef unsigned char memory_conf_t;
 typedef signed int data_3bc_t;
 typedef signed long data_aux_3bc_t;
+
+/** TODO: remove line_3bc_t **/
+typedef line_3bc_t tbc_line_t;
 
 /** application 3bc id (depends of cpu size)**/
 #if defined(TBC_ARCH_BITS_64)
@@ -189,6 +196,7 @@ struct app_3bc_s {
     data_aux_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
     tbc_error_et error_code;
+    struct line_columns_s cache_l0;
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
     union cache_l3_u cache_l3;
@@ -196,6 +204,7 @@ struct app_3bc_s {
     tbc_cout_mt cout;
     struct program_3bc_s program;
     struct memory_3bc_s memory;
+    tbc_pkg_st pkg_func;
 };
 
 typedef void (*function_3bc_t)(

@@ -32,8 +32,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef H_ERRORS_TBC
-#define H_ERRORS_TBC
+#ifndef H_TYPES_ERRORS_TBC
+#define H_TYPES_ERRORS_TBC
 
 enum ___tbc_error_e {
     ERROR_CPU_ZERO = 0x3bc000,
