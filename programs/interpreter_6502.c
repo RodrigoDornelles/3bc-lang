@@ -16,11 +16,6 @@ static const tbc_u8_t prog[] = {
     STRC, NILL, '\n'
 };
 
-void str_put(char* Text)
-{
-    cprintf ("%s", Text);
-}
-
 static struct app_3bc_s instance;
 
 void main (void)
