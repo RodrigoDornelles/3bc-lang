@@ -65,7 +65,7 @@ int interpreter_ticket(struct app_3bc_s* const app)
 
 #if defined(_3BC_NUTTX)
     if (app->cout.tty_source.type == STREAM_TYPE_COMPUTER_STD) {
-        driver_tty_output(app, app->cout.tty_keylog, STRC, character);
+        driver_tty_output(app, &app->cout.tty_keylog, STRC, character);
     }
 #endif
 

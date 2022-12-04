@@ -19,7 +19,7 @@ void cpu_test_error(PARAMS_DEFINE)
 void cpu_test_none_tty(PARAMS_DEFINE)
 {
     app->cout.tty_output.type = STREAM_TYPE_NONE;
-    driver_tty_output_raw(app, app->cout.tty_output, NULL);
+    driver_tty_output_raw(app, &app->cout.tty_output, NULL);
 }
 
 void cpu_test_unsupported(PARAMS_DEFINE)

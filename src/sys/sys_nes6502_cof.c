@@ -8,7 +8,7 @@ union ___cursor_tty_u {
 union ___cursor_tty_u cursor_tty;
 
 static void sys_nes6502_cof2020n_init(void);
-static void sys_nes6502_cof2020n_put(tbc_app_st *const self, tbc_u8_t file_id, const char* buf);
+static void sys_nes6502_cof2020n_put(tbc_app_st *const self);
 
 /**
  * @brief install cof2020n driver
@@ -92,7 +92,7 @@ static void sys_nes6502_cof2020n_put(tbc_app_st *const self)
     /** streamming */
     while(1) {
         /** cache tile to improve perfomance */
-        tile = *(self->cache_l3.fixbuf.storage[index]);
+        tile = self->cache_l3.fixbuf.storage[index];
         
         /** end of of max size*/
         if (index < self->cache_l3.fixbuf.size) {

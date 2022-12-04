@@ -82,7 +82,7 @@ void driver_program_error(
     char error_code_string[sizeof(error_header) + 11];
     snprintf(error_code_string, sizeof(error_code_string), error_header, app->id,
         error_line, error_code);
-    driver_tty_output_raw(app, app->cout.tty_error, error_code_string);
+    driver_tty_output_raw(app, &app->cout.tty_error, error_code_string);
 
     /** TODO: not use macros and move to 3bc_errors.h **/
 #if !defined(TBC_OPT_COMPACT)
@@ -121,10 +121,10 @@ void driver_program_error(
         ERROR_LOG_3BC(ERROR_CHAR_SIZE, "INVALID CHARACTER SIZE");
         ERROR_LOG_3BC(ERROR_COLUMNS, "WRONG NUMBER OF COLUMNS");
     default:
-        driver_tty_output_raw(app, app->cout.tty_error, "UNKNOWN ERROR");
+        driver_tty_output_raw(app, &app->cout.tty_error, "UNKNOWN ERROR");
     }
 
-    driver_tty_output_raw(app, app->cout.tty_error, "\n");
+    driver_tty_output_raw(app, &app->cout.tty_error, "\n");
 #endif
 
     /** TODO: no closign when else **/

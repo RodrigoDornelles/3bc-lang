@@ -82,7 +82,7 @@ void driver_tty_exit()
  * TODO: More compatible tty
  */
 data_3bc_t driver_tty_input(
-    struct app_3bc_s* const app, tbc_tty_st tty, register_3bc_t type)
+    struct app_3bc_s* const app, tbc_tty_st *const tty, register_3bc_t type)
 {
     signed int value;
     char c[2] = "\0";
@@ -172,7 +172,7 @@ data_3bc_t driver_tty_input(
 /**
  * stream texts to outputs
  */
-void driver_tty_output(struct app_3bc_s* const app, tbc_tty_st tty,
+void driver_tty_output(struct app_3bc_s* const app, tbc_tty_st *const tty,
     register_3bc_t type, data_3bc_t val)
 {
     /** the size of the buffer is according to the memory */
@@ -229,32 +229,32 @@ void driver_tty_output(struct app_3bc_s* const app, tbc_tty_st tty,
 }
 
 void driver_tty_output_raw(
-    struct app_3bc_s* const app, tbc_tty_st tty, const char* string)
+    struct app_3bc_s* const app, tbc_tty_st *const tty, const char* string)
 {
-    if (tty.type == STREAM_TYPE_POSIX_FILEID) {
+    if (tty->type == STREAM_TYPE_POSIX_FILEID) {
         app->pkg_func.std.put(app);
     }
 #if defined(_3BC_NUTTX) && !defined(TBC_NOT_FILES)
     /** fix stream flush on nuttx when repl|output **/
-    if (tty.type == STREAM_TYPE_COMPUTER_STD) {
-        fputs(string, tty.io.stream);
-        fflush(tty.io.stream);
+    if (tty->type == STREAM_TYPE_COMPUTER_STD) {
+        fputs(string, tty->io.stream);
+        fflush(tty->io.stream);
         return;
     }
 #endif
 #if defined(TBC_P_COMPUTER) && !defined(TBC_NOT_FILES)
     /** stream standard c output **/
-    if (tty.type == STREAM_TYPE_COMPUTER_STD) {
-        fputs(string, tty.io.stream);
+    if (tty->type == STREAM_TYPE_COMPUTER_STD) {
+        fputs(string, tty->io.stream);
         return;
     }
 #endif
-    if (tty.type == STREAM_TYPE_CLONE_TTY) {
-        driver_tty_output_raw(app, *tty.io.tty, string);
-    } else if (tty.type == STREAM_TYPE_FUNCTION_CALL) {
-        tty.io.lambda.func_pstr_rv((char*)string);
+    if (tty->type == STREAM_TYPE_CLONE_TTY) {
+        driver_tty_output_raw(app, tty->io.tty, string);
+    } else if (tty->type == STREAM_TYPE_FUNCTION_CALL) {
+        tty->io.lambda.func_pstr_rv((char*)string);
         return;
-    } else if (tty.type == STREAM_TYPE_NONE) {
+    } else if (tty->type == STREAM_TYPE_NONE) {
         driver_program_error(app, ERROR_NONE_TTY);
     }
 }
