@@ -1,6 +1,6 @@
 #include "../src/3bc.h"
-#include "../src/sys/sys_common_pfa.h"
 #include "../src/sys/sys_common_pfa.c"
+#include "../src/sys/sys_common_std.c"
 
 static const tbc_u8_t prog[] = {
     MODE, NILL, TBC_MODE_STRING,
@@ -17,12 +17,21 @@ int main()
 {
     struct app_3bc_s* const VM = lang_3bc_init(0, NULL);
     sys_common_pfa888_install(VM);
-    VM->cin.tty_source.io.buf = (tbc_u8_t*) prog;
+    sys_common_std9945_install(VM);
+    VM->cin.tty_source.io.arr.ptr = (tbc_u8_t*) prog;
+    VM->cin.tty_source.io.arr.size = sizeof(prog);
 
-    for (int i = 0; i < sizeof(prog)/3; ++i) {
+    while (VM->pkg_func.prog.avaliable(VM)) {
+
         VM->pkg_func.prog.load(VM);
+        
         instruction_3bc(VM);
+
         VM->pkg_func.prog.next(VM);
+
+        sys_common_std9945_put(VM);
+
     }
+
     return 0;
 }

@@ -16,8 +16,7 @@ static void sys_nes6502_cof2020n_put(tbc_app_st *const self, tbc_u8_t file_id, c
 void sys_nes6502_cof2020n_install(tbc_app_st *const self)
 {
     self->pkg_func.std.put = (void*) &sys_nes6502_cof2020n_put;
-    self->cout.tty_output.type = STREAM_TYPE_POSIX_FILEID;
-    self->cout.tty_output.io.fid = 1;
+    self->cout.tty_output.type = STREAM_TYPE_NES_FULLSCREEN;
     cursor_tty.vram_address = 0;
 }
 
@@ -68,8 +67,15 @@ static void sys_nes6502_cof2020n_init()
  * @link https://www.nesdev.org/wiki/PPU_registers
  * @link https://www.nesdev.org/wiki/NMI
  */
-static void sys_nes6502_cof2020n_put(tbc_app_st *const self, tbc_u8_t file_id, const char* buf)
+static void sys_nes6502_cof2020n_put(tbc_app_st *const self)
 {
+    /** interator */
+    static tbc_u8_t index;
+    static tbc_u8_t tile;
+
+    /** reset */
+    index = 0;
+
     /** turn of PPU */
     *((unsigned char*) 0x2001) = 0b00000000;
 
@@ -83,14 +89,30 @@ static void sys_nes6502_cof2020n_put(tbc_app_st *const self, tbc_u8_t file_id, c
         continue;
     }
 
-    while(*buf != '\0') {
-        if (*buf == '\r') {
+    /** streamming */
+    while(1) {
+        /** cache tile to improve perfomance */
+        tile = *(self->cache_l3.fixbuf.storage[index]);
+        
+        /** end of of max size*/
+        if (index < self->cache_l3.fixbuf.size) {
+            break;
+        }
+
+        /** terminator */
+        if (tile == '\0') {
+            break;
+        }
+        
+        /** special char: carrier return */
+        if (tile == '\r') {
             /** ignore */
-            ++buf;
+            ++index;
             continue;
         }
 
-        if (*buf == '\t') {
+        /** special char: tab */
+        if (tile == '\t') {
             /** 
              * tabulation
              * @joke I really don't know how it works!
@@ -98,11 +120,12 @@ static void sys_nes6502_cof2020n_put(tbc_app_st *const self, tbc_u8_t file_id, c
             cursor_tty.vram_address |= 7;
             *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
             *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
-            ++buf;
+            ++index;
             continue;
         }
 
-        if (*buf == '\n') {
+        /** special char: break line */
+        if (tile == '\n') {
             /** line feed */
             cursor_tty.vram_address += 32;
             /** carrier return */
@@ -110,14 +133,14 @@ static void sys_nes6502_cof2020n_put(tbc_app_st *const self, tbc_u8_t file_id, c
             /** update cursor position into the nametable */
             *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
             *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
-            ++buf;
+            ++index;
             continue;
         }
 
         /** put character to PPU */
-        *((unsigned char*) 0x2007) = *buf;
+        *((unsigned char*) 0x2007) = tile;
         ++cursor_tty.vram_address;
-        ++buf;
+        ++index;
     }
 
     /** turn on PPU*/

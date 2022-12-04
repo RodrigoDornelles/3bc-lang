@@ -26,8 +26,6 @@ void main (void)
     sys_nes6502_cof2020n_install(VM);
     VM->cin.tty_source.io.buf = (tbc_u8_t*) prog;
 
-    VM->pkg_func.std.put(NULL, 1, "hi!");
-
     for (i = 0; i < 8; ++i) {
         VM->pkg_func.prog.load(VM);
         instruction_3bc(VM);

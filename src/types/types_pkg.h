@@ -10,10 +10,11 @@ struct ___tbc_pkg_prog_s {
     void (*next)(tbc_app_st *const);
     void (*clean)(tbc_app_st *const);
     void (*insert)(tbc_app_st *const);
+    bool (*avaliable)(tbc_app_st *const);
 };
 
 struct ___tbc_pkg_std_s {
-    void (*put)(tbc_app_st *const, tbc_u8_t, const char*);
+    void (*put)(tbc_app_st *const);
 };
 
 struct ___tbc_pkg_s {
