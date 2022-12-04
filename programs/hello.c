@@ -21,16 +21,8 @@ int main()
     VM->cin.tty_source.io.arr.ptr = (tbc_u8_t*) prog;
     VM->cin.tty_source.io.arr.size = sizeof(prog);
 
-    while (VM->pkg_func.prog.avaliable(VM)) {
-
-        VM->pkg_func.prog.load(VM);
-        
-        instruction_3bc(VM);
-
-        VM->pkg_func.prog.next(VM);
-
-        sys_common_std9945_put(VM);
-
+    while (driver_interrupt(VM)) {
+        continue;
     }
 
     return 0;

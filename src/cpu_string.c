@@ -44,11 +44,15 @@ void cpu_string_debug(PARAMS_DEFINE)
 void cpu_string_output(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    app->cache_l1.printing = 1;
-    app->cache_l2.tty = &(app->cout.tty_output);
-    app->cache_l3.fixbuf.storage[0] = GET_ANY_PARAM;
-    app->cache_l3.fixbuf.size = 1;
-    //driver_tty_output(app, app->cout.tty_output, reg, GET_ANY_PARAM);
+    if (!app->cache_l1.printing)
+    {
+        app->cache_l1.printing = 1;
+        app->cache_l2.tty = &(app->cout.tty_output);
+        app->cache_l3.fixbuf.storage[0] = GET_ANY_PARAM;
+        app->cache_l3.fixbuf.size = 1;
+    } else {
+        app->cache_l1.printing = 0;
+    }
 }
 
 void cpu_string_input(PARAMS_DEFINE)

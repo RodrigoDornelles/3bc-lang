@@ -3,6 +3,8 @@
 
 #include "types_fsm.h"
 
+typedef struct ___tbc_cache_l0_s tbc_cache_l0_st;
+
 struct ___tbc_dynamic_buffer_s {
     char* storage;
     unsigned int size;
@@ -13,10 +15,21 @@ struct ___tbc_fixed_buffer_s {
     tbc_u8_t size;
 };
 
+struct ___tbc_cache_l0_s {
+    /** first column (3 bits) */
+    tbc_u8_t rx;
+    /** second column (9 bits) */
+    tbc_u16_t ry;
+    /** third column (12 bits)*/
+    tbc_u16_t rz;
+};
+
 union cache_l1_u {
     tbc_sleep_et sleep_mode;
     /** step of output */
     tbc_u8_t printing;
+    /** use for conditionals (same cycle) */
+    bool is;
 };
 
 union cache_l2_u {

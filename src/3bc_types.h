@@ -169,7 +169,7 @@ struct app_3bc_s {
     data_aux_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
     tbc_error_et error_code;
-    struct line_columns_s cache_l0;
+    tbc_cache_l0_st cache_l0;
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
     union cache_l3_u cache_l3;

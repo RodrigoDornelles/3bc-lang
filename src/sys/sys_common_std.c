@@ -1,8 +1,14 @@
 #include <unistd.h>
 #include "sys_common_std.h"
 
+static void sys_common_std9945_put(tbc_app_st *const self);
+
 void sys_common_std9945_install(tbc_app_st *const self)
 {
+    /**
+     * install functions
+     */
+    self->pkg_func.std.put = &sys_common_std9945_put;
     /**
      * default teletype's
      */
@@ -20,7 +26,7 @@ void sys_common_std9945_install(tbc_app_st *const self)
     self->cin.tty_input.io.fid = 0;
 }
 
-void sys_common_std9945_put(tbc_app_st *const self)
+static void sys_common_std9945_put(tbc_app_st *const self)
 {
     /** protect disabled tty */
     if (self->cache_l2.tty) {

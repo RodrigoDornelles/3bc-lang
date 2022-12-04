@@ -42,27 +42,27 @@
 /**
  * VM processor context manager, allows asychronism.
  */
-bool driver_interrupt(struct app_3bc_s* const app)
+bool driver_interrupt(struct app_3bc_s* const self)
 {
-    switch (app->state) {
+    switch (self->state) {
     /**
      * INITIAL CONTEXT
      */
     case FSM_3BC_DEFAULT:
-        app->state = FSM_3BC_RUNNING;
+        self->state = FSM_3BC_RUNNING;
         return true;
 
     /**
      *  INTERPRETER CONTEXT
      */
     case FSM_3BC_READING:
-        switch (interpreter_ticket(app)) {
+        switch (interpreter_ticket(self)) {
         case 1:
-            app->state = FSM_3BC_RUNNING;
+            self->state = FSM_3BC_RUNNING;
             return true;
 
         case EOF:
-            app->state = FSM_3BC_EXITING;
+            self->state = FSM_3BC_EXITING;
             return true;
         }
         return true;
@@ -71,21 +71,34 @@ bool driver_interrupt(struct app_3bc_s* const app)
      * PROCESS CONTEXT
      */
     case FSM_3BC_RUNNING:
-        if (!ds_program_fifo_avaliable(app)) {
-            app->state = FSM_3BC_READING;
-        } else if (app->cpu_mode == TBC_MODE_SLEEP
-            && app->cache_l1.sleep_mode != SLEEP_3BC_NONE) {
-            app->state = FSM_3BC_WAITING;
+        /** 
+         * check for program existence
+         * @note cache level 0 is re-used in evaluate.
+         */
+        self->pkg_func.prog.avaliable(self);
+        if (!self->cache_l0.rx) {
+            self->state = FSM_3BC_EXITING;
         }
-        /** TODO
-        else if (app->cache_l3.direction < 0) {
-            app->state = FSM_3BC_IO_READ;
+
+        /** evaluate */
+        self->pkg_func.prog.load(self);
+        instruction_3bc(self);
+
+        /** @brief virtual machine interrupt: write */
+        if (self->cpu_mode == TBC_MODE_STRING && self->cache_l1.printing) {
+            self->state = FSM_3BC_IO_SEND;
         }
-        else if (app->cache_l3.direction > 0) {
-            app->state = FSM_3BC_IO_SEND;
-        }*/
+        /** @brief virtual machine interrupt: idle */
+        else if (self->cpu_mode == TBC_MODE_SLEEP
+            && self->cache_l1.sleep_mode != SLEEP_3BC_NONE) {
+            self->state = FSM_3BC_WAITING;
+        }
+        /**
+         * @brief nothing to do!
+         * program must be progress.
+         */
         else {
-            driver_program_tick(app);
+            self->pkg_func.prog.next(self);
         }
         return true;
 
@@ -93,11 +106,11 @@ bool driver_interrupt(struct app_3bc_s* const app)
      * SLEEP CONTEXT
      */
     case FSM_3BC_WAITING:
-        if (!driver_idle(app)) {
-            app->state = FSM_3BC_RUNNING;
-            app->cache_l1.sleep_mode = SLEEP_3BC_NONE;
-            app->cache_l2.sleep_period = 0;
-            app->cache_l3.sleep_called = 0;
+        if (!driver_idle(self)) {
+            self->state = FSM_3BC_RUNNING;
+            self->cache_l1.sleep_mode = SLEEP_3BC_NONE;
+            self->cache_l2.sleep_period = 0;
+            self->cache_l3.sleep_called = 0;
         }
         return true;
 
@@ -105,21 +118,22 @@ bool driver_interrupt(struct app_3bc_s* const app)
      * INPUT CONTEXT
      * TODO: this
     case FSM_3BC_IO_READ:
-        app->state = FSM_3BC_RUNNING;
+        self->state = FSM_3BC_RUNNING;
         return true;*/
 
     /**
-     * OUTPUT CONTEXT
-     * TODO: this
+     * @brief OUTPUT CONTEXT
+     */
     case FSM_3BC_IO_SEND:
-        app->state = FSM_3BC_RUNNING;
-        return true;*/
+        self->pkg_func.std.put(self);
+        self->state = FSM_3BC_RUNNING;
+        return true;
 
     /**
      * EXIT CONTEXT
      */
     case FSM_3BC_EXITING:
-        driver_power_exit(app);
+        driver_power_exit(self);
         return true;
     }
 

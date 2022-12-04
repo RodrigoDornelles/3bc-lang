@@ -141,7 +141,7 @@ data_3bc_t driver_gpio_input(struct app_3bc_s* const app, memory_conf_t conf,
 /*****************************************************************************/
 bool driver_idle(struct app_3bc_s* const app);
 /*****************************************************************************/
-bool driver_interrupt(struct app_3bc_s* const app);
+bool driver_interrupt(struct app_3bc_s* const self);
 /*****************************************************************************/
 void driver_memory_data_set(
     struct app_3bc_s* const app, address_3bc_t address, data_3bc_t value);
