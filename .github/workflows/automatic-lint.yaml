@@ -30,3 +30,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: test lint
         run: clang-tidy programs/interpreter.c --warnings-as-errors=* --
+
+  gomod-tidy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: test lint
+        run: go mod lint
