@@ -16,7 +16,7 @@ jobs:
           path: project
 
       - name: Checkout arduino-cli
-        run: curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+        run: curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh -s 0.27.0
 
       - name: Configure arduino-cli
         run: |
@@ -46,7 +46,7 @@ jobs:
           path: project
 
       - name: Checkout arduino-cli
-        run: curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+        run: curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh -s 0.27.0
 
       - name: Configure arduino-cli
         run: |
