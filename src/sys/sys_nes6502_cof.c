@@ -93,9 +93,10 @@ static void sys_nes6502_cof2020n_put(tbc_app_st *const self)
     while(1) {
         /** cache tile to improve perfomance */
         tile = self->cache_l3.fixbuf.storage[index];
+        ++index;
         
         /** end of of max size*/
-        if (index < self->cache_l3.fixbuf.size) {
+        if (index > self->cache_l3.fixbuf.size) {
             break;
         }
 
@@ -120,7 +121,6 @@ static void sys_nes6502_cof2020n_put(tbc_app_st *const self)
             cursor_tty.vram_address |= 7;
             *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
             *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
-            ++index;
             continue;
         }
 
@@ -133,14 +133,12 @@ static void sys_nes6502_cof2020n_put(tbc_app_st *const self)
             /** update cursor position into the nametable */
             *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
             *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
-            ++index;
             continue;
         }
 
         /** put character to PPU */
         *((unsigned char*) 0x2007) = tile;
         ++cursor_tty.vram_address;
-        ++index;
     }
 
     /** turn on PPU*/
