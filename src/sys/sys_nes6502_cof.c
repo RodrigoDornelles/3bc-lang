@@ -54,10 +54,8 @@ static void sys_nes6502_cof2020n_init()
         *((unsigned char*) 0x2004) = 0xf0;
     }
 
-    /** update vram nametable position (cursor position) */
+    /** reset cursor position */
     cursor_tty.vram_address = 0x2020;
-    *((unsigned char*) 0x2006) = 0x20;
-    *((unsigned char*) 0x2006) = 0x20;
 }
 
 /**
@@ -65,6 +63,7 @@ static void sys_nes6502_cof2020n_init()
  * @link https://www.nesdev.org/wiki/PPU_memory_map
  * @link https://www.nesdev.org/wiki/PPU_nametables
  * @link https://www.nesdev.org/wiki/PPU_registers
+ * @link https://www.nesdev.org/wiki/NMI_thread
  * @link https://www.nesdev.org/wiki/NMI
  */
 static void sys_nes6502_cof2020n_put(tbc_app_st *const self)
@@ -76,18 +75,22 @@ static void sys_nes6502_cof2020n_put(tbc_app_st *const self)
     /** reset */
     index = 0;
 
-    /** turn of PPU */
-    *((unsigned char*) 0x2001) = 0b00000000;
-
     /** first put */
     if (cursor_tty.vram_address == 0) {
         sys_nes6502_cof2020n_init();
     }
 
+    /** turn off PPU */
+    *((unsigned char*) 0x2001) = 0b00000000;
+
     /** wait nmi */
-    while(*((signed char*) 0x2002) > 0) {
+    while(*((signed char*) 0x2002) < 0) {
         continue;
     }
+
+    /** update nametable cursor position */
+    *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
+    *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
 
     /** streamming */
     while(1) {
@@ -108,7 +111,6 @@ static void sys_nes6502_cof2020n_put(tbc_app_st *const self)
         /** special char: carrier return */
         if (tile == '\r') {
             /** ignore */
-            ++index;
             continue;
         }
 
