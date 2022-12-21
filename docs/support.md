@@ -5,29 +5,23 @@ description: List of all platforms that are working, or that will receive the su
 Platform Support List
 =====================
 
- * **working** minimal and incomplete operation
- * **running** works unsteadily
- * **released** full support
-
-Personal Computers
+Computers
 ------------------
 
-| system | architeture | working | running | released |
-| :----- | :---------: | :-----: | :-----: | :------: |
-| Windows | i386 | :ok:  | :ok: | :ok: |
-| Windows | amd64 | :ok: | :ok:  | :ok: |
-| GNU Linux | arm | :ok:  | :ok: | :ok: |
-| GNU Linux | i386 | :ok: | :ok: | :ok: |
-| GNU Linux | amd64 | :ok:  | :ok: | :ok: |
-| GNU Linux | aarch64 | :ok: | :ok: | :ok: |
-| Mac OS X | i386 | :ok: | :ok: | :x: |
-| Mac OS X | amd64 | :ok: | :ok: | :ok: |
-| Mac OS X | aarch64 |
-| BSD Unix | arm |
-| BSD Unix | amd64 | :ok: | :ok: | :ok: |
-| BSD Unix | i386 | :ok: | :ok: | :ok: |
+|              | i386 | amd64 | arm32 | arm64 | mips32 | mips64 | powerpc | powerpc64 | riscv | riscv64 | s390x |
+| :----------- | :--: | :---: | :---: | :---: | :----: | :----: | :-----: | :-------: | :---: | :-----: | :---: |
+| Windows      | :ok: | :ok:  |       | :ok:  | _N/A_  | _N/A_  | _N/A_   | _N/A_     | _N/A_ | _N/A_   | _N/A_ |
+| Mac OS       | :x:  | :ok:  |       | :ok:  | _N/A_  | _N/A_  | _N/A_   | _N/A_     | _N/A_ | _N/A_   | _N/A_ |
+| Docker Linux | :ok: | :ok:  | :ok:  | :ok:  |        | :ok:   |         | :ok:      |       |         | :ok:  |
+| GNU Linux    | :ok: | :ok:  | :ok:  | :ok:  | :ok:   |        | :ok:    | :ok:      |       | :ok:    |       | 
+| GNU Hurd     |      |       |       |       |        |        |         |           |       |         | _N/A_ |
+| Plan 9       |      |       |       |       |        |        |         |           |       |         | _N/A_ |
+| Open BSD     |      |       |       |       |        |        |         |           |       |         | _N/A_ |
+| Free BSD     | :x:  | :x:   |       |       |        |        |         |           |       |         | _N/A_ |
 
- * apple systems no longer support 32-bit programs.
+ 1. **mac os** does not support 32-bit systems.
+ 2. **windows** windows is not currently supporting cpu sleep mode.
+ 3. **freebsd** currently does not support official publication.
 
 Web Browser 
 -----------
