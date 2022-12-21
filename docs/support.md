@@ -56,9 +56,10 @@ Embedded Systems
 Legacy Systems
 --------------
 
-| system | architeture | working | running | released |
-| :----- | :---------: | :-----: | :-----: | :------: |
-| Microsoft DOS | i386 |
-| Apple 2 | mos6502 | :ok: |
-| Commodore 64 | mos6502 |
-| Nintendo Entertainment System | mos6502 |
+|               | i386  | mos6502<br/>NES | mos6502<br/>Apple 2 | mos6502<br/>C64 |
+| :------------ | :---: | :-------------: | :-----------------: | :-------------: |
+| Baremetal     | _N/A_ | :ok:            | :ok:                |                 |
+| Microsoft Dos |       | _N/A_           |                     |                 |
+
+ * **MOS6502 / Nintendo Entertainment System** currently it only runs hello world compiled together with the virtual machine program.
+ * **MOS6502 / Apple 2** runs programs that are compiled together with the virtual machine and without support interpreter or repl.
