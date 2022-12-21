@@ -23,13 +23,22 @@ Computers
  2. **windows** windows is not currently supporting cpu sleep mode.
  3. **freebsd** currently does not support official publication.
 
-Web Browser 
------------
+Integrations
+------------
 
-| system | architeture | working | running | released |
-| :----- | :---------: | :-----: | :-----: | :------: |
-| Browser | emscripten | :ok: | :ok: | :ok: |
-| Browser | wasm |
+|         | wasm | wasm.js<br/>_(legacy)_ | emscripten<br/>_(bloated)_ | typescript |
+| :------ | :--: | :--------------------: | :------------------------: | :--------: |
+| NodeJS  |      |                        | :ok:                       |            |
+| Browser |      |                        |                            |            |
+
+
+|                 | C++   | NodeJS | Python | Rust |
+| :-------------- | :---: | :----: | :----: | :--: |
+| FFI             | _N/A_ |        |        |      |
+| Wrapper         |       |        |        | :ok: |
+| Dynamic Library |       |        |        |      |
+
+ * **rust** third-party support <https://github.com/yxqsnz/3bc-sys>
 
 Embedded Systems
 ----------------
