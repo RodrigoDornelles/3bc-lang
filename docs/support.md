@@ -5,59 +5,61 @@ description: List of all platforms that are working, or that will receive the su
 Platform Support List
 =====================
 
- * **working** minimal and incomplete operation
- * **running** works unsteadily
- * **released** full support
-
-Personal Computers
+Computers
 ------------------
 
-| system | architeture | working | running | released |
-| :----- | :---------: | :-----: | :-----: | :------: |
-| Windows | i386 | :ok:  | :ok: | :ok: |
-| Windows | amd64 | :ok: | :ok:  | :ok: |
-| GNU Linux | arm | :ok:  | :ok: | :ok: |
-| GNU Linux | i386 | :ok: | :ok: | :ok: |
-| GNU Linux | amd64 | :ok:  | :ok: | :ok: |
-| GNU Linux | aarch64 | :ok: | :ok: | :ok: |
-| Mac OS X | i386 | :ok: | :ok: | :x: |
-| Mac OS X | amd64 | :ok: | :ok: | :ok: |
-| Mac OS X | aarch64 |
-| BSD Unix | arm |
-| BSD Unix | amd64 | :ok: | :ok: | :ok: |
-| BSD Unix | i386 | :ok: | :ok: | :ok: |
+|              | i386  | amd64 | arm32 | arm64 | mips32 | mips64 | powerpc | powerpc64 | riscv | riscv64 | s390x |
+| :----------- | :---: | :---: | :---: | :---: | :----: | :----: | :-----: | :-------: | :---: | :-----: | :---: |
+| Android      | _N/A_ | :ok:  | :ok:  | :ok:  | _N/A_  | _N/A_  | _N/A_   | _N/A_     | _N/A_ | _N/A_   | _N/A_ |
+| Windows      | :ok:  | :ok:  |       | :ok:  | _N/A_  | _N/A_  | _N/A_   | _N/A_     | _N/A_ | _N/A_   | _N/A_ |
+| Mac OS       | :x:   | :ok:  |       | :ok:  | _N/A_  | _N/A_  | _N/A_   | _N/A_     | _N/A_ | _N/A_   | _N/A_ |
+| Docker Linux | :ok:  | :ok:  | :ok:  | :ok:  |        | :ok:   |         | :ok:      |       |         | :ok:  |
+| GNU Linux    | :ok:  | :ok:  | :ok:  | :ok:  | :ok:   |        | :ok:    | :ok:      |       | :ok:    |       | 
+| GNU Hurd     |       |       |       |       |        |        |         |           |       |         | _N/A_ |
+| Plan 9       |       |       |       |       |        |        |         |           |       |         | _N/A_ |
+| Open BSD     |       |       |       |       |        |        |         |           |       |         | _N/A_ |
+| Free BSD     | :x:   | :x:   |       |       |        |        |         |           |       |         | _N/A_ |
 
- * apple systems no longer support 32-bit programs.
+ 1. **mac os** does not support 32-bit systems.
+ 2. **windows** windows is not currently supporting cpu sleep mode.
+ 3. **freebsd** currently does not support official publication.
 
-Web Browser 
------------
+Integrations
+------------
 
-| system | architeture | working | running | released |
-| :----- | :---------: | :-----: | :-----: | :------: |
-| Browser | emscripten | :ok: | :ok: | :ok: |
-| Browser | wasm |
+|         | wasm | wasm.js<br/>_(legacy)_ | emscripten<br/>_(bloated)_ | typescript |
+| :------ | :--: | :--------------------: | :------------------------: | :--------: |
+| NodeJS  |      |                        | :ok:                       |            |
+| Browser |      |                        |                            |            |
+
+
+|                 | C++   | NodeJS | Python | Rust |
+| :-------------- | :---: | :----: | :----: | :--: |
+| FFI             | _N/A_ |        |        |      |
+| Wrapper         |       |        |        | :ok: |
+| Dynamic Library |       |        |        |      |
+
+ * **rust** third-party support <https://github.com/yxqsnz/3bc-sys>
 
 Embedded Systems
 ----------------
 
-| system | architeture | working | running | released |
-| :----- | :---------: | :-----: | :-----: | :------: |
-| AVR Libc | avr | :ok: |
-| Arduino | avr | :ok: | :ok: | :ok: |
-| Arduino | risc-v | :ok: | :ok: | :ok: |
-| Free RTOS | risc-v |
-| ESP IDF | risc-v |
-| NuttX | arm | :ok: | :ok: |
-| NuttX | avr | :ok: | :ok: |
-| NuttX | risc-v | :ok: | :ok: |
-| ODroid | risc-v |
+|           | avr   | riscv | arm   | pic   |
+| :-------- | :---: | :---: | :---: | :-:   |
+| Arduino   | :ok:  | :ok:  | :ok:  | _N/A_ |
+| AVR Lib C | :ok:  | _N/A_ | _N/A_ | _N/A_ |
+| ESP IDF   | _N/A_ | :ok:  | _N/A_ | _N/A_ |
+| ODroid    |       |       |       | _N/A_ |
+| Free RTOS |       | :ok:  |       | _N/A_ |
+| Baremetal |       |       |       |       |
 
 Legacy Systems
 --------------
 
-| system | architeture | working | running | released |
-| :----- | :---------: | :-----: | :-----: | :------: |
-| Microsoft DOS | i386 |
-| Apple 2 | mos6502 | :ok: |
-| Commodore 64 | mos6502 |
-| Nintendo Entertainment System | mos6502 |
+|               | i386  | mos6502<br/>NES | mos6502<br/>Apple 2 | mos6502<br/>C64 |
+| :------------ | :---: | :-------------: | :-----------------: | :-------------: |
+| Baremetal     | _N/A_ | :ok:            | :ok:                |                 |
+| Microsoft Dos |       | _N/A_           |                     |                 |
+
+ * **MOS6502 / Nintendo Entertainment System** currently it only runs hello world compiled together with the virtual machine program.
+ * **MOS6502 / Apple 2** runs programs that are compiled together with the virtual machine and without support interpreter or repl.
