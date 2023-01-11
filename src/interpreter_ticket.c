@@ -46,38 +46,38 @@
 /**
  * When interpreter disabled, always returns end of file.
  */
-int interpreter_ticket(struct app_3bc_s* const app)
+void interpreter_ticket(tbc_app_st *const self)
 {
-    return EOF;
+    self->cache_l0.rx = TBC_EXIT;
 }
 #else
 /**
  * Default entry point to the interpreter, works asynchronously.
  *
- * RETURN: CR if does nothing.
- * RETURN: EOF if there is nothing else to read.
- * RETURN: 1 if the interpretation was successful.
  * TODO: refactor single point of return, no implicit outputs.
+ * TODO: do{} while(0);
  */
-int interpreter_ticket(struct app_3bc_s* const app)
+void interpreter_ticket(tbc_app_st *const self)
 {
-    int character = fgetc(app->cin.tty_source.io.stream);
+    int character = fgetc(self->cin.tty_source.io.stream);
 
 #if defined(_3BC_NUTTX)
-    if (app->cout.tty_source.type == STREAM_TYPE_COMPUTER_STD) {
-        driver_tty_output(app, &app->cout.tty_keylog, STRC, character);
+    if (self->cout.tty_source.type == STREAM_TYPE_COMPUTER_STD) {
+        driver_tty_output(self, &self->cout.tty_keylog, STRC, character);
     }
 #endif
 
     /** does nothing **/
     if (character == '\r') {
-        return '\r';
+        self->cache_l0.rx = TBC_IGNORE;
+        return;
     }
 
     /** end of file **/
     if ((character == EOF || character == -1)
-        && app->cache_l3.buffer.storage == NULL) {
-        return EOF;
+        && self->cache_l3.buffer.storage == NULL) {
+        self->cache_l0.rx = TBC_EXIT;
+        return;
     }
 
     /** end of line **/
@@ -85,49 +85,53 @@ int interpreter_ticket(struct app_3bc_s* const app)
 
         /** mark end of string **/
         {
-            char* new_buffer = (char*)realloc(app->cache_l3.buffer.storage,
-                sizeof(char) * (++app->cache_l3.buffer.size));
+            char* new_buffer = (char*)realloc(self->cache_l3.buffer.storage,
+                sizeof(char) * (++self->cache_l3.buffer.size));
             if (new_buffer == NULL) {
-                driver_program_error(app, ERROR_OUT_OF_MEMORY);
+                driver_program_error(self, ERROR_OUT_OF_MEMORY);
             } else {
-                app->cache_l3.buffer.storage = new_buffer;
-                app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1]
+                self->cache_l3.buffer.storage = new_buffer;
+                self->cache_l3.buffer.storage[self->cache_l3.buffer.size - 1]
                     = '\0';
             }
         }
 
         /** insert to vm **/
-        char* line = app->cache_l3.buffer.storage;
+        char* line = self->cache_l3.buffer.storage;
         do {
-            app->program.last_line += 1;
-            line = interpreter_readln(app, line);
+            fprintf(stderr, ".");
+            self->program.last_line += 1;
+            line = interpreter_readln(self, line);
         } while (line != NULL);
+
+        self->pkg_func.prog.insert(self);
 
         /** reset buffer **/
         {
-            free(app->cache_l3.buffer.storage);
-            app->cache_l3.buffer.storage = NULL;
-            app->cache_l3.buffer.size = 0;
+            free(self->cache_l3.buffer.storage);
+            self->cache_l3.buffer.storage = NULL;
+            self->cache_l3.buffer.size = 0;
         }
 
-        return 1;
+        self->cache_l0.rx = TBC_OK;
+        return;
     }
 
     /** expand the  buffer **/
     {
-        char* new_buffer = (char*)realloc(app->cache_l3.buffer.storage,
-            sizeof(char) * (++app->cache_l3.buffer.size));
+        char* new_buffer = (char*)realloc(self->cache_l3.buffer.storage,
+            sizeof(char) * (++self->cache_l3.buffer.size));
 
         if (new_buffer == NULL) {
-            driver_program_error(app, ERROR_OUT_OF_MEMORY);
+            driver_program_error(self, ERROR_OUT_OF_MEMORY);
         } else {
-            app->cache_l3.buffer.storage = new_buffer;
-            app->cache_l3.buffer.storage[app->cache_l3.buffer.size - 1]
+            self->cache_l3.buffer.storage = new_buffer;
+            self->cache_l3.buffer.storage[self->cache_l3.buffer.size - 1]
                 = character;
         }
     }
 
-    return 0;
+    self->cache_l0.rx = TBC_REPEAT;
 }
 #endif
 #endif

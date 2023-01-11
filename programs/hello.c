@@ -30,8 +30,8 @@ int main()
     #endif
 
     sys_common_pfa888_install(VM);  
-    VM->cin.tty_source.io.arr.ptr = (tbc_u8_t*) prog;
-    VM->cin.tty_source.io.arr.size = sizeof(prog);
+    VM->cin.tty_storage.io.arr.ptr = (tbc_u8_t*) prog;
+    VM->cin.tty_storage.io.arr.size = sizeof(prog);
 
     while (driver_interrupt(VM)) {
         continue;

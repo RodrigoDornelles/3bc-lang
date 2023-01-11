@@ -57,7 +57,7 @@ char* interpreter_readln(struct app_3bc_s* const app, char* line)
     if (!interpreter_tokens(line, &text_reg, &text_mem, &text_val, &line)) {
         driver_program_error(app, ERROR_COLUMNS);
     }
-    /** blank line **/
+    /** blank line TODO: not working!**/
     if (text_reg == NULL) {
         return line;
     }
@@ -72,10 +72,13 @@ char* interpreter_readln(struct app_3bc_s* const app, char* line)
     /** parse string to constant and validate **/
     else if (!interpreter_syntax_constants(app, text_val, &val)) {
         driver_program_error(app, ERROR_INVALID_CONSTANT);
-    } else {
-        /** add new line **/
-        ds_program_fifo_line_add(app, reg, mem, val);
-    }
+    } 
+    
+    /** add new line **/
+    //ds_program_fifo_line_add(app, reg, mem, val);
+    app->cache_l0.rx = reg;
+    app->cache_l0.ry = mem;
+    app->cache_l0.rz = val;
 
     return line;
 }

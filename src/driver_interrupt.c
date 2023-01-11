@@ -52,16 +52,30 @@ bool driver_interrupt(struct app_3bc_s* const self)
         self->state = FSM_3BC_RUNNING;
         return true;
 
+    case FSM_3BC_EXPAND:
+        self->pkg_func.prog.expand(self);
+        switch(self->cache_l0.rx) {
+            case TBC_OK:
+                self->state = FSM_3BC_READING;
+                break;
+
+            case TBC_EXIT:
+                self->state = FSM_3BC_EXITING;
+                break;
+        }
+        return true;
+
     /**
      *  INTERPRETER CONTEXT
      */
     case FSM_3BC_READING:
-        switch (interpreter_ticket(self)) {
-        case 1:
+        interpreter_ticket(self);
+        switch (self->cache_l0.rx) {
+        case TBC_OK:
             self->state = FSM_3BC_RUNNING;
             return true;
 
-        case EOF:
+        case TBC_EXIT:
             self->state = FSM_3BC_EXITING;
             return true;
         }
@@ -77,7 +91,8 @@ bool driver_interrupt(struct app_3bc_s* const self)
          */
         self->pkg_func.prog.avaliable(self);
         if (!self->cache_l0.rx) {
-            self->state = FSM_3BC_EXITING;
+            self->state = FSM_3BC_EXPAND;
+            return true;
         }
 
         /** evaluate */

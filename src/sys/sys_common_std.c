@@ -11,6 +11,7 @@ void sys_common_std9945_install(tbc_app_st *const self)
     self->pkg_func.std.put = &sys_common_std9945_put;
     /**
      * default teletype's
+     * TODO: not modify???
      */
     self->cout.tty_debug.type = STREAM_TYPE_POSIX_FILEID;
     self->cout.tty_output.type = STREAM_TYPE_POSIX_FILEID;
@@ -22,7 +23,7 @@ void sys_common_std9945_install(tbc_app_st *const self)
      */
     self->cout.tty_debug.io.fid = 2;
     self->cout.tty_output.io.fid = 1;
-    self->cin.tty_source.io.fid = 0;
+    //self->cin.tty_source.io.fid = 0; TODO: ????
     self->cin.tty_input.io.fid = 0;
 }
 
