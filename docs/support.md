@@ -11,8 +11,8 @@ Computers
 |              | i386  | amd64 | arm32 | arm64 | mips32 | mips64 | powerpc | powerpc64 | riscv | riscv64 | s390x |
 | :----------- | :---: | :---: | :---: | :---: | :----: | :----: | :-----: | :-------: | :---: | :-----: | :---: |
 | Android      | _N/A_ | :ok:  | :ok:  | :ok:  | _N/A_  | _N/A_  | _N/A_   | _N/A_     | _N/A_ | _N/A_   | _N/A_ |
-| Windows      | :ok:  | :ok:  |       | :ok:  | _N/A_  | _N/A_  | _N/A_   | _N/A_     | _N/A_ | _N/A_   | _N/A_ |
-| Mac OS       | :x:   | :ok:  |       | :ok:  | _N/A_  | _N/A_  | _N/A_   | _N/A_     | _N/A_ | _N/A_   | _N/A_ |
+| Windows      | :ok:  | :ok:  | _N/A_ | :ok:  | _N/A_  | _N/A_  | _N/A_   | _N/A_     | _N/A_ | _N/A_   | _N/A_ |
+| Mac OS       | :x:   | :ok:  | _N/A_ | :ok:  | _N/A_  | _N/A_  |         | _N/A_     | _N/A_ | _N/A_   | _N/A_ |
 | Docker Linux | :ok:  | :ok:  | :ok:  | :ok:  |        | :ok:   |         | :ok:      |       |         | :ok:  |
 | GNU Linux    | :ok:  | :ok:  | :ok:  | :ok:  | :ok:   |        | :ok:    | :ok:      |       | :ok:    |       | 
 | GNU Hurd     |       |       |       |       |        |        |         |           |       |         | _N/A_ |
@@ -39,7 +39,7 @@ Integrations
 | Wrapper         |       |        |        | :ok: |
 | Dynamic Library |       |        |        |      |
 
- * **rust** third-party support <https://github.com/yxqsnz/3bc-sys>
+ * **Rust** third-party support <https://github.com/yxqsnz/3bc-sys>
 
 Embedded Systems
 ----------------
