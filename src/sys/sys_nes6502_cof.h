@@ -5,6 +5,7 @@
  * @def pkg_nes_output_fullscreen sys_nes6502_cout2000_install
  * @brief driver output fullscren start in $2020 (Nintendo 8 Bits)
  * @details fullscreen C standard output
+ * @todo MOVE IT!
  */
 void sys_nes6502_cof2020n_install(tbc_app_st *const self);
 
