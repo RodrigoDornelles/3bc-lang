@@ -2,24 +2,16 @@
 //#include "primitive.h"
 //#include "tty.h"
 
-static void sys_common_pfac_next(tbc_app_st *const self);
-static void sys_common_pfac_clean(tbc_app_st *const self);
-static void sys_common_pfac_exist(tbc_app_st *const self);
-static void sys_common_pfa888_load(tbc_app_st *const self);
-static void sys_common_pfa888_insert(tbc_app_st *const self);
-static void sys_common_pfa3912_load(tbc_app_st *const self);
-static void sys_common_pfa3912_insert(tbc_app_st *const self);
-
 /**
  * @brief install pfa888 driver
  */
 void sys_common_pfa888_install(tbc_app_st *const self)
 {
-    self->pkg_func.prog.next = (void*) &sys_common_pfac_next;
-    self->pkg_func.prog.clean = (void*) &sys_common_pfac_clean;
-    self->pkg_func.prog.avaliable = (void*) &sys_common_pfac_exist;
-    self->pkg_func.prog.load = (void*) &sys_common_pfa888_load;
-    self->pkg_func.prog.insert = (void*) &sys_common_pfa888_insert;
+    self->pkg_func->prog.next = (void*) &sys_common_pfac_next;
+    self->pkg_func->prog.clean = (void*) &sys_common_pfac_clean;
+    self->pkg_func->prog.avaliable = (void*) &sys_common_pfac_exist;
+    self->pkg_func->prog.load = (void*) &sys_common_pfa888_load;
+    self->pkg_func->prog.insert = (void*) &sys_common_pfa888_insert;
     self->cin.tty_storage.type = STREAM_TYPE_FIXED_ARRAY_1D;
     self->cin.tty_storage.io.arr.ptr = NULL;
     self->cin.tty_storage.io.arr.size = 0;
@@ -31,11 +23,11 @@ void sys_common_pfa888_install(tbc_app_st *const self)
  */
 void sys_common_pfa3912_install(tbc_app_st *const self)
 {
-    self->pkg_func.prog.next = (void*) &sys_common_pfac_next;
-    self->pkg_func.prog.clean = (void*) &sys_common_pfac_clean;
-    self->pkg_func.prog.avaliable = (void*) &sys_common_pfac_exist;
-    self->pkg_func.prog.load = (void*) &sys_common_pfa3912_load;
-    self->pkg_func.prog.insert = (void*) &sys_common_pfa3912_insert;
+    self->pkg_func->prog.next = (void*) &sys_common_pfac_next;
+    self->pkg_func->prog.clean = (void*) &sys_common_pfac_clean;
+    self->pkg_func->prog.avaliable = (void*) &sys_common_pfac_exist;
+    self->pkg_func->prog.load = (void*) &sys_common_pfa3912_load;
+    self->pkg_func->prog.insert = (void*) &sys_common_pfa3912_insert;
     self->cin.tty_storage.type = STREAM_TYPE_FIXED_ARRAY_1D;
     self->cin.tty_storage.io.arr.ptr = NULL;
     self->cin.tty_storage.io.arr.size = 0;
@@ -45,7 +37,7 @@ void sys_common_pfa3912_install(tbc_app_st *const self)
 /**
  * @brief increment program
  */
-static void sys_common_pfac_next(tbc_app_st *const self)
+void sys_common_pfac_next(tbc_app_st *const self)
 {
     self->cin.tty_storage.io.arr.index += 3;
 }
@@ -53,7 +45,7 @@ static void sys_common_pfac_next(tbc_app_st *const self)
 /**
  * @brief erase program
  */
-static void sys_common_pfac_clean(tbc_app_st *const self)
+void sys_common_pfac_clean(tbc_app_st *const self)
 {
     while (self->cin.tty_storage.io.arr.index && self->cin.tty_storage.io.arr.ptr) {
         self->cin.tty_storage.io.arr.ptr[self->cin.tty_storage.io.arr.index] = 0;
@@ -63,17 +55,20 @@ static void sys_common_pfac_clean(tbc_app_st *const self)
 
 /**
  * @brief program avaliable
- * @return void (use rx register) 
  */
-static void sys_common_pfac_exist(tbc_app_st *const self)
+void sys_common_pfac_exist(tbc_app_st *const self)
 {
-    self->cache_l0.rx = self->cin.tty_storage.io.arr.index < self->cin.tty_storage.io.arr.size;
+    if (self->cin.tty_storage.io.arr.index < self->cin.tty_storage.io.arr.size) {
+        self->rc = TBC_RET_FULL;
+    } else {
+        self->rc = TBC_RET_CLEAN;
+    }
 }
 
 /**
  * @brief put program memory into cpu
  */
-static void sys_common_pfa888_load(tbc_app_st *const self)
+void sys_common_pfa888_load(tbc_app_st *const self)
 {
     tbc_line_t program_counter = self->cin.tty_storage.io.arr.index;
     self->cache_l0.rx = self->cin.tty_storage.io.arr.ptr[program_counter];
@@ -85,7 +80,7 @@ static void sys_common_pfa888_load(tbc_app_st *const self)
  * @brief put cpu into program memory
  * @note must be placed from interpreter to cpu memory previously.
  */
-static void sys_common_pfa888_insert(tbc_app_st *const self)
+void sys_common_pfa888_insert(tbc_app_st *const self)
 {
     tbc_line_t program_counter = self->cin.tty_storage.io.arr.index;
     self->cin.tty_storage.io.arr.ptr[program_counter] = self->cache_l0.rx;
@@ -96,7 +91,7 @@ static void sys_common_pfa888_insert(tbc_app_st *const self)
 /**
  * @brief put program memory into cpu
  */
-static void sys_common_pfa3912_load(tbc_app_st *const self)
+void sys_common_pfa3912_load(tbc_app_st *const self)
 {
     /** reg = 0b00000111 */
     self->cache_l0.rx = (0x7 & self->cin.tty_storage.io.arr.ptr[self->cin.tty_storage.io.arr.index]);
@@ -112,7 +107,7 @@ static void sys_common_pfa3912_load(tbc_app_st *const self)
  * @brief put cpu into program memory
  * @note must be placed from interpreter to cpu memory previously.
  */
-static void sys_common_pfa3912_insert(tbc_app_st *const self)
+void sys_common_pfa3912_insert(tbc_app_st *const self)
 {
     /** reg = 0b00000111 */
     self->cin.tty_storage.io.arr.ptr[self->cin.tty_storage.io.arr.index + 0] = (0x7 & self->cache_l0.rx);

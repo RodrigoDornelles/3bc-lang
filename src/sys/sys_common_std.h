@@ -6,5 +6,6 @@
  * @brief driver provide POSIX features
  */
 void sys_common_std9945_install(tbc_app_st *const self);
+void sys_common_std9945_put(tbc_app_st *const self);
 
 #endif

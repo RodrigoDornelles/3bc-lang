@@ -19,11 +19,11 @@ int main(int argc, char** argv)
     VM->cin.tty_input.io.stream = stdin;
 
     while (lang_3bc_update(VM)) {
-        fprintf(stderr, "\n[%d:%d] %x", VM->cin.tty_storage.io.arr.size/3, VM->cin.tty_storage.io.arr.index/3, VM->state);
+        /*fprintf(stderr, "\n[%d:%d] %x", VM->cin.tty_storage.io.arr.size/3, VM->cin.tty_storage.io.arr.index/3, VM->state);/***/
 
         if (VM->cin.tty_storage.io.arr.index < VM->cin.tty_storage.io.arr.size) {
             int i = VM->cin.tty_storage.io.arr.index;
-            fprintf(stderr, " -> %02x, %02x, %02x",
+            /*fprintf(stderr, " -> %02x, %02x, %02x",
                 VM->cin.tty_storage.io.arr.ptr[i],
                 VM->cin.tty_storage.io.arr.ptr[i + 1],
                 VM->cin.tty_storage.io.arr.ptr[i + 2]

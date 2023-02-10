@@ -17,4 +17,13 @@ void sys_common_pfa888_install(tbc_app_st *const self);
  */
 void sys_common_pfa3912_install(tbc_app_st *const self);
 
+
+void sys_common_pfac_next(tbc_app_st *const self);
+void sys_common_pfac_clean(tbc_app_st *const self);
+void sys_common_pfac_exist(tbc_app_st *const self);
+void sys_common_pfa888_load(tbc_app_st *const self);
+void sys_common_pfa888_insert(tbc_app_st *const self);
+void sys_common_pfa3912_load(tbc_app_st *const self);
+void sys_common_pfa3912_insert(tbc_app_st *const self);
+
 #endif

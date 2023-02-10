@@ -15,7 +15,7 @@ static void sys_nes6502_cof2020n_put(tbc_app_st *const self);
  */
 void sys_nes6502_cof2020n_install(tbc_app_st *const self)
 {
-    self->pkg_func.std.put = (void*) &sys_nes6502_cof2020n_put;
+    self->pkg_func->std.put = (void*) &sys_nes6502_cof2020n_put;
     self->cout.tty_output.type = STREAM_TYPE_NES_FULLSCREEN;
     cursor_tty.vram_address = 0;
 }

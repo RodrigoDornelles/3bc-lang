@@ -48,7 +48,7 @@
  */
 void interpreter_ticket(tbc_app_st *const self)
 {
-    self->cache_l0.rx = TBC_EXIT;
+    self->cache_l0.rx = TBC_RET_EXIT;
 }
 #else
 /**
@@ -76,7 +76,7 @@ void interpreter_ticket(tbc_app_st *const self)
     /** end of file **/
     if ((character == EOF || character == -1)
         && self->cache_l3.buffer.storage == NULL) {
-        self->cache_l0.rx = TBC_EXIT;
+        self->cache_l0.rx = TBC_RET_EXIT;
         return;
     }
 
@@ -104,7 +104,7 @@ void interpreter_ticket(tbc_app_st *const self)
             line = interpreter_readln(self, line);
         } while (line != NULL);
 
-        self->pkg_func.prog.insert(self);
+        self->pkg_func->prog.insert(self);
 
         /** reset buffer **/
         {
@@ -131,7 +131,7 @@ void interpreter_ticket(tbc_app_st *const self)
         }
     }
 
-    self->cache_l0.rx = TBC_REPEAT;
+    self->cache_l0.rx = TBC_RET_REPEAT;
 }
 #endif
 #endif
