@@ -163,7 +163,9 @@ bool driver_interrupt(struct app_3bc_s* const self)
      */
     case FSM_3BC_EXITING:
         driver_power_exit(self);
-        return true;
+        /** @todo investigate why not set*/
+        self->state = FSM_3BC_STOPED;
+        return false;
     }
 
     return false;
