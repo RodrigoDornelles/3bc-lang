@@ -1,6 +1,7 @@
-#ifndef H_SYS_COMMON_PFA_TBC
-#define H_SYS_COMMON_PFA_TBC
+#ifndef H_SYS_COMMON_PEXA_TBC
+#define H_SYS_COMMON_PEXA_TBC
 
+#include "3bc_types.h"
 /**
  * @brief driver program pexams (generic)
  * @details program expand array malloc standard

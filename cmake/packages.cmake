@@ -11,6 +11,10 @@ target_compile_definitions("tbc_cpu_no_math" PRIVATE TBC_NOT_MATH)
 FILE(GLOB tbc_bus_std_files "${CMAKE_SOURCE_DIR}/src/bus/*.c")
 add_library(tbc_bus_std OBJECT ${tbc_bus_std_files})
 
+# System dependencies
+FILE(GLOB tbc_sys_std_files "${CMAKE_SOURCE_DIR}/src/sys/sys_common_*.c")
+add_library(tbc_sys_std OBJECT ${tbc_sys_std_files})
+
 # Drivers
 FILE(GLOB tbc_driver_std_files "${CMAKE_SOURCE_DIR}/src/driver/*.c")
 add_library(tbc_driver_std OBJECT ${tbc_driver_std_files})

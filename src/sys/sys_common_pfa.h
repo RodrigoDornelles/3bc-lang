@@ -1,6 +1,8 @@
 #ifndef H_SYS_COMMON_PFA_TBC
 #define H_SYS_COMMON_PFA_TBC
 
+#include "3bc_types.h"
+
 /**
  * @def pkg_common_pfa888 sys_common_pfa888_install
  * @brief driver program pfa888 (generic)
