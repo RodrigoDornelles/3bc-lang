@@ -1,14 +1,12 @@
 #define _3BC_DISABLE_INTERPRETER
 #include "../src/3bc.h"
 #include "../src/sys/sys_common_std.h"
-#include "../src/pkg/pkg_std_hello.h"
 #include "../src/sys/sys_common_mock.c"
 #include "../src/sys/sys_common_pfa.c"
 #include "../src/sys/sys_nes6502_cof.c"
 #if !defined(TBC_CONSOLE_NES)
 #include "../src/sys/sys_common_std.c"
 #endif
-#include "../src/pkg/pkg_std_hello.c"
 
 static const tbc_u8_t prog[] = {
     MODE, NILL, TBC_MODE_STRING,

@@ -1,6 +1,7 @@
 #ifndef H_TYPES_TTY_TBC
 #define H_TYPES_TTY_TBC
 
+#include "3bc_detect.h"
 #include "types_func.h"
 
 enum ___tbc_stream_type_e {
@@ -17,11 +18,20 @@ enum ___tbc_stream_type_e {
     STREAM_TYPE_NES_FULLSCREEN
 };
 
+#if defined(TBC_NOT_FILES)
 /**
  * NOTE: mixed type
- * when can be primitive, struct, union...
+ * when can be primitive, pointer, struct, union...
  */
+typedef void* tbc_file_mt
+#else
+/**
+ * NOTE: mixed type
+ * when can be primitive, pointer, struct, union...
+ */
+#include <stdio.h>
 typedef FILE tbc_file_mt;
+#endif
 typedef enum ___tbc_stream_type_e tbc_stream_type_et;
 typedef union ___tbc_stream_io_u tbc_stream_io_ut;
 typedef struct ___tbc_tty_s tbc_tty_st;

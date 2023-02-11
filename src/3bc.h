@@ -111,52 +111,6 @@
 #include "3bc_header.h"
 
 /* opcodes and witchcraft **/
-#include "3bc_register.h"
-
-/**
- *  _____                            _____           _
- * /  ___|                          /  __ \         | |
- * \ `--.  ___  _   _ _ __ ___ ___  | /  \/ ___   __| | ___
- *  `--. \/ _ \| | | | '__/ __/ _ \ | |    / _ \ / _` |/ _ \
- * /\__/ / (_) | |_| | | | (_|  __/ | \__/\ (_) | (_| |  __/
- * \____/ \___/ \__,_|_|  \___\___|  \____/\___/ \__,_|\___|
- */
-
-/** default source **/
-#if !defined(TBC_SCU)
-#include "cpu_boolean.c"
-#include "cpu_common.c"
-#include "cpu_jump.c"
-#include "cpu_math.c"
-#include "cpu_memory.c"
-#include "cpu_procedure.c"
-#include "cpu_sleep.c"
-#include "cpu_string.c"
-#include "driver_accumulator.c"
-#include "driver_custom.c"
-#include "driver_gpio.c"
-#include "driver_idle.c"
-#include "driver_interrupt.c"
-#include "driver_memory.c"
-#include "driver_mode.c"
-#include "driver_power.c"
-#include "driver_program.c"
-#include "driver_tty.c"
-#include "ds_hypervisor_darray.c"
-#include "ds_label_hash.c"
-#include "ds_memory_llrbt.c"
-#include "ds_procedure_lifo.c"
-#include "ds_program_fifo.c"
-#include "interpreter_parser.c"
-#include "interpreter_readln.c"
-#include "interpreter_syntax.c"
-#include "interpreter_ticket.c"
-#include "interpreter_tokens.c"
-#endif
-/** customizable source **/
-#if defined(TBC_SCU_FORCE)
-#include "driver_custom.c"
-#include "interpreter_ticket.c"
-#endif
+#include "bus_registers.h"
 
 #endif

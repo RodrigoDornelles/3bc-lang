@@ -1,5 +1,5 @@
-#ifndef H_SYS_NES6502_COF_TBC
-#define H_SYS_NES6502_COF_TBC
+#ifndef H_SYS_COMMON_STD_TBC
+#define H_SYS_COMMON_STD_TBC
 
 /**
  * @def pkg_standard_iso9945 sys_common_std9945_install

@@ -38,7 +38,7 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
-#include "pkg/pkg_std_0000.h"
+#include "pkg_std_0000.h"
 
 /**
  * VM processor context manager, allows asychronism.

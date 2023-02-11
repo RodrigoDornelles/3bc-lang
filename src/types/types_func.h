@@ -1,6 +1,9 @@
 #ifndef H_TYPES_FUNC_TBC
 #define H_TYPES_FUNC_TBC
 
+#include "types_primitive.h"
+#include <stdbool.h>
+
 typedef union ___tbc_func_u tbc_func_ft;
 
 union ___tbc_func_u {

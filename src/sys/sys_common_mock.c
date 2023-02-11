@@ -1,3 +1,5 @@
+#include "sys_common_mock.h"
+
 void sys_common_mock_none(tbc_app_st *const self)
 {
 

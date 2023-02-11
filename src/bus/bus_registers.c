@@ -32,9 +32,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "3bc.h"
 
-#include "types/types_opcodes.h"
+#include "3bc.h"
 
 /**
  * case of separate compilation in different statistical libraries,
@@ -42,7 +41,6 @@
  *
  * (required for avr compiler in arduino ide)
  */
-#ifdef TBC_SOURCE_REGISTERS
 void instruction_3bc(struct app_3bc_s* const app)
 {
     register_3bc_t reg = app->cache_l0.rx;
@@ -122,4 +120,3 @@ void instruction_3bc(struct app_3bc_s* const app)
                 cpu_sleep_micr, cpu_sleep_mili, cpu_sleep_seco);
         }
 }
-#endif

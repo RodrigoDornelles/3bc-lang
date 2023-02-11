@@ -1,6 +1,8 @@
 #ifndef H_TYPES_PKG_TBC
 #define H_TYPES_PKG_TBC
 
+#include "3bc_types.h"
+
 typedef struct ___tbc_pkg_prog_s tbc_pkg_prog_st;
 typedef struct ___tbc_pkg_std_s tbc_pkg_std_st;
 typedef struct ___tbc_pkg_s tbc_pkg_st;

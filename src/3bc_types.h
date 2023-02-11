@@ -39,13 +39,15 @@
 typedef struct app_3bc_s tbc_app_st;
 
 #include "3bc_detect.h"
+#include "3bc_macros.h"
 #include "types/types_primitive.h"
 #include "types/types_opcodes.h"
 #include "types/types_fsm.h"
-#include "types/types_pkg.h"
 #include "types/types_tty.h"
 #include "types/types_cache.h"
 #include "types/types_return.h"
+#include "types_pkg.h"
+#include "types_errors.h"
 
 /**
  *  _   __                                 _       _____
@@ -184,6 +186,9 @@ struct app_3bc_s {
 
 typedef void (*function_3bc_t)(
     struct app_3bc_s* const, register_3bc_t, address_3bc_t, data_3bc_t);
+
+/** todo: remove time.h **/
+#include <time.h>
 
 /** GLOBAL TYPES **/
 union global_time_u {
