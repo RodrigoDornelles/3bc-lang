@@ -4,6 +4,8 @@ add_library(tbc_pkg_std_lang OBJECT "${CMAKE_SOURCE_DIR}/src/pkg/pkg_std_lang.c"
 # Standard Virtual Machine (CPU)
 FILE(GLOB tbc_cpu_std_files "${CMAKE_SOURCE_DIR}/src/cpu/*.c")
 add_library(tbc_cpu_std OBJECT ${tbc_cpu_std_files})
+add_library(tbc_cpu_no_math OBJECT ${tbc_cpu_std_files})
+target_compile_definitions("tbc_cpu_no_math" PRIVATE TBC_NOT_MATH)
 
 # Bus
 FILE(GLOB tbc_bus_std_files "${CMAKE_SOURCE_DIR}/src/bus/*.c")
@@ -12,6 +14,8 @@ add_library(tbc_bus_std OBJECT ${tbc_bus_std_files})
 # Drivers
 FILE(GLOB tbc_driver_std_files "${CMAKE_SOURCE_DIR}/src/driver/*.c")
 add_library(tbc_driver_std OBJECT ${tbc_driver_std_files})
+add_library(tbc_driver_no_math OBJECT ${tbc_driver_std_files})
+target_compile_definitions("tbc_driver_no_math" PRIVATE TBC_NOT_MATH)
 
 # Interpreter
 FILE(GLOB tbc_interpreter_files "${CMAKE_SOURCE_DIR}/src/interpreter/*.c")

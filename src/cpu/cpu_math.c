@@ -116,6 +116,7 @@ void cpu_math_logb(PARAMS_DEFINE)
     } else {
         int base = GET_ANY_PARAM;
         switch (base) {
+#if !defined(TBC_NOT_MATH)
 #if !defined(TBC_NOT_LOG2)
         case 2:
             driver_accumulator_set(
@@ -129,8 +130,9 @@ void cpu_math_logb(PARAMS_DEFINE)
                 app, (data_aux_3bc_t)trunc(log10((double)AUX)));
             break;
 #endif
+#endif
 
-#if defined(TBC_NOT_LOG)
+#if defined(TBC_NOT_LOG) || defined(TBC_NOT_MATH)
         default:
             driver_program_error(app, ERROR_UNSUPPORTED);
 #else

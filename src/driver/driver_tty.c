@@ -186,7 +186,7 @@ void driver_tty_output(struct app_3bc_s* const app, tbc_tty_st *const tty,
 
     switch (type) {
     case STRB: {
-#if defined(TBC_NOT_LOG2)
+#if defined(TBC_NOT_LOG2) || defined(TBC_NOT_MATH)
 #warning "[3BC] UNSUPPORTED: STRB OUTPUT"
         driver_program_error(app, ERROR_UNSUPPORTED);
 #else
