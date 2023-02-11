@@ -38,17 +38,31 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
-#include "pkg/pkg_std_hello.h"
+#include "pkg/pkg_std_0000.h"
 
 /**
  * VM processor context manager, allows asychronism.
  */
 bool driver_interrupt(struct app_3bc_s* const self)
 {
+    /**
+     * HARD INTERRUPTS
+     */
     switch (self->rc) {
         case TBC_RET_EXIT:
             self->state = FSM_3BC_EXITING;
             break;
+
+        case TBC_RET_EXIT_FORCE:
+            self->state = FSM_3BC_STOPED;
+            break;
+
+        case TBC_RET_GC_ROTINE_2:
+            memset(&self->cache_l1, 0, sizeof(union cache_l1_u));
+            memset(&self->cache_l2, 0, sizeof(union cache_l2_u));
+            memset(&self->cache_l3, 0, sizeof(union cache_l3_u));
+            self->rc = TBC_RET_GC_ROTINE_3;
+            return true;
     }
 
     switch (self->state) {
@@ -65,16 +79,9 @@ bool driver_interrupt(struct app_3bc_s* const self)
         return true;
 
     case FSM_3BC_EXPAND:
-        self->cache_l0.rx = TBC_RET_EXIT;
-        //self->pkg_func->prog.expand(self);
-        switch(self->cache_l0.rx) {
-            case TBC_RET_OK:
-                self->state = FSM_3BC_READING;
-                break;
-
-            case TBC_RET_EXIT:
-                self->state = FSM_3BC_EXITING;
-                break;
+        self->pkg_func->prog.expand(self);
+        if(self->rc == TBC_RET_OK) {
+            self->state = FSM_3BC_READING;
         }
         return true;
 
@@ -83,14 +90,8 @@ bool driver_interrupt(struct app_3bc_s* const self)
      */
     case FSM_3BC_READING:
         interpreter_ticket(self);
-        switch (self->cache_l0.rx) {
-        case TBC_RET_OK:
+        if (self->rc == TBC_RET_OK) {
             self->state = FSM_3BC_RUNNING;
-            return true;
-
-        case TBC_RET_EXIT:
-            self->state = FSM_3BC_EXITING;
-            return true;
         }
         return true;
 

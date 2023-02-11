@@ -7,5 +7,6 @@
  * @todo MOVE IT!
  */
 void sys_common_pexams_install(tbc_app_st *const self);
+void sys_common_pexams_expand(tbc_app_st *const self);
 
 #endif

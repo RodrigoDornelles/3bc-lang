@@ -10,8 +10,8 @@ const tbc_pkg_st tbc_pkg_standard = {
 #endif
         &sys_common_pfac_next,
         &sys_common_mock_none,
-        &sys_common_mock_exit,
-        &sys_common_mock_exit,
+        &sys_common_mock_exit_force,
+        &sys_common_mock_exit_force,
         &sys_common_pfac_exist,
     },{
 #if defined(TBC_CONSOLE_NES)
