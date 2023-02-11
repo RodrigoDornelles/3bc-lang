@@ -38,6 +38,13 @@ _site/
 # IDE FILES
 .vscode
 
+# Build System
+*.tlc
+Makefile
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+
 # Tests files
 *.test.bin
 *.gcov
