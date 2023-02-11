@@ -1,11 +1,14 @@
 #define _3BC_DISABLE_INTERPRETER
 #include "../src/3bc.h"
+#include "../src/sys/sys_common_std.h"
+#include "../src/pkg/pkg_std_hello.h"
+#include "../src/sys/sys_common_mock.c"
 #include "../src/sys/sys_common_pfa.c"
-#if defined(TBC_CONSOLE_NES)
 #include "../src/sys/sys_nes6502_cof.c"
-#else
+#if !defined(TBC_CONSOLE_NES)
 #include "../src/sys/sys_common_std.c"
 #endif
+#include "../src/pkg/pkg_std_hello.c"
 
 static const tbc_u8_t prog[] = {
     MODE, NILL, TBC_MODE_STRING,
@@ -23,13 +26,9 @@ int main()
     #if defined(TBC_CONSOLE_NES)
     static struct app_3bc_s instance;
     static struct app_3bc_s* const VM = &instance;
-    sys_nes6502_cof2020n_install(VM);
     #else
     struct app_3bc_s* const VM = lang_3bc_init(0, NULL);
-    sys_common_std9945_install(VM);
     #endif
-
-    sys_common_pfa888_install(VM);  
     VM->cin.tty_storage.io.arr.ptr = (tbc_u8_t*) prog;
     VM->cin.tty_storage.io.arr.size = sizeof(prog);
 

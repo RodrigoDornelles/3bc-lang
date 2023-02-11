@@ -169,6 +169,7 @@ struct app_3bc_s {
     tbc_app_fsm_et state;
     data_aux_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
+    tbc_return_et rc;
     tbc_error_et error_code;
     tbc_cache_l0_st cache_l0;
     union cache_l1_u cache_l1;
@@ -178,7 +179,7 @@ struct app_3bc_s {
     tbc_cout_mt cout;
     struct program_3bc_s program;
     struct memory_3bc_s memory;
-    tbc_pkg_st pkg_func;
+    tbc_pkg_st* pkg_func;
 };
 
 typedef void (*function_3bc_t)(

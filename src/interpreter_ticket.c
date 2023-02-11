@@ -45,10 +45,11 @@
 #if !defined(TBC_INTERPRETER)
 /**
  * When interpreter disabled, always returns end of file.
+ * @todo delete
  */
 void interpreter_ticket(tbc_app_st *const self)
 {
-    self->cache_l0.rx = TBC_EXIT;
+    self->rc = TBC_RET_EXIT;
 }
 #else
 /**
@@ -69,14 +70,14 @@ void interpreter_ticket(tbc_app_st *const self)
 
     /** does nothing **/
     if (character == '\r') {
-        self->cache_l0.rx = TBC_IGNORE;
+        self->rc = TBC_RET_IGNORE;
         return;
     }
 
     /** end of file **/
     if ((character == EOF || character == -1)
         && self->cache_l3.buffer.storage == NULL) {
-        self->cache_l0.rx = TBC_EXIT;
+        self->rc = TBC_RET_EXIT;
         return;
     }
 
@@ -99,12 +100,11 @@ void interpreter_ticket(tbc_app_st *const self)
         /** insert to vm **/
         char* line = self->cache_l3.buffer.storage;
         do {
-            fprintf(stderr, ".");
             self->program.last_line += 1;
             line = interpreter_readln(self, line);
         } while (line != NULL);
 
-        self->pkg_func.prog.insert(self);
+        self->pkg_func->prog.insert(self);
 
         /** reset buffer **/
         {
@@ -113,14 +113,15 @@ void interpreter_ticket(tbc_app_st *const self)
             self->cache_l3.buffer.size = 0;
         }
 
-        self->cache_l0.rx = TBC_OK;
+        self->rc = TBC_RET_OK;
         return;
     }
 
     /** expand the  buffer **/
     {
-        char* new_buffer = (char*)realloc(self->cache_l3.buffer.storage,
-            sizeof(char) * (++self->cache_l3.buffer.size));
+        tbc_line_t line_size = self->cache_l3.buffer.size + 1;
+        char* new_buffer = (char*)realloc(self->cache_l3.buffer.storage, line_size);
+        self->cache_l3.buffer.size = line_size;
 
         if (new_buffer == NULL) {
             driver_program_error(self, ERROR_OUT_OF_MEMORY);
@@ -131,7 +132,7 @@ void interpreter_ticket(tbc_app_st *const self)
         }
     }
 
-    self->cache_l0.rx = TBC_REPEAT;
+    self->rc = TBC_RET_REPEAT;
 }
 #endif
 #endif
