@@ -1,6 +1,14 @@
+#define _3BC_DISABLE_INTERPRETER
 #include "../src/3bc.h"
-#include "../src/sys/sys_common_pfa.h"
+#include "../src/sys/sys_common_std.h"
+#include "../src/pkg/pkg_std_hello.h"
+#include "../src/sys/sys_common_mock.c"
 #include "../src/sys/sys_common_pfa.c"
+#include "../src/sys/sys_nes6502_cof.c"
+#if !defined(TBC_CONSOLE_NES)
+#include "../src/sys/sys_common_std.c"
+#endif
+#include "../src/pkg/pkg_std_hello.c"
 
 static const tbc_u8_t prog[] = {
     MODE, NILL, TBC_MODE_STRING,
@@ -15,14 +23,18 @@ static const tbc_u8_t prog[] = {
 
 int main()
 {
+    #if defined(TBC_CONSOLE_NES)
+    static struct app_3bc_s instance;
+    static struct app_3bc_s* const VM = &instance;
+    #else
     struct app_3bc_s* const VM = lang_3bc_init(0, NULL);
-    sys_common_pfa888_install(VM);
-    VM->cin.tty_source.io.buf = (tbc_u8_t*) prog;
+    #endif
+    VM->cin.tty_storage.io.arr.ptr = (tbc_u8_t*) prog;
+    VM->cin.tty_storage.io.arr.size = sizeof(prog);
 
-    for (int i = 0; i < sizeof(prog)/3; ++i) {
-        VM->pkg_func.prog.load(VM);
-        instruction_3bc(VM);
-        VM->pkg_func.prog.next(VM);
+    while (driver_interrupt(VM)) {
+        continue;
     }
+
     return 0;
 }

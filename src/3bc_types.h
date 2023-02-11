@@ -44,6 +44,8 @@ typedef struct app_3bc_s tbc_app_st;
 #include "types/types_fsm.h"
 #include "types/types_pkg.h"
 #include "types/types_tty.h"
+#include "types/types_cache.h"
+#include "types/types_return.h"
 
 /**
  *  _   __                                 _       _____
@@ -111,34 +113,6 @@ struct procedure_3bc_s {
     struct procedure_3bc_s* prev;
 };
 
-/** AUXILIARY MEMORY **/
-enum sleep_3bc_e {
-    SLEEP_3BC_NONE = 0,
-    SLEEP_3BC_REAL_TICK,
-    SLEEP_3BC_FAKE_TICK,
-    SLEEP_3BC_MICROSECONDS,
-    SLEEP_3BC_MILLISECONDS,
-    SLEEP_3BC_SECONDS
-};
-
-struct buffer_s {
-    char* storage;
-    unsigned int size;
-};
-
-union cache_l1_u {
-    enum sleep_3bc_e sleep_mode;
-};
-
-union cache_l2_u {
-    unsigned long sleep_period;
-};
-
-union cache_l3_u {
-    struct buffer_s buffer;
-    unsigned long sleep_called;
-};
-
 /** PROGRAM MEMORY **/
 struct label_node_s {
     label_3bc_t label;
@@ -195,8 +169,9 @@ struct app_3bc_s {
     tbc_app_fsm_et state;
     data_aux_3bc_t mem_aux;
     cpumode_3bc_t cpu_mode;
+    tbc_return_et rc;
     tbc_error_et error_code;
-    struct line_columns_s cache_l0;
+    tbc_cache_l0_st cache_l0;
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
     union cache_l3_u cache_l3;
@@ -204,7 +179,7 @@ struct app_3bc_s {
     tbc_cout_mt cout;
     struct program_3bc_s program;
     struct memory_3bc_s memory;
-    tbc_pkg_st pkg_func;
+    tbc_pkg_st* pkg_func;
 };
 
 typedef void (*function_3bc_t)(

@@ -1,28 +1,24 @@
 #include "../src/3bc.h"
 
+/** TODO: move??? */
+#include "../src/pkg/pkg_std_lang.h"
+#include "../src/sys/sys_common_pfa.c"
+#include "../src/sys/sys_common_pexa.c"
+#include "../src/sys/sys_common_std.c"
+#include "../src/pkg/pkg_std_lang.c"
+
+
+static char bufferzao_gigante[100];
+
 int main(int argc, char** argv)
 {
     struct app_3bc_s* const VM = lang_3bc_init(argc, argv);
-    /**
-     * put transpiled program here.
-     * @example:*
-    lang_3bc_line(VM, MODE, NILL, TBC_MODE_STRING);
-    lang_3bc_line(VM, STRC, NILL, 'H');
-    lang_3bc_line(VM, STRC, NILL, 'E');
-    lang_3bc_line(VM, STRC, NILL, 'L');
-    lang_3bc_line(VM, STRC, NILL, 'L');
-    lang_3bc_line(VM, STRC, NILL, 'O');
-    lang_3bc_line(VM, STRC, NILL, 0x20);
-    lang_3bc_line(VM, STRC, NILL, 'W');
-    lang_3bc_line(VM, STRC, NILL, 'O');
-    lang_3bc_line(VM, STRC, NILL, 'R');
-    lang_3bc_line(VM, STRC, NILL, 'L');
-    lang_3bc_line(VM, STRC, NILL, 'D');
-    lang_3bc_line(VM, STRC, NILL, '!');
-    lang_3bc_line(VM, STRC, NILL, '\n');
-     */
+    VM->cin.tty_input.type = STREAM_TYPE_COMPUTER_STD;
+    VM->cin.tty_input.io.stream = stdin;
 
-    while (lang_3bc_update(VM))
-        ;
+    while (lang_3bc_update(VM)) {
+        continue;
+    }
+
     return 0;
 }

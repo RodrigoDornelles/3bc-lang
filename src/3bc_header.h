@@ -126,11 +126,11 @@ void cpu_string_input_password(PARAMS_DEFINE);
 void driver_tty_init(void);
 void driver_tty_exit(void);
 data_3bc_t driver_tty_input(
-    struct app_3bc_s* const app, tbc_tty_st tty, register_3bc_t type);
-void driver_tty_output(struct app_3bc_s* const app, tbc_tty_st tty,
+    struct app_3bc_s* const app, tbc_tty_st *const tty, register_3bc_t type);
+void driver_tty_output(struct app_3bc_s* const app, tbc_tty_st *const tty,
     register_3bc_t type, data_3bc_t val);
 void driver_tty_output_raw(
-    struct app_3bc_s* const app, tbc_tty_st tty, const char* string);
+    struct app_3bc_s* const app, tbc_tty_st *const tty, const char* string);
 /*****************************************************************************/
 void driver_gpio_setup(
     struct app_3bc_s* const app, memory_conf_t conf, address_3bc_t pin);
@@ -238,7 +238,7 @@ bool interpreter_syntax_registers(struct app_3bc_s* const app,
 bool interpreter_tokens(
     char* line, char** reg, char** mem, char** val, char** line_end);
 /*****************************************************************************/
-int interpreter_ticket(struct app_3bc_s* const app);
+void interpreter_ticket(tbc_app_st *const self);
 /*****************************************************************************/
 #ifdef __cplusplus
 }
