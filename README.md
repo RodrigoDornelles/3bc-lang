@@ -25,6 +25,13 @@ examples/       Syntax sampling codes (3bc, Arduino with C++)
 programs/       Embbed programs sampling codes (C)
 scripts/        Development and installation tools (Bash, Ruby)
 src/            Library source code (C)
+  bus/
+  cpu/
+  driver/
+  lang/
+  legacy/
+  pkg/
+  types/
 tests/          Language work check (Ruby)
 ```
 
