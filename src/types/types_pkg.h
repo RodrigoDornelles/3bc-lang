@@ -10,6 +10,7 @@ struct ___tbc_pkg_prog_s {
     void (*next)(tbc_app_st *const);
     void (*clean)(tbc_app_st *const);
     void (*insert)(tbc_app_st *const);
+    void (*expand)(tbc_app_st *const);
     void (*avaliable)(tbc_app_st *const);
 };
 

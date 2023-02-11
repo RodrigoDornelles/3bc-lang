@@ -83,6 +83,7 @@ struct ___tbc_tty_s {
 union ___tbc_cin_u {
     tbc_tty_st tty_input;
     tbc_tty_st tty_source;
+    tbc_tty_st tty_storage;
 };
 
 union ___tbc_cout_u {
@@ -95,6 +96,7 @@ union ___tbc_cout_u {
 struct ___tbc_cin_s {
     tbc_tty_st tty_input;
     tbc_tty_st tty_source;
+    tbc_tty_st tty_storage;
 };
 
 struct ___tbc_cout_s {

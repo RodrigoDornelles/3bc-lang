@@ -144,10 +144,10 @@ void driver_power_exit(struct app_3bc_s* const app)
         }
 #endif
         /** deallocate occupied memory **/
-        ds_memory_llrbt_destroy(app);
-        ds_program_fifo_destroy(app);
+        //ds_memory_llrbt_destroy(app);
+        //ds_program_fifo_destroy(app);
 
-        driver_tty_exit();
+        //driver_tty_exit();
         app->state = FSM_3BC_STOPED;
     }
 }

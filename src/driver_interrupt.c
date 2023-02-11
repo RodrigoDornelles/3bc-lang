@@ -38,32 +38,60 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
+#include "pkg/pkg_std_0000.h"
 
 /**
  * VM processor context manager, allows asychronism.
  */
 bool driver_interrupt(struct app_3bc_s* const self)
 {
+    /**
+     * HARD INTERRUPTS
+     */
+    switch (self->rc) {
+        case TBC_RET_EXIT:
+            self->state = FSM_3BC_EXITING;
+            break;
+
+        case TBC_RET_EXIT_FORCE:
+            self->state = FSM_3BC_STOPED;
+            break;
+
+        case TBC_RET_GC_ROTINE_2:
+            memset(&self->cache_l1, 0, sizeof(union cache_l1_u));
+            memset(&self->cache_l2, 0, sizeof(union cache_l2_u));
+            memset(&self->cache_l3, 0, sizeof(union cache_l3_u));
+            self->rc = TBC_RET_GC_ROTINE_3;
+            return true;
+    }
+
     switch (self->state) {
     /**
      * INITIAL CONTEXT
      */
     case FSM_3BC_DEFAULT:
+        self->state = FSM_3BC_STARTING;
+        return true;
+
+    case FSM_3BC_STARTING:
+        self->pkg_func = (tbc_pkg_st*) &tbc_pkg_standard;
         self->state = FSM_3BC_RUNNING;
+        return true;
+
+    case FSM_3BC_EXPAND:
+        self->pkg_func->prog.expand(self);
+        if(self->rc == TBC_RET_OK) {
+            self->state = FSM_3BC_READING;
+        }
         return true;
 
     /**
      *  INTERPRETER CONTEXT
      */
     case FSM_3BC_READING:
-        switch (interpreter_ticket(self)) {
-        case 1:
+        interpreter_ticket(self);
+        if (self->rc == TBC_RET_OK) {
             self->state = FSM_3BC_RUNNING;
-            return true;
-
-        case EOF:
-            self->state = FSM_3BC_EXITING;
-            return true;
         }
         return true;
 
@@ -75,13 +103,14 @@ bool driver_interrupt(struct app_3bc_s* const self)
          * check for program existence
          * @note cache level 0 is re-used in evaluate.
          */
-        self->pkg_func.prog.avaliable(self);
-        if (!self->cache_l0.rx) {
-            self->state = FSM_3BC_EXITING;
+        self->pkg_func->prog.avaliable(self);
+        if (self->rc == TBC_RET_CLEAN) {
+            self->state = FSM_3BC_EXPAND;
+            return true;
         }
 
         /** evaluate */
-        self->pkg_func.prog.load(self);
+        self->pkg_func->prog.load(self);
         instruction_3bc(self);
 
         /** @brief virtual machine interrupt: write */
@@ -98,7 +127,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
          * program must be progress.
          */
         else {
-            self->pkg_func.prog.next(self);
+            self->pkg_func->prog.next(self);
         }
         return true;
 
@@ -125,7 +154,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
      * @brief OUTPUT CONTEXT
      */
     case FSM_3BC_IO_SEND:
-        self->pkg_func.std.put(self);
+        self->pkg_func->std.put(self);
         self->state = FSM_3BC_RUNNING;
         return true;
 
@@ -134,7 +163,9 @@ bool driver_interrupt(struct app_3bc_s* const self)
      */
     case FSM_3BC_EXITING:
         driver_power_exit(self);
-        return true;
+        /** @todo investigate why not set*/
+        self->state = FSM_3BC_STOPED;
+        return false;
     }
 
     return false;

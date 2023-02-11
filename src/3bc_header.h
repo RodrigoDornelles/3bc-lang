@@ -238,7 +238,7 @@ bool interpreter_syntax_registers(struct app_3bc_s* const app,
 bool interpreter_tokens(
     char* line, char** reg, char** mem, char** val, char** line_end);
 /*****************************************************************************/
-int interpreter_ticket(struct app_3bc_s* const app);
+void interpreter_ticket(tbc_app_st *const self);
 /*****************************************************************************/
 #ifdef __cplusplus
 }

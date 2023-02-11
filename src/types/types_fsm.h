@@ -4,6 +4,8 @@
 /** FSM INTERRUPTS **/
 enum ___tbc_app_fsm_e {
     FSM_3BC_DEFAULT = 0,
+    FSM_3BC_STARTING,
+    FSM_3BC_EXPAND,
     FSM_3BC_READING,
     FSM_3BC_RUNNING,
     FSM_3BC_WAITING,
