@@ -1,0 +1,1 @@
+cp .commit-msg .git/hooks/commit-msg

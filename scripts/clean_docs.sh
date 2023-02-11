@@ -1,0 +1,1 @@
+rm -Rf docs/_site/* 2>/dev/null; true
