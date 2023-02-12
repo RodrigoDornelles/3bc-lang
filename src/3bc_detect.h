@@ -110,7 +110,9 @@
  */
 #if defined(__CC65_STD__) || defined(__CC65_STD_CC65__)
 #define TBC_NOT_LOG
+#ifndef TBC_NOT_MATH
 #define TBC_NOT_MATH
+#endif
 #define TBC_NOT_LOG2
 #define TBC_NOT_LOG10
 #define TBC_OPT_COMPACT
@@ -126,6 +128,8 @@
 #define TBC_CONSOLE_NES
 #define TBC_OPT_ULTRA_COMPACT
 #undef TBC_P_COMPUTER
+/** TODO: remove **/ 
+#define _3BC_DISABLE_INTERPRETER
 #endif
 
 /**

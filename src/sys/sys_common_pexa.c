@@ -1,4 +1,5 @@
 #include "sys_common_pexa.h"
+#include <stdlib.h>
 
 void sys_common_pexams_install(tbc_app_st *const self)
 {

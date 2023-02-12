@@ -8,7 +8,6 @@ union ___cursor_tty_u {
 union ___cursor_tty_u cursor_tty;
 
 static void sys_nes6502_cof2020n_init(void);
-static void sys_nes6502_cof2020n_put(tbc_app_st *const self);
 
 /**
  * @brief install cof2020n driver
@@ -66,7 +65,7 @@ static void sys_nes6502_cof2020n_init()
  * @link https://www.nesdev.org/wiki/NMI_thread
  * @link https://www.nesdev.org/wiki/NMI
  */
-static void sys_nes6502_cof2020n_put(tbc_app_st *const self)
+void sys_nes6502_cof2020n_put(tbc_app_st *const self)
 {
     /** interator */
     static tbc_u8_t index;

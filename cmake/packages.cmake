@@ -13,6 +13,11 @@ add_library(tbc_bus_std OBJECT ${tbc_bus_std_files})
 
 # System dependencies
 FILE(GLOB tbc_sys_std_files "${CMAKE_SOURCE_DIR}/src/sys/sys_common_*.c")
+if(${TARGET} STREQUAL nes)
+file(GLOB tbc_sys_std_files_nes "${CMAKE_SOURCE_DIR}/src/sys/sys_nes6502_*.c")
+set(tbc_sys_std_files "${tbc_sys_std_files};${tbc_sys_std_files_nes}")
+endif()
+
 add_library(tbc_sys_std OBJECT ${tbc_sys_std_files})
 
 # Drivers

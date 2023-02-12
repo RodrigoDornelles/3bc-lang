@@ -3,24 +3,32 @@
 #include "sys_common_std.h"
 #include "sys_common_pfa.h"
 #include "sys_common_pexa.h"
+#include "sys_nes6502_cof.h"
 
+#if defined(TBC_CONSOLE_NES)
 const tbc_pkg_st tbc_pkg_standard = {
     {
-#if defined(TBC_OPT_ULTRA_COMPACT)
-        &sys_common_pfa3912_load,
-#else
         &sys_common_pfa888_load,
-#endif
         &sys_common_pfac_next,
         &sys_common_mock_none,
         &sys_common_mock_exit_force,
         &sys_common_mock_exit_force,
         &sys_common_pfac_exist,
     },{
-#if defined(TBC_CONSOLE_NES)
-        &sys_nes6502_cof2020n_put
-#else
-        &sys_common_std9945_put
-#endif
+       &sys_nes6502_cof2020n_put
     }
 };
+#else
+const tbc_pkg_st tbc_pkg_standard = {
+    {
+        &sys_common_pfa3912_load,
+        &sys_common_pfac_next,
+        &sys_common_mock_none,
+        &sys_common_mock_exit_force,
+        &sys_common_mock_exit_force,
+        &sys_common_pfac_exist,
+    },{
+        &sys_common_std9945_put
+    }
+};
+#endif

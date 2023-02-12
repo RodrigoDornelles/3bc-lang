@@ -23,7 +23,7 @@ enum ___tbc_stream_type_e {
  * NOTE: mixed type
  * when can be primitive, pointer, struct, union...
  */
-typedef void* tbc_file_mt
+typedef void* tbc_file_mt;
 #else
 /**
  * NOTE: mixed type

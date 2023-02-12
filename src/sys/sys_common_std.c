@@ -29,10 +29,12 @@ void sys_common_std9945_put(tbc_app_st *const self)
 {
     /** protect disabled tty */
     if (self->cache_l2.tty) {
+#if !defined(TBC_NOT_FILES)
         write(
             1,//self->cache_l2.tty->io.fid, 
             self->cache_l3.fixbuf.storage,
             self->cache_l3.fixbuf.size
         );
+#endif
     }
 }

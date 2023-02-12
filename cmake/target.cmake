@@ -1,23 +1,18 @@
-set(CC65_PATHS "${CMAKE_SOURCE_DIR}/../cc65/bin" "${CMAKE_SOURCE_DIR}/vendor/cc65/bin")
-find_program(CC65 cc65 PATHS ${CC65_PATHS})
-
-if(NOT CC65)
-    cmake_minimum_required(VERSION 3.14)
-    include(FetchContent)
-    FetchContent_Populate(
-      vendor_cc65
-      GIT_REPOSITORY "https://github.com/cc65/cc65.git"
-      SOURCE_DIR "${CMAKE_SOURCE_DIR}/vendor/cc65"
-      SUBBUILD_DIR "${CMAKE_SOURCE_DIR}/CMakeFiles/git_cc65_cache"
-      BINARY_DIR "${CMAKE_SOURCE_DIR}/CMakeFiles/git_cc65_cache"
-    )
-    execute_process(
-      COMMAND ${CMAKE_MAKE_PROGRAM} -C "${CMAKE_SOURCE_DIR}/vendor/cc65"
-      COMMAND_ERROR_IS_FATAL ANY
-    )
+if(NOT TARGET)
+set(TARGET "native")
 endif()
 
-find_program(AR65 ar65 PATHS ${CC65_PATHS} REQUIRED)
-find_program(CA65 ca65 PATHS ${CC65_PATHS} REQUIRED)
-find_program(CL65 cl65 PATHS ${CC65_PATHS} REQUIRED)
-find_program(CC65 cc65 PATHS ${CC65_PATHS} REQUIRED)
+if(${TARGET} STREQUAL nes)
+    include("${CMAKE_SOURCE_DIR}/cmake/find/cc65.cmake")
+    include("${CMAKE_SOURCE_DIR}/cmake/find/cc65.cmake")
+    set(CMAKE_C_FLAGS  "-t ${TARGET} ${CMAKE_C_FLAGS}")
+    set(CMAKE_TOOLCHAIN_FILE "${CMAKE_SOURCE_DIR}/cmake/toolchain/cc65.cmake")
+    set(CMAKE_EXECUTABLE_SUFFIX_C ".nes")
+    message("-- using cc65 cross compiler.\n")
+elseif(${TARGET} STREQUAL native)
+    unset(CMAKE_TOOLCHAIN_FILE)
+    message("-- using host native compiler.")
+    message("-- NOTE: for distribution use '-DTARGET=release-<system>-<arch>-<abi>'\n")
+else()
+    message(FATAL_ERROR "target '${TARGET}' its not supported at the moment." )
+endif()
