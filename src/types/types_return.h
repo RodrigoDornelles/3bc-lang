@@ -37,15 +37,17 @@
 
 enum ___tbc_return_e {
     TBC_RET_OK = 0,
+    TBC_RET_GC_LV1,
+    TBC_RET_GC_LV2,
+    TBC_RET_GC_LV3,
+    TBC_RET_GC_LV4,
+    TBC_RET_GC_END,
     TBC_RET_EXIT,
     TBC_RET_EXIT_FORCE,
     TBC_RET_REPEAT,
     TBC_RET_IGNORE,
     TBC_RET_CLEAN,
     TBC_RET_FULL,
-    TBC_RET_GC_ROTINE_1,
-    TBC_RET_GC_ROTINE_2,
-    TBC_RET_GC_ROTINE_3,
     TBC_RET_OUT_MEM
 };
 

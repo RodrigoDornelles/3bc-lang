@@ -38,6 +38,7 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
+#include "driver_gc.h"
 #include "pkg_std_0000.h"
 
 /**
@@ -48,21 +49,16 @@ bool driver_interrupt(struct app_3bc_s* const self)
     /**
      * HARD INTERRUPTS
      */
-    switch (self->rc) {
-        case TBC_RET_EXIT:
-            self->state = FSM_3BC_EXITING;
-            break;
-
-        case TBC_RET_EXIT_FORCE:
-            self->state = FSM_3BC_STOPED;
-            break;
-
-        case TBC_RET_GC_ROTINE_2:
-            memset(&self->cache_l1, 0, sizeof(union cache_l1_u));
-            memset(&self->cache_l2, 0, sizeof(union cache_l2_u));
-            memset(&self->cache_l3, 0, sizeof(union cache_l3_u));
-            self->rc = TBC_RET_GC_ROTINE_3;
-            return true;
+    if (self->rc == TBC_RET_EXIT) {
+        self->state = FSM_3BC_EXITING;
+    }
+    else if (self->rc == TBC_RET_EXIT_FORCE) {
+        self->state = FSM_3BC_STOPED;
+    }
+    else if (TBC_RET_GC_LV1 <= self->rc && self->rc <= TBC_RET_GC_LV4) {
+        driver_gc(self);
+        /** TODO: change to break */
+        return true;
     }
 
     switch (self->state) {
