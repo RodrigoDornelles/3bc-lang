@@ -1,0 +1,5 @@
+set(CMAKE_AR ${AR65} ${ZIG} ar -target ${ZIG_TARGET})
+set(CMAKE_C_COMPILER ${ZIG} cc -target ${ZIG_TARGET})
+set(CMAKE_CXX_COMPILER ${ZIG} c++ -target ${ZIG_TARGET})
+set(CMAKE_C_COMPILER_ID ${ZIG} cc)
+set(CMAKE_CXX_COMPILER_ID ${ZIG} c++) 
