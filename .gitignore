@@ -44,6 +44,9 @@ Makefile
 CMakeCache.txt
 cmake_install.cmake
 CMakeFiles/
+vendor_*/
+vendor/
+_deps/
 
 # Tests files
 *.test.bin
