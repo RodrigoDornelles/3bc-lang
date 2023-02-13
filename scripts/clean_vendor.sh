@@ -1,0 +1,1 @@
+rm -Rf vendor
