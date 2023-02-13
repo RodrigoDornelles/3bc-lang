@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require './scripts/commit_message_hook'
+require './utils/commit_message_hook'
 
 message = File.read(ARGV[0])
 
