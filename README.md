@@ -24,15 +24,17 @@ docs/           Website made with jekyll (Ruby)
 examples/       Syntax sampling codes (3bc, Arduino with C++)
 programs/       Embbed programs sampling codes (C)
 scripts/        Development and installation tools (Bash, Ruby)
-src/            Library source code (C)
-  bus/
-  cpu/
-  driver/
-  lang/
-  legacy/
-  pkg/
-  types/
-tests/          Language work check (Ruby)
+src/            library source code (C)
+  bus/          instruction set of vm cpu (C)
+  cpu/          unit control and arithmetic of vm (C)
+  driver/       guest drivers "hypervisor -> vm" (C) 
+  lang/         interpreter "bytecode/assembly" (C)
+  pkg/          standard packages (C)
+  sys/          system drivers "host -> hypervisor" (C)
+  types/        common types headers (C)
+tests/
+  e2e/          Integration tests (Ruby)
+  unit/         Unit tests (C)
 ```
 
 ## How to build ##
