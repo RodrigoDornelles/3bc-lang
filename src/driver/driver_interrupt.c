@@ -49,16 +49,19 @@ bool driver_interrupt(struct app_3bc_s* const self)
     /**
      * HARD INTERRUPTS
      */
-    if (self->rc == TBC_RET_EXIT) {
-        self->state = FSM_3BC_EXITING;
-    }
-    else if (self->rc == TBC_RET_EXIT_FORCE) {
-        self->state = FSM_3BC_STOPED;
-    }
-    else if (TBC_RET_GC_LV1 <= self->rc && self->rc <= TBC_RET_GC_LV4) {
-        driver_gc(self);
-        /** TODO: change to break */
-        return true;
+    if (self->rc < 0) {
+        if (self->rc == TBC_RET_EXIT) {
+            self->state = FSM_3BC_EXITING;
+        }
+        else if (self->rc == TBC_RET_EXIT_FORCE) {
+            self->state = FSM_3BC_STOPED;
+        }
+        /** NOTE: garbage collector routine has negatives values **/
+        else if (TBC_RET_GC_LV1 >= self->rc && self->rc >= TBC_RET_GC_LV4) {
+            driver_gc(self);
+            /** TODO: change to break */
+            return true;
+        }
     }
 
     switch (self->state) {

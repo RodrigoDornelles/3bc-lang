@@ -26,7 +26,7 @@ void driver_gc(struct app_3bc_s* const self)
     }
 
     /** next level **/
-    --self->rc;
+    ++self->rc;
 
     /** finished gc **/
     if (self->rc == TBC_RET_OK) {
