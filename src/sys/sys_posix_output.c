@@ -6,7 +6,7 @@ void sys_common_std9945_install(tbc_app_st *const self)
     /**
      * install functions
      */
-    self->pkg_func->std.put = &sys_posix_output;
+    self->pkg_func->io.write = &sys_posix_output;
     /**
      * default teletype's
      * TODO: not modify???

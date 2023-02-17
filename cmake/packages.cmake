@@ -11,6 +11,10 @@ target_compile_definitions("tbc_cpu_no_math" PRIVATE TBC_NOT_MATH)
 FILE(GLOB tbc_bus_std_files "${CMAKE_SOURCE_DIR}/src/bus/*.c")
 add_library(tbc_bus_std OBJECT ${tbc_bus_std_files})
 
+# Datastruct dependencies
+FILE(GLOB tbc_ds_array_files "${CMAKE_SOURCE_DIR}/src/ds/*.c")
+add_library(tbc_array_simple OBJECT ${tbc_ds_array_files})
+
 # System dependencies
 FILE(GLOB tbc_sys_std_files "${CMAKE_SOURCE_DIR}/src/sys/sys_common_*.c")
 if(UNIX OR LINUX)

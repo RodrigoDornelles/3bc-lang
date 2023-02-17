@@ -150,7 +150,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
      * @brief OUTPUT CONTEXT
      */
     case FSM_3BC_IO_SEND:
-        self->pkg_func->std.put(self);
+        self->pkg_func->io.write(self);
         self->state = FSM_3BC_RUNNING;
         return true;
 

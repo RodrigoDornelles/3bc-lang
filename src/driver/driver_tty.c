@@ -232,7 +232,7 @@ void driver_tty_output_raw(
     struct app_3bc_s* const app, tbc_tty_st *const tty, const char* string)
 {
     if (tty->type == STREAM_TYPE_POSIX_FILEID) {
-        app->pkg_func->std.put(app);
+        app->pkg_func->io.write(app);
     }
 #if defined(_3BC_NUTTX) && !defined(TBC_NOT_FILES)
     /** fix stream flush on nuttx when repl|output **/
