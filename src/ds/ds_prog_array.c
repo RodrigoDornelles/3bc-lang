@@ -1,38 +1,6 @@
 #include "ds_prog_array.h"
 
 /**
- * @brief install pfa888 driver
- */
-void ds_prog_array888_install(tbc_app_st *const self)
-{
-    self->pkg_func->prog.next = (void*) &ds_prog_arrayc_next;
-    self->pkg_func->prog.clean = (void*) &ds_prog_arrayc_clean;
-    self->pkg_func->prog.avaliable = (void*) &ds_prog_arrayc_exist;
-    self->pkg_func->prog.load = (void*) &ds_prog_array888_load;
-    self->pkg_func->prog.insert = (void*) &ds_prog_array888_insert;
-    self->cin.tty_storage.type = STREAM_TYPE_FIXED_ARRAY_1D;
-    self->cin.tty_storage.io.arr.ptr = NULL;
-    self->cin.tty_storage.io.arr.size = 0;
-    self->cin.tty_storage.io.arr.index = 0;
-}
-
-/**
- * @brief install pfa3912 driver
- */
-void ds_prog_array3912_install(tbc_app_st *const self)
-{
-    self->pkg_func->prog.next = (void*) &ds_prog_arrayc_next;
-    self->pkg_func->prog.clean = (void*) &ds_prog_arrayc_clean;
-    self->pkg_func->prog.avaliable = (void*) &ds_prog_arrayc_exist;
-    self->pkg_func->prog.load = (void*) &ds_prog_array3912_load;
-    self->pkg_func->prog.insert = (void*) &ds_prog_array3912_insert;
-    self->cin.tty_storage.type = STREAM_TYPE_FIXED_ARRAY_1D;
-    self->cin.tty_storage.io.arr.ptr = NULL;
-    self->cin.tty_storage.io.arr.size = 0;
-    self->cin.tty_storage.io.arr.index = 0;
-}
-
-/**
  * @brief increment program
  */
 void ds_prog_arrayc_next(tbc_app_st *const self)

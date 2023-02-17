@@ -36,19 +36,21 @@
 #define H_TYPES_RETURN_TBC
 
 enum ___tbc_return_e {
+    TBC_RET_ERROR = - 4,
+    TBC_RET_OUT_MEM = -3,
+    TBC_RET_EXIT_FORCE = -2,
+    TBC_RET_EXIT = -1,
     TBC_RET_OK = 0,
-    TBC_RET_GC_LV1,
-    TBC_RET_GC_LV2,
-    TBC_RET_GC_LV3,
-    TBC_RET_GC_LV4,
-    TBC_RET_GC_END,
-    TBC_RET_EXIT,
-    TBC_RET_EXIT_FORCE,
-    TBC_RET_REPEAT,
-    TBC_RET_IGNORE,
-    TBC_RET_CLEAN,
-    TBC_RET_FULL,
-    TBC_RET_OUT_MEM
+    TBC_RET_GC_LV1 = 1,
+    TBC_RET_GC_LV2 = 2,
+    TBC_RET_GC_LV3 = 3,
+    TBC_RET_GC_LV4 = 4,
+    TBC_RET_GC_END = 5,
+    TBC_RET_REPEAT = 6,
+    TBC_RET_IGNORE = 7,
+    TBC_RET_CLEAN = 8,
+    TBC_RET_FULL = 9,
+    TBC_RET_SYSCALL = 10
 };
 
 typedef enum ___tbc_return_e tbc_return_et;

@@ -109,6 +109,24 @@ bool driver_interrupt(struct app_3bc_s* const self)
         self->pkg_func->prog.load(self);
         instruction_3bc(self);
 
+        /** soft interrupt **/
+        if (self->rc == TBC_RET_SYSCALL) {
+            self->previous = self->state;
+            self->state = FSM_3BC_SYSCALL;
+            return true;
+        }
+        /** program counting **/
+        else {
+            self->state = FSM_3BC_COUNTING;
+        }
+        return true;
+
+    case FSM_3BC_COUNTING:
+        self->pkg_func->prog.next(self);
+        self->state = FSM_3BC_RUNNING;
+        return true;
+
+    case FSM_3BC_SYSCALL:
         /** @brief virtual machine interrupt: write */
         if (self->cpu_mode == TBC_MODE_STRING && self->cache_l1.printing) {
             self->state = FSM_3BC_IO_SEND;
@@ -117,13 +135,6 @@ bool driver_interrupt(struct app_3bc_s* const self)
         else if (self->cpu_mode == TBC_MODE_SLEEP
             && self->cache_l1.sleep_mode != SLEEP_3BC_NONE) {
             self->state = FSM_3BC_WAITING;
-        }
-        /**
-         * @brief nothing to do!
-         * program must be progress.
-         */
-        else {
-            self->pkg_func->prog.next(self);
         }
         return true;
 
@@ -151,7 +162,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
      */
     case FSM_3BC_IO_SEND:
         self->pkg_func->io.write(self);
-        self->state = FSM_3BC_RUNNING;
+        self->state = self->previous;
         return true;
 
     /**
