@@ -1,6 +1,8 @@
 #ifndef H_TYPES_PRIMITIVE_TBC
 #define H_TYPES_PRIMITIVE_TBC
 
+#include "3bc_detect.h"
+
 #if defined(TBC_CC_STD_99)
 #include <inttypes.h>
 /** signed 8 bits **/

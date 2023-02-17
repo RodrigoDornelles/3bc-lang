@@ -39,11 +39,14 @@ _site/
 .vscode
 
 # Build System
-*.tlc
+*.tcl
+test_*
 Makefile
 CMakeCache.txt
 cmake_install.cmake
+CTestTestfile.cmake
 CMakeFiles/
+Testing/
 vendor_*/
 vendor/
 _deps/
