@@ -8,7 +8,7 @@ class TestSleep < Minitest::Test
     def test_sleep_seconds
         skip "dont work correctly :/"
         exectuion = Benchmark.measure do
-            stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => 'mode.0.43,seco.0.1,mode.0.2,stri.0.0')
+            stdout, stderr, status = Open3.capture3('./bin/3bc-debug', :stdin_data => 'mode.0.43,seco.0.1,mode.0.2,stri.0.0')
             assert_equal "0", stdout
             assert_equal 0, status
         end
@@ -17,7 +17,7 @@ class TestSleep < Minitest::Test
 
     def test_sleep_miliseconds
         exectuion = Benchmark.measure do
-            stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => 'mode.0.43,mili.0.100,mode.0.2,stri.0.0')
+            stdout, stderr, status = Open3.capture3('./bin/3bc-debug', :stdin_data => 'mode.0.43,mili.0.100,mode.0.2,stri.0.0')
             assert_equal "0", stdout
             assert_equal 0, status
         end
@@ -26,7 +26,7 @@ class TestSleep < Minitest::Test
 
     def test_sleep_microseconds
         exectuion = Benchmark.measure do
-            stdout, stderr, status = Open3.capture3("./3bc.test.bin", :stdin_data => 'mode.0.6,aloc.1.200,mode.0.8,0.0.1,push.1.0,mode.0.12,math.0.1,mode.0.8,pull.1.0,mode.0.43,micro.0.100,mode.0.9,fgto.0.1,mode.0.2,stri.0.0')
+            stdout, stderr, status = Open3.capture3('./bin/3bc-debug', :stdin_data => 'mode.0.6,aloc.1.200,mode.0.8,0.0.1,push.1.0,mode.0.12,math.0.1,mode.0.8,pull.1.0,mode.0.43,micro.0.100,mode.0.9,fgto.0.1,mode.0.2,stri.0.0')
             assert_equal "0", stdout
             assert_equal 0, status
         end

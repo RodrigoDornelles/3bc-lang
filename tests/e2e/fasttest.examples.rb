@@ -4,84 +4,84 @@ require 'minitest/autorun'
 
 class TestExample < Minitest::Test
     def test_fibonacci
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/fibonacci.3bc", :stdin_data => 9)
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/fibonacci.3bc", :stdin_data => 9)
         assert_equal "", stderr
         assert_equal "FIB:9\n0\n1\n1\n2\n3\n5\n8\n13\n21", stdout
         assert_equal 0, status
     end
 
     def test_hello_world
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/heloworld.3bc")
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/heloworld.3bc")
         assert_equal "", stderr
         assert_equal "hello world!\n", stdout
         assert_equal 0, status
     end
 
     def test_input_login 
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/input_login.3bc", :stdin_data => "XXXXXXX")
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/input_login.3bc", :stdin_data => "XXXXXXX")
         assert_equal "", stderr
         assert_equal "\n[?] login: XXX\n[?] password: ***\n\n[!] press any key.\n", stdout
         assert_equal 0, status
     end
 
     def test_loop_do_while
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/loop_do_while.3bc", :stdin_data => "t1yYn")
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/loop_do_while.3bc", :stdin_data => "t1yYn")
         assert_equal "", stderr
         assert_equal "\nREPEAT? [y/n]\nREPEAT? [y/n]\nREPEAT? [y/n]\nREPEAT? [y/n]", stdout
         assert_equal 0, status
     end
 
     def test_loop
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/loop.3bc")
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/loop.3bc")
         assert_equal "", stderr
         assert_equal "HI!\nHI!\nHI!\n", stdout
         assert_equal 0, status
     end
 
     def test_invert_default
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/invert_default.3bc")
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/invert_default.3bc")
         assert_equal "", stderr
         assert_equal "ABC CBA\n", stdout
         assert_equal 0, status
     end
 
     def test_invert_helper
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/invert_default.3bc")
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/invert_default.3bc")
         assert_equal "", stderr
         assert_equal "ABC CBA\n", stdout
         assert_equal 0, status
     end
 
     def test_invert_helper
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/invert_text.3bc", :stdin_data => 'socorram me subi no onibus em marrocos.')
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/invert_text.3bc", :stdin_data => 'socorram me subi no onibus em marrocos.')
         assert_equal "", stderr
         assert_equal "socorram me subi no onibus em marrocos..socorram me subino on ibus em marrocos", stdout
         assert_equal 0, status
     end
 
     def test_math_basics
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/math_basics.3bc")
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/math_basics.3bc")
         assert_equal "", stderr
         assert_equal "a,b=5,2\na+b=7\na-b=3\na*b=10\na/b=2\n", stdout
         assert_equal 0, status
     end
 
     def test_pointers
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/pointers.3bc")
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/pointers.3bc")
         assert_equal "", stderr
         assert_equal "7", stdout
         assert_equal 0, status
     end
 
     def test_procedure
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/procedure.3bc")
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/procedure.3bc")
         assert_equal "", stderr
         assert_equal "HelloWorld", stdout
         assert_equal 0, status
     end
 
     def test_ola_mundo
-        stdout, stderr, status = Open3.capture3("./3bc.test.bin", "./examples/olamundo.3bc")
+        stdout, stderr, status = Open3.capture3('./bin/3bc-debug', "./examples/olamundo.3bc")
         assert_equal "", stderr
         assert_equal "ola mundo!", stdout
         assert_equal 0, status
