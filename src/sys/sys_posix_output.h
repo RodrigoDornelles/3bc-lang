@@ -9,6 +9,6 @@
  * @todo MOVE IT!
  */
 void sys_common_std9945_install(tbc_app_st *const self);
-void sys_common_std9945_put(tbc_app_st *const self);
+void sys_posix_output(tbc_app_st *const self);
 
 #endif

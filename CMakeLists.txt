@@ -1,13 +1,14 @@
 cmake_minimum_required(VERSION 3.0)
-project(tbc C)
 set(CMAKE_C_STANDARD 90)
 include(cmake/uname.cmake)
 include(cmake/include.cmake)
 include(cmake/logo.cmake)
 include(cmake/target.cmake)
-include(cmake/tests.cmake)
 include(cmake/outputdir.cmake)
 include(cmake/packages.cmake)
+
+project(tbc C)
+include(cmake/tests.cmake)
 
 add_executable("hello" "${CMAKE_SOURCE_DIR}/programs/hello.c")
 target_link_libraries("hello" tbc_cpu_no_math)

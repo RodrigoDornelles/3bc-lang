@@ -1,4 +1,4 @@
-#include "sys_nes6502_cof.h"
+#include "sys_nes_output.h"
 
 union ___cursor_tty_u {
     tbc_u16_t vram_address;
@@ -7,14 +7,14 @@ union ___cursor_tty_u {
 
 union ___cursor_tty_u cursor_tty;
 
-static void sys_nes6502_cof2020n_init(void);
+static void sys_nes_output_init(void);
 
 /**
  * @brief install cof2020n driver
  */
 void sys_nes6502_cof2020n_install(tbc_app_st *const self)
 {
-    self->pkg_func->std.put = (void*) &sys_nes6502_cof2020n_put;
+    self->pkg_func->std.put = (void*) &sys_nes_output;
     self->cout.tty_output.type = STREAM_TYPE_NES_FULLSCREEN;
     cursor_tty.vram_address = 0;
 }
@@ -26,7 +26,7 @@ void sys_nes6502_cof2020n_install(tbc_app_st *const self)
  * @link https://www.nesdev.org/wiki/PPU_scrolling
  * @link https://www.nesdev.org/wiki/PPU_OAM
  */
-static void sys_nes6502_cof2020n_init()
+static void sys_nes_output_init()
 {
     /** init PPU */
     *((unsigned char*) 0x2000) = 0b10101000;
@@ -65,7 +65,7 @@ static void sys_nes6502_cof2020n_init()
  * @link https://www.nesdev.org/wiki/NMI_thread
  * @link https://www.nesdev.org/wiki/NMI
  */
-void sys_nes6502_cof2020n_put(tbc_app_st *const self)
+void sys_nes_output(tbc_app_st *const self)
 {
     /** interator */
     static tbc_u8_t index;
@@ -76,7 +76,7 @@ void sys_nes6502_cof2020n_put(tbc_app_st *const self)
 
     /** first put */
     if (cursor_tty.vram_address == 0) {
-        sys_nes6502_cof2020n_init();
+        sys_nes_output_init();
     }
 
     /** turn off PPU */

@@ -10,7 +10,7 @@
  * @todo MOVE IT!
  */
 void sys_nes6502_cof2020n_install(tbc_app_st *const self);
-void sys_nes6502_cof2020n_put(tbc_app_st *const self);
+void sys_nes_output(tbc_app_st *const self);
 
 
 #endif

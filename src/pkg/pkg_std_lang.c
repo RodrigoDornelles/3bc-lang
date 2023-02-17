@@ -15,7 +15,7 @@ const tbc_pkg_st tbc_pkg_standard = {
         &sys_common_pexams_expand,
         &sys_common_pfac_exist,
     },{
-        &sys_common_std9945_put
+        &sys_posix_output
     }
 };
 #else 
@@ -28,7 +28,7 @@ const tbc_pkg_st tbc_pkg_standard = {
         &sys_common_pexams_expand,
         &sys_common_pfac_exist,
     },{
-        &sys_common_std9945_put
+        &sys_posix_output
     }
 };
 #endif
