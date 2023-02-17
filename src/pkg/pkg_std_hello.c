@@ -2,7 +2,6 @@
 #include "sys_common_mock.h"
 #include "sys_common_std.h"
 #include "sys_common_pfa.h"
-#include "sys_common_pexa.h"
 #include "sys_nes6502_cof.h"
 
 #if defined(TBC_CONSOLE_NES)

@@ -1,5 +1,9 @@
-#include "../sys/sys_common_mock.h"
-#include "../sys/sys_common_pfa.h"
+#include "pkg_std_lang.h"
+#include "3bc_types.h"
+#include "sys_common_mock.h"
+#include "sys_common_std.h"
+#include "sys_common_pfa.h"
+#include "sys_common_pexa.h"
 
 #if defined(TBC_OPT_ULTRA_COMPACT)
 const tbc_pkg_st tbc_pkg_standard = {
