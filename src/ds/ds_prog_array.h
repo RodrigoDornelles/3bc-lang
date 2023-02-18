@@ -1,5 +1,5 @@
-#ifndef H_ds_prog_array_TBC
-#define H_ds_prog_array_TBC
+#ifndef H_DS_PROG_ARRAY_TBC
+#define H_DS_PROG_ARRAY_TBC
 
 #include "3bc_types.h"
 

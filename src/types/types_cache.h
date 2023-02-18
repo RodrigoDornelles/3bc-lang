@@ -28,6 +28,8 @@ union cache_l1_u {
     tbc_sleep_et sleep_mode;
     /** step of output */
     tbc_u8_t printing;
+    /** direction -1 left | 1 right **/
+    tbc_i8_t dir;
     /** use for conditionals (same cycle) */
     bool is;
 };

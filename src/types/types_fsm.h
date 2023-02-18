@@ -14,7 +14,7 @@ enum ___tbc_app_fsm_e {
     FSM_3BC_MEM_READ = 8,
     FSM_3BC_MEM_WRITE = 9,
     FSM_3BC_IO_READ = 10,
-    FSM_3BC_IO_SEND = 11,
+    FSM_3BC_IO_WRITE = 11,
     FSM_3BC_EXITING = 12,
     FSM_3BC_STOPED = 13
 };

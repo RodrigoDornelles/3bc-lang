@@ -158,11 +158,18 @@ bool driver_interrupt(struct app_3bc_s* const self)
         return true;
 
     case FSM_3BC_SYSCALL:
-        /** @brief virtual machine interrupt: write */
-        if (self->cpu_mode == TBC_MODE_STRING && self->cache_l1.printing) {
-            self->state = FSM_3BC_IO_SEND;
+        if (self->cpu_mode == TBC_MODE_MEMORY || self->cpu_mode == TBC_MODE_MEMORY_AUX)
+        {
+            if (self->cache_l1.dir < 0) {
+                self->state = FSM_3BC_MEM_READ;
+            }
+            else if (self->cache_l1.dir > 0) {
+                self->state = FSM_3BC_MEM_WRITE;
+            }
         }
-        /** @brief virtual machine interrupt: idle */
+        else if (self->cpu_mode == TBC_MODE_STRING && self->cache_l1.printing) {
+            self->state = FSM_3BC_IO_WRITE;
+        }
         else if (self->cpu_mode == TBC_MODE_SLEEP
             && self->cache_l1.sleep_mode != SLEEP_3BC_NONE) {
             self->state = FSM_3BC_WAITING;
@@ -191,8 +198,18 @@ bool driver_interrupt(struct app_3bc_s* const self)
     /**
      * @brief OUTPUT CONTEXT
      */
-    case FSM_3BC_IO_SEND:
+    case FSM_3BC_IO_WRITE:
         self->pkg_func->io.write(self);
+        self->state = self->previous;
+        return true;
+
+    case FSM_3BC_MEM_READ:
+        self->pkg_func->ram.read(self);
+        self->state = self->previous;
+        return true;
+
+    case FSM_3BC_MEM_WRITE:
+        self->pkg_func->ram.write(self);
         self->state = self->previous;
         return true;
 

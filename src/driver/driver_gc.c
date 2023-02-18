@@ -6,7 +6,7 @@
 void driver_gc(struct app_3bc_s* const self)
 {
     /** cleanup **/
-    switch((char) self->rc)
+    switch((tbc_i8_t) self->rc)
     {
         case TBC_RET_GC_LV4:
             free(self->cache_l3.buffer.storage);

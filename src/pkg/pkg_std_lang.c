@@ -2,6 +2,7 @@
 #include "3bc_types.h"
 #include "sys_common_mock.h"
 #include "ds_prog_array.h"
+#include "ds_ram_array.h"
 #include "sys_common_pexa.h"
 #include "sys_nes_output.h"
 #include "sys_posix_output.h"
@@ -17,6 +18,9 @@ const tbc_pkg_st tbc_pkg_standard = {
         &ds_prog_arrayc_exist,
     },{
         &sys_posix_output
+    },{
+        &ds_ram_array_read,
+        &ds_ram_array_write,
     }
 };
 #else 
@@ -30,6 +34,9 @@ const tbc_pkg_st tbc_pkg_standard = {
         &ds_prog_arrayc_exist,
     },{
         &sys_posix_output
+    },{
+        &ds_ram_array_read,
+        &ds_ram_array_write,
     }
 };
 #endif

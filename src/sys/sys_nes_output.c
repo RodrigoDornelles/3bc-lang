@@ -10,16 +10,6 @@ union ___cursor_tty_u cursor_tty;
 static void sys_nes_output_init(void);
 
 /**
- * @brief install cof2020n driver
- */
-void sys_nes6502_cof2020n_install(tbc_app_st *const self)
-{
-    self->pkg_func->std.put = (void*) &sys_nes_output;
-    self->cout.tty_output.type = STREAM_TYPE_NES_FULLSCREEN;
-    cursor_tty.vram_address = 0;
-}
-
-/**
  * @brief startup PPU, palete, scroll, sprites, nametable...
  * @link https://www.nesdev.org/wiki/PPU_registers
  * @link https://www.nesdev.org/wiki/PPU_palettes

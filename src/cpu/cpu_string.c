@@ -52,7 +52,6 @@ void cpu_string_output(PARAMS_DEFINE)
         app->cache_l3.fixbuf.size = 1;
         app->rc = TBC_RET_SYSCALL;
     } else {
-        app->cache_l1.printing = 0;
         app->rc = TBC_RET_GC_LV3;
     }
 }
