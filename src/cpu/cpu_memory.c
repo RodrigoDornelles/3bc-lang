@@ -39,9 +39,9 @@ void cpu_memory_free(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
     VALIDATE_NOT_VALUES
-    if (app->cache_l1.dir == 0) {
-        app->cache_l1.dir = 1;
+    if (!app->cache_l1.syscall) {
         app->rc = TBC_RET_SYSCALL;
+        app->cache_l1.syscall = TBC_SYS_MEM_WRITE;
         app->mem_aux ^= app->mem_aux;
     }
     else {
@@ -52,9 +52,9 @@ void cpu_memory_free(PARAMS_DEFINE)
 void cpu_memory_aloc(PARAMS_DEFINE)
 {
     REQUIRED_ADDRESS
-    if (app->cache_l1.dir == 0) {
-        app->cache_l1.dir = 1;
+    if (!app->cache_l1.syscall) {
         app->rc = TBC_RET_SYSCALL;
+        app->cache_l1.syscall = TBC_SYS_MEM_WRITE;
         app->mem_aux = app->cache_l0.rz;
     }
     else {
@@ -130,9 +130,9 @@ void cpu_memory_aux_aloc(PARAMS_DEFINE)
 void cpu_memory_aux_pull(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
-    if (app->cache_l1.dir == 0) {
-        app->cache_l1.dir = -1;
+    if (!app->cache_l1.syscall) {
         app->rc = TBC_RET_SYSCALL;
+        app->cache_l1.syscall = TBC_SYS_MEM_READ;
     }
     else {
         app->rc = TBC_RET_GC_LV1;
@@ -142,9 +142,9 @@ void cpu_memory_aux_pull(PARAMS_DEFINE)
 void cpu_memory_aux_push(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
-    if (app->cache_l1.dir == 0) {
-        app->cache_l1.dir = 1;
+    if (!app->cache_l1.syscall) {
         app->rc = TBC_RET_SYSCALL;
+        app->cache_l1.syscall = TBC_SYS_MEM_WRITE;
     }
     else {
         app->rc = TBC_RET_GC_LV1;
@@ -157,9 +157,10 @@ void cpu_memory_aux_push(PARAMS_DEFINE)
 void cpu_memory_aux_spin(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
+    /** TODO: this
     {
         data_3bc_t aux_old = AUX;
         driver_accumulator_set(app, driver_memory_data_get(app, address));
         driver_memory_data_set(app, address, aux_old);
-    }
+    }*/
 }

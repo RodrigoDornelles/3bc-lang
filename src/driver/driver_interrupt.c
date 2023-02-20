@@ -158,21 +158,22 @@ bool driver_interrupt(struct app_3bc_s* const self)
         return true;
 
     case FSM_3BC_SYSCALL:
-        if (self->cpu_mode == TBC_MODE_MEMORY || self->cpu_mode == TBC_MODE_MEMORY_AUX)
-        {
-            if (self->cache_l1.dir < 0) {
-                self->state = FSM_3BC_MEM_READ;
-            }
-            else if (self->cache_l1.dir > 0) {
-                self->state = FSM_3BC_MEM_WRITE;
-            }
-        }
-        else if (self->cpu_mode == TBC_MODE_STRING && self->cache_l1.printing) {
+        switch(self->cache_l1.syscall) {
+           case TBC_SYS_MEM_READ:
+            self->state = FSM_3BC_MEM_READ;
+            break;
+
+            case TBC_SYS_MEM_WRITE:
+            self->state = FSM_3BC_MEM_WRITE;
+            break;
+
+            case TBC_SYS_IO_WRITE:
             self->state = FSM_3BC_IO_WRITE;
-        }
-        else if (self->cpu_mode == TBC_MODE_SLEEP
-            && self->cache_l1.sleep_mode != SLEEP_3BC_NONE) {
+            break;
+
+            case TBC_SYS_WAIT:
             self->state = FSM_3BC_WAITING;
+            break;
         }
         return true;
 

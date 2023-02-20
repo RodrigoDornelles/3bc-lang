@@ -44,14 +44,25 @@ void cpu_string_debug(PARAMS_DEFINE)
 void cpu_string_output(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
-    if (!app->cache_l1.printing)
-    {
-        app->cache_l1.printing = 1;
+
+    if (app->cache_l1.syscall == TBC_SYS_NONE) {
+        if (app->cache_l0.ry) {
+            app->rc = TBC_RET_SYSCALL;
+            app->cache_l1.syscall = TBC_SYS_MEM_READ;
+        } else {
+            app->cache_l3.fixbuf.size = sprintf(app->cache_l3.fixbuf.storage, "%c", app->cache_l0.rz);
+            app->cache_l2.tty = &(app->cout.tty_output);
+            app->cache_l1.syscall = TBC_SYS_IO_WRITE;
+            app->rc = TBC_RET_SYSCALL;
+        }
+    }
+    else if (app->cache_l1.syscall == TBC_SYS_MEM_READ) {
+        app->cache_l3.fixbuf.size = sprintf(app->cache_l3.fixbuf.storage, "%02x ", app->mem_aux);
         app->cache_l2.tty = &(app->cout.tty_output);
-        app->cache_l3.fixbuf.storage[0] = GET_ANY_PARAM;
-        app->cache_l3.fixbuf.size = 1;
+        app->cache_l1.syscall = TBC_SYS_IO_WRITE;
         app->rc = TBC_RET_SYSCALL;
-    } else {
+    }
+    else if (app->cache_l1.syscall == TBC_SYS_IO_WRITE) {
         app->rc = TBC_RET_GC_LV3;
     }
 }

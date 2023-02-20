@@ -2,6 +2,7 @@
 #define H_TYPES_CACHE_TBC
 
 #include "types_fsm.h"
+#include "types_syscall.h"
 
 typedef struct ___tbc_cache_l0_s tbc_cache_l0_st;
 
@@ -26,12 +27,10 @@ struct ___tbc_cache_l0_s {
 
 union cache_l1_u {
     tbc_sleep_et sleep_mode;
-    /** step of output */
-    tbc_u8_t printing;
-    /** direction -1 left | 1 right **/
-    tbc_i8_t dir;
+    /** system call id */
+    tbc_syscall_et syscall;
     /** use for conditionals (same cycle) */
-    bool is;
+    bool is; /**< TODO: remove **/
 };
 
 union cache_l2_u {
