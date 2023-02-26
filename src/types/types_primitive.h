@@ -81,6 +81,8 @@ typedef unsigned char tbc_u8_t;
 typedef unsigned int tbc_u16_t;
 /** unsigned 32 bits **/
 typedef unsigned long tbc_u32_t;
+#else
+#error [3BC] unknown compiler arch please upgrade to ISO C99 STANDARD.
 #endif
 
 #endif
