@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
+if(NOT DEFINED CMAKE_C_STANDARD)
 set(CMAKE_C_STANDARD 90)
+endif()
 include(cmake/include.cmake)
 include(cmake/logo.cmake)
 include(cmake/target.cmake)
