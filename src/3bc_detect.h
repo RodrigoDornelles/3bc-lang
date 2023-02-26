@@ -270,6 +270,11 @@
 #define TBC_ARCH_CPU_INTEL
 #endif
 
+#if defined(__i386__)
+#define TBC_ARCH_BITS_32
+#define TBC_ARCH_CPU_INTEL
+#endif
+
 #if defined(__ppc64__)
 #define TBC_ARCH_BITS_64
 #define TBC_ARCH_CPU_POWER
