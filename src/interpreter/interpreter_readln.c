@@ -67,7 +67,7 @@ char* interpreter_readln(struct app_3bc_s* const app, char* line)
     }
     /** parse string to address and validate **/
     else if (!interpreter_syntax_constants(app, text_mem, &mem)) {
-        driver_program_error(app, ERROR_INVALID_ADDRESS);
+        driver_program_error(app, ERROR_INVALID_ADR);
     }
     /** parse string to constant and validate **/
     else if (!interpreter_syntax_constants(app, text_val, &val)) {

@@ -4,8 +4,6 @@
 # Some generators will also not work (like MSVS). Ninja has been tested to work.
 # What is supported: C, assembly, static libraries
 
-set( CMAKE_SYSTEM_NAME Generic )
-
 macro( __compilerCc65 lang )
     set( CMAKE_${lang}_COMPILER ${CL65} CACHE PATH "${lang} compiler" )
     set( CMAKE_${lang}_COMPILER_ID ${CC65} )

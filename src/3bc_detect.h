@@ -186,7 +186,7 @@
 /**
  * PLATAFORM: KERNEL NT
  */
-#if defined(_WIN32)
+#if defined(_WIN32) || defined(WIN32)
 #define TBC_KERNEL_NT
 #define TBC_PREFER_INTERPRETER
 #define TBC_P_COMPUTER

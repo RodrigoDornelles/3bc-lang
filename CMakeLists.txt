@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.0)
 set(CMAKE_C_STANDARD 90)
-include(cmake/uname.cmake)
 include(cmake/include.cmake)
 include(cmake/logo.cmake)
 include(cmake/target.cmake)
