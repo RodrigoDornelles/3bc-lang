@@ -49,7 +49,7 @@ void ds_label_hash_insert(struct app_3bc_s* const app, label_3bc_t label)
 
     /** label already exists **/
     if (ds_label_hash_search(app, label) != NULL) {
-        driver_program_error(app, ERROR_INVALID_LABEL);
+        driver_program_error(app, ERROR_INVALID_LABEL_3BC);
     }
 
     new_node = (struct label_node_s*)malloc(sizeof(struct label_node_s));
