@@ -61,7 +61,7 @@ bool driver_idle(struct app_3bc_s* const app)
         global_time.count = clock();
 #else
 #if defined(TBC_PRG_WARNING)
-#pragma warning("[3BC] UNSUPPORTED: SLEEP_3BC_REAL_TICK")
+#pragma message("[3BC] UNSUPPORTED: SLEEP_3BC_REAL_TICK")
 #else
 #warning "[3BC] UNSUPPORTED: SLEEP_3BC_REAL_TICK"
 #endif
@@ -118,7 +118,7 @@ bool driver_idle(struct app_3bc_s* const app)
         return app->cache_l2.sleep_period;
 #else
 #if defined(TBC_PRG_WARNING)
-#pragma warning("[3BC] UNSUPPORTED: SLEEP_3BC_MICROSECONDS")
+#pragma message("[3BC] UNSUPPORTED: SLEEP_3BC_MICROSECONDS")
 #else
 #warning "[3BC] UNSUPPORTED: SLEEP_3BC_MICROSECONDS"
 #endif
@@ -167,7 +167,7 @@ bool driver_idle(struct app_3bc_s* const app)
         return app->cache_l2.sleep_period;
 #else
 #if defined(TBC_PRG_WARNING)
-#pragma warning("[3BC] UNSUPPORTED: SLEEP_3BC_MILLISECONDS")
+#pragma message("[3BC] UNSUPPORTED: SLEEP_3BC_MILLISECONDS")
 #else
 #warning "[3BC] UNSUPPORTED: SLEEP_3BC_MILLISECONDS"
 #endif
@@ -225,7 +225,7 @@ bool driver_idle(struct app_3bc_s* const app)
         return app->cache_l2.sleep_period;
 #else
 #if defined(TBC_PRG_WARNING)
-#pragma warning("[3BC] UNSUPPORTED: SLEEP_3BC_SECONDS")
+#pragma message("[3BC] UNSUPPORTED: SLEEP_3BC_SECONDS")
 #else
 #warning "[3BC] UNSUPPORTED: SLEEP_3BC_SECONDS"
 #endif
