@@ -1,1 +1,1 @@
-git clean -xdf
+git clean -xdff
