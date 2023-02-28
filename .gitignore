@@ -56,3 +56,11 @@ _deps/
 *.gcov
 *.gcno
 *.gcda
+
+# Microsoft Visual Code Files
+*.sln
+*.dir/
+x64/
+x86/
+*.vcxproj
+*.vcxproj.*

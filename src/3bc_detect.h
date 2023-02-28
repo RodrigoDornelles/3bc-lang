@@ -186,7 +186,7 @@
 /**
  * PLATAFORM: KERNEL NT
  */
-#if defined(_WIN32) || defined(WIN32)
+#if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(_WIN64)
 #define TBC_KERNEL_NT
 #define TBC_PREFER_INTERPRETER
 #define TBC_P_COMPUTER
@@ -250,12 +250,12 @@
 #define TBC_ARCH_CPU_6502
 #endif
 
-#if defined(__arm__)
+#if defined(__arm) || defined(__arm__) || defined(_M_ARM)
 #define TBC_ARCH_BITS_32
 #define TBC_ARCH_CPU_ARM
 #endif
 
-#if defined(__aarch64__)
+#if defined(__aarch64__) || defined(_M_ARM64)
 #define TBC_ARCH_BITS_64
 #define TBC_ARCH_CPU_ARM
 #endif
@@ -265,12 +265,12 @@
 #define TBC_ARCH_CPU_AVR
 #endif
 
-#if defined(__x86_64__)
+#if defined(__x86_64) || defined(__x86_64__) || defined(_M_AMD64)
 #define TBC_ARCH_BITS_64
 #define TBC_ARCH_CPU_INTEL
 #endif
 
-#if defined(__i386__)
+#if defined(__i386) || defined(__i386__) || defined(_M_IX86)
 #define TBC_ARCH_BITS_32
 #define TBC_ARCH_CPU_INTEL
 #endif
