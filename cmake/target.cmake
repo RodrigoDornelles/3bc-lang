@@ -1,9 +1,7 @@
-if(NOT TARGET)
-    if(DEFINED ENV{VSCMD_VER} AND NOT CMAKE_TOOLCHAIN_FILE)
-        set(TARGET "msvc")
-    else()
-        set(TARGET "native")
-    endif()
+if(${CMAKE_GENERATOR} MATCHES "Visual Studio")
+    set(TARGET "msvc")
+elseif(NOT TARGET)
+    set(TARGET "native")
 endif()
 
 if(${TARGET} MATCHES "cc65-(.+)")
