@@ -49,6 +49,9 @@
  * and resource optimization purposes.
  */
 
+#if defined(_MSC_VER)
+#define TBC_PRG_WARNING
+#endif
 #if defined(__STDC_VERSION__)
 #if (__STDC_VERSION__ >= 201710L)
 #define TBC_CC_STD_17
@@ -60,7 +63,11 @@
 #elif (__STDC_VERSION__ >= 199901L)
 #define TBC_CC_STD_99
 #else
+#if defined(TBC_PRG_WARNING)
+#pragma message("__STDC_VERSION__ not recognized.")
+#else
 #warning "__STDC_VERSION__ not recognized."
+#endif
 #define TBC_CC_STD_89
 #endif
 #else
