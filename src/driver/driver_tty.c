@@ -185,6 +185,7 @@ void driver_tty_output(struct app_3bc_s* const app, tbc_tty_st *const tty,
     }
 
     switch (type) {
+        /** TODO: move **/
     case STRB: {
 #if defined(TBC_NOT_LOG2) || defined(TBC_NOT_MATH)
 #if defined(TBC_PRG_WARNING)
@@ -210,24 +211,7 @@ void driver_tty_output(struct app_3bc_s* const app, tbc_tty_st *const tty,
         output[pos] = '\0';
         break;
 #endif
-    }
-
-    case STRC:
-        snprintf(output, sizeof(output), "%c", val);
-        break;
-
-    case STRX:
-        snprintf(output, sizeof(output), "%x", val);
-        break;
-
-    case STRI:
-        snprintf(output, sizeof(output), "%d", val);
-        break;
-
-    case STRO:
-        snprintf(output, sizeof(output), "%o", val);
-        break;
-    }
+    }}
 
     driver_tty_output_raw(app, tty, output);
 }

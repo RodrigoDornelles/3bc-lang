@@ -63,15 +63,43 @@ void cpu_string_output(PARAMS_DEFINE)
         }
 
         if (app->cache_l1.syscall != TBC_SYS_IO_WRITE) {
-            app->cache_l3.fixbuf.size = 1;
-            app->cache_l3.fixbuf.storage[0] = app->mem_aux;
+            char* out = app->cache_l3.fixbuf.storage;
+            static const size_t out_size = sizeof(app->cache_l3.fixbuf.storage);
+
+            if (app->cache_l0.rx == STRC)
+            {
+                app->cache_l3.fixbuf.size = 1;
+                app->cache_l3.fixbuf.storage[0] = app->mem_aux;
+            }
+            else {
+                /** TODO: fix negative bit **/
+                if (app->mem_aux & 0b10000000) {
+                    out += 1;
+                    app->mem_aux = (uint8_t) -app->mem_aux;
+                    app->cache_l3.fixbuf.size += 1;
+                    app->cache_l3.fixbuf.storage[0] = '-';
+                }
+                switch(app->cache_l0.rx)
+                {
+                    case STRO:
+                        app->cache_l3.fixbuf.size += snprintf(out, out_size, "%o", app->mem_aux);
+                        break;
+
+                    case STRI:
+                        app->cache_l3.fixbuf.size += snprintf(out, out_size, "%d", app->mem_aux);
+                        break;
+
+                    case STRX:
+                        app->cache_l3.fixbuf.size += snprintf(out, out_size, "%x", app->mem_aux);
+                        break;                    
+                }
+            }
             app->cache_l2.tty = &(app->cout.tty_output);
             app->cache_l1.syscall = TBC_SYS_IO_WRITE;
             app->rc = TBC_RET_SYSCALL;
             break;
         }
 
-        /** step: 2 **/
         app->rc = TBC_RET_GC_LV3;
         break;
     }
