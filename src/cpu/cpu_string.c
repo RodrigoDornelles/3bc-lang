@@ -44,7 +44,6 @@ void cpu_string_debug(PARAMS_DEFINE)
 void cpu_string_output(PARAMS_DEFINE)
 {
     do {
-        /** step: 1 **/
         if (app->cache_l1.syscall == TBC_SYS_NONE) {
             if (app->cache_l0.ry) {
                 if (app->cache_l0.rz) {
@@ -63,18 +62,18 @@ void cpu_string_output(PARAMS_DEFINE)
             }
         }
 
-        /** step: 3 **/
-        if (app->cache_l1.syscall == TBC_SYS_IO_WRITE) {
-            app->rc = TBC_RET_GC_LV3;
+        if (app->cache_l1.syscall != TBC_SYS_IO_WRITE) {
+            app->cache_l3.fixbuf.size = 1;
+            app->cache_l3.fixbuf.storage[0] = app->mem_aux;
+            app->cache_l2.tty = &(app->cout.tty_output);
+            app->cache_l1.syscall = TBC_SYS_IO_WRITE;
+            app->rc = TBC_RET_SYSCALL;
             break;
         }
 
         /** step: 2 **/
-        app->cache_l3.fixbuf.size = 1;
-        app->cache_l3.fixbuf.storage[0] = app->mem_aux;
-        app->cache_l2.tty = &(app->cout.tty_output);
-        app->cache_l1.syscall = TBC_SYS_IO_WRITE;
-        app->rc = TBC_RET_SYSCALL;
+        app->rc = TBC_RET_GC_LV3;
+        break;
     }
     while (0);
 }
