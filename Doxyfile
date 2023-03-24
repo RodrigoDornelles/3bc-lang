@@ -1,0 +1,29 @@
+# Custom Configs
+DOXYFILE_ENCODING      = UTF-8
+PROJECT_NAME           = "3BC Runtime"
+PROJECT_NUMBER         = 0.1.4
+PROJECT_BRIEF          = "implementation manual for advanced developers."
+PROJECT_LOGO           = 
+OUTPUT_DIRECTORY       = .
+RECURSIVE              = YES
+CREATE_SUBDIRS         = NO
+STRIP_CODE_COMMENTS    = NO
+CALL_GRAPH             = YES
+HAVE_DOT               = YES
+EXTRACT_ALL            = YES
+DIR_GRAPH_MAX_DEPTH    = 2s
+PLANTUML_JAR_PATH      = $(PLANTUML_JAR_PATH)
+PLANTUML_CFG_FILE      =
+PLANTUML_INCLUDE_PATH  =
+OUTPUT_LANGUAGE        = English
+INPUT                  = CONTRIBUTING.md CODE_OF_CONDUCT.md CODE_STANDARD.md src
+USE_MDFILE_AS_MAINPAGE = CONTRIBUTING.md
+MARKDOWN_ID_STYLE      = GITHUB
+INPUT_FILTER 		   = ./scripts/filter_doxygen.sh
+# Theme: https://jothepro.github.io/doxygen-awesome-css/
+GENERATE_TREEVIEW      = YES
+DISABLE_INDEX          = NO
+FULL_SIDEBAR           = NO
+HTML_EXTRA_STYLESHEET  = /usr/local/share/doxygen-awesome-css/doxygen-awesome.css \
+                        /usr/local/share/doxygen-awesome-css/doxygen-awesome-sidebar-only.css
+HTML_COLORSTYLE        = LIGHT

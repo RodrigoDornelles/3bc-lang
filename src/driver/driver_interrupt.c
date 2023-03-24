@@ -1,4 +1,5 @@
 /**
+ * @internal
  *  ___________  _____   _
  * |____ | ___ \/  __ \ | |
  *     / / |_/ /| /  \/ | | __ _ _ __   __ _ _   _  __ _  __ _  ___
@@ -7,33 +8,36 @@
  * \____/\____/  \____/ |_|\__,_|_| |_|\__, |\__,_|\__,_|\__, |\___|
  *                                     __/ |             __/ |
  *                                    |___/             |___/
- * DESCRIPTION:
+ * @endinternal
+ * @file driver_interrupt.c
+ *
+ * @brief
  * Code refers to the managing contexts and interrupt's of the virtual machine.
  *
- * BRIEF:
- * Low-level language, tiny virtual machine, intermediate representation,
- * embeddable, easy for beginners. (Friendly Punched cards)
+ * @copyright
+ * Low-level language, tiny virtual machine, intermediate representation,     \n
+ * embeddable, easy for beginners. (Friendly Punched cards)                   \n
+ *                                                                            \n
+ * Copyright (C) 2020 Rodrigo Dornelles.                                      \n
+ *                                                                            \n
+ * This program is free software: you can redistribute it and/or modify       \n
+ * it under the terms of the GNU General Public License as published by       \n
+ * the Free Software Foundation, either version 3 of the License,             \n
+ * or any later version.                                                      \n
+ *                                                                            \n
+ * This program is distributed in the hope that it will be useful,            \n
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of             \n
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the              \n
+ * GNU General Public License for more details.                               \n
+ *                                                                            \n
+ * You should have received a copy of the GNU General Public License          \n
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>. 
  *
- * AUTHOR:
- * Copyright (C) 2020 Rodrigo Dornelles.
- *
- * LICENSE:
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License,
- * or any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
- *
- * JOKE:
+ * @par Joke
+ * @code{.unparsed}
  * _\|/_ weedend alert! _\|/_
  * this code was written in a 4:20 mode.
+ * @endcode
  */
 
 #define TBC_SOURCE_ENTRY
