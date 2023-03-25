@@ -1,0 +1,27 @@
+name: "docs"
+
+on:
+  push:
+    branches:
+      - develop-wip
+
+jobs:
+  doxygen:
+    name: "dev.3bc-lang.org"
+    runs-on: ubuntu-latest
+    container: rodrigodornelles/doxygen
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+        
+      - name: Build project
+        run: doxygen
+
+      - name: Deploy project
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: doxygen-3bc
+          directory: html
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
