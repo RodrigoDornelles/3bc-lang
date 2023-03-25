@@ -9,13 +9,14 @@ jobs:
   doxygen:
     name: "dev.3bc-lang.org"
     runs-on: ubuntu-latest
-    container: rodrigodornelles/doxygen
     steps:
       - name: Checkout project
         uses: actions/checkout@v3
         
       - name: Build project
-        run: doxygen
+        run: > 
+          docker run --rm -v $(pwd):/app -w /app
+          rodrigodornelles/doxygen doxygen
 
       - name: Deploy project
         uses: cloudflare/pages-action@v1
