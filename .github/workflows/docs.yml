@@ -4,7 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - develop-wip
+      - master
+  pull_request:
+      branches:
+      - master
 
 jobs:
   doxygen:
