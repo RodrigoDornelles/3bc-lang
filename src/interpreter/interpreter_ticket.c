@@ -55,6 +55,15 @@ void interpreter_ticket(tbc_app_st *const self)
 /**
  * Default entry point to the interpreter, works asynchronously.
  *
+ * @startuml
+ * [*] --> FSM_3BC_EXPAND
+ * FSM_3BC_EXPAND --> FSM_3BC_READING
+ * FSM_3BC_READING --> FSM_3BC_COMMIT
+ * FSM_3BC_EXPAND  --> [*]
+ * FSM_3BC_READING --> [*]
+ * FSM_3BC_COMMIT --> [*]
+ * @enduml
+ *
  * @todo refactor single point of return, no implicit outputs.
  * @todo do{} while(0);
  */

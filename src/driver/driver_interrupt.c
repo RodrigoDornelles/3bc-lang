@@ -51,34 +51,30 @@
  * @startuml
  * [*] --> FSM_3BC_DEFAULT
  * FSM_3BC_DEFAULT --> FSM_3BC_STARTING
- * FSM_3BC_STARTING --> FSM_3BC_RUNNING
- * FSM_3BC_RUNNING --> FSM_3BC_EXPAND
+ * FSM_3BC_STARTING --> FSM_3BC_VACUUM
+ * FSM_3BC_VACUUM --> FSM_3BC_INTERPRETER
+ * FSM_3BC_RUNNING --> FSM_3BC_ERROR
+ * FSM_3BC_RUNNING --> FSM_3BC_RUNNING
  * FSM_3BC_RUNNING --> FSM_3BC_SYSCALL
  * FSM_3BC_RUNNING --> FSM_3BC_COUNTING
- * FSM_3BC_RUNNING --> FSM_3BC_EXITING
- * FSM_3BC_EXPAND --> FSM_3BC_READING
- * FSM_3BC_READING --> FSM_3BC_RUNNING
- * FSM_3BC_READING --> FSM_3BC_EXITING
- * FSM_3BC_SYSCALL --> FSM_3BC_WAITING
- * FSM_3BC_WAITING --> FSM_3BC_WAITING
- * FSM_3BC_WAITING --> FSM_3BC_RUNNING
- * FSM_3BC_SYSCALL --> FSM_3BC_IO_WRITE
- * FSM_3BC_SYSCALL --> FSM_3BC_IO_READ
- * FSM_3BC_SYSCALL --> FSM_3BC_RAM_WRITE
- * FSM_3BC_SYSCALL --> FSM_3BC_RAM_READ
- * FSM_3BC_IO_WRITE --> FSM_3BC_RUNNING
- * FSM_3BC_IO_READ --> FSM_3BC_RUNNING
- * FSM_3BC_RAM_WRITE --> FSM_3BC_RUNNING
- * FSM_3BC_RAM_READ --> FSM_3BC_RUNNING
- * FSM_3BC_COUNTING --> FSM_3BC_RUNNING
- * FSM_3BC_RAM_WRITE --> FSM_3BC_RUNNING
+ * FSM_3BC_SYSCALL --> FSM_3BC_SYSCALL
+ * FSM_3BC_SYSCALL --> FSM_3BC_RUNNING
+ * FSM_3BC_SYSCALL --> FSM_3BC_ERROR
+ * FSM_3BC_INTERPRETER --> FSM_3BC_INTERPRETER
+ * FSM_3BC_INTERPRETER --> FSM_3BC_LOADING
+ * FSM_3BC_INTERPRETER --> FSM_3BC_EXITING
+ * FSM_3BC_INTERPRETER --> FSM_3BC_ERROR
+ * FSM_3BC_SYSCALL --> FSM_3BC_EXITING
+ * FSM_3BC_LOADING --> FSM_3BC_RUNNING
+ * FSM_3BC_COUNTING --> FSM_3BC_VACUUM
+ * FSM_3BC_ERROR --> FSM_3BC_EXITING
  * FSM_3BC_EXITING --> FSM_3BC_STOPED
  * FSM_3BC_STOPED --> [*]
  * @enduml
  */
 bool driver_interrupt(struct app_3bc_s* const self)
 {
-    /**
+    /*
      * HARD INTERRUPTS
      */
     if (self->rc < 0) {
@@ -97,9 +93,6 @@ bool driver_interrupt(struct app_3bc_s* const self)
     }
 
     switch (self->state) {
-    /**
-     * INITIAL CONTEXT
-     */
     case FSM_3BC_DEFAULT:
         self->state = FSM_3BC_STARTING;
         return true;
@@ -116,9 +109,6 @@ bool driver_interrupt(struct app_3bc_s* const self)
         }
         return true;
 
-    /**
-     *  INTERPRETER CONTEXT
-     */
     case FSM_3BC_READING:
         interpreter_ticket(self);
         if (self->rc == TBC_RET_OK) {
@@ -126,12 +116,8 @@ bool driver_interrupt(struct app_3bc_s* const self)
         }
         return true;
 
-    /**
-     * PROCESS CONTEXT
-     */
     case FSM_3BC_RUNNING:
         /** 
-         * check for program existence
          * @note cache level 0 is re-used in evaluate.
          */
         self->pkg_func->prog.avaliable(self);
@@ -140,17 +126,17 @@ bool driver_interrupt(struct app_3bc_s* const self)
             return true;
         }
 
-        /** evaluate */
+        /* evaluate */
         self->pkg_func->prog.load(self);
         instruction_3bc(self);
 
-        /** soft interrupt **/
+        /* soft interrupt **/
         if (self->rc == TBC_RET_SYSCALL) {
             self->previous = self->state;
             self->state = FSM_3BC_SYSCALL;
             return true;
         }
-        /** program counting **/
+        /* program counting **/
         else {
             self->state = FSM_3BC_COUNTING;
         }
@@ -181,9 +167,6 @@ bool driver_interrupt(struct app_3bc_s* const self)
         }
         return true;
 
-    /**
-     * SLEEP CONTEXT
-     */
     case FSM_3BC_WAITING:
         if (!driver_idle(self)) {
             self->state = FSM_3BC_RUNNING;
@@ -194,15 +177,11 @@ bool driver_interrupt(struct app_3bc_s* const self)
         return true;
 
     /**
-     * INPUT CONTEXT
-     * @todo this
+     * @todo
     case FSM_3BC_IO_READ:
         self->state = FSM_3BC_RUNNING;
         return true;*/
 
-    /**
-     * @brief OUTPUT CONTEXT
-     */
     case FSM_3BC_IO_WRITE:
         self->pkg_func->io.write(self);
         self->state = self->previous;
@@ -218,9 +197,6 @@ bool driver_interrupt(struct app_3bc_s* const self)
         self->state = self->previous;
         return true;
 
-    /**
-     * EXIT CONTEXT
-     */
     case FSM_3BC_EXITING:
         driver_power_exit(self);
         /** @todo investigate why not set **/
