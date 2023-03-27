@@ -78,7 +78,7 @@ void cpu_math_power(PARAMS_DEFINE)
 #if defined(TBC_NOT_MATH)
     driver_program_error(app, ERROR_UNSUPPORTED);
 #else
-    /** TODO: remove this "gambiarra" tecnical debt **/
+    /** @todo remove this "gambiarra" tecnical debt **/
     driver_accumulator_set(app,
         (data_aux_3bc_t)trunc(pow((double)(AUX), (double)(GET_ANY_PARAM))));
 #endif
@@ -153,7 +153,7 @@ void cpu_math_logn(PARAMS_DEFINE)
     VALIDATE_NOT_ADRESS
     VALIDATE_NOT_VALUES
 #if defined(TBC_NOT_MATH)
-    /** TODO: support logarithm on 6502 **/
+    /** @todo support logarithm on 6502 **/
     driver_program_error(app, ERROR_UNSUPPORTED);
 #else
     if (AUX == 0) {

@@ -8,7 +8,7 @@
  *                                     __/ |             __/ |
  *                                    |___/             |___/
  * DESCRIPTION:
- * TODO: describre.
+ * @todo describre.
  *
  * BRIEF:
  * Low-level language, tiny virtual machine, intermediate representation,

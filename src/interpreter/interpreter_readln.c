@@ -43,7 +43,7 @@
 /**
  * Interpret text and insert to virtual machine.
  *
- * TODO: refactor single point of return, no implicit outputs.
+ * @todo refactor single point of return, no implicit outputs.
  * EXAMPLE: interpreter_compiler(app, "MODE 0 2");
  * RETURN: NULL if the entire string is compiled.
  * RETURN: Pointer to the rest of the string that can be compiled.
@@ -57,7 +57,7 @@ char* interpreter_readln(struct app_3bc_s* const app, char* line)
     if (!interpreter_tokens(line, &text_reg, &text_mem, &text_val, &line)) {
         driver_program_error(app, ERROR_COLUMNS);
     }
-    /** blank line TODO: not working!**/
+    /** blank line @todo not working!**/
     if (text_reg == NULL) {
         return line;
     }

@@ -48,7 +48,7 @@ struct app_3bc_s* const driver_power_init()
     struct app_3bc_s* const app = ds_hypervisor_darray_new();
 
 #if defined(TBC_P_COMPUTER)
-    /** TODO: move to driver_tty_init() **/
+    /** @todo move to driver_tty_init() **/
     app->cin.tty_source.type = STREAM_TYPE_COMPUTER_STD;
     app->cin.tty_source.io.file = stdin;
     app->cout.tty_debug.type = STREAM_TYPE_COMPUTER_STD;
@@ -136,7 +136,7 @@ void driver_power_signal(int sig)
 void driver_power_exit(struct app_3bc_s* const app)
 {
     if (app->state != FSM_3BC_STOPED) {
-        /** TODO: move driver_tty_exit **/
+        /** @todo move driver_tty_exit **/
 #if !defined(TBC_NOT_FILES)
         if (app->cin.tty_source.type == STREAM_TYPE_COMPUTER_FILE
             && app->cin.tty_source.io.file != NULL) {

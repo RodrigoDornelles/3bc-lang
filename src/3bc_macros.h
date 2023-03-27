@@ -56,7 +56,7 @@
 
 #define MEM_CONFIG_RESERVED (0b00000001) /** unused **/
 #define MEM_CONFIG_FLOW_SAFE                                                   \
-    (0b00000010) /** TODO: trust in over/under flow                            \
+    (0b00000010) /** @todo trust in over/under flow                            \
                   **/
 #define MEM_CONFIG_GPIO_SEND (0b00000100) /** digital output **/
 #define MEM_CONFIG_GPIO_READ (0b00001000) /** digital input **/

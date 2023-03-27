@@ -79,7 +79,7 @@ void driver_tty_exit()
 /**
  * detect keyboard input
  *
- * TODO: More compatible tty
+ * @todo More compatible tty
  */
 data_3bc_t driver_tty_input(
     struct app_3bc_s* const app, tbc_tty_st *const tty, register_3bc_t type)
@@ -185,7 +185,7 @@ void driver_tty_output(struct app_3bc_s* const app, tbc_tty_st *const tty,
     }
 
     switch (type) {
-        /** TODO: move **/
+        /** @todo move **/
     case STRB: {
 #if defined(TBC_NOT_LOG2) || defined(TBC_NOT_MATH)
 #if defined(TBC_PRG_WARNING)

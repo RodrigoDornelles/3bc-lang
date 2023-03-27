@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"todo-tree.regex.regex": "@todo",
+		"todo-tree.filtering.excludeGlobs": [
+			"*.code-workspace"
+		],
+		"todo-tree.general.tags": [
+			"@todo"
+		]
+	}
+}

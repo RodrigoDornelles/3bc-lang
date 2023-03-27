@@ -39,7 +39,7 @@
 /**
  * header used before error description.
  *
- * TODO:
+ * @todo
  * more readable and move to 3bc_errors.h
  *
  * NOTE:
@@ -70,7 +70,7 @@ void driver_program_error(
      * NOTE: if the current line does not exist,
      * it was because it was interpreting a line which failed.
      *
-     * TODO:
+     * @todo
      * safer and remove ternaries.
      */
     line_3bc_t error_line
@@ -84,7 +84,7 @@ void driver_program_error(
         error_line, error_code);
     driver_tty_output_raw(app, &app->cout.tty_error, error_code_string);
 
-    /** TODO: not use macros and move to 3bc_errors.h **/
+    /** @todo not use macros and move to 3bc_errors.h **/
 #if !defined(TBC_OPT_COMPACT)
     switch ((long)(error_code)) {
 #if defined(SIGSEGV)
@@ -127,7 +127,7 @@ void driver_program_error(
     driver_tty_output_raw(app, &app->cout.tty_error, "\n");
 #endif
 
-    /** TODO: no closign when else **/
+    /** @todo no closign when else **/
     if (error_code >= ERROR_CPU_ZERO) {
         driver_power_signal(SIGTERM);
     }

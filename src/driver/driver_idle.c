@@ -38,7 +38,7 @@
  * following a lot of documented emoji smileys.
  * U+1F44A U+26BD
  *
- * TODO:
+ * @todo
  * Support esp32/esp8266 real sleep on arduino framework.
  */
 
@@ -147,7 +147,7 @@ bool driver_idle(struct app_3bc_s* const app)
 #elif defined(TBC_P_COMPUTER) && defined(CLOCK_REALTIME)                       \
     && !defined(TBC_NOT_CLOCK)
         /**
-         * TODO: 40 milliseconds is not such a good precision,
+         * @todo 40 milliseconds is not such a good precision,
          * the algorithm should be improved for this case.
          */
         clock_gettime(CLOCK_REALTIME, &global_time.ts);

@@ -91,7 +91,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
         /** NOTE: garbage collector routine has negatives values **/
         else if (TBC_RET_GC_LV1 >= self->rc && self->rc >= TBC_RET_GC_LV4) {
             driver_gc(self);
-            /** TODO: change to break */
+            /** @todo change to break */
             return true;
         }
     }
@@ -195,7 +195,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
 
     /**
      * INPUT CONTEXT
-     * TODO: this
+     * @todo this
     case FSM_3BC_IO_READ:
         self->state = FSM_3BC_RUNNING;
         return true;*/
@@ -223,7 +223,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
      */
     case FSM_3BC_EXITING:
         driver_power_exit(self);
-        /** @todo investigate why not set*/
+        /** @todo investigate why not set **/
         self->state = FSM_3BC_STOPED;
         return false;
     }

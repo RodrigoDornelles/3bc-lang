@@ -35,7 +35,7 @@
 #ifndef H_TYPES_TBC
 #define H_TYPES_TBC
 
-/** TODO: move **/
+/** @todo move **/
 typedef struct app_3bc_s tbc_app_st;
 
 #include "3bc_detect.h"
@@ -86,7 +86,7 @@ typedef unsigned char memory_conf_t;
 typedef signed int data_3bc_t;
 typedef signed long data_aux_3bc_t;
 
-/** TODO: remove line_3bc_t **/
+/** @todo remove line_3bc_t **/
 typedef line_3bc_t tbc_line_t;
 
 /** application 3bc id (depends of cpu size)**/
@@ -188,7 +188,7 @@ struct app_3bc_s {
 typedef void (*function_3bc_t)(
     struct app_3bc_s* const, register_3bc_t, address_3bc_t, data_3bc_t);
 
-/** todo: remove time.h **/
+/** @todo remove time.h **/
 #include <time.h>
 
 /** GLOBAL TYPES **/

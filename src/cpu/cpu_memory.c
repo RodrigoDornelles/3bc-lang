@@ -157,7 +157,7 @@ void cpu_memory_aux_push(PARAMS_DEFINE)
 void cpu_memory_aux_spin(PARAMS_DEFINE)
 {
     VALIDATE_NOT_VALUES
-    /** TODO: this
+    /** @todo this
     {
         data_3bc_t aux_old = AUX;
         driver_accumulator_set(app, driver_memory_data_get(app, address));

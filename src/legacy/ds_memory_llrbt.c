@@ -175,7 +175,7 @@ struct memory_node_s* ds_memory_llrbt_clear(
 }
 
 /**
- * TODO: unify function with ds_memory_llrbt_insert?
+ * @todo unify function with ds_memory_llrbt_insert?
  */
 struct memory_node_s* ds_memory_llrbt_access(
     struct app_3bc_s* const app, address_3bc_t address)
@@ -225,7 +225,7 @@ struct memory_node_s* ds_memory_llrbt_insert(
         node->right = ds_memory_llrbt_insert(address, node->right);
     }
     /**
-     * TODO: ????
+     * @todo ????
      * unless address exists see: ds_memory_llrbt_access
      *   else {
      *       return node;

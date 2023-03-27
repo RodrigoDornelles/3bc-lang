@@ -30,7 +30,7 @@ union cache_l1_u {
     /** system call id */
     tbc_syscall_et syscall;
     /** use for conditionals (same cycle) */
-    bool is; /**< TODO: remove **/
+    bool is; /**< @todo remove **/
 };
 
 union cache_l2_u {

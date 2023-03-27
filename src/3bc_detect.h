@@ -135,7 +135,7 @@
 #define TBC_CONSOLE_NES
 #define TBC_OPT_ULTRA_COMPACT
 #undef TBC_P_COMPUTER
-/** TODO: remove **/ 
+/** @todo remove **/ 
 #define _3BC_DISABLE_INTERPRETER
 #endif
 
@@ -170,7 +170,7 @@
 /**
  * PLATAFORM: KERNEL NUTTX
  *
- * TODO: replace '__nuttx__' by another compiler constant
+ * @todo replace '__nuttx__' by another compiler constant
  * that is from the compiler.
  */
 #if defined(__nuttx__)
@@ -372,7 +372,7 @@
  *                                   | |
  *                                   |_|
  * BRIEF: helper to find serial speed according to hardware.
- * TODO: improving this list is constant work.
+ * @todo improving this list is constant work.
  */
 #if defined(__AVR_ATmega8__)
 #define TBC_SERIAL_SPEED 9600

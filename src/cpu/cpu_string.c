@@ -72,10 +72,10 @@ void cpu_string_output(PARAMS_DEFINE)
                 app->cache_l3.fixbuf.storage[0] = app->mem_aux;
             }
             else {
-                /** TODO: fix negative bit **/
+                /** @todo fix negative bit **/
                 if (app->mem_aux & 0b10000000) {
                     out += 1;
-                    app->mem_aux = (uint8_t) -app->mem_aux;
+                    app->mem_aux = (tbc_u8_t) -app->mem_aux;
                     app->cache_l3.fixbuf.size += 1;
                     app->cache_l3.fixbuf.storage[0] = '-';
                 }

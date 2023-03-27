@@ -55,8 +55,8 @@ void interpreter_ticket(tbc_app_st *const self)
 /**
  * Default entry point to the interpreter, works asynchronously.
  *
- * TODO: refactor single point of return, no implicit outputs.
- * TODO: do{} while(0);
+ * @todo refactor single point of return, no implicit outputs.
+ * @todo do{} while(0);
  */
 void interpreter_ticket(tbc_app_st *const self)
 {

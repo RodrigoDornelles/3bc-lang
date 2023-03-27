@@ -91,7 +91,7 @@
 #include <nes.h>
 #endif
 
-/** TODO: move to supporting file **/
+/** @todo move to supporting file **/
 #ifndef SIGTERM
 #define SIGTERM (15)
 #endif

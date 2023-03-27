@@ -173,7 +173,7 @@ void driver_program_tick(struct app_3bc_s* const app);
 void ds_procedure_lifo_push(struct app_3bc_s* const app);
 struct line_node_s* ds_procedure_lifo_pop(struct app_3bc_s* const app);
 /*****************************************************************************/
-/** TODO: move **/
+/** @todo move **/
 int interpreter(struct app_3bc_s* const app);
 void driver_custom_set(struct app_3bc_s* const app, cpumode_3bc_t cpu_mode,
     register_3bc_t reg, function_3bc_t lambda);
