@@ -16,13 +16,51 @@ struct ___tbc_fixed_buffer_s {
     tbc_u8_t size;
 };
 
+/**
+ * @short out of cache internal registers
+ * @brief complete layout of all internal registers that inside
+ * of the virtual machine's CPU, this is a highly volatile low-level resource.
+ * @warning this requires **advanced programming** skills.
+ * 
+ * @startuml cache_l0
+ * rectangle "CPU Cache Lv 0" {
+ *  rectangle rx
+ *  rectangle ry
+ *  rectangle rz
+ *  rectangle ra
+ *  rectangle rm
+ * }
+ * @enduml
+ */
 struct ___tbc_cache_l0_s {
-    /** first column (3 bits) */
+    /** 
+     * @short first column
+     * @brief behavior of instruction
+     * @note 3 bits
+     */
     tbc_u8_t rx;
-    /** second column (9 bits) */
+    /**
+     * @short second column 
+     * @brief address related of instruction
+     * @note 9 bits
+     */
     tbc_u16_t ry;
-    /** third column (12 bits)*/
+    /** 
+     * @short third column
+     * @brief constant value of instruction
+     * @note 12 bits
+     */
     tbc_u16_t rz;
+    /**
+     * @short cpu mode
+     * @brief current context of virtual machine
+     */
+    tbc_u8_t rm;
+    /** 
+     * @short accumulator
+     * @brief auxiliary memory of logical and arithmetic unity 
+     */
+    tbc_i16_t ra;
 };
 
 union cache_l1_u {

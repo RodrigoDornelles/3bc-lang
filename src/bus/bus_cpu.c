@@ -71,7 +71,8 @@ void bus_cpu(struct app_3bc_s* const self)
             break;
         }
 
-        self->hyperload = (*layout_cpu[2].opcodes)[self->cache_l0.rx - 1];
+        self->hyperload =
+            (*layout_cpu[self->cache_l0.rm].opcodes)[self->cache_l0.rx - 1];
     }
     while(0);
 }

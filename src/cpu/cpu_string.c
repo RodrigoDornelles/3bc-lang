@@ -70,7 +70,7 @@ void cpu_string_output(struct app_3bc_s* const self)
             } 
             else {
                 /* rz */
-                self->mem_aux = self->cache_l0.rz;
+                self->cache_l0.ra = self->cache_l0.rz;
             }
         }
 
@@ -81,28 +81,28 @@ void cpu_string_output(struct app_3bc_s* const self)
             if (self->cache_l0.rx == STRC)
             {
                 self->cache_l3.fixbuf.size = 1;
-                self->cache_l3.fixbuf.storage[0] = self->mem_aux;
+                self->cache_l3.fixbuf.storage[0] = self->cache_l0.ra;
             }
             else {
                 /** @todo fix negative bit **/
-                if (self->mem_aux & 0b10000000) {
+                if (self->cache_l0.ra & 0b10000000) {
                     out += 1;
-                    self->mem_aux = (tbc_u8_t) -self->mem_aux;
+                    self->cache_l0.ra = (tbc_u8_t) -self->cache_l0.ra;
                     self->cache_l3.fixbuf.size += 1;
                     self->cache_l3.fixbuf.storage[0] = '-';
                 }
                 switch(self->cache_l0.rx)
                 {
                     case STRO:
-                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%o", (unsigned int) self->mem_aux);
+                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%o", (unsigned int) self->cache_l0.ra);
                         break;
 
                     case STRI:
-                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%u", (unsigned int) self->mem_aux);
+                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%u", (unsigned int) self->cache_l0.ra);
                         break;
 
                     case STRX:
-                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%x", (unsigned int) self->mem_aux);
+                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%x", (unsigned int) self->cache_l0.ra);
                         break;                    
                 }
             }

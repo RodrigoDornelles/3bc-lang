@@ -172,8 +172,6 @@ struct app_3bc_s {
     app_3bc_id id;
     tbc_app_fsm_et state;
     tbc_app_fsm_et previous;
-    data_aux_3bc_t mem_aux;
-    cpumode_3bc_t cpu_mode;
     tbc_return_et rc;
     tbc_error_et error_code;
     tbc_cache_l0_st cache_l0;

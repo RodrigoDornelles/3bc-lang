@@ -37,10 +37,10 @@
 
 data_aux_3bc_t driver_accumulator_get(struct app_3bc_s* const app)
 {
-    return app->mem_aux;
+    return app->cache_l0.ra;
 }
 
 void driver_accumulator_set(struct app_3bc_s* const app, data_aux_3bc_t value)
 {
-    app->mem_aux = value;
+    app->cache_l0.ra = value;
 }

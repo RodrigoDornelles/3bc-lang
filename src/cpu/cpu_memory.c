@@ -42,7 +42,7 @@ void cpu_memory_free(PARAMS_DEFINE)
     if (!app->cache_l1.syscall) {
         app->rc = TBC_RET_SYSCALL;
         app->cache_l1.syscall = TBC_SYS_MEM_WRITE;
-        app->mem_aux ^= app->mem_aux;
+        app->cache_l0.ra ^= app->cache_l0.ra;
     }
     else {
         app->rc = TBC_RET_GC_LV1;
@@ -55,7 +55,7 @@ void cpu_memory_aloc(PARAMS_DEFINE)
     if (!app->cache_l1.syscall) {
         app->rc = TBC_RET_SYSCALL;
         app->cache_l1.syscall = TBC_SYS_MEM_WRITE;
-        app->mem_aux = app->cache_l0.rz;
+        app->cache_l0.ra = app->cache_l0.rz;
     }
     else {
         app->rc = TBC_RET_GC_LV1;
@@ -118,13 +118,13 @@ void cpu_memory_aux_free(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
     VALIDATE_NOT_VALUES
-    app->mem_aux ^= app->mem_aux;
+    app->cache_l0.ra ^= app->cache_l0.ra;
 }
 
 void cpu_memory_aux_aloc(PARAMS_DEFINE)
 {
     VALIDATE_NOT_ADRESS
-    app->mem_aux = app->cache_l0.rz;
+    app->cache_l0.ra = app->cache_l0.rz;
 }
 
 void cpu_memory_aux_pull(PARAMS_DEFINE)

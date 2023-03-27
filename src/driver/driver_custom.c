@@ -80,7 +80,7 @@ void driver_custom_set(struct app_3bc_s* const app, cpumode_3bc_t cpu_mode,
 void driver_custom_call(struct app_3bc_s* const app, register_3bc_t reg,
     address_3bc_t address, data_3bc_t value)
 {
-    unsigned char atual_func = ((app->cpu_mode / 10) - 1) * 6 + reg;
+    unsigned char atual_func = ((app->cache_l0.rm / 10) - 1) * 6 + reg;
 
     /** custom function not found **/
     if (custom_funcs == NULL || custom_funcs[atual_func] == NULL
