@@ -34,7 +34,7 @@
 
 #include "3bc.h"
 
-void cpu_string_output(struct app_3bc_s* const self);
+static void cpu_string_output(struct app_3bc_s* const self);
 
 tbc_method_ft ___cpu_string_layout[] = {
     cpu_string_output, cpu_string_output, cpu_string_output,

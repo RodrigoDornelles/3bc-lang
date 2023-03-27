@@ -64,12 +64,14 @@ void bus_cpu(struct app_3bc_s* const self)
     do {
         if (self->cache_l0.rx == NILL) {
             self->hyperload = cpu_common_null;
+            break;
         }
         if (self->cache_l0.rx == MODE) {
             self->hyperload = cpu_common_mode;
+            break;
         }
 
-        self->hyperload = **layout_cpu[2].opcodes;
+        self->hyperload = (*layout_cpu[2].opcodes)[self->cache_l0.rx - 1];
     }
     while(0);
 }
