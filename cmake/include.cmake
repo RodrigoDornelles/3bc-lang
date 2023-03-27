@@ -1,5 +1,6 @@
 include_directories("${CMAKE_SOURCE_DIR}/src")
 include_directories("${CMAKE_SOURCE_DIR}/src/bus")
+include_directories("${CMAKE_SOURCE_DIR}/src/cpu")
 include_directories("${CMAKE_SOURCE_DIR}/src/ds")
 include_directories("${CMAKE_SOURCE_DIR}/src/pkg")
 include_directories("${CMAKE_SOURCE_DIR}/src/sys")

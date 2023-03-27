@@ -61,8 +61,6 @@ void cpu_bool_nand(PARAMS_DEFINE);
 void cpu_bool_nor(PARAMS_DEFINE);
 void cpu_bool_xnor(PARAMS_DEFINE);
 /*****************************************************************************/
-void cpu_null(PARAMS_DEFINE);
-void cpu_mode(PARAMS_DEFINE);
 void cpu_not_mode(PARAMS_DEFINE);
 void cpu_not_exist(PARAMS_DEFINE);
 void cpu_mode_reserved(PARAMS_DEFINE);
@@ -118,7 +116,6 @@ void cpu_sleep_mili(PARAMS_DEFINE);
 void cpu_sleep_seco(PARAMS_DEFINE);
 /*****************************************************************************/
 void cpu_string_debug(PARAMS_DEFINE);
-void cpu_string_output(PARAMS_DEFINE);
 void cpu_string_input(PARAMS_DEFINE);
 void cpu_string_input_silent(PARAMS_DEFINE);
 void cpu_string_input_password(PARAMS_DEFINE);

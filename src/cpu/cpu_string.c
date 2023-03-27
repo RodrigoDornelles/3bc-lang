@@ -32,75 +32,87 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
+void cpu_string_output(struct app_3bc_s* const self);
+
+tbc_method_ft ___cpu_string_layout[] = {
+    cpu_string_output, cpu_string_output, cpu_string_output,
+    cpu_string_output, cpu_string_output
+};
+
+const unsigned char cpu_string_layout_size = sizeof(___cpu_string_layout);
+const void* cpu_string_layout_opcodes = ___cpu_string_layout;
+
+/**
+ * @todo refact
+ */
 void cpu_string_debug(PARAMS_DEFINE)
 {
     VALIDATE_NOT_DUALITY
     driver_tty_output(app, &app->cout.tty_debug, reg, GET_ANY_PARAM);
 }
 
-void cpu_string_output(PARAMS_DEFINE)
+void cpu_string_output(struct app_3bc_s* const self)
 {
     do {
-        if (app->cache_l1.syscall == TBC_SYS_NONE) {
-            if (app->cache_l0.ry) {
-                if (app->cache_l0.rz) {
-                    /** ry && rz **/
-                    driver_program_error(app, ERROR_PARAM_DUALITY);
+        if (self->cache_l1.syscall == TBC_SYS_NONE) {
+            if (self->cache_l0.ry) {
+                if (self->cache_l0.rz) {
+                    /* ry && rz */
+                    driver_program_error(self, ERROR_PARAM_DUALITY);
                     break;
                 } 
-                /** ry **/
-                app->rc = TBC_RET_SYSCALL;
-                app->cache_l1.syscall = TBC_SYS_MEM_READ;
+                /* ry */
+                self->rc = TBC_RET_SYSCALL;
+                self->cache_l1.syscall = TBC_SYS_MEM_READ;
                 break;
             } 
             else {
-                /** rz **/
-                app->mem_aux = app->cache_l0.rz;
+                /* rz */
+                self->mem_aux = self->cache_l0.rz;
             }
         }
 
-        if (app->cache_l1.syscall != TBC_SYS_IO_WRITE) {
-            char* out = app->cache_l3.fixbuf.storage;
-            static const size_t out_size = sizeof(app->cache_l3.fixbuf.storage);
+        if (self->cache_l1.syscall != TBC_SYS_IO_WRITE) {
+            char* out = self->cache_l3.fixbuf.storage;
+            static const size_t out_size = sizeof(self->cache_l3.fixbuf.storage);
 
-            if (app->cache_l0.rx == STRC)
+            if (self->cache_l0.rx == STRC)
             {
-                app->cache_l3.fixbuf.size = 1;
-                app->cache_l3.fixbuf.storage[0] = app->mem_aux;
+                self->cache_l3.fixbuf.size = 1;
+                self->cache_l3.fixbuf.storage[0] = self->mem_aux;
             }
             else {
                 /** @todo fix negative bit **/
-                if (app->mem_aux & 0b10000000) {
+                if (self->mem_aux & 0b10000000) {
                     out += 1;
-                    app->mem_aux = (tbc_u8_t) -app->mem_aux;
-                    app->cache_l3.fixbuf.size += 1;
-                    app->cache_l3.fixbuf.storage[0] = '-';
+                    self->mem_aux = (tbc_u8_t) -self->mem_aux;
+                    self->cache_l3.fixbuf.size += 1;
+                    self->cache_l3.fixbuf.storage[0] = '-';
                 }
-                switch(app->cache_l0.rx)
+                switch(self->cache_l0.rx)
                 {
                     case STRO:
-                        app->cache_l3.fixbuf.size += snprintf(out, out_size, "%o", app->mem_aux);
+                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%o", (unsigned int) self->mem_aux);
                         break;
 
                     case STRI:
-                        app->cache_l3.fixbuf.size += snprintf(out, out_size, "%d", app->mem_aux);
+                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%u", (unsigned int) self->mem_aux);
                         break;
 
                     case STRX:
-                        app->cache_l3.fixbuf.size += snprintf(out, out_size, "%x", app->mem_aux);
+                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%x", (unsigned int) self->mem_aux);
                         break;                    
                 }
             }
-            app->cache_l2.tty = &(app->cout.tty_output);
-            app->cache_l1.syscall = TBC_SYS_IO_WRITE;
-            app->rc = TBC_RET_SYSCALL;
+            self->cache_l2.tty = &(self->cout.tty_output);
+            self->cache_l1.syscall = TBC_SYS_IO_WRITE;
+            self->rc = TBC_RET_SYSCALL;
             break;
         }
 
-        app->rc = TBC_RET_GC_LV3;
+        self->rc = TBC_RET_GC_LV3;
         break;
     }
     while (0);

@@ -112,7 +112,4 @@
 /** functions prototypes **/
 #include "3bc_header.h"
 
-/* opcodes and witchcraft **/
-#include "bus_registers.h"
-
 #endif

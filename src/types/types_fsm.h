@@ -16,7 +16,9 @@ enum ___tbc_app_fsm_e {
     FSM_3BC_IO_READ = 10,
     FSM_3BC_IO_WRITE = 11,
     FSM_3BC_EXITING = 12,
-    FSM_3BC_STOPED = 13
+    FSM_3BC_STOPED = 13,
+    FSM_3BC_VACUUM = 14,
+    FSM_3BC_LOADING = 15
 };
 
 /** IDLE INTERRUPTS **/

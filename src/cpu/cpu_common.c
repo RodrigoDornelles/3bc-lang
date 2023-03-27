@@ -35,12 +35,12 @@
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
-void cpu_null(PARAMS_DEFINE) { }
+void cpu_common_null(struct app_3bc_s* const self) {}
 
-void cpu_mode(PARAMS_DEFINE)
+void cpu_common_mode(struct app_3bc_s* const self)
 {
-    VALIDATE_NOT_ADRESS
-    driver_mode_set(app, value);
+    /// @todo: VALIDATE_NOT_ADRESS
+    driver_mode_set(self, self->cache_l0.rz);
 }
 
 void cpu_not_mode(PARAMS_DEFINE)

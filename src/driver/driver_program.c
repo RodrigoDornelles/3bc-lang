@@ -132,18 +132,3 @@ void driver_program_error(
         driver_power_signal(SIGTERM);
     }
 }
-
-/**
- * run processor instructions,
- * this is a core of virtual machine
- */
-void driver_program_tick(struct app_3bc_s* const app)
-{
-    app->cache_l0.rx = app->program.curr->column.reg;
-    app->cache_l0.ry = app->program.curr->column.adr;
-    app->cache_l0.rz = app->program.curr->column.dta;
-    instruction_3bc(app);
-
-    /** go next line **/
-    app->program.curr = app->program.curr->next;
-}

@@ -43,6 +43,7 @@
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
 #include "driver_gc.h"
+#include "bus_cpu.h"
 #include "pkg_std_0000.h"
 
 /**
@@ -128,7 +129,8 @@ bool driver_interrupt(struct app_3bc_s* const self)
 
         /* evaluate */
         self->pkg_func->prog.load(self);
-        instruction_3bc(self);
+        bus_cpu(self);
+        self->hyperload(self);
 
         /* soft interrupt **/
         if (self->rc == TBC_RET_SYSCALL) {

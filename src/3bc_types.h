@@ -165,6 +165,8 @@ struct memory_3bc_s {
     void (*conf_set)(app_3bc_id, address_3bc_t, data_3bc_t);
 };
 
+typedef void (*tbc_method_ft)(struct app_3bc_s* const);
+
 /** APLICATION **/
 struct app_3bc_s {
     app_3bc_id id;
@@ -183,6 +185,7 @@ struct app_3bc_s {
     struct program_3bc_s program;
     struct memory_3bc_s memory;
     tbc_pkg_st* pkg_func;
+    tbc_method_ft hyperload;
 };
 
 typedef void (*function_3bc_t)(
