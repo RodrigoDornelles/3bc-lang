@@ -23,6 +23,6 @@ INPUT_FILTER 		   = ./scripts/filter_doxygen.sh
 GENERATE_TREEVIEW      = YES
 DISABLE_INDEX          = NO
 FULL_SIDEBAR           = NO
-HTML_EXTRA_STYLESHEET  = /usr/local/share/doxygen-awesome-css/doxygen-awesome.css \
-                        /usr/local/share/doxygen-awesome-css/doxygen-awesome-sidebar-only.css
+HTML_EXTRA_STYLESHEET  = $(DOXYGEN_AWESOME_PATH)/doxygen-awesome.css \
+                         $(DOXYGEN_AWESOME_PATH)/doxygen-awesome-sidebar-only.css
 HTML_COLORSTYLE        = LIGHT
