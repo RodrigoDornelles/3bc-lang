@@ -76,9 +76,9 @@ char* interpreter_readln(struct app_3bc_s* const app, char* line)
     
     /** add new line **/
     //ds_program_fifo_line_add(app, reg, mem, val);
-    app->cache_l0.rx = reg;
-    app->cache_l0.ry = mem;
-    app->cache_l0.rz = val;
+    app->cpu.rx = reg;
+    app->cpu.ry = mem;
+    app->cpu.rz = val;
 
     return line;
 }

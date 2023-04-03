@@ -44,6 +44,7 @@ typedef struct app_3bc_s tbc_app_st;
 #include "types/types_opcodes.h"
 #include "types/types_fsm.h"
 #include "types/types_tty.h"
+#include "types/types_cpu.h"
 #include "types/types_cache.h"
 #include "types/types_return.h"
 #include "types_pkg.h"
@@ -174,7 +175,7 @@ struct app_3bc_s {
     tbc_app_fsm_et previous;
     tbc_return_et rc;
     tbc_error_et error_code;
-    tbc_cache_l0_st cache_l0;
+    tbc_cpu_st cpu;
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
     union cache_l3_u cache_l3;

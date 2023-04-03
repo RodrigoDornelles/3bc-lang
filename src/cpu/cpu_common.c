@@ -40,7 +40,7 @@ void cpu_common_null(struct app_3bc_s* const self) {}
 void cpu_common_mode(struct app_3bc_s* const self)
 {
     /// @todo: VALIDATE_NOT_ADRESS
-    driver_mode_set(self, self->cache_l0.rz);
+    driver_mode_set(self, self->cpu.rz);
 }
 
 void cpu_not_mode(PARAMS_DEFINE)

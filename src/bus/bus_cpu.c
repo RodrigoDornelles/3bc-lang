@@ -62,17 +62,17 @@ const static struct ___layout_cpu_s layout_cpu[] = {
 void bus_cpu(struct app_3bc_s* const self)
 {
     do {
-        if (self->cache_l0.rx == NILL) {
+        if (self->cpu.rx == NILL) {
             self->hyperload = cpu_common_null;
             break;
         }
-        if (self->cache_l0.rx == MODE) {
+        if (self->cpu.rx == MODE) {
             self->hyperload = cpu_common_mode;
             break;
         }
 
         self->hyperload =
-            (*layout_cpu[self->cache_l0.rm].opcodes)[self->cache_l0.rx - 1];
+            (*layout_cpu[self->cpu.rm].opcodes)[self->cpu.rx - 1];
     }
     while(0);
 }

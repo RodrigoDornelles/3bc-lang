@@ -57,8 +57,8 @@ void cpu_string_output(struct app_3bc_s* const self)
 {
     do {
         if (self->cache_l1.syscall == TBC_SYS_NONE) {
-            if (self->cache_l0.ry) {
-                if (self->cache_l0.rz) {
+            if (self->cpu.ry) {
+                if (self->cpu.rz) {
                     /* ry && rz */
                     driver_program_error(self, ERROR_PARAM_DUALITY);
                     break;
@@ -70,7 +70,7 @@ void cpu_string_output(struct app_3bc_s* const self)
             } 
             else {
                 /* rz */
-                self->cache_l0.ra = self->cache_l0.rz;
+                self->cpu.ra = self->cpu.rz;
             }
         }
 
@@ -78,31 +78,31 @@ void cpu_string_output(struct app_3bc_s* const self)
             char* out = self->cache_l3.fixbuf.storage;
             static const size_t out_size = sizeof(self->cache_l3.fixbuf.storage);
 
-            if (self->cache_l0.rx == STRC)
+            if (self->cpu.rx == STRC)
             {
                 self->cache_l3.fixbuf.size = 1;
-                self->cache_l3.fixbuf.storage[0] = self->cache_l0.ra;
+                self->cache_l3.fixbuf.storage[0] = self->cpu.ra;
             }
             else {
                 /** @todo fix negative bit **/
-                if (self->cache_l0.ra & 0b10000000) {
+                if (self->cpu.ra & 0b10000000) {
                     out += 1;
-                    self->cache_l0.ra = (tbc_u8_t) -self->cache_l0.ra;
+                    self->cpu.ra = (tbc_u8_t) -self->cpu.ra;
                     self->cache_l3.fixbuf.size += 1;
                     self->cache_l3.fixbuf.storage[0] = '-';
                 }
-                switch(self->cache_l0.rx)
+                switch(self->cpu.rx)
                 {
                     case STRO:
-                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%o", (unsigned int) self->cache_l0.ra);
+                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%o", (unsigned int) self->cpu.ra);
                         break;
 
                     case STRI:
-                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%u", (unsigned int) self->cache_l0.ra);
+                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%u", (unsigned int) self->cpu.ra);
                         break;
 
                     case STRX:
-                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%x", (unsigned int) self->cache_l0.ra);
+                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%x", (unsigned int) self->cpu.ra);
                         break;                    
                 }
             }

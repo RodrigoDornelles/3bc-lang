@@ -45,7 +45,7 @@ void driver_mode_set(struct app_3bc_s* const app, cpumode_3bc_t value)
     }
 
     /** after cpu mode change **/
-    switch (app->cache_l0.rm) {
+    switch (app->cpu.rm) {
     }
 
     /** before cpu mode change **/
@@ -53,5 +53,5 @@ void driver_mode_set(struct app_3bc_s* const app, cpumode_3bc_t value)
     }
 
     /** apply cpu mode **/
-    app->cache_l0.rm = value;
+    app->cpu.rm = value;
 }
