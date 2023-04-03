@@ -9,6 +9,8 @@ target_compile_definitions("tbc_cpu_no_math" PRIVATE TBC_NOT_MATH)
 # Bus
 add_library(tbc_bus_cpu_hello OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_cpu_hello.c")
 add_library(tbc_bus_sys_hello OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_sys_hello.c")
+add_library(tbc_bus_cpu_lang OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_cpu_lang.c")
+add_library(tbc_bus_sys_lang OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_sys_lang.c")
 
 # Datastruct dependencies
 FILE(GLOB tbc_ds_array_files "${CMAKE_SOURCE_DIR}/src/ds/*.c")
