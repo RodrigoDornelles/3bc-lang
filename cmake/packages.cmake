@@ -1,15 +1,14 @@
-add_library(tbc_pkg_std_hello OBJECT "${CMAKE_SOURCE_DIR}/src/pkg/pkg_std_hello.c")
-add_library(tbc_pkg_std_lang OBJECT "${CMAKE_SOURCE_DIR}/src/pkg/pkg_std_lang.c")
-
 # Standard Virtual Machine (CPU)
 FILE(GLOB tbc_cpu_std_files "${CMAKE_SOURCE_DIR}/src/cpu/*.c")
 add_library(tbc_cpu_std OBJECT ${tbc_cpu_std_files})
 add_library(tbc_cpu_no_math OBJECT ${tbc_cpu_std_files})
+add_library(tbc_cpu_hello OBJECT "${CMAKE_SOURCE_DIR}/src/cpu/cpu_string.c")
+target_compile_definitions("tbc_cpu_hello" PRIVATE TBC_NOT_MATH)
 target_compile_definitions("tbc_cpu_no_math" PRIVATE TBC_NOT_MATH)
 
 # Bus
-FILE(GLOB tbc_bus_std_files "${CMAKE_SOURCE_DIR}/src/bus/*.c")
-add_library(tbc_bus_std OBJECT ${tbc_bus_std_files})
+add_library(tbc_bus_cpu_hello OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_cpu_hello.c")
+add_library(tbc_bus_sys_hello OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_sys_hello.c")
 
 # Datastruct dependencies
 FILE(GLOB tbc_ds_array_files "${CMAKE_SOURCE_DIR}/src/ds/*.c")

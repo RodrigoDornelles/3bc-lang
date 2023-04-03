@@ -43,8 +43,8 @@
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
 #include "driver_gc.h"
-#include "bus_cpu.h"
-#include "pkg_std_0000.h"
+#include "bus_cpu_0000.h"
+#include "bus_sys_0000.h"
 
 /**
  * VM processor context manager, allows asychronism.
@@ -129,7 +129,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
 
         /* evaluate */
         self->pkg_func->prog.load(self);
-        bus_cpu(self);
+        driver_cpu(self);
         self->hyperload(self);
 
         /* soft interrupt **/

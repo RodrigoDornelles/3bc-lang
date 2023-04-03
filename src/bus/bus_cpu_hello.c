@@ -9,7 +9,7 @@
  *                                     __/ |             __/ |
  *                                    |___/             |___/
  * @endinternal
- * @file bus_cpu.c
+ * @file bus_cpu_hello.c
  *
  * @brief
  * Instruction set opcodes layout in virtual machine.
@@ -33,21 +33,14 @@
  * You should have received a copy of the GNU General Public License          \n
  * along with this program.  If not, see <https://www.gnu.org/licenses/>. 
  *
+ * @note
+ * Only cpu modes 1 & 2.
  */
 
-#include "3bc.h"
-#include "cpu_common.h"
+#include "bus_cpu_hello.h"
 #include "cpu_string.h"
 
-extern void cpu_string_output(struct app_3bc_s* const self);
-
-
-struct ___layout_cpu_s {
-    tbc_u8_t* size;
-    tbc_method_ft** opcodes;
-};
-
-const static struct ___layout_cpu_s layout_cpu[] = {
+static const tbc_layout_cpu_st ___layout_cpu[] = {
     {
         0, NULL,
     },
@@ -59,20 +52,9 @@ const static struct ___layout_cpu_s layout_cpu[] = {
     }
 };
 
-void bus_cpu(struct app_3bc_s* const self)
-{
-    do {
-        if (self->cpu.rx == NILL) {
-            self->hyperload = cpu_common_null;
-            break;
-        }
-        if (self->cpu.rx == MODE) {
-            self->hyperload = cpu_common_mode;
-            break;
-        }
 
-        self->hyperload =
-            (*layout_cpu[self->cpu.rm].opcodes)[self->cpu.rx - 1];
-    }
-    while(0);
-}
+const tbc_u8_t tbc_layout_cpu_modes = sizeof(___layout_cpu)/sizeof(tbc_layout_cpu_st);
+
+const tbc_size_t tbc_layout_cpu_bytes = sizeof(___layout_cpu);
+
+const tbc_layout_cpu_st* tbc_layout_cpu_funcs = ___layout_cpu;
