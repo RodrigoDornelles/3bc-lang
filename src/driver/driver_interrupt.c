@@ -42,6 +42,7 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
+#include "driver_cpu.h"
 #include "driver_gc.h"
 #include "bus_cpu_0000.h"
 #include "bus_sys_0000.h"

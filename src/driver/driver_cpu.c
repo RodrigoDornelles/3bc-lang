@@ -1,3 +1,4 @@
+#include "driver_cpu.h"
 #include "cpu_common.h"
 #include "bus_cpu_0000.h"
 

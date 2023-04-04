@@ -5,6 +5,7 @@
 
 #if defined(TBC_CC_STD_99)
 #include <inttypes.h>
+#include <stddef.h>
 /** signed 8 bits **/
 typedef int8_t tbc_i8_t;
 /** signed 16 bits **/
