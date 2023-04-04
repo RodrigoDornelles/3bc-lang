@@ -48,30 +48,59 @@
 #include "bus_sys_0000.h"
 
 /**
- * VM processor context manager, allows asychronism.
+ * @short VM processor context manager, allows asychronism.
  *
- * @startuml
+ * @brief
+ * all the functioning of the virtual machine runtime
+ * including context manager, state machine, errors,
+ * connection between guest drivers and host drivers,
+ * and hardware and software interrupts is being handled
+ * by this function.
+ *
+ * @note
+ * **guest drivers** is a @ref src/driver source files.                      \n
+ * **host drivers** is a @ref src/sys source files.                          \n
+ *
+ * @par Finite State Machine
+ * @startuml fsm
  * [*] --> FSM_3BC_DEFAULT
- * FSM_3BC_DEFAULT --> FSM_3BC_STARTING
- * FSM_3BC_STARTING --> FSM_3BC_VACUUM
- * FSM_3BC_VACUUM --> FSM_3BC_INTERPRETER
+ * FSM_3BC_DEFAULT -right-> FSM_3BC_STARTING
+ * FSM_3BC_STARTING -right-> FSM_3BC_VACUUM
+ * FSM_3BC_VACUUM -down-> FSM_3BC_INTERPRETER
  * FSM_3BC_RUNNING --> FSM_3BC_ERROR
- * FSM_3BC_RUNNING --> FSM_3BC_RUNNING
- * FSM_3BC_RUNNING --> FSM_3BC_SYSCALL
- * FSM_3BC_RUNNING --> FSM_3BC_COUNTING
- * FSM_3BC_SYSCALL --> FSM_3BC_SYSCALL
- * FSM_3BC_SYSCALL --> FSM_3BC_RUNNING
- * FSM_3BC_SYSCALL --> FSM_3BC_ERROR
- * FSM_3BC_INTERPRETER --> FSM_3BC_INTERPRETER
- * FSM_3BC_INTERPRETER --> FSM_3BC_LOADING
+ * FSM_3BC_RUNNING -right-> FSM_3BC_COUNTING
+ * FSM_3BC_RUNNING --> FSM_3BC_EXITING
+ * FSM_3BC_INTERPRETER -right-> FSM_3BC_LOADING
  * FSM_3BC_INTERPRETER --> FSM_3BC_EXITING
  * FSM_3BC_INTERPRETER --> FSM_3BC_ERROR
- * FSM_3BC_SYSCALL --> FSM_3BC_EXITING
- * FSM_3BC_LOADING --> FSM_3BC_RUNNING
+ * FSM_3BC_LOADING -right-> FSM_3BC_RUNNING
+ * FSM_3BC_LOADING -right-> FSM_3BC_ERROR
  * FSM_3BC_COUNTING --> FSM_3BC_VACUUM
  * FSM_3BC_ERROR --> FSM_3BC_EXITING
- * FSM_3BC_EXITING --> FSM_3BC_STOPED
+ * FSM_3BC_EXITING -right-> FSM_3BC_STOPED
  * FSM_3BC_STOPED --> [*]
+ * @enduml
+ * 
+ * @startuml interrupts
+ * rectangle "Interrupts" {
+ * rectangle "Force stoped"
+ * rectangle "Garbage Collector" {
+ *    rectangle LV1
+ *    rectangle LV2
+ *    rectangle LV3
+ *    rectangle LV4
+ *    LV4 -right-> LV3
+ *    LV3 -down-> LV2
+ *    LV2 -left-> LV1
+ *  }
+ *  rectangle "Syscall" {
+ *    rectangle "Input"
+ *    rectangle "Output" 
+ *    rectangle "Idle"
+ *    rectangle "Memory Read"
+ *    rectangle "Memory Write"
+ *  }
+ * }
  * @enduml
  */
 bool driver_interrupt(struct app_3bc_s* const self)
