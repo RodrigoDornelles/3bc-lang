@@ -43,6 +43,7 @@ _site/
 test_*
 Makefile
 CMakeCache.txt
+CopyOfCMakeCache.txt
 cmake_install.cmake
 CTestTestfile.cmake
 CMakeFiles/
