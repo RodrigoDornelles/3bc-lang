@@ -1,12 +1,11 @@
 #include "driver_cpu.h"
-#include "cpu_common.h"
 #include "bus_cpu_0000.h"
 
 void driver_cpu(struct app_3bc_s* const self)
 {
     do {
         if (self->cpu.rx == NILL) {
-            self->hyperload = cpu_common_null;
+            self->hyperload = NULL;
             break;
         }
         if (self->cpu.rx == MODE) {
@@ -14,7 +13,8 @@ void driver_cpu(struct app_3bc_s* const self)
                 /** @todo: error*/
                 break;
             }
-            self->hyperload = cpu_common_mode;
+            self->cpu.rm = self->cpu.rz;
+            self->hyperload = NULL;
             break;
         }
         if (self->cpu.rx >= (*tbc_layout_cpu_funcs[self->cpu.rm].size)) {

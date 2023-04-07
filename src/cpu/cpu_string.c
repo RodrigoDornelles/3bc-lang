@@ -53,6 +53,18 @@ void cpu_string_debug(PARAMS_DEFINE)
     driver_tty_output(app, &app->cout.tty_debug, reg, GET_ANY_PARAM);
 }
 
+/**
+ * @startuml
+ * (*) --> if "register column?" then
+ *  -->[RY] "Read memory"
+ *  --> "IO Write"
+ * else
+ *  -->[RZ] "IO Write"
+ * endif
+ * --> "Garbage Collector"
+ * --> (*)
+ * @enduml
+ */
 void cpu_string_output(struct app_3bc_s* const self)
 {
     do {
