@@ -1,16 +1,22 @@
 #include <unistd.h>
 #include "sys_posix_output.h"
 
+/**
+ * @todo: self->cache_l2.tty->io.fid
+ */
 void sys_posix_output(tbc_app_st *const self)
 {
-    /** protect disabled tty */
-    if (self->cache_l2.tty) {
-#if !defined(TBC_NOT_FILES)
+    if (self->cache_l3.fixbuf.size > 0) {
         write(
-            1,//self->cache_l2.tty->io.fid, 
+            1,
             self->cache_l3.fixbuf.storage,
             self->cache_l3.fixbuf.size
         );
-#endif
+    } else {
+        write(
+            1, 
+            self->cache_l3.buffer.storage,
+            -self->cache_l3.buffer.size
+        );
     }
 }

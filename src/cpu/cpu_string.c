@@ -56,25 +56,19 @@ void cpu_string_debug(PARAMS_DEFINE)
 void cpu_string_output(struct app_3bc_s* const self)
 {
     do {
-        if (self->cache_l1.syscall == TBC_SYS_NONE) {
+        if (self->rc == TBC_RET_OK) {
             if (self->cpu.ry) {
-                if (self->cpu.rz) {
-                    /* ry && rz */
-                    driver_program_error(self, ERROR_PARAM_DUALITY);
-                    break;
-                } 
-                /* ry */
-                self->rc = TBC_RET_SYSCALL;
-                self->cache_l1.syscall = TBC_SYS_MEM_READ;
+                self->rc = TBC_RET_SYS_MEM_READ;
                 break;
             } 
-            else {
-                /* rz */
-                self->cpu.ra = self->cpu.rz;
-            }
+            self->cpu.ra = self->cpu.rz;
         }
 
-        if (self->cache_l1.syscall != TBC_SYS_IO_WRITE) {
+        if (self->rc == TBC_RET_SYS_MEM_READ) {
+            self->rc = TBC_RET_OK;
+        }
+
+        if (self->rc == TBC_RET_OK) {
             char* out = self->cache_l3.fixbuf.storage;
             static const size_t out_size = sizeof(self->cache_l3.fixbuf.storage);
 
@@ -107,12 +101,16 @@ void cpu_string_output(struct app_3bc_s* const self)
                 }
             }
             self->cache_l2.tty = &(self->cout.tty_output);
-            self->cache_l1.syscall = TBC_SYS_IO_WRITE;
-            self->rc = TBC_RET_SYSCALL;
+            self->rc = TBC_RET_SYS_IO_WRITE;
             break;
         }
 
-        self->rc = TBC_RET_GC_LV3;
+        if (self->rc == TBC_RET_SYS_IO_WRITE) {
+            self->rc = TBC_RET_GC_LV3;
+            break;
+        }
+
+        self->rc = TBC_RET_OK;
         break;
     }
     while (0);

@@ -41,12 +41,29 @@
 #include <string.h>
 
 /**
- * @brief internal garbage collector
- * @note the final **3bc language** programmer
+ * @short internal garbage collector
+ *
+ * @brief small implementation for garbage collection routine,
+ * it is used to facilitate the development of the project and
+ * reduce the amount of code to release codes,
+ * since all dynamic use shared memory region.
+ *
+ * @note the @ref TBC_RET_GC_END is internal reserved value,
+ * this value convert automatic to @ref TBC_RET_GC_OK.
+ * 
+ * @attention the final **3bc language** programmer
  * does **not have access to the GC** feature,
  * this implementation concerns only the runtime source code.
  *
  * @startuml
+ *
+ * TBC_RET_GC_OK: does not interrupt
+ * TBC_RET_GC_LV1: interrupt sytem
+ * TBC_RET_GC_LV2: interrupt sytem
+ * TBC_RET_GC_LV3: interrupt sytem
+ * TBC_RET_GC_LV4: interrupt sytem
+ * TBC_RET_GC_END: internal only
+ *
  * [*] --> TBC_RET_GC_LV4
  * [*] --> TBC_RET_GC_LV3
  * [*] --> TBC_RET_GC_LV2
@@ -54,8 +71,10 @@
  * TBC_RET_GC_LV4 --> TBC_RET_GC_LV3
  * TBC_RET_GC_LV3 --> TBC_RET_GC_LV2
  * TBC_RET_GC_LV2 --> TBC_RET_GC_LV1
- * TBC_RET_GC_LV1 --> TBC_RET_GC_OK
+ * TBC_RET_GC_LV1 --> TBC_RET_GC_END
+ * TBC_RET_GC_END --> TBC_RET_GC_OK
  * TBC_RET_GC_OK --> [*]
+ *
  * @enduml
  */
 void driver_gc(struct app_3bc_s* const self)
@@ -81,10 +100,10 @@ void driver_gc(struct app_3bc_s* const self)
     }
 
     /* next level */
-    ++self->rc;
+    --self->rc;
 
-    /* finished gc */
-    if (self->rc == TBC_RET_OK) {
-        self->rc = TBC_RET_GC_END;
+    /* verify gc done rotine */
+    if (self->rc == TBC_RET_GC_END) {
+        self->rc = TBC_RET_GC_OK;
     }
 }

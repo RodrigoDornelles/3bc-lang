@@ -49,6 +49,9 @@
 
 /**
  * @short VM processor context manager, allows asychronism.
+ * @return it is currently running
+ * @retval true
+ * @retval false
  *
  * @brief
  * all the functioning of the virtual machine runtime
@@ -67,6 +70,7 @@
  * FSM_3BC_DEFAULT -right-> FSM_3BC_STARTING
  * FSM_3BC_STARTING -right-> FSM_3BC_VACUUM
  * FSM_3BC_VACUUM -down-> FSM_3BC_INTERPRETER
+ * FSM_3BC_VACUUM -down-> FSM_3BC_LOADING
  * FSM_3BC_RUNNING --> FSM_3BC_ERROR
  * FSM_3BC_RUNNING -right-> FSM_3BC_COUNTING
  * FSM_3BC_RUNNING --> FSM_3BC_EXITING
@@ -105,136 +109,122 @@
  */
 bool driver_interrupt(struct app_3bc_s* const self)
 {
-    /*
-     * HARD INTERRUPTS
-     */
-    if (self->rc < 0) {
-        if (self->rc == TBC_RET_EXIT) {
-            self->state = FSM_3BC_EXITING;
-        }
-        else if (self->rc == TBC_RET_EXIT_FORCE) {
-            self->state = FSM_3BC_STOPED;
-        }
-        /** NOTE: garbage collector routine has negatives values **/
-        else if (TBC_RET_GC_LV1 >= self->rc && self->rc >= TBC_RET_GC_LV4) {
-            driver_gc(self);
-            /** @todo change to break */
-            return true;
-        }
-    }
-
-    switch (self->state) {
-    case FSM_3BC_DEFAULT:
-        self->state = FSM_3BC_STARTING;
-        return true;
-
-    case FSM_3BC_STARTING:
-        self->pkg_func = (tbc_pkg_st*) &tbc_pkg_standard;
-        self->state = FSM_3BC_RUNNING;
-        return true;
-
-    case FSM_3BC_EXPAND:
-        self->pkg_func->prog.expand(self);
-        if(self->rc == TBC_RET_OK) {
-            self->state = FSM_3BC_READING;
-        }
-        return true;
-
-    case FSM_3BC_READING:
-        interpreter_ticket(self);
-        if (self->rc == TBC_RET_OK) {
-            self->state = FSM_3BC_RUNNING;
-        }
-        return true;
-
-    case FSM_3BC_RUNNING:
-        /** 
-         * @note cache level 0 is re-used in evaluate.
+    do {
+        /**
+         * @par mask @c 0x80 in @c self->rc
+         * @brief return code special cases.
+         * @c 0b10000000
+         * @li bit 7 must process something. (interrupt)
          */
-        self->pkg_func->prog.avaliable(self);
-        if (self->rc == TBC_RET_CLEAN) {
-            self->state = FSM_3BC_EXPAND;
-            return true;
+        if (self->rc & 0x80) {
+            switch (self->rc)
+            {
+                case TBC_RET_EXIT_SAFE:
+                    self->state = FSM_3BC_EXITING;
+                    break;
+
+                case TBC_RET_EXIT_FORCE:
+                    self->state = FSM_3BC_STOPED;
+                    break;
+
+                case TBC_RET_SYS_MEM_READ:
+                    self->pkg_func->ram.read(self);
+                    break;
+
+                case TBC_RET_SYS_MEM_WRITE:
+                    self->pkg_func->ram.write(self);
+                    break;
+
+                case TBC_RET_SYS_IO_READ:
+                    /** @todo self->pkg_func->io.read(self); **/
+                    break;
+
+                case TBC_RET_SYS_IO_WRITE:
+                    self->pkg_func->io.write(self);
+                    break;
+
+                case TBC_RET_GC_LV1:
+                case TBC_RET_GC_LV2:
+                case TBC_RET_GC_LV3:
+                case TBC_RET_GC_LV4:
+                    driver_gc(self);
+                    break;
+            }
+            /**
+             * @par mask @c 0x40 in @c self->rc
+             * @brief end processing cycle.
+             * @c 0b01000000
+             * @li bit 6 hard interrupts. (not execute machine state)
+             * @li bit 7 is pre-condition nested branch.
+             */
+            if (self->rc & 0x40) {
+                break;
+            }
         }
 
-        /* evaluate */
-        self->pkg_func->prog.load(self);
-        driver_cpu(self);
-        self->hyperload(self);
-
-        /* soft interrupt **/
-        if (self->rc == TBC_RET_SYSCALL) {
-            self->previous = self->state;
-            self->state = FSM_3BC_SYSCALL;
-            return true;
-        }
-        /* program counting **/
-        else {
-            self->state = FSM_3BC_COUNTING;
-        }
-        return true;
-
-    case FSM_3BC_COUNTING:
-        self->pkg_func->prog.next(self);
-        self->state = FSM_3BC_RUNNING;
-        return true;
-
-    case FSM_3BC_SYSCALL:
-        switch(self->cache_l1.syscall) {
-           case TBC_SYS_MEM_READ:
-            self->state = FSM_3BC_MEM_READ;
+        switch (self->state) {
+        case FSM_3BC_DEFAULT:
+            self->state = FSM_3BC_STARTING;
             break;
 
-            case TBC_SYS_MEM_WRITE:
-            self->state = FSM_3BC_MEM_WRITE;
+        case FSM_3BC_STARTING:
+            self->pkg_func = (tbc_pkg_st*) &tbc_pkg_standard;
+            self->state = FSM_3BC_VACUUM;
             break;
 
-            case TBC_SYS_IO_WRITE:
-            self->state = FSM_3BC_IO_WRITE;
+        case FSM_3BC_VACUUM:
+            self->pkg_func->prog.avaliable(self);
+            if (self->rc == TBC_RET_CLEAN) {
+                self->state = FSM_3BC_EXPAND;
+                break;
+            }
+            self->state = FSM_3BC_LOADING;
             break;
 
-            case TBC_SYS_WAIT:
-            self->state = FSM_3BC_WAITING;
+        case FSM_3BC_EXPAND:
+            self->pkg_func->prog.expand(self);
+            if(self->rc == TBC_RET_OK) {
+                self->state = FSM_3BC_READING;
+            }
             break;
-        }
-        return true;
 
-    case FSM_3BC_WAITING:
-        if (!driver_idle(self)) {
+        case FSM_3BC_READING:
+            interpreter_ticket(self);
+            if (self->rc == TBC_RET_OK) {
+                self->state = FSM_3BC_LOADING;
+            }
+            break;
+
+        case FSM_3BC_LOADING:
+            self->pkg_func->prog.load(self);
+            driver_cpu(self);
             self->state = FSM_3BC_RUNNING;
-            self->cache_l1.sleep_mode = SLEEP_3BC_NONE;
-            self->cache_l2.sleep_period = 0;
-            self->cache_l3.sleep_called = 0;
+            self->rc = TBC_RET_OK;
+            break;
+
+        case FSM_3BC_RUNNING:
+            if (self->hyperload != NULL) {
+                self->hyperload(self);
+            }
+            if (self->rc == TBC_RET_OK) {
+                self->state = FSM_3BC_COUNTING;
+            }
+            break;
+
+        case FSM_3BC_COUNTING:
+            self->pkg_func->prog.next(self);
+            self->state = FSM_3BC_VACUUM;
+            break;
+        
+        case FSM_3BC_EXITING:
+            self->state = FSM_3BC_STOPED;
+            break;
+        
+        case FSM_3BC_STOPED:
+            break;
         }
-        return true;
-
-    /**
-     * @todo
-    case FSM_3BC_IO_READ:
-        self->state = FSM_3BC_RUNNING;
-        return true;*/
-
-    case FSM_3BC_IO_WRITE:
-        self->pkg_func->io.write(self);
-        self->state = self->previous;
-        return true;
-
-    case FSM_3BC_MEM_READ:
-        self->pkg_func->ram.read(self);
-        self->state = self->previous;
-        return true;
-
-    case FSM_3BC_MEM_WRITE:
-        self->pkg_func->ram.write(self);
-        self->state = self->previous;
-        return true;
-
-    case FSM_3BC_EXITING:
-        driver_power_exit(self);
-        /** @todo investigate why not set **/
-        self->state = FSM_3BC_STOPED;
-        return false;
     }
+    while(0);
 
-    return false;
+    return self->state != FSM_3BC_STOPED;
 }

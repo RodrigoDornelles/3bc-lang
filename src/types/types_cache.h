@@ -2,22 +2,19 @@
 #define H_TYPES_CACHE_TBC
 
 #include "types_fsm.h"
-#include "types_syscall.h"
 
 struct ___tbc_dynamic_buffer_s {
+    tbc_i8_t size;
     char* storage;
-    unsigned int size;
 };
 
 struct ___tbc_fixed_buffer_s {
+    tbc_i8_t size;
     char storage[7];
-    tbc_u8_t size;
 };
 
 union cache_l1_u {
     tbc_sleep_et sleep_mode;
-    /** system call id */
-    tbc_syscall_et syscall;
     /** use for conditionals (same cycle) */
     bool is; /**< @todo remove **/
 };

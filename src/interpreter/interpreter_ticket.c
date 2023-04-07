@@ -49,7 +49,7 @@
  */
 void interpreter_ticket(tbc_app_st *const self)
 {
-    self->rc = TBC_RET_EXIT;
+    self->rc = TBC_RET_EXIT_SAFE;
 }
 #else
 /**
@@ -86,7 +86,7 @@ void interpreter_ticket(tbc_app_st *const self)
     /** end of file **/
     if ((character == EOF || character == -1)
         && self->cache_l3.buffer.storage == NULL) {
-        self->rc = TBC_RET_EXIT;
+        self->rc = TBC_RET_EXIT_SAFE;
         return;
     }
 
