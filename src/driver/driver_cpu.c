@@ -1,6 +1,10 @@
 #include "driver_cpu.h"
 #include "bus_cpu_0000.h"
 
+/**
+ * @throw ERROR_INVALID_CPU_MODE
+ * @throw ERROR_INVALID_REGISTER
+ */
 void driver_cpu(struct app_3bc_s* const self)
 {
     do {
@@ -10,7 +14,8 @@ void driver_cpu(struct app_3bc_s* const self)
         }
         if (self->cpu.rx == MODE) {
             if (self->cpu.rz >= tbc_layout_cpu_modes) {
-                /** @todo: error*/
+                self->rc = TBC_RET_ERROR;
+                self->cache_l1.error = ERROR_INVALID_CPU_MODE;
                 break;
             }
             self->cpu.rm = self->cpu.rz;
@@ -18,7 +23,8 @@ void driver_cpu(struct app_3bc_s* const self)
             break;
         }
         if (self->cpu.rx >= (*tbc_layout_cpu_funcs[self->cpu.rm].size)) {
-            /** @todo: error */
+            self->rc = TBC_RET_ERROR;
+            self->cache_l1.error = ERROR_INVALID_REGISTER;
             break;
         }
 

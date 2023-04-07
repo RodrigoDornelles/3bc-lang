@@ -42,6 +42,7 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc_types.h"
+#include "driver_error.h"
 #include "driver_cpu.h"
 #include "driver_gc.h"
 #include "bus_cpu_0000.h"
@@ -119,6 +120,10 @@ bool driver_interrupt(struct app_3bc_s* const self)
         if (self->rc & 0x80) {
             switch (self->rc)
             {
+                case TBC_RET_ERROR:
+                    self->state = FSM_3BC_ERROR;
+                    break;
+
                 case TBC_RET_EXIT_SAFE:
                     self->state = FSM_3BC_EXITING;
                     break;
@@ -197,9 +202,11 @@ bool driver_interrupt(struct app_3bc_s* const self)
 
         case FSM_3BC_LOADING:
             self->pkg_func->prog.load(self);
-            driver_cpu(self);
-            self->state = FSM_3BC_RUNNING;
             self->rc = TBC_RET_OK;
+            driver_cpu(self);
+            if (self->rc == TBC_RET_OK) {
+                self->state = FSM_3BC_RUNNING;
+            }
             break;
 
         case FSM_3BC_RUNNING:
@@ -208,6 +215,13 @@ bool driver_interrupt(struct app_3bc_s* const self)
             }
             if (self->rc == TBC_RET_OK) {
                 self->state = FSM_3BC_COUNTING;
+            }
+            break;
+
+        case FSM_3BC_ERROR:
+            driver_error(self);
+            if (self->rc == TBC_RET_OK) {
+                self->state = FSM_3BC_EXITING;
             }
             break;
 

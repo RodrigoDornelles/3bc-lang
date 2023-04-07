@@ -39,6 +39,9 @@ add_library(tbc_driver_std OBJECT ${tbc_driver_std_files})
 add_library(tbc_driver_no_math OBJECT ${tbc_driver_std_files})
 target_compile_definitions("tbc_driver_no_math" PRIVATE TBC_NOT_MATH)
 
+# Internationalization
+add_library(tbc_i18n_en OBJECT "${CMAKE_SOURCE_DIR}/src/i18n/i18n_en.c")
+
 # Interpreter
 FILE(GLOB tbc_interpreter_files "${CMAKE_SOURCE_DIR}/src/interpreter/*.c")
 add_library(tbc_interpreter OBJECT ${tbc_interpreter_files})
