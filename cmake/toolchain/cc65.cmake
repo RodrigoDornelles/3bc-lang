@@ -10,8 +10,11 @@ macro( __compilerCc65 lang )
 
     # We cannot run tests for the cc65 compiler, because of cross-compilation,
     # so force the compiler tests to passed.
+    set( CMAKE_${lang}_COMPILER_RUN TRUE )
     set( CMAKE_${lang}_COMPILER_ID_RUN TRUE )
     # Don't know if these are necessary.
+    set( CMAKE_${lang}_COMPILER_WORKS TRUE )
+    set( CMAKE_${lang}_COMPILER_FORCED TRUE )
     set( CMAKE_${lang}_COMPILER_ID_WORKS TRUE )
     set( CMAKE_${lang}_COMPILER_ID_FORCED TRUE )
 
