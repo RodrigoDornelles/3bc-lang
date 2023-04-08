@@ -4,6 +4,7 @@
 #include "ds_ram_array.h"
 #include "sys_common_mock.h"
 #include "sys_common_pexa.h"
+#include "sys_conio_output.h"
 #include "sys_nes_output.h"
 #include "sys_posix_output.h"
 #include "sys_windows_output.h"
@@ -29,6 +30,8 @@ const tbc_pkg_st tbc_pkg_standard = {
         &sys_nes_output
 #elif defined(TBC_KERNEL_NT)
         &sys_windows_output
+#elif defined(TBC_USE_CONIO)
+        &sys_conio_output,
 #else
         &sys_posix_output
 #endif 
