@@ -1,4 +1,4 @@
-#include "i18n_en.h"
+#include "i18n_en-us.h"
 
 static const char ___tbc_error_000[] = "UNKNOWN ERROR";
 static const char ___tbc_error_001[] = "CPU MODE IS NOT DEFINED";

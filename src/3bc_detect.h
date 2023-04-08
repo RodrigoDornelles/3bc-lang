@@ -139,6 +139,11 @@
 #define _3BC_DISABLE_INTERPRETER
 #endif
 
+#if defined(__PCE__)
+/** @todo remove **/ 
+#define _3BC_DISABLE_INTERPRETER
+#endif
+
 /**
  * PLATAFORM: EMBEDDED SYSTEMS
  */

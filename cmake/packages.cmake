@@ -40,7 +40,9 @@ add_library(tbc_driver_no_math OBJECT ${tbc_driver_std_files})
 target_compile_definitions("tbc_driver_no_math" PRIVATE TBC_NOT_MATH)
 
 # Internationalization
-add_library(tbc_i18n_en OBJECT "${CMAKE_SOURCE_DIR}/src/i18n/i18n_en.c")
+set(I18N_LANG "en-us" CACHE STRING "")
+set(I18N_PATH "${CMAKE_SOURCE_DIR}/src/i18n" CACHE STRING "")
+add_library(tbc_i18n_en OBJECT "${I18N_PATH}/i18n_${I18N_LANG}.c")
 
 # Interpreter
 FILE(GLOB tbc_interpreter_files "${CMAKE_SOURCE_DIR}/src/interpreter/*.c")
