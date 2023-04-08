@@ -45,8 +45,10 @@ set(I18N_PATH "${CMAKE_SOURCE_DIR}/src/i18n" CACHE STRING "")
 add_library(tbc_i18n_en OBJECT "${I18N_PATH}/i18n_${I18N_LANG}.c")
 
 # Interpreter
-FILE(GLOB tbc_interpreter_files "${CMAKE_SOURCE_DIR}/src/interpreter/*.c")
-add_library(tbc_interpreter OBJECT ${tbc_interpreter_files})
+FILE(GLOB tbc_interpreter_lang_files "${CMAKE_SOURCE_DIR}/src/interpreter/*.c")
+list(REMOVE_ITEM tbc_interpreter_lang_files "${CMAKE_SOURCE_DIR}/src/interpreter/interpreter_mock.c")
+add_library(tbc_interpreter_lang OBJECT ${tbc_interpreter_lang_files})
+add_library(tbc_interpreter_none OBJECT "${CMAKE_SOURCE_DIR}/src/interpreter/interpreter_mock.c")
 
 # Legacy
 FILE(GLOB tbc_legacy_files "${CMAKE_SOURCE_DIR}/src/legacy/*.c")

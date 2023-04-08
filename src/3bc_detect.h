@@ -135,14 +135,16 @@
 #define TBC_CONSOLE_NES
 #define TBC_OPT_ULTRA_COMPACT
 #undef TBC_P_COMPUTER
-/** @todo remove **/ 
-#define _3BC_DISABLE_INTERPRETER
 #endif
 
 #if defined(__PCE__)
-/** @todo remove **/ 
-#define _3BC_DISABLE_INTERPRETER
+#define TBC_CONSOLE_PCE
 #endif
+
+#if defined(__C64__)
+#define TBC_CONSOLE_C64
+#endif
+
 
 /**
  * PLATAFORM: EMBEDDED SYSTEMS
@@ -180,7 +182,6 @@
  */
 #if defined(__nuttx__)
 #define TBC_KERNEL_NUTTX
-#define TBC_PREFER_INTERPRETER
 #define TBC_P_EMBEDDED
 #define TBC_USE_POSIX
 #endif
@@ -190,7 +191,6 @@
  */
 #if defined(__linux) || defined(__linux__) || defined(__gnu_linux__)
 #define TBC_KERNEL_LINUX
-#define TBC_PREFER_INTERPRETER
 #define TBC_P_COMPUTER
 #define TBC_USE_POSIX
 #endif
@@ -200,7 +200,6 @@
  */
 #if defined(_WIN32) || defined(WIN32) || defined(_WIN64) || defined(_WIN64)
 #define TBC_KERNEL_NT
-#define TBC_PREFER_INTERPRETER
 #define TBC_P_COMPUTER
 #define TBC_USE_CONIO
 #endif
@@ -211,7 +210,6 @@
 #if defined(__APPLE__)
 #define TBC_USE_POSIX
 #define TBC_KERNEL_DARWIN
-#define TBC_PREFER_INTERPRETER
 #define TBC_P_COMPUTER
 #endif
 
@@ -221,7 +219,6 @@
 #if defined(__unix__) || defined(BSD)
 #define TBC_USE_POSIX
 #define TBC_KERNEL_UNIX
-#define TBC_PREFER_INTERPRETER
 #define TBC_P_COMPUTER
 #endif
 
@@ -230,7 +227,6 @@
  */
 #if defined(EMSCRIPTEN)
 #define TBC_USE_POSIX
-#define TBC_PREFER_INTERPRETER
 #define TBC_P_WEBASSEMBLY
 #endif
 
@@ -336,26 +332,6 @@
 #else
 /** disable **/
 #define TBC_SOURCE_REGISTERS
-#endif
-
-/**
- * FEATURE: INTERPRETER
- *
- * BRIEF: language mnemonic analyzer, including
- * lexer, tokenizer, and compiler.
- */
-#if !defined(TBC_SCU_OPTIONAL_FIX)
-#if defined(_3BC_ENABLE_INTERPRETER)
-#define TBC_INTERPRETER
-#elif !defined(_3BC_DISABLE_INTERPRETER)
-#if defined(TBC_PREFER_INTERPRETER)
-#define TBC_INTERPRETER
-#else
-#error define '_3BC_ENABLE_INTERPRETER' \
-    or '_3BC_DISABLE_INTERPRETER' \
-    after include header '3bc.h'
-#endif
-#endif
 #endif
 
 /**

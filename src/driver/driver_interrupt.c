@@ -47,6 +47,7 @@
 #include "driver_gc.h"
 #include "bus_cpu_0000.h"
 #include "bus_sys_0000.h"
+#include "interpreter_0000.h"
 
 /**
  * @short VM processor context manager, allows asychronism.
@@ -194,11 +195,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
             break;
 
         case FSM_3BC_READING:
-#if defined(TBC_INTERPRETER)
             interpreter_ticket(self);
-#else
-            self->rc = FSM_3BC_EXITING;
-#endif
             if (self->rc == TBC_RET_OK) {
                 self->state = FSM_3BC_LOADING;
             }

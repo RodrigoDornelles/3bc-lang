@@ -38,20 +38,6 @@
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
-#if !defined(TBC_SCU_OPTIONAL_FIX)
-/**
- * JOKE: rest in peace spaghetti code, I won't miss you.
- */
-#if !defined(TBC_INTERPRETER)
-/**
- * When interpreter disabled, always returns end of file.
- * @todo delete
- */
-void interpreter_ticket(tbc_app_st *const self)
-{
-    self->rc = TBC_RET_EXIT_SAFE;
-}
-#else
 /**
  * Default entry point to the interpreter, works asynchronously.
  *
@@ -107,11 +93,13 @@ void interpreter_ticket(tbc_app_st *const self)
         }
 
         /** insert to vm **/
-        char* line = self->cache_l3.buffer.storage;
-        do {
-            self->program.last_line += 1;
-            line = interpreter_readln(self, line);
-        } while (line != NULL);
+        {
+            char* line = self->cache_l3.buffer.storage;
+            do {
+                self->program.last_line += 1;
+                line = interpreter_readln(self, line);
+            } while (line != NULL);
+        }
 
         self->pkg_func->prog.insert(self);
 
@@ -143,5 +131,3 @@ void interpreter_ticket(tbc_app_st *const self)
 
     self->rc = TBC_RET_REPEAT;
 }
-#endif
-#endif
