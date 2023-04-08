@@ -118,7 +118,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
          * @li bit 7 must process something. (interrupt)
          */
         if (self->rc & 0x80) {
-            switch (self->rc)
+            switch ((tbc_u8_t) self->rc)
             {
                 case TBC_RET_ERROR:
                     self->state = FSM_3BC_ERROR;
@@ -194,7 +194,11 @@ bool driver_interrupt(struct app_3bc_s* const self)
             break;
 
         case FSM_3BC_READING:
+#if defined(TBC_INTERPRETER)
             interpreter_ticket(self);
+#else
+            self->rc = FSM_3BC_EXITING;
+#endif
             if (self->rc == TBC_RET_OK) {
                 self->state = FSM_3BC_LOADING;
             }
