@@ -3,7 +3,7 @@
 
 #include "3bc_detect.h"
 
-#if defined(TBC_CC_STD_99)
+#if defined(TBC_CC_STD_99) && !defined(TBC_NOT_INTYPES)
 #include <inttypes.h>
 #include <stddef.h>
 /** signed 8 bits **/

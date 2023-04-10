@@ -145,6 +145,9 @@
 #define TBC_CONSOLE_C64
 #endif
 
+#if defined(__Z88DK) 
+#define TBC_NOT_INTYPES
+#endif
 
 /**
  * PLATAFORM: EMBEDDED SYSTEMS
@@ -256,6 +259,11 @@
 #if defined(__CC65_STD__) || defined(__CC65_STD_CC65__)
 #define TBC_ARCH_BITS_8
 #define TBC_ARCH_CPU_6502
+#endif
+
+#if defined(__Z88DK) || defined(__Z80) || defined(Z80)
+#define TBC_ARCH_BITS_8
+#define TBC_ARCH_CPU_Z80
 #endif
 
 #if defined(__arm) || defined(__arm__) || defined(_M_ARM)
