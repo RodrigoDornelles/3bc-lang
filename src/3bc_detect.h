@@ -145,6 +145,11 @@
 #define TBC_CONSOLE_C64
 #endif
 
+#if defined(__PET__)
+#define TBC_CONSOLE_PET
+#define TBC_NOT_CLOCK
+#endif
+
 #if defined(__Z88DK) 
 #define TBC_NOT_INTYPES
 #endif

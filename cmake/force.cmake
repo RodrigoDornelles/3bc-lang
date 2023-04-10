@@ -10,6 +10,13 @@ if(DEFINED CMAKE_SYSTEM_VERSION)
         set(CONIO FALSE)
     endif()
 
+    if(${CMAKE_SYSTEM_VERSION} STREQUAL "pet")
+        set(CMAKE_EXECUTABLE_SUFFIX_C ".prg")
+        set(CONIO TRUE)
+    else()
+        set(CONIO FALSE)
+    endif()
+
     if(${CMAKE_SYSTEM_VERSION} STREQUAL "windows")
         set(CMAKE_EXECUTABLE_SUFFIX_C ".exe")
         set(WIN32 TRUE)
