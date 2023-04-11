@@ -1,6 +1,6 @@
 #include "i18n_no-ne.h"
 
-static const char ___tbc_error_000[] = "see: https://3bc-lang.org";
+static const char ___tbc_error_000[] = "https://3bc-lang.org";
 
 static const tbc_error_st ___tbc_errors[] = {
     {sizeof(___tbc_error_000), (char *const)___tbc_error_000}

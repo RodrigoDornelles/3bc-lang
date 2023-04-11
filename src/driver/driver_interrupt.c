@@ -146,6 +146,16 @@ bool driver_interrupt(struct app_3bc_s* const self)
                     break;
 
                 case TBC_RET_SYS_IO_WRITE:
+                case TBC_RET_PRINT_ERROR_1:
+                case TBC_RET_PRINT_ERROR_2:
+                case TBC_RET_PRINT_ERROR_3:
+                case TBC_RET_PRINT_ERROR_4:
+                case TBC_RET_PRINT_ERROR_5:
+                case TBC_RET_PRINT_ERROR_6:
+                case TBC_RET_PRINT_ERROR_7:
+                case TBC_RET_PRINT_ERROR_8:
+                case TBC_RET_PRINT_ERROR_9:
+                case TBC_RET_PRINT_ERROR_A:
                     self->pkg_func->io.write(self);
                     break;
 
