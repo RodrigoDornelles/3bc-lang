@@ -49,7 +49,7 @@
  * and resource optimization purposes.
  */
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) || defined(__Z88DK)
 #define TBC_PRG_WARNING
 #endif
 #if defined(__STDC_VERSION__)
