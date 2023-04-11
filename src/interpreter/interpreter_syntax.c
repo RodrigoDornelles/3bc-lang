@@ -48,8 +48,6 @@
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
-#if defined(TBC_INTERPRETER) && !defined(TBC_SCU_OPTIONAL_FIX)
-
 /**
  * BRIEF:
  * representation of the menomonics for registers
@@ -239,4 +237,3 @@ bool interpreter_syntax_constants(struct app_3bc_s* const app,
 
     return success;
 }
-#endif

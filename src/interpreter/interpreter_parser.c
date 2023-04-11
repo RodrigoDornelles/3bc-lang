@@ -38,7 +38,6 @@
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
-#if defined(TBC_INTERPRETER) && !defined(TBC_SCU_OPTIONAL_FIX)
 /**
  * convert string in any numeric base
  */
@@ -227,4 +226,3 @@ int interpreter_parser_skip()
 
     return hash % SHRT_MAX;
 }
-#endif

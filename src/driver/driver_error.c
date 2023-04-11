@@ -16,7 +16,7 @@ void driver_error(struct app_3bc_s* const self)
             self->cache_l1.error = 0;
         }
 
-        if (self->rc == TBC_RET_ERROR) {
+        if (self->rc == TBC_RET_THROW_ERROR) {
             self->rc = TBC_RET_SYS_IO_WRITE;
             self->cache_l2.tty = &(self->cout.tty_output);
             self->cache_l3.buffer.size =

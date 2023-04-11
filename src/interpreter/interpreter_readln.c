@@ -39,7 +39,6 @@
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
-#if defined(TBC_INTERPRETER) && !defined(TBC_SCU_OPTIONAL_FIX)
 /**
  * Interpret text and insert to virtual machine.
  *
@@ -82,4 +81,3 @@ char* interpreter_readln(struct app_3bc_s* const app, char* line)
 
     return line;
 }
-#endif

@@ -121,7 +121,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
         if (self->rc & 0x80) {
             switch ((tbc_u8_t) self->rc)
             {
-                case TBC_RET_ERROR:
+                case TBC_RET_THROW_ERROR:
                     self->state = FSM_3BC_ERROR;
                     break;
 

@@ -14,7 +14,7 @@ void driver_cpu(struct app_3bc_s* const self)
         }
         if (self->cpu.rx == MODE) {
             if (self->cpu.rz >= tbc_layout_cpu_modes) {
-                self->rc = TBC_RET_ERROR;
+                self->rc = TBC_RET_THROW_ERROR;
                 self->cache_l1.error = ERROR_INVALID_CPU_MODE;
                 break;
             }
@@ -23,7 +23,7 @@ void driver_cpu(struct app_3bc_s* const self)
             break;
         }
         if (self->cpu.rx >= (*tbc_layout_cpu_funcs[self->cpu.rm].size)) {
-            self->rc = TBC_RET_ERROR;
+            self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_INVALID_REGISTER;
             break;
         }

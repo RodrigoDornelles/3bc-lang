@@ -35,10 +35,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
-#if defined(TBC_INTERPRETER) && !defined(TBC_SCU_OPTIONAL_FIX)
 /**
  * Separator in columns and rows.
  *
@@ -131,4 +129,3 @@ bool interpreter_tokens(
     /** validate number of columns **/
     return columns == 3 || columns == 0;
 }
-#endif
