@@ -146,6 +146,7 @@
 #endif
 
 #if defined(__PET__)
+#warning "[3BC] UNTESTED: COMMODORE PET SEEMS NOT TO HAVE ENOUGH MEMORY."
 #define TBC_CONSOLE_PET
 #define TBC_NOT_CLOCK
 #endif
