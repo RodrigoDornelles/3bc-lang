@@ -4,6 +4,8 @@ elseif(NOT TARGET)
     set(TARGET "native")
 endif()
 
+option(IGNORE_PATH "Not use default $$PATH" "OFF")
+
 if(${TARGET} MATCHES "cc65-(.+)")
     set(CC65_TARGET ${CMAKE_MATCH_1})
     set(I18N_LANG "no-ne" CACHE STRING "")

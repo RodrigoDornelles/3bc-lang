@@ -7,7 +7,11 @@ set(ZCC_PATHS_CFG "${CMAKE_SOURCE_DIR}/../z88dk/lib/config"
     "/usr/local/share/z88dk/lib/config"
 )
 
+if(IGNORE_PATH)
+find_program(ZCC zcc PATHS ${ZCC_PATHS_BIN} NO_DEFAULT_PATH)
+else()
 find_program(ZCC zcc PATHS ${ZCC_PATHS_BIN})
+endif()
 
 if(NOT ZCC)
     cmake_minimum_required(VERSION 3.14)

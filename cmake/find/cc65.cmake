@@ -1,5 +1,10 @@
 set(CC65_PATHS "${CMAKE_SOURCE_DIR}/../cc65/bin" "${CMAKE_SOURCE_DIR}/vendor/cc65/bin")
+
+if(IGNORE_PATH)
+find_program(CC65 cc65 PATHS ${CC65_PATHS} NO_DEFAULT_PATH)
+else()
 find_program(CC65 cc65 PATHS ${CC65_PATHS})
+endif()
 
 if(NOT CC65)
     cmake_minimum_required(VERSION 3.14)

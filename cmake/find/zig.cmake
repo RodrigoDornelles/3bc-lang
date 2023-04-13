@@ -2,7 +2,12 @@ include(cmake/uname.cmake)
 set(ZIG_VERSION "0.10.1")
 set(ZIG_DOWNLOAD "http://ziglang.org/download")
 set(ZIG_PATHS "${CMAKE_SOURCE_DIR}/vendor/zig")
+
+if(IGNORE_PATH)
+find_program(ZIG zig PATHS ${ZIG_PATHS} NO_DEFAULT_PATH)
+else()
 find_program(ZIG zig PATHS ${ZIG_PATHS})
+endif()
 
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL "Darwin")
     set(ZIG_DOWNLOAD "${ZIG_DOWNLOAD}/${ZIG_VERSION}/zig-macos-${CMAKE_HOST_SYSTEM_PROCESSOR_AARCH64}-${ZIG_VERSION}.tar.xz")
