@@ -49,8 +49,10 @@ const void* cpu_string_layout_opcodes = ___cpu_string_layout;
  */
 void cpu_string_debug(PARAMS_DEFINE)
 {
+    /** @todo
     VALIDATE_NOT_DUALITY
     driver_tty_output(app, &app->cout.tty_debug, reg, GET_ANY_PARAM);
+    */
 }
 
 /**
@@ -130,32 +132,35 @@ void cpu_string_output(struct app_3bc_s* const self)
 
 void cpu_string_input(PARAMS_DEFINE)
 {
+    /** @todo
     VALIDATE_NOT_VALUES
     {
         data_3bc_t aux = driver_tty_input(app, &app->cin.tty_input, reg);
         driver_accumulator_set(app, aux);
         driver_memory_data_set(app, address, aux);
         driver_tty_output(app, &app->cout.tty_keylog, reg, aux);
-    }
+    }*/
 }
 
 void cpu_string_input_silent(PARAMS_DEFINE)
 {
+    /** @todo
     VALIDATE_NOT_VALUES
     {
         data_3bc_t aux = driver_tty_input(app, &app->cin.tty_input, reg);
         driver_accumulator_set(app, aux);
         driver_memory_data_set(app, address, aux);
-    }
+    }*/
 }
 
 void cpu_string_input_password(PARAMS_DEFINE)
 {
+    /** @todo
     VALIDATE_NOT_VALUES
     {
         data_3bc_t aux = driver_tty_input(app, &app->cin.tty_input, reg);
         driver_accumulator_set(app, aux);
         driver_memory_data_set(app, address, aux);
         driver_tty_output(app, &app->cout.tty_keylog, STRC, '*');
-    }
+    }*/
 }

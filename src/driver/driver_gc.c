@@ -37,7 +37,10 @@
 
 #include "types_return.h"
 #include "3bc_types.h"
+
+#if !defined(TBC_NOT_MALLOC)
 #include <stdlib.h>
+#endif
 #include <string.h>
 
 /**
@@ -83,7 +86,9 @@ void driver_gc(struct app_3bc_s* const self)
     switch((tbc_u8_t) self->rc)
     {
         case TBC_RET_GC_LV4:
+#if !defined(TBC_NOT_MALLOC)
             free(self->cache_l3.buffer.storage);
+#endif
             break;
 
         case TBC_RET_GC_LV3:

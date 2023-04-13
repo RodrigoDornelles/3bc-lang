@@ -48,7 +48,9 @@
  * BRIEF: builder detection, for compatibility
  * and resource optimization purposes.
  */
-
+#if defined(Z80) && !defined(__Z88DK)
+#define __Z88DK
+#endif
 #if defined(_MSC_VER) || defined(__Z88DK)
 #define TBC_PRG_WARNING
 #endif
@@ -145,6 +147,10 @@
 #define TBC_CONSOLE_C64
 #endif
 
+#if defined(__MSX__)
+#define TBC_USE_CONIO
+#endif
+
 #if defined(__PET__)
 #warning "[3BC] UNTESTED: COMMODORE PET SEEMS NOT TO HAVE ENOUGH MEMORY."
 #define TBC_CONSOLE_PET
@@ -153,6 +159,7 @@
 
 #if defined(__Z88DK) 
 #define TBC_NOT_INTYPES
+#define TBC_NOT_MALLOC
 #endif
 
 /**

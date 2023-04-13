@@ -89,6 +89,6 @@ void driver_program_error(
 
     /** @todo no closign when else **/
     if (error_code >= ERROR_CPU_ZERO) {
-        driver_power_signal(SIGTERM);
+        /** @todo driver_power_signal(SIGTERM);**/
     }
 }
