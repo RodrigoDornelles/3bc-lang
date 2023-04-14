@@ -14,6 +14,11 @@ if(DEFINED CMAKE_SYSTEM_VERSION)
         set(CONIO TRUE)
     endif()
 
+    if(${CMAKE_SYSTEM_VERSION} STREQUAL "pce")
+        set(CMAKE_EXECUTABLE_SUFFIX_C ".pce")
+        set(CONIO TRUE)
+    endif()
+
     if(${CMAKE_SYSTEM_VERSION} STREQUAL "msx")
         set(CONIO TRUE)
     endif()
