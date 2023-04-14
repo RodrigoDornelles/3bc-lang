@@ -55,7 +55,11 @@
  */
 void interpreter_ticket(tbc_app_st *const self)
 {
-    int character = fgetc(self->cin.tty_source.io.stream);
+    int character;
+    
+#if !defined(TBC_NOT_FILES)
+    character = fgetc(self->cin.tty_source.io.stream);
+#endif
 
 #if defined(_3BC_NUTTX)
     if (self->cout.tty_source.type == STREAM_TYPE_COMPUTER_STD) {
