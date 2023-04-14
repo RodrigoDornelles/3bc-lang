@@ -2,28 +2,28 @@
 #define H_MACRO_CONSTS_TBC
 
 /**
- * @par mask @c 0x1 in @c TBC_RRX
- * @brief Required RX
- * @c 0b0001
+ * @par mask @c 0x1 in @c TBC_RRZ
+ * @brief Required RZ
+ * @c 0b1
  */
-#define TBC_RRX (0x1)
+#define TBC_RRZ (0x1)
 
 /**
  * @par mask @c 0x2 in @c TBC_RRY
  * @brief Required RY
- * @c 0b0010
+ * @c 0b10
  */
 #define TBC_RRY (0x2)
 
 /**
- * @par mask @c 0x4 in @c TBC_RRX
- * @brief Forbidden RX
- * @c 0b0100
+ * @par mask @c 0x4 in @c TBC_NRZ
+ * @brief Forbidden RZ
+ * @c 0b100
  */
-#define TBC_NRX (0x4)
+#define TBC_NRZ (0x4)
 
 /**
- * @par mask @c 0x8 in @c TBC_RRT
+ * @par mask @c 0x8 in @c TBC_NRT
  * @brief Forbidden RT
  * @c 0b1000
  */
@@ -32,27 +32,38 @@
 /**
  * @short alias to @ref TBC_DUAL_AZ
  * @brief use this to check if it matches any type of duality.
- * (@ref TBC_DUAL_AZ or @ref TBC_DUAL_NZ)
+ * @see @ref TBC_DUAL_AZ
+ * @see @ref TBC_DUAL_NZ)
  */
-#define TBC_DUAL (0x5)
+#define TBC_DUAL (0x10)
 
 /**
- * @par mask @c 0x5 in @c TBC_DUAL_AZ
+ * @par mask @c 0x10 in @c TBC_DUAL_AZ
  * @short Duality (allowed zero)
- * @brief exclusive use RX or RY
- * @li when uses RX and RY causes error.
- * @c 0b0101
+ * @brief exclusive use RZ or RY
+ * @li when uses RZ and RY causes error.
+ * @c 0b10000
  */
-#define TBC_DUAL_AZ (0x5)
+#define TBC_DUAL_AZ (0x10)
 
 /**
- * @par mask @c 0x7 in @c TBC_DUAL_NZ
+ * @par mask @c 0x30 in @c TBC_DUAL_NZ
  * @short Duality (non zero)
- * @brief exclusive use RX or RY
- * @li when you uses RX and RY causes error.
- * @li when don't uses RX or RY causes error.
- * @c 0b0111
+ * @brief exclusive use RZ or RY
+ * @li when you uses RZ and RY causes error.
+ * @li when don't uses RZ or RY causes error.
+ * @see @ref TBC_DUAL_AZ
+ * @see @ref TBC_RXY
+ * @c 0b110000
  */
-#define TBC_DUAL_NZ (0x7)
+#define TBC_DUAL_NZ (0x20|0x10)
+
+/**
+ * @par mask @c 0x30 in @c TBC_DUAL_NZ
+ * @brief Required any column
+ * @li when don't uses RZ or RY causes error.
+ * @c 0b100000
+ */
+#define TBC_RXY (0x20)
 
 #endif
