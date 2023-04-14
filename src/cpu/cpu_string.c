@@ -34,15 +34,6 @@
 
 #include "3bc.h"
 
-static void cpu_string_output(struct app_3bc_s* const self);
-
-tbc_method_ft ___cpu_string_layout[] = {
-    cpu_string_output, cpu_string_output, cpu_string_output,
-    cpu_string_output, cpu_string_output
-};
-
-const unsigned char cpu_string_layout_size = sizeof(___cpu_string_layout);
-const void* cpu_string_layout_opcodes = ___cpu_string_layout;
 
 /**
  * @todo refact

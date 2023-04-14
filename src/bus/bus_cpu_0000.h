@@ -5,9 +5,22 @@
 
 typedef struct ___layout_cpu_s tbc_layout_cpu_st;
 
+/**
+ * @param size number of instructions in cpu mode
+ * @param opcode function pointers to instructions
+ * @param errors permissions of each instruction
+ * @li bit 0 ry is required
+ * @li bit 1 rz is required
+ * @li bit 2 rx is forbidden
+ * @li bit 3 rz is forbidden
+ * @note bit 0 + bit 2 is duality (allowed zero)
+ * @note bit 1 + bit 3 is duality (non zero)
+ * @see constants in @ref macros_consts.h 
+ */
 struct ___layout_cpu_s {
-    tbc_u8_t* size;
-    tbc_method_ft** opcodes;
+    const tbc_u8_t size;
+    const tbc_method_ft* opcodes;
+    const tbc_u8_t* errors;
 };
 
 /**
@@ -16,12 +29,8 @@ struct ___layout_cpu_s {
 extern const tbc_u8_t tbc_layout_cpu_modes;
 
 /**
- * @brief size of CPU Modes in processor unit layout. (bytes)
- */
-extern const tbc_size_t tbc_layout_cpu_bytes;
-
-/**
  * @brief layout of functions
+ * @relates struct ___layout_cpu_s
  */
 extern const tbc_layout_cpu_st* tbc_layout_cpu_funcs;
 

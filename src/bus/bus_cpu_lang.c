@@ -35,24 +35,28 @@
  *
  */
 
-#include "bus_cpu_lang.h"
+#include "macro_consts.h"
+#include "bus_cpu_hello.h"
 #include "cpu_string.h"
+
+const static tbc_method_ft ___bus_op_02[] = {
+    cpu_string_output, cpu_string_output, cpu_string_output,
+    cpu_string_output, cpu_string_output
+};
+const static tbc_u8_t ___bus_er_02[] = {
+    TBC_DUAL_NZ, TBC_DUAL_NZ, TBC_DUAL_NZ, TBC_DUAL_NZ, TBC_DUAL_NZ
+};
 
 static const tbc_layout_cpu_st ___layout_cpu[] = {
     {
-        0, NULL,
+        0, NULL, NULL
     },
     {   
-        0, NULL,
+        0, NULL, NULL
     },{
-        (tbc_u8_t*const)&cpu_string_layout_size,
-        (tbc_method_ft**const) &cpu_string_layout_opcodes
+        sizeof(___bus_op_02), ___bus_op_02, ___bus_er_02
     }
 };
 
-
 const tbc_u8_t tbc_layout_cpu_modes = sizeof(___layout_cpu)/sizeof(tbc_layout_cpu_st);
-
-const tbc_size_t tbc_layout_cpu_bytes = sizeof(___layout_cpu);
-
 const tbc_layout_cpu_st* tbc_layout_cpu_funcs = ___layout_cpu;
