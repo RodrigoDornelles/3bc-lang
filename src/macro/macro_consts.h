@@ -64,6 +64,14 @@
  * @li when don't uses RZ or RY causes error.
  * @c 0b100000
  */
-#define TBC_RXY (0x20)
+#define TBC_RYZ (0x20)
+
+/**
+ * @par mask @c 0xC in @c TBC_NXY
+ * @brief Forbidden any column
+ * @li when uses RZ or RY causes error.
+ * @c 0b1100
+ */
+#define TBC_NYZ (0x4|0x8)
 
 #endif

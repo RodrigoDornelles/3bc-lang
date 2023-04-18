@@ -15,6 +15,8 @@ struct ___tbc_fixed_buffer_s {
 };
 
 union cache_l1_u {
+    tbc_u8_t u8;
+    tbc_i8_t i8;
     tbc_error_et error;
     tbc_sleep_et sleep_mode;
     /** use for conditionals (same cycle) */
@@ -22,6 +24,12 @@ union cache_l1_u {
 };
 
 union cache_l2_u {
+    tbc_u8_t u8[4];
+    tbc_u16_t u16[2];
+    tbc_u32_t u32;
+    tbc_i8_t i8[4];
+    tbc_i16_t i16[2];
+    tbc_i32_t i32;
     unsigned long sleep_period;
     tbc_tty_st* tty;
 };

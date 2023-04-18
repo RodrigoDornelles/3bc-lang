@@ -34,7 +34,7 @@ void driver_cpu(struct app_3bc_s* const self)
             self->hyperload = NULL;
             break;
         }
-        if (self->cpu.rx >= tbc_layout_cpu_funcs[self->cpu.rm].size) {
+        if (self->cpu.rx > tbc_layout_cpu_funcs[self->cpu.rm].size) {
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_INVALID_REGISTER;
             break;
@@ -45,7 +45,7 @@ void driver_cpu(struct app_3bc_s* const self)
             self->cache_l1.error = ERROR_PARAM_DUALITY;
             break;
         }
-        if ((tbc_layout_cpu_funcs[self->cpu.rm].errors[self->cpu.rx-1]&TBC_RXY)
+        if ((tbc_layout_cpu_funcs[self->cpu.rm].errors[self->cpu.rx-1]&TBC_RYZ)
             && self->cpu.ry == 0 && self->cpu.rz == 0)  {
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_PARAM_REQUIRE_ANY;

@@ -38,13 +38,29 @@
 #include "macro_consts.h"
 #include "bus_cpu_hello.h"
 #include "cpu_string.h"
+#include "cpu_memory.h"
 
 const static tbc_method_ft ___bus_op_02[] = {
     cpu_string_output, cpu_string_output, cpu_string_output,
     cpu_string_output, cpu_string_output
 };
 const static tbc_u8_t ___bus_er_02[] = {
-    TBC_DUAL_NZ, TBC_DUAL_NZ, TBC_DUAL_NZ, TBC_DUAL_NZ, TBC_DUAL_NZ
+    TBC_DUAL, TBC_DUAL, TBC_DUAL, TBC_DUAL, TBC_DUAL
+};
+const static tbc_method_ft ___bus_op_06[] = {
+    cpu_memory_free, cpu_memory_aloc
+};
+const static tbc_u8_t ___bus_er_06[] = {
+    (TBC_RRY|TBC_NRZ), TBC_RRY
+};
+
+const static tbc_method_ft ___bus_op_08[] = {
+    cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull,
+    cpu_memory_aux_spin, cpu_memory_aux_push
+};
+const static tbc_u8_t ___bus_er_08[] = {
+    TBC_NYZ, TBC_NRY, (TBC_RRY|TBC_NRZ),
+    (TBC_RRY|TBC_NRZ), (TBC_RRY|TBC_NRZ)
 };
 
 static const tbc_layout_cpu_st ___layout_cpu[] = {
@@ -53,8 +69,27 @@ static const tbc_layout_cpu_st ___layout_cpu[] = {
     },
     {   
         0, NULL, NULL
-    },{
-        sizeof(___bus_op_02), ___bus_op_02, ___bus_er_02
+    },
+    {
+        sizeof(___bus_er_02), ___bus_op_02, ___bus_er_02
+    },
+    {
+        0, NULL, NULL
+    },
+    {
+        0, NULL, NULL
+    },
+    {
+        0, NULL, NULL
+    },
+    {
+        sizeof(___bus_er_06), ___bus_op_06, ___bus_er_06
+    },
+    {
+        0, NULL, NULL
+    },
+    {
+        sizeof(___bus_er_08), ___bus_op_08, ___bus_er_08
     }
 };
 

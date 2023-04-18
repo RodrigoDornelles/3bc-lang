@@ -83,21 +83,6 @@ void cpu_jump_zgto(PARAMS_DEFINE);
 void cpu_jump_pgto(PARAMS_DEFINE);
 void cpu_jump_ngto(PARAMS_DEFINE);
 /*****************************************************************************/
-void cpu_memory_free(PARAMS_DEFINE);
-void cpu_memory_aloc(PARAMS_DEFINE);
-void cpu_memory_moff(PARAMS_DEFINE);
-void cpu_memory_muse(PARAMS_DEFINE);
-void cpu_memory_ptr_free(PARAMS_DEFINE);
-void cpu_memory_ptr_aloc(PARAMS_DEFINE);
-void cpu_memory_ptr_pull(PARAMS_DEFINE);
-void cpu_memory_ptr_push(PARAMS_DEFINE);
-void cpu_memory_ptr_spin(PARAMS_DEFINE);
-void cpu_memory_aux_free(PARAMS_DEFINE);
-void cpu_memory_aux_aloc(PARAMS_DEFINE);
-void cpu_memory_aux_pull(PARAMS_DEFINE);
-void cpu_memory_aux_push(PARAMS_DEFINE);
-void cpu_memory_aux_spin(PARAMS_DEFINE);
-/*****************************************************************************/
 void cpu_procedure_call(PARAMS_DEFINE);
 void cpu_procedure_back(PARAMS_DEFINE);
 void cpu_procedure_fcal(PARAMS_DEFINE);
