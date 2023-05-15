@@ -74,7 +74,8 @@ void cpu_memory_aloc(struct app_3bc_s* const self)
 
 void cpu_memory_moff(PARAMS_DEFINE)
 {
-    /** @todo this config remove mask (and not)
+    /** @todo remove?
+    this config remove mask (and not)
     driver_memory_conf_set(
         app, address, driver_memory_conf_get(app, address) & ~value);
     */
@@ -82,24 +83,58 @@ void cpu_memory_moff(PARAMS_DEFINE)
 
 void cpu_memory_muse(PARAMS_DEFINE)
 {
-    /** @todo this config append mask (or) 
+    /** @todo remove?
+    this config append mask (or) 
     driver_memory_conf_set(
         app, address, driver_memory_conf_get(app, address) | value);
     */
 }
 
-void cpu_memory_ptr_free(PARAMS_DEFINE)
+void cpu_memory_ptr_free(struct app_3bc_s* const self)
 {
-    /*
-    driver_memory_free(app, POINTER(address));
-    */
+    do {
+        if (self->rc != TBC_RET_OK){
+            self->rc = TBC_RET_SYS_MEM_READ;
+            break;
+        }
+
+        if (self->rc == TBC_RET_SYS_MEM_READ) {
+            self->cpu.ry = self->cpu.ra;
+            self->rc = TBC_RET_SYS_MEM_WRITE;
+            self->cpu.ra ^= self->cpu.ra;
+            break;
+        }
+
+        self->rc = TBC_RET_OK;
+    }
+    while(0);
 }
 
-void cpu_memory_ptr_aloc(PARAMS_DEFINE)
+/**
+ * @startuml
+ * rectangle pointer {
+ *  rectangle mem
+ * }
+ * @enduml
+ */
+void cpu_memory_ptr_aloc(struct app_3bc_s* const self)
 {
-    /*
-    driver_memory_data_set(app, POINTER(address), value);
-    */
+    do {
+        if (self->rc != TBC_RET_OK){
+            self->rc = TBC_RET_SYS_MEM_READ;
+            break;
+        }
+
+        if (self->rc == TBC_RET_SYS_MEM_READ) {
+            self->cpu.ry = self->cpu.ra;
+            self->rc = TBC_RET_SYS_MEM_WRITE;
+            self->cpu.ra = self->cpu.rz;
+            break;
+        }
+
+        self->rc = TBC_RET_OK;
+    }
+    while(0);
 }
 
 /**
@@ -111,11 +146,30 @@ void cpu_memory_ptr_aloc(PARAMS_DEFINE)
  * aux -left-> mem
  * @enduml
  */
-void cpu_memory_ptr_pull(PARAMS_DEFINE)
+void cpu_memory_ptr_pull(struct app_3bc_s* const self)
 {
-    /*
-    driver_memory_data_set(app, POINTER(address), AUX);
-    */
+    do {
+        if (self->rc != TBC_RET_OK){
+            self->rc = TBC_RET_SYS_MEM_READ;
+            self->cache_l2.i16[0] = self->cpu.ra;
+            break;
+        }
+
+        if (self->rc == TBC_RET_SYS_MEM_READ) {
+            self->cpu.ry = self->cpu.ra;
+            self->rc = TBC_RET_SYS_MEM_WRITE;
+            self->cpu.ra = self->cache_l2.i16[0];
+            break;
+        }
+
+        if (self->rc == TBC_RET_SYS_MEM_WRITE) {
+            self->rc = TBC_RET_GC_LV2;
+            break;
+        }
+
+        self->rc = TBC_RET_OK;
+    }
+    while(0);
 }
 
 /**
@@ -127,11 +181,28 @@ void cpu_memory_ptr_pull(PARAMS_DEFINE)
  * mem -right-> aux
  * @enduml
  */
-void cpu_memory_ptr_push(PARAMS_DEFINE)
+void cpu_memory_ptr_push(struct app_3bc_s* const self)
 {
-    /*
-    driver_accumulator_set(app, driver_memory_data_get(app, POINTER(address)));
-    */
+    do {
+        if (self->rc != TBC_RET_SYS_MEM_READ){
+            self->rc = TBC_RET_SYS_MEM_READ;
+            break;
+        }
+
+        if (self->rc == TBC_RET_SYS_MEM_READ && !self->cache_l1.retry) {
+            self->cpu.ry = self->cpu.ra;
+            self->cache_l1.retry = true;
+            break;
+        }
+
+        if (self->rc != TBC_RET_GC_LV1) {
+            self->rc = TBC_RET_GC_LV1;
+            break;
+        }
+
+        self->rc = TBC_RET_OK;
+    }
+    while(0);
 }
 
 /**

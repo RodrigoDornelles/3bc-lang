@@ -19,6 +19,7 @@ union cache_l1_u {
     tbc_i8_t i8;
     tbc_error_et error;
     tbc_sleep_et sleep_mode;
+    bool retry;
     /** use for conditionals (same cycle) */
     bool is; /**< @todo remove **/
 };
