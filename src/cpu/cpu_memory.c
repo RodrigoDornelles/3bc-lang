@@ -93,7 +93,7 @@ void cpu_memory_muse(PARAMS_DEFINE)
 void cpu_memory_ptr_free(struct app_3bc_s* const self)
 {
     do {
-        if (self->rc != TBC_RET_OK){
+        if (self->rc == TBC_RET_OK){
             self->rc = TBC_RET_SYS_MEM_READ;
             break;
         }
@@ -120,7 +120,7 @@ void cpu_memory_ptr_free(struct app_3bc_s* const self)
 void cpu_memory_ptr_aloc(struct app_3bc_s* const self)
 {
     do {
-        if (self->rc != TBC_RET_OK){
+        if (self->rc == TBC_RET_OK){
             self->rc = TBC_RET_SYS_MEM_READ;
             break;
         }
@@ -149,7 +149,7 @@ void cpu_memory_ptr_aloc(struct app_3bc_s* const self)
 void cpu_memory_ptr_pull(struct app_3bc_s* const self)
 {
     do {
-        if (self->rc != TBC_RET_OK){
+        if (self->rc == TBC_RET_OK){
             self->rc = TBC_RET_SYS_MEM_READ;
             self->cache_l2.i16[0] = self->cpu.ra;
             break;
@@ -184,7 +184,7 @@ void cpu_memory_ptr_pull(struct app_3bc_s* const self)
 void cpu_memory_ptr_push(struct app_3bc_s* const self)
 {
     do {
-        if (self->rc != TBC_RET_SYS_MEM_READ){
+        if (self->rc == TBC_RET_OK){
             self->rc = TBC_RET_SYS_MEM_READ;
             break;
         }
@@ -217,13 +217,35 @@ void cpu_memory_ptr_push(struct app_3bc_s* const self)
  */
 void cpu_memory_ptr_spin(PARAMS_DEFINE)
 {
-    /**
-    {
-        data_3bc_t aux_old = AUX;
-        address = POINTER(address);
-        driver_accumulator_set(app, driver_memory_data_get(app, address));
-        driver_memory_data_set(app, address, aux_old);
-    }*/
+    do {
+        if (self->rc == TBC_RET_OK){
+            self->rc = TBC_RET_SYS_MEM_READ;
+            self->cache_l2.i16[0] = self->cpu.ra;
+            break;
+        }
+
+        if (self->rc == TBC_RET_SYS_MEM_READ && !self->cache_l1.retry) {
+            self->cpu.ry = self->cpu.ra;
+            self->cache_l1.retry = true;
+            break;
+        }
+
+        if (self->rc == TBC_RET_SYS_MEM_READ) {
+            self->cache_l2.i16[1] = self->cpu.ra;
+            self->cpu.ra = self->cache_l2.i16[0];
+            self->rc = TBC_RET_SYS_MEM_WRITE;
+            break;
+        }
+
+        if (self->rc == TBC_RET_SYS_MEM_WRITE) {
+            self->cpu.ra = self->cache_l2.i16[1];
+            self->rc = TBC_RET_GC_LV2;
+            break;
+        }
+
+        self->rc = TBC_RET_OK;
+    }
+    while(0);
 }
 
 /**
