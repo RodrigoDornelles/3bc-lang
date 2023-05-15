@@ -215,7 +215,7 @@ void cpu_memory_ptr_push(struct app_3bc_s* const self)
  * aux -left-> mem
  * @enduml
  */
-void cpu_memory_ptr_spin(PARAMS_DEFINE)
+void cpu_memory_ptr_spin(struct app_3bc_s* const self)
 {
     do {
         if (self->rc == TBC_RET_OK){
