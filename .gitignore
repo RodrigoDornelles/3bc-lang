@@ -70,3 +70,6 @@ x86/
 *.pu
 html/
 latex/
+
+# WTF??
+!tests/unit/*.c

@@ -12,6 +12,11 @@ add_library(tbc_bus_sys_hello OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_sys_hello.
 add_library(tbc_bus_cpu_lang OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_cpu_lang.c")
 add_library(tbc_bus_sys_lang OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_sys_lang.c")
 
+
+# Casting dependencies
+FILE(GLOB tbc_cast_files "${CMAKE_SOURCE_DIR}/src/cast/*.c")
+add_library(tbc_cast OBJECT ${tbc_cast_files})
+
 # Datastruct dependencies
 FILE(GLOB tbc_ds_array_files "${CMAKE_SOURCE_DIR}/src/ds/*.c")
 add_library(tbc_array_simple OBJECT ${tbc_ds_array_files})
