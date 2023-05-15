@@ -53,7 +53,14 @@ const static tbc_method_ft ___bus_op_06[] = {
 const static tbc_u8_t ___bus_er_06[] = {
     (TBC_RRY|TBC_NRZ), TBC_RRY
 };
-
+const static tbc_method_ft ___bus_op_07[] = {
+    cpu_memory_ptr_free, cpu_memory_ptr_aloc, cpu_memory_ptr_pull,
+    cpu_memory_ptr_spin, cpu_memory_ptr_push
+};
+const static tbc_u8_t ___bus_er_07[] = {
+    TBC_NYZ, TBC_NRY, (TBC_RRY|TBC_NRZ),
+    (TBC_RRY|TBC_NRZ), (TBC_RRY|TBC_NRZ)
+};
 const static tbc_method_ft ___bus_op_08[] = {
     cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull,
     cpu_memory_aux_spin, cpu_memory_aux_push
@@ -86,7 +93,7 @@ static const tbc_layout_cpu_st ___layout_cpu[] = {
         sizeof(___bus_er_06), ___bus_op_06, ___bus_er_06
     },
     {
-        0, NULL, NULL
+        sizeof(___bus_er_07), ___bus_op_07, ___bus_er_07
     },
     {
         sizeof(___bus_er_08), ___bus_op_08, ___bus_er_08
