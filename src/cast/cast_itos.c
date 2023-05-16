@@ -75,6 +75,7 @@ tbc_u8_t cast_itos10(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
                 break;
             }
             case 64:
+#if !defined(TBC_NOT_INT64)
             {
                 tbc_u64_t src64 = *((tbc_u64_t*)src);
                 do {
@@ -85,6 +86,7 @@ tbc_u8_t cast_itos10(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
                 while (src64 && len <= (dn - 1));
                 break;
             }
+#endif
             default:
                 break;
         }

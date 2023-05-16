@@ -60,6 +60,10 @@ typedef unsigned short tbc_u16_t;
 typedef unsigned int tbc_u32_t;
 /** unsigned 64 bits **/
 typedef unsigned long long tbc_u64_t;
+/** not support integer 64 bits */
+#ifndef TBC_NOT_INT64
+#define TBC_NOT_INT64
+#endif
 /** architeture pointer size */
 typedef unsigned int tbc_size_t;
 #elif defined(TBC_ARCH_BITS_16)
@@ -78,6 +82,10 @@ typedef unsigned int tbc_u32_t;
 /** architeture pointer size */
 typedef unsigned short tbc_size_t;
 #elif defined(TBC_ARCH_BITS_8)
+/** not support integer 64 bits */
+#ifndef TBC_NOT_INT64
+#define TBC_NOT_INT64
+#endif
 /** signed 8 bits **/
 typedef signed char tbc_i8_t;
 /** signed 16 bits **/
