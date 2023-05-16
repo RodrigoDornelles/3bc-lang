@@ -35,9 +35,9 @@
  *
  */
 #include "i18n_0000.h"
+#include "cast_itos.h"
 #include "driver_error.h"
 
-static const char ___msg_err_0[] = "000";
 static const char ___msg_err_1[] = "[3BC] CRITICAL ERROR ABORTED THE PROGRAM";
 static const char ___msg_err_2[] = "\n> MACHINE ID:\t";
 static const char ___msg_err_4[] = "\n> ERROR LINE:\t";
@@ -83,8 +83,13 @@ void driver_error(struct app_3bc_s* const self)
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_3) {
-            self->cache_l3.buffer.storage = (char*) ___msg_err_0;
-            self->cache_l3.buffer.size = -3;
+            self->cache_l3.fixbuf.size = 
+                cast_itos10(
+                    self->cache_l3.fixbuf.storage,
+                    &self->id,
+                    sizeof(self->cache_l3.fixbuf.storage),
+                    sizeof(self->id) * 8
+                );
             break;
         }
         
@@ -95,8 +100,13 @@ void driver_error(struct app_3bc_s* const self)
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_5) {
-            self->cache_l3.buffer.storage = (char*) ___msg_err_0;
-            self->cache_l3.buffer.size = -3;
+            self->cache_l3.fixbuf.size = 
+                cast_itos10(
+                    self->cache_l3.fixbuf.storage,
+                    &self->cin.tty_storage.io.arr.index,
+                    sizeof(self->cache_l3.fixbuf.storage),
+                    sizeof(self->cin.tty_storage.io.arr.index) * 8
+                );
             break;
         }
 
@@ -107,8 +117,13 @@ void driver_error(struct app_3bc_s* const self)
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_7) {
-            self->cache_l3.buffer.storage = (char*) ___msg_err_0;
-            self->cache_l3.buffer.size = -3;
+            self->cache_l3.fixbuf.size = 
+                cast_itos10(
+                    self->cache_l3.fixbuf.storage,
+                    &self->cache_l1.error,
+                    sizeof(self->cache_l3.fixbuf.storage),
+                    sizeof(self->cache_l1.error) * 8
+                );
             break;
         }
 
