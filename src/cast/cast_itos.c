@@ -2,80 +2,114 @@
 
 /**
  * @short [0-9] to char*
- * @brief casting integer to string
- * @pre @b bits: 8, 10, 13, 16, 32, 64.
+ * @brief @par casting integer to string
+ * @details string formater intenger numbers in base 10
+ * and return number of bytes writed in buffer.
+ * @note this function has <b>space complexity</b> @f$O(1)@f$
+ * can be more slow in some hardwares than standard library,
+ * but is minify and safety for old devices.
  * @param[out] dest string destination
  * @param[in] src integer destination
  * @param[in] dn string destination length @b (bytes)
  * @param[in] sn integer destinatin length @b (bits)
+ * @pre @c dn minimum 2 @b bytes.
+ * @pre @c sn must be 8, 10, 13, 16, 32 or 64 @b bits.
+ * @return number of bytes writed
+ * @retval 1..127 success
+ * @retval 0 when invalid sizes @c dn or @c sn
+ * @retval 0 when invalid buffer @c dest
+ * @retval 0 when invalid source @c src
  */
-void cast_itos10(char* dest, void *src, tbc_u8_t dn, tbc_u8_t sn)
+tbc_u8_t cast_itos10(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
 {
-    tbc_u8_t i1 = 0, i2 = 0;
+    tbc_u8_t len = 0;
     
-    /* evaluate */
-    switch (sn) {
-        case 8:
-        {
-            tbc_u8_t srcopied = *((tbc_u8_t*)src);
-            while (srcopied && i1 < dn) {
-                dest[i1] = ('0' + (srcopied % 10));
-                srcopied = (srcopied / 10);
-                ++i1;
-            }
+    do {
+        /* invalid destination */
+        if (dest == NULL) {
             break;
+        }
+        /* invalid source */
+        if (src == NULL) {
+            break;
+        }
+        /* invalid destination size */
+        if (dn < 2) {
+            break;
+        }
+        /* evaluate */
+        switch (sn) {
+            case 8:
+            {
+                tbc_u8_t src8 = *((tbc_u8_t*)src);
+                do {
+                    dest[len] = ('0' + (src8 % 10));
+                    src8 = (src8 / 10);
+                    ++len;
+                }
+                while (src8 && len <= (dn - 1));
+                break;
+            }
+            case 10:
+            case 13:
+            case 16:
+            {
+                tbc_u16_t src16 = *((tbc_u16_t*)src);
+                do {
+                    dest[len] = ('0' + (src16 % 10));
+                    src16 = (src16 / 10);
+                    ++len;
+                }
+                while (src16 && len <= (dn - 1));
+                break;
+            }
+            case 32:
+            {
+                tbc_u32_t src32 = *((tbc_u32_t*)src);
+                do {
+                    dest[len] = ('0' + (src32 % 10));
+                    src32 = (src32 / 10);
+                    ++len;
+                }
+                while (src32 && len <= (dn - 1));
+                break;
+            }
+            case 64:
+            {
+                tbc_u64_t src64 = *((tbc_u64_t*)src);
+                do {
+                    dest[len] = ('0' + (src64 % 10));
+                    src64 = (src64 / 10);
+                    ++len;
+                }
+                while (src64 && len <= (dn - 1));
+                break;
+            }
+            default:
+                break;
         }
 
-        case 10:
-        case 13:
-        case 16:
-        {
-            tbc_u16_t srcopied = *((tbc_u16_t*)src);
-            while (srcopied && i1 < dn) {
-                dest[i1] = ('0' + (srcopied % 10));
-                srcopied = (srcopied / 10);
-                ++i1;
+        /* formating */
+        if (len > 0) {
+            tbc_u8_t i = (len - 1);
+            tbc_u8_t o = 0;
+
+            /* terminator */
+            dest[len] = '\0';
+
+            /* xor swap */
+            while (i > o) {
+                if (dest[i] != dest[o]) {
+                    dest[i] ^= dest[o];
+                    dest[o] ^= dest[i];
+                    dest[i] ^= dest[o];
+                }
+                --i;
+                ++o;
             }
-            break;
-        }
-        case 32:
-        {
-            tbc_u32_t srcopied = *((tbc_u32_t*)src);
-            while (srcopied && i1 < dn) {
-                dest[i1] = ('0' + (srcopied % 10));
-                srcopied = (srcopied / 10);
-                ++i1;
-            }
-            break;
-        }
-        case 64:
-        {
-            tbc_u64_t srcopied = *((tbc_u64_t*)src);
-            while (srcopied && i1 < dn) {
-                dest[i1] = ('0' + (srcopied % 10));
-                srcopied = (srcopied / 10);
-                ++i1;
-            }
-            break;
-        }
-        default:
-        {
-            dest[i1] = '?';
-            ++i1;
-            break;
         }
     }
+    while(0);
 
-    /* terminator */
-    dest[i1] = '\0';
-    --i1;
-
-    /* xor swap */
-    while (i1 > i2) {
-        dest[i1] ^= dest[i2];
-        dest[i2] ^= dest[i1];
-        dest[i1] ^= dest[i2];
-        --i1;
-        ++i2;
-    }
+    return len;
 }
