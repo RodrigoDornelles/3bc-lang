@@ -33,6 +33,7 @@
  */
 
 #include "3bc.h"
+#include "cast_itos.h"
 
 
 /**
@@ -97,7 +98,11 @@ void cpu_string_output(struct app_3bc_s* const self)
                         break;
 
                     case STRI:
-                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%u", (unsigned int) self->cpu.ra);
+                        self->cache_l3.fixbuf.size += cast_itos10(
+                            self->cache_l3.fixbuf.storage,
+                            &self->cpu.ra,
+                            sizeof(self->cache_l3.fixbuf.storage),
+                            13);
                         break;
 
                     case STRX:
