@@ -93,6 +93,14 @@ void cpu_string_output(struct app_3bc_s* const self)
                 }
                 switch(self->cpu.rx)
                 {
+                    case STRB:
+                        self->cache_l3.fixbuf.size += cast_itos2(
+                            self->cache_l3.fixbuf.storage,
+                            &self->cpu.ra,
+                            sizeof(self->cache_l3.fixbuf.storage),
+                            13);
+                        break;
+
                     case STRO:
                         self->cache_l3.fixbuf.size += snprintf(out, out_size, "%o", (unsigned int) self->cpu.ra);
                         break;
