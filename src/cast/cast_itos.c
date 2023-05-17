@@ -136,13 +136,6 @@ tbc_u8_t cast_itos10(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
 tbc_u8_t cast_itos2(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
 {
     tbc_u8_t len = 0;
-#if !defined(TBC_NOT_INT64)
-    tbc_u64_t pit = *((tbc_u64_t*)src);
-    tbc_u64_t wise = 1llu << (sn - 1);
-#else
-    tbc_u32_t pit = *((tbc_u32_t*)src);
-    tbc_u32_t wise = 1lu << (sn - 1);
-#endif
     
     do {
         /* invalid destination */
@@ -161,17 +154,31 @@ tbc_u8_t cast_itos2(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
         if (sn == 0) {
             break;
         }
-        /* get first bit*/
-        while (wise && !(pit & wise)) {
-            wise = wise >> 1;
+        /* safety assignment */
+        {
+ #if !defined(TBC_NOT_INT64)
+            tbc_u64_t pit = *((tbc_u64_t*)src);
+            tbc_u64_t wise = 1llu << (sn - 1);
+#else
+            tbc_u32_t pit = *((tbc_u32_t*)src);
+            tbc_u32_t wise = 1lu << (sn - 1);
+#endif
+            /* invalid source size */
+            if (sn > (sizeof(pit) * 8)) {
+                break;
+            }
+            /* get first bit*/
+            while (wise && !(pit & wise)) {
+                wise = wise >> 1;
+            }
+            /* evaluate */
+            do {
+                dest[len] = '0' + (!!(pit & wise));
+                wise = wise >> 1;
+                ++len;
+            }
+            while(wise && len <= (dn - 1));
         }
-        /* evaluate */
-        do {
-            dest[len] = '0' + (!!(pit & wise));
-            wise = wise >> 1;
-            ++len;
-        }
-        while(wise && len <= (dn - 1));
         /* terminator */
         dest[len] = '\0';
     }
