@@ -114,7 +114,12 @@ void cpu_string_output(struct app_3bc_s* const self)
                         break;
 
                     case STRX:
-                        self->cache_l3.fixbuf.size += snprintf(out, out_size, "%x", (unsigned int) self->cpu.ra);
+                        /** @todo investage prints bigger than 0x81 */
+                        self->cache_l3.fixbuf.size += cast_itos16(
+                            self->cache_l3.fixbuf.storage,
+                            &self->cpu.ra,
+                            sizeof(self->cache_l3.fixbuf.storage),
+                            16);
                         break;                    
                 }
             }
