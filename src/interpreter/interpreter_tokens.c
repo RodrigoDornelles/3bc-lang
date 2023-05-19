@@ -36,6 +36,7 @@
  */
 
 #include "3bc.h"
+#include <string.h>
 
 /**
  * Separator in columns and rows.

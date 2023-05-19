@@ -41,7 +41,6 @@
 #if !defined(TBC_NOT_MALLOC)
 #include <stdlib.h>
 #endif
-#include <string.h>
 
 /**
  * @short internal garbage collector
@@ -82,6 +81,9 @@
  */
 void driver_gc(struct app_3bc_s* const self)
 {
+    tbc_u8_t index = 0;
+    tbc_u8_t* buf = NULL;
+
     /* cleanup **/
     switch((tbc_u8_t) self->rc)
     {
@@ -92,15 +94,27 @@ void driver_gc(struct app_3bc_s* const self)
             break;
 
         case TBC_RET_GC_LV3:
-            memset(&self->cache_l3, 0, sizeof(union cache_l3_u));
+            buf = ((tbc_u8_t*) &self->cache_l3);
+            while (index < sizeof(union cache_l3_u)) {
+                buf[index] ^= buf[index];
+                ++index;
+            }
             break;
 
         case TBC_RET_GC_LV2:
-            memset(&self->cache_l2, 0, sizeof(union cache_l2_u));
+            buf = ((tbc_u8_t*) &self->cache_l2);
+            while (index < sizeof(union cache_l2_u)) {
+                buf[index] ^= buf[index];
+                ++index;
+            }
             break;
 
         case TBC_RET_GC_LV1:
-            memset(&self->cache_l1, 0, sizeof(union cache_l1_u));
+            buf = ((tbc_u8_t*) &self->cache_l1);
+            while (index < sizeof(union cache_l1_u)) {
+                buf[index] ^= buf[index];
+                ++index;
+            }
             break;
     }
 

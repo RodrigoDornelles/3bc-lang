@@ -67,7 +67,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #if defined(TBC_USE_POSIX)
 #include <unistd.h>
 #endif

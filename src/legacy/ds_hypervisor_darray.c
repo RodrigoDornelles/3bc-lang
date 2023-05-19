@@ -37,6 +37,7 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
+#include <string.h>
 
 static app_3bc_id machines_count;
 static struct app_3bc_s** machines_array;

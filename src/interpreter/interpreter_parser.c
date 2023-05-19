@@ -37,6 +37,7 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
+#include <string.h>
 
 /**
  * convert string in any numeric base
