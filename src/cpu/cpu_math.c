@@ -35,6 +35,9 @@
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
+/**
+ * @ref alu_common_simple
+ */
 void cpu_math(struct app_3bc_s* const self)
 {
      do {
