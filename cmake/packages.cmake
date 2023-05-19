@@ -6,12 +6,15 @@ add_library(tbc_cpu_hello OBJECT "${CMAKE_SOURCE_DIR}/src/cpu/cpu_string.c")
 target_compile_definitions("tbc_cpu_hello" PRIVATE TBC_NOT_MATH)
 target_compile_definitions("tbc_cpu_no_math" PRIVATE TBC_NOT_MATH)
 
+# Alu
+FILE(GLOB tbc_alu_files "${CMAKE_SOURCE_DIR}/src/alu/alu_common_*.c")
+add_library(tbc_alu OBJECT ${tbc_alu_files})
+
 # Bus
 add_library(tbc_bus_cpu_hello OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_cpu_hello.c")
 add_library(tbc_bus_sys_hello OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_sys_hello.c")
 add_library(tbc_bus_cpu_lang OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_cpu_lang.c")
 add_library(tbc_bus_sys_lang OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_sys_lang.c")
-
 
 # Casting dependencies
 FILE(GLOB tbc_cast_files "${CMAKE_SOURCE_DIR}/src/cast/*.c")

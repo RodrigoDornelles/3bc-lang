@@ -65,18 +65,6 @@ void cpu_not_mode(PARAMS_DEFINE);
 void cpu_not_exist(PARAMS_DEFINE);
 void cpu_mode_reserved(PARAMS_DEFINE);
 /*****************************************************************************/
-void cpu_math_sum(PARAMS_DEFINE);
-void cpu_math_sub(PARAMS_DEFINE);
-void cpu_math_mul(PARAMS_DEFINE);
-void cpu_math_div(PARAMS_DEFINE);
-void cpu_math_mod(PARAMS_DEFINE);
-void cpu_math_power(PARAMS_DEFINE);
-void cpu_math_root(PARAMS_DEFINE);
-void cpu_math_abs(PARAMS_DEFINE);
-void cpu_math_logb(PARAMS_DEFINE);
-void cpu_math_logn(PARAMS_DEFINE);
-void cpu_math_mul_add(PARAMS_DEFINE);
-/*****************************************************************************/
 void cpu_jump_goto(PARAMS_DEFINE);
 void cpu_jump_fgto(PARAMS_DEFINE);
 void cpu_jump_zgto(PARAMS_DEFINE);

@@ -17,6 +17,7 @@ struct ___tbc_fixed_buffer_s {
 union cache_l1_u {
     tbc_u8_t u8;
     tbc_i8_t i8;
+    tbc_u8_t math;
     tbc_error_et error;
     tbc_sleep_et sleep_mode;
     bool retry;

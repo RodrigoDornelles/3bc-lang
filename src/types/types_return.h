@@ -35,6 +35,14 @@
 #ifndef H_TYPES_RETURN_TBC
 #define H_TYPES_RETURN_TBC
 
+/**
+ * @li equal @c 0 is normal operation.
+ * @li after @c 1 is status communication.
+ * @li after @c 128 is interrupt.
+ * @li after @c 192 is blocking interrupt.
+ * @note the <b> blocking interrupt </b> is the fact that it
+ * does not allow the @b CPU to execute until another non-blocking return.
+ */
 enum ___tbc_return_e {
     TBC_RET_OK = 0,
     TBC_RET_REPEAT = 1,
@@ -42,7 +50,7 @@ enum ___tbc_return_e {
     TBC_RET_CLEAN = 3,
     TBC_RET_FULL = 4,
     TBC_RET_GC_OK = 5,
-    TBC_RET_THROW_ERROR = 128,
+    TBC_RET_CATCH_ERROR = 6,
     TBC_RET_EXIT_SAFE = 129,
     TBC_RET_EXIT_FORCE = 130,
     TBC_RET_PRINT_ERROR_1 = 131,
@@ -60,11 +68,13 @@ enum ___tbc_return_e {
     TBC_RET_PRINT_ERROR_D = 143,
     TBC_RET_PRINT_ERROR_E = 144,
     TBC_RET_PRINT_ERROR_F = 145,
+    TBC_RET_SYS_MATH = 186,
     TBC_RET_SYS_MEM_READ = 187,
     TBC_RET_SYS_MEM_WRITE = 188,
     TBC_RET_SYS_IO_READ = 189,
     TBC_RET_SYS_IO_WRITE = 190,
     TBC_RET_SYS_WAIT = 191,
+    TBC_RET_THROW_ERROR = 192,
     TBC_RET_GC_END = 250,
     TBC_RET_GC_LV1 = 251,
     TBC_RET_GC_LV2 = 252,

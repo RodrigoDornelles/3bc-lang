@@ -66,7 +66,7 @@ void driver_error(struct app_3bc_s* const self)
             ++self->rc;
         }
 
-        if (self->rc == TBC_RET_THROW_ERROR) {
+        if (self->rc == TBC_RET_CATCH_ERROR) {
             self->rc = TBC_RET_PRINT_ERROR_1;
         }
 

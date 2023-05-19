@@ -42,6 +42,7 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc_types.h"
+#include "alu_common_simple.h"
 #include "driver_error.h"
 #include "driver_cpu.h"
 #include "driver_gc.h"
@@ -122,6 +123,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
             switch ((tbc_u8_t) self->rc)
             {
                 case TBC_RET_THROW_ERROR:
+                    self->rc = TBC_RET_CATCH_ERROR;
                     self->state = FSM_3BC_ERROR;
                     break;
 
@@ -131,6 +133,10 @@ bool driver_interrupt(struct app_3bc_s* const self)
 
                 case TBC_RET_EXIT_FORCE:
                     self->state = FSM_3BC_STOPED;
+                    break;
+
+                case TBC_RET_SYS_MATH:
+                    alu_common_simple(self);
                     break;
 
                 case TBC_RET_SYS_MEM_READ:
