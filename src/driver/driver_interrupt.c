@@ -252,6 +252,9 @@ bool driver_interrupt(struct app_3bc_s* const self)
             break;
         
         case FSM_3BC_STOPED:
+#if defined(TBC_FREEZE_STOPPED)
+            while(1);
+#endif
             break;
         }
     }

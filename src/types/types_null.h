@@ -3,6 +3,7 @@
 
 #ifndef NULL
 #define NULL ((void*)0)
+#define _HAVE_NULL
 #endif
 
 #endif
