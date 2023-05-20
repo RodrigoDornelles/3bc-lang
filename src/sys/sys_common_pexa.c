@@ -14,6 +14,6 @@ void sys_common_pexams_expand(tbc_app_st *const self)
 #if !defined(TBC_NOT_MALLOC)
     self->rc = TBC_RET_OK;
     self->cin.tty_storage.io.arr.size += 3;
-    self->cin.tty_storage.io.arr.ptr = realloc(self->cin.tty_storage.io.arr.ptr, self->cin.tty_storage.io.arr.size);
+    self->cin.tty_storage.io.arr.ptr = (tbc_u8_t*) realloc(self->cin.tty_storage.io.arr.ptr, self->cin.tty_storage.io.arr.size);
 #endif
 }

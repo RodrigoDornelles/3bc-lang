@@ -63,7 +63,7 @@ void driver_error(struct app_3bc_s* const self)
         if (TBC_RET_PRINT_ERROR_1 <= self->rc &&
             self->rc <= TBC_RET_PRINT_ERROR_F) {
             self->cache_l2.tty = &(self->cout.tty_output);
-            ++self->rc;
+            self->rc = (tbc_return_et) (*((tbc_u8_t*) &self->rc) + 1);
         }
 
         if (self->rc == TBC_RET_CATCH_ERROR) {
@@ -135,7 +135,7 @@ void driver_error(struct app_3bc_s* const self)
 
         if (self->rc == TBC_RET_PRINT_ERROR_9) {
             if (self->cache_l1.error >= tbc_i18n_error_len) {
-                self->cache_l1.error = 0;
+                self->cache_l1.error = ERROR_UNKWON;
             }
             self->cache_l3.buffer.size =
                 -tbc_i18n_error_arr[self->cache_l1.error].len;

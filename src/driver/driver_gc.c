@@ -119,7 +119,7 @@ void driver_gc(struct app_3bc_s* const self)
     }
 
     /* next level */
-    --self->rc;
+    self->rc = (tbc_return_et) (*((tbc_u8_t*) &self->rc) - 1);
 
     /* verify gc done rotine */
     if (self->rc == TBC_RET_GC_END) {
