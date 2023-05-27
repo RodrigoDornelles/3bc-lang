@@ -79,6 +79,10 @@ const static tbc_u8_t ___bus_er_math[] = {
     TBC_DUAL
 };
 
+const static tbc_u8_t ___bus_er_math_nryz[] = {
+    (TBC_NRY|TBC_NRZ)
+};
+
 static const tbc_layout_cpu_st ___layout_cpu[] = {
     {
         0, NULL, NULL
@@ -144,7 +148,7 @@ static const tbc_layout_cpu_st ___layout_cpu[] = {
         0, NULL, NULL
     },
     {
-        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math
+        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math_nryz
     },
     {
         sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math
@@ -174,7 +178,7 @@ static const tbc_layout_cpu_st ___layout_cpu[] = {
         0, NULL, NULL
     },
     {
-        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math
+        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math_nryz
     },
     {
         sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math
@@ -198,7 +202,7 @@ static const tbc_layout_cpu_st ___layout_cpu[] = {
         sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math
     },
     {
-        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math
+        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math_nryz
     }
 };
 
