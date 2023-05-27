@@ -41,6 +41,7 @@
 #include "cpu_memory.h"
 #include "cpu_string.h"
 
+/** @par 1-9 **/
 const static tbc_method_ft ___bus_op_02[] = {
     cpu_string_output, cpu_string_output, cpu_string_output,
     cpu_string_output, cpu_string_output
@@ -71,6 +72,7 @@ const static tbc_u8_t ___bus_er_08[] = {
     (TBC_RRY|TBC_NRZ), (TBC_RRY|TBC_NRZ)
 };
 
+/** @par 11-39 **/
 const static tbc_method_ft ___bus_op_math[] = {
     cpu_math
 };
@@ -78,7 +80,12 @@ const static tbc_method_ft ___bus_op_math[] = {
 const static tbc_u8_t ___bus_er_math[] = {
     TBC_DUAL
 };
-
+const static tbc_method_ft ___bus_op_math_19[] = {
+    cpu_math, cpu_math, cpu_math, cpu_math,
+};
+const static tbc_u8_t ___bus_er_math_19[] = {
+    TBC_DUAL, TBC_DUAL, TBC_DUAL, TBC_DUAL,
+};
 const static tbc_u8_t ___bus_er_math_nryz[] = {
     (TBC_NRY|TBC_NRZ)
 };
@@ -142,13 +149,13 @@ static const tbc_layout_cpu_st ___layout_cpu[] = {
         sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math
     },
     {
-        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math
+        sizeof(___bus_er_math_19), ___bus_op_math_19, ___bus_er_math_19
     },
     {
         0, NULL, NULL
     },
     {
-        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math_nryz
+        sizeof(___bus_er_math_nryz), ___bus_op_math, ___bus_er_math_nryz
     },
     {
         sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math

@@ -14,6 +14,10 @@
  * @details
  * ID | Math Name          | Math Formula              | Math Code (ANSI C) 
  * -- |------------------- | ------------------------- | ------------------
+ * 01 | Mul Add (base 2)   | @f$(a \ll 1) + b@f$       | (a<<1)+b
+ * 02 | Mul Add (base 8)   | @f$(a \ll 3) + b@f$       | (a<<3)+b
+ * 03 | Mul Add (base 10)  | @f$(a \times 10) + b@f$   | (a*10)+b
+ * 04 | Mul Add (base 16)  | @f$(a \ll 4) + b@f$       | (a<<4)+b
  * 11 | Addition           | @f$a + b@f$               | a+b
  * 12 | Subtraction        | @f$a - b@f$               | a-b
  * 13 | Multiplication     | @f$a \times b@f$          | a*b
@@ -22,7 +26,7 @@
  * 16 | Exponentiation     | @f$a^b@f$                 | pow(a,b)
  * 17 | Nth Root           | @f$\sqrt[b]{a}@f$         | pow(a,1/b)
  * 18 | Absolute Value     | @f$\|a\|@f$               | abs(a)
- * 19 | Multiplication Add | @f$(a \times base) + b@f$ | (a*base)+b
+ * 19 | Multiplication Add | use 1, 2, 3 or 4          ||
  * 21 | Bitwise NOT        | @f$\sim a@f$              | ~a
  * 22 | Bitwise AND        | @f$a \& b@f$              | a&b
  * 23 | Bitwise OR         | @f$a \mid b@f$            | a\|b
@@ -46,6 +50,26 @@ void alu_common_simple(struct app_3bc_s* const self)
 {
     switch(self->cache_l1.math)
     {
+        case 1:
+            self->cpu.ra = 
+                (self->cache_l2.i16[0]<<1) + self->cache_l2.i16[1];
+            break;
+
+        case 2:
+            self->cpu.ra = 
+                (self->cache_l2.i16[0]<<3) + self->cache_l2.i16[1];
+            break;
+
+        case 3:
+            self->cpu.ra = 
+                (self->cache_l2.i16[0]*10) + self->cache_l2.i16[1];
+            break;
+
+        case 4:
+            self->cpu.ra = 
+                (self->cache_l2.i16[0]<<4) + self->cache_l2.i16[1];
+            break;
+
         case 11:
             self->cpu.ra = 
                 self->cache_l2.i16[0] + self->cache_l2.i16[1];

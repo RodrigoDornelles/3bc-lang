@@ -56,7 +56,11 @@ void cpu_math(struct app_3bc_s* const self)
 
         if (self->rc == TBC_RET_OK) {
             self->rc = TBC_RET_SYS_MATH;
-            self->cache_l1.math = self->cpu.rm;
+            if (self->cpu.rm == TBC_MODE_MATH_MUL_ADD) {
+                self->cache_l1.math = self->cpu.rx;
+            } else {
+                self->cache_l1.math = self->cpu.rm;
+            }
             self->cache_l2.i16[1] = self->cpu.ra;
             break;
         }
