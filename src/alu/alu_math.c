@@ -110,7 +110,41 @@ void alu_calculator(struct app_3bc_s* const self)
                 self->cache_l2.i16[0] % self->cache_l2.i16[1];
             break;
 
-        case 17:
+        case 16:
+#if defined(TBC_NOT_MATH)
+#if defined(TBC_PRG_WARNING)
+#pragma message("[3BC] UNSUPPORTED: ALU 16")
+#else
+#warning "[3BC] UNSUPPORTED: ALU 16"
+#endif
+            self->rc = TBC_RET_THROW_ERROR;
+            self->cache_l1.error = ERROR_UNSUPPORTED;
+            break;
+#else
+            self->cpu.ra =
+                (data_aux_3bc_t)trunc(powf((float)self->cache_l2.i16[0],
+                    (float)self->cache_l2.i16[1]));
+#endif
+            break;
+
+            case 17:
+#if defined(TBC_NOT_MATH)
+#if defined(TBC_PRG_WARNING)
+#pragma message("[3BC] UNSUPPORTED: ALU 17")
+#else
+#warning "[3BC] UNSUPPORTED: ALU 17"
+#endif
+            self->rc = TBC_RET_THROW_ERROR;
+            self->cache_l1.error = ERROR_UNSUPPORTED;
+            break;
+#else
+            self->cpu.ra =
+                (data_aux_3bc_t)trunc(powf((float)self->cache_l2.i16[0],
+                    1.0f/(float)self->cache_l2.i16[1]));
+#endif
+            break;
+
+        case 18:
             self->cpu.ra = self->cache_l2.i16[0] < 0?
                 -self->cache_l2.i16[0]: 
                 self->cache_l2.i16[0];
