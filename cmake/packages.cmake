@@ -7,8 +7,8 @@ target_compile_definitions("tbc_cpu_hello" PRIVATE TBC_NOT_MATH)
 target_compile_definitions("tbc_cpu_no_math" PRIVATE TBC_NOT_MATH)
 
 # Alu
-FILE(GLOB tbc_alu_files "${CMAKE_SOURCE_DIR}/src/alu/alu_common_*.c")
-add_library(tbc_alu OBJECT ${tbc_alu_files})
+add_library(tbc_alu_std OBJECT "${CMAKE_SOURCE_DIR}/src/alu/alu_math.c")
+add_library(tbc_alu_none OBJECT "${CMAKE_SOURCE_DIR}/src/alu/alu_none.c")
 
 # Bus
 add_library(tbc_bus_cpu_hello OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_cpu_hello.c")

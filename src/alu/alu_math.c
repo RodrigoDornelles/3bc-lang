@@ -1,5 +1,10 @@
-#include "alu_common_simple.h"
+#include "3bc_detect.h"
+#include "alu_math.h"
 #include "types_errors.h"
+
+#if !defined(TBC_NOT_MATH)
+#include <math.h>
+#endif
 
 /**
  * @brief native host cpu math
@@ -46,7 +51,7 @@
  * 38 | Logarithm Natural  | @f$\log(a)@f$             | log(a)
  * 39 | Logarithm Base N   | @f$\log_{b}(a)@f$         | log(a)/log(b)
  */
-void alu_common_simple(struct app_3bc_s* const self)
+void alu_calculator(struct app_3bc_s* const self)
 {
     switch(self->cache_l1.math)
     {
@@ -188,61 +193,79 @@ void alu_common_simple(struct app_3bc_s* const self)
                 !((!!self->cache_l2.i16[0]) ^ (!!self->cache_l2.i16[1]));
             break;
 
+        case 38:
+#if defined(TBC_NOT_MATH) || defined(TBC_NOT_LOG)
+#if defined(TBC_PRG_WARNING)
+#pragma message("[3BC] UNSUPPORTED: ALU 38")
+#else
+#warning "[3BC] UNSUPPORTED: ALU 38"
+#endif
+            self->rc = TBC_RET_THROW_ERROR;
+            self->cache_l1.error = ERROR_UNSUPPORTED;
+            break;
+#else
+            if (self->cache_l2.i16[0] == 0) {
+                self->rc = TBC_RET_THROW_ERROR;
+                self->cache_l1.error = ERROR_NUMBER_ZERO;
+                break;
+            }
+            self->cpu.ra =
+                (data_aux_3bc_t)trunc(log((double)self->cache_l2.i16[0]));
+            break;
+#endif
+
+        case 39:
+#if !defined(TBC_NOT_LOG2)
+            /** @note optmized @b log2 **/
+            if(self->cache_l2.i16[1] == 2) {
+                self->cpu.ra =
+                (data_aux_3bc_t)trunc(log2((double)self->cache_l2.i16[0]));
+                break;
+            }
+#else
+            /** @note software supporting @b log2 **/
+            if(self->cache_l2.i16[1] == 2) {
+                self->cpu.ra = 16;
+                while(self->cache_l2.i16[1] &&
+                    !(self->cache_l2.i16[0] & self->cache_l2.i16[1])) {
+                    self->cache_l2.i16[1] = self->cache_l2.i16[1] >> 1;
+                    --self->cpu.ra;
+                }
+                break;
+            }
+#endif
+#if !defined(TBC_NOT_LOG10)
+            /** @note optmized @b log10 **/
+            if(self->cache_l2.i16[1] == 10) {
+                self->cpu.ra =
+                (data_aux_3bc_t)trunc(log10((double)self->cache_l2.i16[0]));
+                break;
+            }
+#endif
+#if defined(TBC_NOT_MATH) || defined(TBC_NOT_LOG)
+#if defined(TBC_PRG_WARNING)
+#pragma message("[3BC] UNSUPPORTED: ALU 39 (PARTIAL)")
+#else
+#warning "[3BC] UNSUPPORTED: ALU 39 (PARTIAL)"
+#endif
+            self->rc = TBC_RET_THROW_ERROR;
+            self->cache_l1.error = ERROR_UNSUPPORTED;
+            break;
+#else
+            if (self->cache_l2.i16[0] == 0) {
+                self->rc = TBC_RET_THROW_ERROR;
+                self->cache_l1.error = ERROR_NUMBER_ZERO;
+                break;
+            }
+            self->cpu.ra =
+                (data_aux_3bc_t)trunc(log((double)self->cache_l2.i16[0])/
+                log((double)self->cache_l2.i16[0]));
+            break;
+#endif
+
         default:
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_UNSUPPORTED;
             break;
     }
 }
-
-/*
-void cpu_bool_not(PARAMS_DEFINE)
-{
-    VALIDATE_NOT_ADRESS
-    VALIDATE_NOT_VALUES
-    driver_accumulator_set(app, !AUX);
-}
-
-void cpu_bool_and(PARAMS_DEFINE)
-{
-    VALIDATE_NOT_DUALITY
-    VALIDATE_NOT_NEGATIVES
-    driver_accumulator_set(app, AUX && GET_ANY_PARAM);
-}
-
-void cpu_bool_or(PARAMS_DEFINE)
-{
-    VALIDATE_NOT_DUALITY
-    VALIDATE_NOT_NEGATIVES
-    driver_accumulator_set(app, AUX || GET_ANY_PARAM);
-}
-
-void cpu_bool_xor(PARAMS_DEFINE)
-{
-    VALIDATE_NOT_DUALITY
-    VALIDATE_NOT_NEGATIVES
-    driver_accumulator_set(app, (!!AUX) ^ (!!GET_ANY_PARAM));
-}
-
-void cpu_bool_nand(PARAMS_DEFINE)
-{
-    VALIDATE_NOT_DUALITY
-    VALIDATE_NOT_NEGATIVES
-    driver_accumulator_set(app, !(AUX && GET_ANY_PARAM));
-}
-
-void cpu_bool_nor(PARAMS_DEFINE)
-{
-    VALIDATE_NOT_DUALITY
-    VALIDATE_NOT_NEGATIVES
-    driver_accumulator_set(app, !(AUX || GET_ANY_PARAM));
-}
-
-void cpu_bool_xnor(PARAMS_DEFINE)
-{
-    VALIDATE_NOT_DUALITY
-    VALIDATE_NOT_NEGATIVES
-    driver_accumulator_set(app, !((!!AUX) ^ (!!GET_ANY_PARAM)));
-}
-
-*/

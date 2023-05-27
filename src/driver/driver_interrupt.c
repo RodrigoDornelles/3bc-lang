@@ -42,7 +42,7 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc_types.h"
-#include "alu_common_simple.h"
+#include "alu_0000.h"
 #include "driver_error.h"
 #include "driver_cpu.h"
 #include "driver_gc.h"
@@ -136,7 +136,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
                     break;
 
                 case TBC_RET_SYS_MATH:
-                    alu_common_simple(self);
+                    alu_calculator(self);
                     break;
 
                 case TBC_RET_SYS_MEM_READ:

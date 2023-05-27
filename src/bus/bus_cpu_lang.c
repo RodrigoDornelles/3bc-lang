@@ -206,11 +206,11 @@ static const tbc_layout_cpu_st ___layout_cpu[] = {
         sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math
     },
     {
-        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math
+        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math_nryz
     },
     {
-        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math_nryz
-    }
+        sizeof(___bus_er_math), ___bus_op_math, ___bus_er_math
+    },
 };
 
 const tbc_u8_t tbc_layout_cpu_modes = sizeof(___layout_cpu)/sizeof(tbc_layout_cpu_st);
