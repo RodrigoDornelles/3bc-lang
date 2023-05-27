@@ -58,6 +58,7 @@ char* interpreter_readln(struct app_3bc_s* const app, char* line)
     }
     /** blank line @todo not working!**/
     if (text_reg == NULL) {
+        app->rc = TBC_RET_CLEAN;
         return line;
     }
     /** parse string to register and validate **/
@@ -74,7 +75,6 @@ char* interpreter_readln(struct app_3bc_s* const app, char* line)
     } 
     
     /** add new line **/
-    //ds_program_fifo_line_add(app, reg, mem, val);
     app->cpu.rx = reg;
     app->cpu.ry = mem;
     app->cpu.rz = val;

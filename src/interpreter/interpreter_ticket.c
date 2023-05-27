@@ -102,10 +102,8 @@ void interpreter_ticket(tbc_app_st *const self)
             do {
                 self->program.last_line += 1;
                 line = interpreter_readln(self, line);
-            } while (line != NULL);
+            } while (line != NULL && self->rc != TBC_RET_CLEAN);
         }
-
-        self->pkg_func->prog.insert(self);
 
         /** reset buffer **/
         {
@@ -114,7 +112,10 @@ void interpreter_ticket(tbc_app_st *const self)
             self->cache_l3.buffer.size = 0;
         }
 
-        self->rc = TBC_RET_OK;
+        /** done */
+        if (self->rc != TBC_RET_CLEAN) {
+            self->rc = TBC_RET_FULL;
+        }
         return;
     }
 

@@ -212,7 +212,8 @@ bool driver_interrupt(struct app_3bc_s* const self)
 
         case FSM_3BC_READING:
             interpreter_ticket(self);
-            if (self->rc == TBC_RET_OK) {
+            if (self->rc == TBC_RET_FULL) {
+                self->pkg_func->prog.insert(self);
                 self->state = FSM_3BC_LOADING;
             }
             break;
