@@ -35,7 +35,7 @@
  *
  */
 
-#include "macro_consts.h"
+#include "types_consts.h"
 #include "bus_cpu_lang.h"
 #include "cpu_math.h"
 #include "cpu_memory.h"
