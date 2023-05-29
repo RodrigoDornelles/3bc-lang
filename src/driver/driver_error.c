@@ -103,9 +103,9 @@ void driver_error(struct app_3bc_s* const self)
             self->cache_l3.fixbuf.size = 
                 cast_itos10(
                     self->cache_l3.fixbuf.storage,
-                    &self->cin.tty_storage.io.arr.index,
+                    &self->stack.cfgmin.prog->index,
                     sizeof(self->cache_l3.fixbuf.storage),
-                    sizeof(self->cin.tty_storage.io.arr.index) * 8
+                    sizeof(self->stack.cfgmin.prog->index) * 8
                 );
             break;
         }

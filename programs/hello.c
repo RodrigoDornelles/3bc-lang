@@ -15,7 +15,7 @@ int main()
 {
     static struct app_3bc_s instance;
     instance.cin.tty_storage.io.arr.ptr = (tbc_u8_t*) prog;
-    instance.cin.tty_storage.io.arr.size = sizeof(prog);
+    instance.stack.cfgmin.prog_size = sizeof(prog);
 
     while (driver_interrupt(&instance)) {
         continue;

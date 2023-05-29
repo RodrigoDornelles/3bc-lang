@@ -1,14 +1,24 @@
 #ifndef H_TYPES_STACK_TBC
 #define H_TYPES_STACK_TBC
 
-struct ___tbc_stack_basic_struct_s {
+/**
+ * @brief VM basic program struct
+ * @note for @b minimal-stack
+ */
+struct ___tbc_stack_basic_prog_s {
     /**
-     * @brief counter
-     * @details struct for @c heap and @c prog when minimal stack
+     * @brief program counter
      */
     tbc_u16_t index;
+    /**
+     * @brief program lenght
+     */
+    tbc_u16_t size;
 };
 
+/**
+ * @brief VM stack brute
+ */
 struct ___tbc_stack_raw_s {
     /**
      * @brief raw pointer to stack
@@ -18,6 +28,9 @@ struct ___tbc_stack_raw_s {
     tbc_u8_t* buffer;
 };
 
+/**
+ * @brief VM stack access
+ */
 struct ___tbc_stack_mem_s {
     /** 
      * @brief stack tail
@@ -36,6 +49,9 @@ struct ___tbc_stack_mem_s {
     tbc_u8_t data[];
 };
 
+/**
+ * @brief VM initial configs in the stack
+ */
 struct ___tbc_stack_cfg_s {
     /**
      * @attention not use @b ___pad0;
@@ -51,41 +67,48 @@ struct ___tbc_stack_cfg_s {
      * @brief heap memory config
      * @details basically ram
      * @pre first field must be @b index with 16 bits.
+     * @pre second field must be @b size with 16 bits.
      */
     void* heap;
     /**
      * @brief label memory config
-     * @details for conditional jumps and procedures
-     * @note when using minimal stack this space is used
-     * to storage @c prog and @c heap
+     * @details for conditional jumps and procedures.
      */
     void* interpreter;
 };
 
+/**
+ * @brief VM initial configs in the stack
+ * @note for @b minimal-stack
+ */
 struct ___tbc_stack_cfgmin_s {
     /**
+     * @brief alignment
      * @attention not use @b ___pad0;
      */
     void* ___pad0;
     /**
      * @brief program memory config
      * @details for counting and reading
-     * @note only field index
+     * @note @c prog points to @c @prog_index and @c prog_size 
+     * when @b minimal-stack configuration is activated.
      */
-    struct ___tbc_stack_basic_struct_s prog;
+    struct ___tbc_stack_basic_prog_s* prog;
     /**
-     * @brief heap memory config
-     * @details basically ram
-     * @note only field index
-     */    
-    struct ___tbc_stack_basic_struct_s mem;
-    /**
-     * @brief force 32 bits
-     * @attention not use @b ___pad4;
+     * @brief program counter
+     * @note @c prog_index is used in @b minimal-stack
      */
-    tbc_u8_t ___pad1[4];
+    tbc_u16_t prog_index;
+    /**
+     * @brief program length
+     * @note @c prog_size is used in @b minimal-stack
+     */
+    tbc_u16_t prog_size;
 };
 
+/**
+ * @brief VM stack
+ */
 union ___tbc_stack_root_u {
     /**
      * @brief configuration

@@ -72,8 +72,6 @@ typedef struct ___tbc_cout_s tbc_cout_mt;
 /** tty dynamic array unsigned 8 bits */
 struct ___tbc_tty_arru8_st {
     tbc_u8_t* ptr;
-    tbc_u8_t size;
-    tbc_u8_t index;
 };
 
 union ___tbc_stream_io_u {

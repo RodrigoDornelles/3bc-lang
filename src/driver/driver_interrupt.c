@@ -190,7 +190,12 @@ bool driver_interrupt(struct app_3bc_s* const self)
             break;
 
         case FSM_3BC_STARTING:
+            /* host drivers */
             self->pkg_func = (tbc_pkg_st*) &tbc_pkg_standard;
+            /* stack config */
+            self->stack.raw.buffer = NULL;
+            self->stack.cfg.prog = &self->stack.cfgmin.prog_index;
+            /* first state */
             self->state = FSM_3BC_VACUUM;
             break;
 

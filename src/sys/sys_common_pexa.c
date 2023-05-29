@@ -2,18 +2,32 @@
 #if !defined(TBC_NOT_MALLOC)
 #include <stdlib.h>
 #endif
+#include "types_null.h"
 
-void sys_common_pexams_install(tbc_app_st *const self)
-{
-    self->pkg_func->prog.expand = &sys_common_pexams_expand;
-}
-
+/**
+ * @throw ERROR_UNSUPPORTED
+ * @throw ERROR_OUT_OF_MEMORY
+ */
 void sys_common_pexams_expand(tbc_app_st *const self)
 {
-    /** @todo raise error */
-#if !defined(TBC_NOT_MALLOC)
-    self->rc = TBC_RET_OK;
-    self->cin.tty_storage.io.arr.size += 3;
-    self->cin.tty_storage.io.arr.ptr = (tbc_u8_t*) realloc(self->cin.tty_storage.io.arr.ptr, self->cin.tty_storage.io.arr.size);
+#if defined(TBC_NOT_MALLOC)
+    self->rc = TBC_RET_THROW_ERROR;
+    self->cache_l1.error = ERROR_UNSUPPORTED;
+#else
+    do {
+        tbc_u16_t newsize = self->stack.cfgmin.prog->size + 3;
+        tbc_u8_t* newptr = (tbc_u8_t*) realloc(self->cin.tty_storage.io.arr.ptr, newsize);
+
+        if (newptr == NULL) {
+            self->rc = TBC_RET_THROW_ERROR;
+            self->cache_l1.error = ERROR_OUT_OF_MEMORY;
+            break;   
+        }
+        
+        self->cin.tty_storage.io.arr.ptr = newptr;
+        self->stack.cfgmin.prog->size = newsize;
+        self->rc = TBC_RET_OK;
+    }
+    while(0);
 #endif
 }
