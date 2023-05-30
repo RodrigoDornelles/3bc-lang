@@ -51,8 +51,7 @@ static void sys_nes_output_init()
         *((unsigned char*) 0x2007) = ' ';
         ++cursor_tty.vram_address;
     }
-    while(cursor_tty.vram_address < (0x2400 - 0x80));
-
+    while(cursor_tty.vram_address < (0x2400));
 
     /** reset cursor position */
     cursor_tty.vram_address = 0x2020;
