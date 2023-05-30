@@ -5,7 +5,7 @@
  */
 void ds_prog_arrayc_next(tbc_app_st *const self)
 {
-    self->stack.cfgmin.prog->index += 3;
+    ++self->stack.cfgmin.prog->index;
 }
 
 /**
@@ -13,9 +13,10 @@ void ds_prog_arrayc_next(tbc_app_st *const self)
  */
 void ds_prog_arrayc_clean(tbc_app_st *const self)
 {
-    while (self->stack.cfgmin.prog->index && self->cin.tty_storage.io.arr.ptr) {
-        self->cin.tty_storage.io.arr.ptr[self->stack.cfgmin.prog->index] = 0;
-        --self->stack.cfgmin.prog->index;
+    tbc_line_t program_counter = (self->stack.cfgmin.prog->index * 3);
+    while (program_counter && self->cin.tty_storage.io.arr.ptr) {
+        self->cin.tty_storage.io.arr.ptr[program_counter] = 0;
+        --program_counter;
     }
 }
 
@@ -24,7 +25,7 @@ void ds_prog_arrayc_clean(tbc_app_st *const self)
  */
 void ds_prog_arrayc_exist(tbc_app_st *const self)
 {
-    if (self->stack.cfgmin.prog->index < self->stack.cfgmin.prog->size) {
+    if ((self->stack.cfgmin.prog->index * 3) < self->stack.cfgmin.prog->size) {
         self->rc = TBC_RET_FULL;
     } else {
         self->rc = TBC_RET_CLEAN;
@@ -36,10 +37,12 @@ void ds_prog_arrayc_exist(tbc_app_st *const self)
  */
 void ds_prog_array888_load(tbc_app_st *const self)
 {
-    tbc_line_t program_counter = self->stack.cfgmin.prog->index;
+    tbc_line_t program_counter = self->stack.cfgmin.prog->index * 3;
     self->cpu.rx = self->cin.tty_storage.io.arr.ptr[program_counter];
-    self->cpu.ry = self->cin.tty_storage.io.arr.ptr[++program_counter];
-    self->cpu.rz = self->cin.tty_storage.io.arr.ptr[++program_counter];
+    ++program_counter;
+    self->cpu.ry = self->cin.tty_storage.io.arr.ptr[program_counter];
+    ++program_counter;
+    self->cpu.rz = self->cin.tty_storage.io.arr.ptr[program_counter];
 }
 
 /**
@@ -48,39 +51,47 @@ void ds_prog_array888_load(tbc_app_st *const self)
  */
 void ds_prog_array888_insert(tbc_app_st *const self)
 {
-    tbc_line_t program_counter = self->stack.cfgmin.prog->index;
+    tbc_line_t program_counter = (self->stack.cfgmin.prog->index * 3);
     self->cin.tty_storage.io.arr.ptr[program_counter] = self->cpu.rx;
-    self->cin.tty_storage.io.arr.ptr[++program_counter] = self->cpu.ry;
-    self->cin.tty_storage.io.arr.ptr[++program_counter] = self->cpu.rz;
+    ++program_counter;
+    self->cin.tty_storage.io.arr.ptr[program_counter] = self->cpu.ry;
+    ++program_counter;
+    self->cin.tty_storage.io.arr.ptr[program_counter] = self->cpu.rz;
 }
 
 /**
  * @brief put program memory into cpu
+ * reg = 0b00000111 
+ * dta = (0b00001000 << 5) | 0b11111111
+ * dta = (0b11110000 << 4) | 0b11111111
  */
 void ds_prog_array3912_load(tbc_app_st *const self)
 {
-    /** reg = 0b00000111 */
-    self->cpu.rx = (0x7 & self->cin.tty_storage.io.arr.ptr[self->stack.cfgmin.prog->index]);
-    /** dta = (0b00001000 << 5) | 0b11111111 */
-    self->cpu.ry = self->cin.tty_storage.io.arr.ptr[self->stack.cfgmin.prog->index + 1];
-    self->cpu.ry |= (0x8 & self->cin.tty_storage.io.arr.ptr[self->stack.cfgmin.prog->index]) << 5;
-    /** dta = (0b11110000 << 4) | 0b11111111 */
-    self->cpu.rz = self->cin.tty_storage.io.arr.ptr[self->stack.cfgmin.prog->index + 2];
-    self->cpu.rz |= (0xf0 & self->cin.tty_storage.io.arr.ptr[self->stack.cfgmin.prog->index]) << 4;
+    tbc_line_t program_counter = (self->stack.cfgmin.prog->index * 3) + 2;
+    self->cpu.rz = self->cin.tty_storage.io.arr.ptr[program_counter];
+    --program_counter;
+    self->cpu.ry = self->cin.tty_storage.io.arr.ptr[program_counter];
+    --program_counter;
+    self->cpu.rx = (0x7 & self->cin.tty_storage.io.arr.ptr[program_counter]);
+    self->cpu.ry |= (0x8 & self->cin.tty_storage.io.arr.ptr[program_counter]) << 5;
+    self->cpu.rz |= (0xf0 & self->cin.tty_storage.io.arr.ptr[program_counter]) << 4;
 }
 
 /**
  * @brief put cpu into program memory
  * @note must be placed from interpreter to cpu memory previously.
+ * reg = 0b00000111
+ * dta = (0b00001000 << 5) | 0b11111111
+ * dta = (0b11110000 << 4) | 0b11111111
  */
 void ds_prog_array3912_insert(tbc_app_st *const self)
 {
-    /** reg = 0b00000111 */
-    self->cin.tty_storage.io.arr.ptr[self->stack.cfgmin.prog->index + 0] = (0x7 & self->cpu.rx);
-    /** dta = (0b00001000 << 5) | 0b11111111 */
-    self->cin.tty_storage.io.arr.ptr[self->stack.cfgmin.prog->index + 1] = self->cpu.ry;
-    self->cin.tty_storage.io.arr.ptr[self->stack.cfgmin.prog->index + 1] |= (0x8 & self->cpu.rx) << 5;
-    /** dta = (0b11110000 << 4) | 0b11111111 */
-    self->cin.tty_storage.io.arr.ptr[self->stack.cfgmin.prog->index + 2] = self->cpu.rz;
-    self->cin.tty_storage.io.arr.ptr[self->stack.cfgmin.prog->index + 2] |= (0xf0 & self->cpu.rx) << 4;
+    tbc_line_t program_counter = self->stack.cfgmin.prog->index * 3;
+    self->cin.tty_storage.io.arr.ptr[program_counter] = (0x7 & self->cpu.rx);
+    ++program_counter;
+    self->cin.tty_storage.io.arr.ptr[program_counter] = self->cpu.ry;
+    self->cin.tty_storage.io.arr.ptr[program_counter] |= (0x8 & self->cpu.rx) << 5;
+    ++program_counter;
+    self->cin.tty_storage.io.arr.ptr[program_counter] = self->cpu.rz;
+    self->cin.tty_storage.io.arr.ptr[program_counter] |= (0xf0 & self->cpu.rx) << 4;
 }
