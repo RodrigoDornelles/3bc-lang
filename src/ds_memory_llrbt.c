@@ -74,6 +74,10 @@ struct memory_node_s* ds_memory_llrbt_create_node(address_3bc_t address)
     struct memory_node_s* new_node
         = (struct memory_node_s*)malloc(sizeof(struct memory_node_s));
 
+    if (new_node == NULL) {
+        return NULL;
+    }
+
     /** prevent wild pointers **/
     new_node->left = NULL;
     new_node->right = NULL;
