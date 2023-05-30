@@ -2,6 +2,7 @@
 
 static const tbc_u8_t prog[] = {
     NILL, NILL, NILL,
+    NILL, NILL, NILL,
     MODE, NILL, TBC_MODE_STRING,
     STRX, NILL, 0xCA,
     STRX, NILL, 0xFE,

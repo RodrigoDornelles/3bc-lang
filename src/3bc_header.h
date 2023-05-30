@@ -49,12 +49,7 @@ extern "C" {
 void cpu_not_mode(PARAMS_DEFINE);
 void cpu_not_exist(PARAMS_DEFINE);
 void cpu_mode_reserved(PARAMS_DEFINE);
-/*****************************************************************************/
-void cpu_jump_goto(PARAMS_DEFINE);
-void cpu_jump_fgto(PARAMS_DEFINE);
-void cpu_jump_zgto(PARAMS_DEFINE);
-void cpu_jump_pgto(PARAMS_DEFINE);
-void cpu_jump_ngto(PARAMS_DEFINE);
+
 /*****************************************************************************/
 void cpu_procedure_call(PARAMS_DEFINE);
 void cpu_procedure_back(PARAMS_DEFINE);
