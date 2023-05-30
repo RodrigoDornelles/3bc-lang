@@ -44,7 +44,7 @@ static struct app_3bc_s** machines_array;
 /**
  * Expand number of virtual machines
  */
-struct app_3bc_s* const ds_hypervisor_darray_new()
+struct app_3bc_s* ds_hypervisor_darray_new()
 {
     struct app_3bc_s* new_vm
         = (struct app_3bc_s* const)malloc(sizeof(struct app_3bc_s));
@@ -83,7 +83,7 @@ struct app_3bc_s* const ds_hypervisor_darray_new()
 /**
  * RETURN: virutal machine by id
  */
-struct app_3bc_s* const ds_hypervisor_darray_get_one(app_3bc_id app)
+struct app_3bc_s* ds_hypervisor_darray_get_one(app_3bc_id app)
 {
     return machines_array[app];
 }

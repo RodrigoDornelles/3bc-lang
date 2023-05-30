@@ -40,9 +40,9 @@
  * MACRO: lang_3bc_init
  */
 #if !defined(TBC_NOT_ARGCV)
-struct app_3bc_s* const driver_power_init(int argc, char** argv)
+struct app_3bc_s* driver_power_init(int argc, char** argv)
 #else
-struct app_3bc_s* const driver_power_init()
+struct app_3bc_s* driver_power_init()
 #endif
 {
     struct app_3bc_s* const app = ds_hypervisor_darray_new();
