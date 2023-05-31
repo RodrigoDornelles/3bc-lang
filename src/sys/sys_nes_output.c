@@ -115,8 +115,8 @@ void sys_nes_output(tbc_app_st *const self)
             continue;
         }
 
-        /** 0x40 is two lines to end screen */
-        if (cursor_tty.vram_address >= (0x2400 - 0x40)) {
+        /** 0x60 is three lines to end screen */
+        if (cursor_tty.vram_address >= (0x2400 - 0x60)) {
             sys_nes_output_init();
             index = 0;
             continue;
