@@ -51,7 +51,7 @@ static void sys_nes_output_init()
         *((unsigned char*) 0x2007) = ' ';
         ++cursor_tty.vram_address;
     }
-    while(cursor_tty.vram_address < (0x2400));
+    while(cursor_tty.vram_address <= (0x2400 - 0x20));
 
     /** reset cursor position */
     cursor_tty.vram_address = 0x2020;
@@ -115,8 +115,8 @@ void sys_nes_output(tbc_app_st *const self)
             continue;
         }
 
-        /** 0x80 is a complately magic number wtf???*/
-        if (cursor_tty.vram_address >= (0x2400 - 0x80)) {
+        /** 0x40 is two lines to end screen */
+        if (cursor_tty.vram_address >= (0x2400 - 0x40)) {
             sys_nes_output_init();
             index = 0;
             continue;

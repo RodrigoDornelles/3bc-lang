@@ -75,58 +75,45 @@ void cpu_string_output(struct app_3bc_s* const self)
         }
 
         if (self->rc == TBC_RET_OK) {
-            char* out = self->cache_l3.fixbuf.storage;
-            static const size_t out_size = sizeof(self->cache_l3.fixbuf.storage);
-
-            if (self->cpu.rx == STRC)
+            switch(self->cpu.rx)
             {
-                self->cache_l3.fixbuf.size = 1;
-                self->cache_l3.fixbuf.storage[0] = self->cpu.ra;
-            }
-            else {
-                /** @todo fix negative bit **/
-                if (self->cpu.ra & 0b10000000) {
-                    out += 1;
-                    self->cpu.ra = (tbc_u8_t) -self->cpu.ra;
-                    self->cache_l3.fixbuf.size += 1;
-                    self->cache_l3.fixbuf.storage[0] = '-';
-                }
-                switch(self->cpu.rx)
-                {
-                    case STRB:
-                        self->cache_l3.fixbuf.size += cast_itos2(
-                            self->cache_l3.fixbuf.storage,
-                            &self->cpu.ra,
-                            sizeof(self->cache_l3.fixbuf.storage),
-                            13);
-                        break;
+                case STRB:
+                    self->cache_l3.fixbuf.size += cast_itos2(
+                        self->cache_l3.fixbuf.storage,
+                        &self->cpu.ra,
+                        sizeof(self->cache_l3.fixbuf.storage),
+                        13);
+                    break;
 
-                    case STRO:
-                        /** @todo leading zeros */
-                        self->cache_l3.fixbuf.size += cast_itos8(
-                            self->cache_l3.fixbuf.storage,
-                            &self->cpu.ra,
-                            sizeof(self->cache_l3.fixbuf.storage),
-                            13);
-                        break;
+                case STRO:
+                    /** @todo leading zeros */
+                    self->cache_l3.fixbuf.size += cast_itos8(
+                        self->cache_l3.fixbuf.storage,
+                        &self->cpu.ra,
+                        sizeof(self->cache_l3.fixbuf.storage),
+                        13);
+                    break;
 
-                    case STRI:
-                        self->cache_l3.fixbuf.size += cast_itos10(
-                            self->cache_l3.fixbuf.storage,
-                            &self->cpu.ra,
-                            sizeof(self->cache_l3.fixbuf.storage),
-                            13);
-                        break;
+                case STRI:
+                    self->cache_l3.fixbuf.size += cast_itos10(
+                        self->cache_l3.fixbuf.storage,
+                        &self->cpu.ra,
+                        sizeof(self->cache_l3.fixbuf.storage),
+                        13);
+                    break;
 
-                    case STRX:
-                        /** @todo investage prints bigger than 0x81 */
-                        self->cache_l3.fixbuf.size += cast_itos16(
-                            self->cache_l3.fixbuf.storage,
-                            &self->cpu.ra,
-                            sizeof(self->cache_l3.fixbuf.storage),
-                            16);
-                        break;                    
-                }
+                case STRX:
+                    self->cache_l3.fixbuf.size += cast_itos16(
+                        self->cache_l3.fixbuf.storage,
+                        &self->cpu.ra,
+                        sizeof(self->cache_l3.fixbuf.storage),
+                        16);
+                    break;
+
+                case STRC:
+                    self->cache_l3.fixbuf.size = 1;
+                    self->cache_l3.fixbuf.storage[0] = self->cpu.ra;                   
+                    break;
             }
             self->cache_l2.tty = &(self->cout.tty_output);
             self->rc = TBC_RET_SYS_IO_WRITE;

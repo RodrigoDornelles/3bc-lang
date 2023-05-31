@@ -63,7 +63,7 @@ void ds_prog_array888_insert(tbc_app_st *const self)
  * @brief put program memory into cpu
  * reg = 0b00000111 
  * dta = (0b00001000 << 5) | 0b11111111
- * dta = (0b11110000 << 4) | 0b11111111
+ * dta = (0b01110000 << 5) | 0b11111111
  */
 void ds_prog_array3912_load(tbc_app_st *const self)
 {
@@ -88,10 +88,10 @@ void ds_prog_array3912_insert(tbc_app_st *const self)
 {
     tbc_line_t program_counter = self->stack.cfgmin.prog->index * 3;
     self->cin.tty_storage.io.arr.ptr[program_counter] = (0x7 & self->cpu.rx);
+    self->cin.tty_storage.io.arr.ptr[program_counter] |= (0x8 & self->cpu.rx);
+    self->cin.tty_storage.io.arr.ptr[program_counter] |= (0xf0 & self->cpu.rz);
     ++program_counter;
     self->cin.tty_storage.io.arr.ptr[program_counter] = self->cpu.ry;
-    self->cin.tty_storage.io.arr.ptr[program_counter] |= (0x8 & self->cpu.rx) << 5;
     ++program_counter;
     self->cin.tty_storage.io.arr.ptr[program_counter] = self->cpu.rz;
-    self->cin.tty_storage.io.arr.ptr[program_counter] |= (0xf0 & self->cpu.rx) << 4;
 }
