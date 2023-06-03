@@ -141,6 +141,10 @@
 #endif
 
 #if defined(__PCE__)
+#define TBC_NOT_ARGCV
+#define TBC_NOT_FILES
+#define TBC_NOT_CLOCK
+#define TBC_USE_CONIO
 #define TBC_CONSOLE_PCE
 #endif
 

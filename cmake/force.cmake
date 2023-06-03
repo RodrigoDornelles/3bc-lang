@@ -15,7 +15,7 @@ if(DEFINED CMAKE_SYSTEM_VERSION)
     endif()
 
     if(${CMAKE_SYSTEM_VERSION} STREQUAL "pce")
-        set(CMAKE_EXECUTABLE_SUFFIX_C ".pce")
+        set(CMAKE_EXECUTABLE_SUFFIX_C ".bin")
         set(CONIO TRUE)
     endif()
 
