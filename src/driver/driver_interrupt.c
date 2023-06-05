@@ -193,10 +193,11 @@ bool driver_interrupt(struct app_3bc_s* const self)
             /* host drivers */
             self->pkg_func = (tbc_pkg_st*) &tbc_pkg_standard;
             /* stack config */
-            self->stack.raw.buffer = NULL;
-            self->stack.cfg.prog = &self->stack.cfgmin.prog_index;
+            driver_stack(self);
             /* first state */
-            self->state = FSM_3BC_VACUUM;
+            if (self->rc == TBC_RET_OK) {
+                self->state = FSM_3BC_VACUUM;
+            }
             break;
 
         case FSM_3BC_VACUUM:

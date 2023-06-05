@@ -1,4 +1,5 @@
 
+#include "bus_cfg_0000.h"
 #include "types_null.h"
 #include "driver_stack.h"
 
@@ -82,6 +83,23 @@
  */
 void driver_stack(struct app_3bc_s* const self)
 {
+    do {
+        self->rc = TBC_RET_OK;
+        
+        /* minimal stack */
+        if (self->stack.raw.buffer == NULL) {
+            self->stack.cfg.prog = &self->stack.cfgmin.prog_index;
+            break;
+        }
 
+        
+
+        /* continue configuring... */
+        if (self->cache_l1.u8 < tbc_cfg_size) {
+            self->rc = TBC_RET_REPEAT;
+            break;
+        }
+    }
+    while(0);
 }
  
