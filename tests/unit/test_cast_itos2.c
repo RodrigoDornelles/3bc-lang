@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <string.h>
 #include "cast_itos.h"
 
 int main()

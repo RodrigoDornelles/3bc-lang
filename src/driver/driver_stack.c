@@ -103,9 +103,29 @@ void driver_stack(struct app_3bc_s* const self)
         /* continue configuring */
         self->rc = TBC_RET_REPEAT;
 
-        /* skip st and sp */
+        /* first step advanced stack */
         if (self->stack.mem->sp == 0) {
+            /* missing the size of stack */
+            if (self->stack.mem->st == 0) {
+                self->rc = TBC_RET_THROW_ERROR;
+                self->cache_l1.error = ERROR_MEM_STACK_CFG_MIS;
+                break;
+            }
+            /* stack size is not enough */
+            if (self->stack.mem->st < 8) {
+                self->rc = TBC_RET_THROW_ERROR;
+                self->cache_l1.error = ERROR_MEM_STACK_CFG_MIN;
+                break;
+            }
+            /* skip @c st and @c sp */
             self->stack.mem->sp += 2;
+            break;
+        }
+
+        /* insuficient memmory to configure all */
+        if ((self->stack.mem->sp + tbc_cfg_standard[self->cache_l1.u8].size) > self->stack.mem->st) {
+            self->rc = TBC_RET_THROW_ERROR;
+            self->cache_l1.error = ERROR_MEM_STACK_CFG_OUT;
             break;
         }
 

@@ -30,6 +30,9 @@ static const char ___tbc_error_026[] = "NULL POINTER";
 static const char ___tbc_error_027[] = "INVALID CHARACTER ESCAPE";
 static const char ___tbc_error_028[] = "INVALID CHARACTER SIZE";
 static const char ___tbc_error_029[] = "WRONG NUMBER OF COLUMNS";
+static const char ___tbc_error_030[] = "STACK MEMORY MISSING SIZE";
+static const char ___tbc_error_031[] = "STACK MEMORY IS NOT ENOUGH FOR CONFIGURATION";
+static const char ___tbc_error_032[] = "STACK MEMORY WAS NOT ENOUGH DURING CONFIGURATION";
 
 static const tbc_error_st ___tbc_errors[] = {
     {sizeof(___tbc_error_000), (char *const)___tbc_error_000},
@@ -61,7 +64,10 @@ static const tbc_error_st ___tbc_errors[] = {
     {sizeof(___tbc_error_026), (char *const)___tbc_error_026},
     {sizeof(___tbc_error_027), (char *const)___tbc_error_027},
     {sizeof(___tbc_error_028), (char *const)___tbc_error_028},
-    {sizeof(___tbc_error_029), (char *const)___tbc_error_029}
+    {sizeof(___tbc_error_029), (char *const)___tbc_error_029},
+    {sizeof(___tbc_error_030), (char *const)___tbc_error_030},
+    {sizeof(___tbc_error_031), (char *const)___tbc_error_031},
+    {sizeof(___tbc_error_032), (char *const)___tbc_error_032},
 };
 
 const tbc_error_st* tbc_i18n_error_arr = ___tbc_errors;
