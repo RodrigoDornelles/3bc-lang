@@ -38,6 +38,7 @@
 void cpu_jump_goto(struct app_3bc_s* const self)
 {
     self->stack.cfgmin.prog->index = self->cpu.rz;
+    self->rc = TBC_RET_RELOAD;
 }
 
 void cpu_jump_fgto(struct app_3bc_s* const self)
