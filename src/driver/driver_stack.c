@@ -4,6 +4,10 @@
 #include "driver_stack.h"
 
 /**
+ * @throw ERROR_MEM_STACK_CFG_MIS
+ * @throw ERROR_MEM_STACK_CFG_MIN
+ * @throw ERROR_MEM_STACK_CFG_OUT
+ *
  * @dot
  * digraph stack_g {
  *     graph [
