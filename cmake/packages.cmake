@@ -11,10 +11,10 @@ add_library(tbc_alu_std OBJECT "${CMAKE_SOURCE_DIR}/src/alu/alu_math.c")
 add_library(tbc_alu_none OBJECT "${CMAKE_SOURCE_DIR}/src/alu/alu_none.c")
 
 # Bus
-add_library(tbc_bus_cpu_hello OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_cpu_hello.c")
-add_library(tbc_bus_sys_hello OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_sys_hello.c")
-add_library(tbc_bus_cpu_lang OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_cpu_lang.c")
-add_library(tbc_bus_sys_lang OBJECT "${CMAKE_SOURCE_DIR}/src/bus/bus_sys_lang.c")
+FILE(GLOB tbc_bus_lang_files "${CMAKE_SOURCE_DIR}/src/bus/bus_*_lang.c")
+FILE(GLOB tbc_bus_hello_files "${CMAKE_SOURCE_DIR}/src/bus/bus_*_hello.c")
+add_library(tbc_bus_lang OBJECT "${tbc_bus_lang_files}")
+add_library(tbc_bus_hello OBJECT "${tbc_bus_hello_files}")
 
 # Casting dependencies
 FILE(GLOB tbc_cast_files "${CMAKE_SOURCE_DIR}/src/cast/*.c")

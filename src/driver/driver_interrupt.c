@@ -46,6 +46,7 @@
 #include "driver_error.h"
 #include "driver_cpu.h"
 #include "driver_gc.h"
+#include "driver_stack.h"
 #include "bus_cpu_0000.h"
 #include "bus_sys_0000.h"
 #include "interpreter_0000.h"
