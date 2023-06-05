@@ -77,9 +77,7 @@ const static tbc_method_ft ___bus_op_09[] = {
     cpu_jump_ngto
 };
 const static tbc_u8_t ___bus_er_09[] = {
-    (TBC_NRY|TBC_RRZ),(TBC_NRY|TBC_RRZ),
-    (TBC_NRY|TBC_RRZ),(TBC_NRY|TBC_RRZ),
-    (TBC_NRY|TBC_RRZ)
+    TBC_NRY, TBC_NRY, TBC_NRY, TBC_NRY, TBC_NRY
 };
 
 /** @par 11-39 **/

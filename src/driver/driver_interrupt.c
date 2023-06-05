@@ -240,6 +240,9 @@ bool driver_interrupt(struct app_3bc_s* const self)
             if (self->rc == TBC_RET_OK) {
                 self->state = FSM_3BC_COUNTING;
             }
+            if(self->rc == TBC_RET_RELOAD) {
+                self->state = FSM_3BC_LOADING;
+            }
             break;
 
         case FSM_3BC_ERROR:

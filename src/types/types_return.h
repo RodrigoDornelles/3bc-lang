@@ -51,6 +51,7 @@ enum ___tbc_return_e {
     TBC_RET_FULL = 4,
     TBC_RET_GC_OK = 5,
     TBC_RET_CATCH_ERROR = 6,
+    TBC_RET_RELOAD = 7,
     TBC_RET_EXIT_SAFE = 129,
     TBC_RET_EXIT_FORCE = 130,
     TBC_RET_PRINT_ERROR_1 = 131,
