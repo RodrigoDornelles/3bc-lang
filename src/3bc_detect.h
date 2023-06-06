@@ -148,6 +148,14 @@
 #define TBC_CONSOLE_PCE
 #endif
 
+#if defined(__ATARI5200__)
+#define TBC_USE_CONIO
+#define TBC_NOT_ARGCV
+#define TBC_NOT_FILES
+#define TBC_NOT_CLOCK
+#define TBC_CONSOLE_ATARI52000
+#endif
+
 #if defined(__C64__)
 #define TBC_CONSOLE_C64
 #endif
