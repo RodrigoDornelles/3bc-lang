@@ -195,7 +195,7 @@ void cpu_memory_ptr_push(struct app_3bc_s* const self)
             break;
         }
 
-        if (self->rc != TBC_RET_GC_LV1) {
+        if (self->rc != TBC_RET_GC_OK) {
             self->rc = TBC_RET_GC_LV1;
             break;
         }

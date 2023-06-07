@@ -47,6 +47,7 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
+#include "types_consts.h"
 
 /**
  * BRIEF:
@@ -181,7 +182,7 @@ bool interpreter_syntax_constants(struct app_3bc_s* const app,
             break;
         }
         /** is safe! **/
-        if (interpreter_parser_strhash(string, value)) {
+        if (interpreter_parser_strhash(string, value, TBC_MAX_RY)) {
             success = true;
             break;
         }

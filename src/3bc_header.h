@@ -171,7 +171,7 @@ bool ds_program_fifo_avaliable(struct app_3bc_s* const app);
 /*****************************************************************************/
 bool interpreter_parser_strchar(
     struct app_3bc_s* const app, const char* string, signed long int* value);
-bool interpreter_parser_strhash(const char* string, signed long int* value);
+bool interpreter_parser_strhash(const char* string, signed long* value, long maxdjb2);
 bool interpreter_parser_strtol(
     struct app_3bc_s* const app, const char* string, signed long int* value);
 int interpreter_parser_skip();
