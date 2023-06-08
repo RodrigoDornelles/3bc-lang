@@ -85,7 +85,7 @@
  * }
  * @enddot
  */
-void driver_stack(struct app_3bc_s* const self)
+void driver_stack_init(struct app_3bc_s* const self)
 {
     do {
         /* minimal stack */
