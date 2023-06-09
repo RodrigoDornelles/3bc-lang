@@ -21,11 +21,13 @@ if(TEST_UNIT)
     set(tests
         "error_driver_stack,src/driver/driver_stack.c"
         "error_cast_stoi2,src/cast/cast_stoi.c"
+        "error_cast_stoi8,src/cast/cast_stoi.c"
         "test_cast_itos2,src/cast/cast_itos.c"
         "test_cast_itos8,src/cast/cast_itos.c"
         "test_cast_itos10,src/cast/cast_itos.c"
         "test_cast_itos16,src/cast/cast_itos.c"
         "test_cast_stoi2,src/cast/cast_stoi.c"
+        "test_cast_stoi8,src/cast/cast_stoi.c"
         "test_driver_stack_min,src/driver/driver_stack.c"
     )
     foreach(deps IN LISTS tests)
