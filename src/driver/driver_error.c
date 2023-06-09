@@ -135,7 +135,7 @@ void driver_error(struct app_3bc_s* const self)
 
         if (self->rc == TBC_RET_PRINT_ERROR_9) {
             if (self->cache_l1.error >= tbc_i18n_error_len) {
-                self->cache_l1.error = ERROR_UNKWON;
+                self->cache_l1.error = ERROR_UNKNOWN;
             }
             self->cache_l3.buffer.size =
                 -tbc_i18n_error_arr[self->cache_l1.error].len;

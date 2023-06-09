@@ -36,7 +36,7 @@
 #define H_TYPES_ERRORS_TBC
 
 enum ___tbc_error_e {
-    ERROR_UNKWON = 0,
+    ERROR_UNKNOWN = 0,
     ERROR_CPU_ZERO = 1,
     ERROR_CPU_RESERVED = 2,
     ERROR_INVALID_REGISTER = 3,

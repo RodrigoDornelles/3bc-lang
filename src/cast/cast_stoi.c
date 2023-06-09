@@ -87,7 +87,7 @@ tbc_error_et cast_stoi8(void *const dest, char *const src, const tbc_u8_t dn, tb
 tbc_error_et cast_stoi2(void *const dest, char *const src, const tbc_u8_t dn, tbc_u8_t sn)
 {
     tbc_u8_t index = 0;
-    tbc_error_et res = ERROR_UNKWON;
+    tbc_error_et res = ERROR_UNKNOWN;
     switch(dn) {
         case 8:
         {
@@ -112,7 +112,7 @@ tbc_error_et cast_stoi2(void *const dest, char *const src, const tbc_u8_t dn, tb
                 ++index;
             }
             while(index < sn && index < dn);
-            if (res == ERROR_UNKWON) {
+            if (res == ERROR_UNKNOWN) {
                 *((tbc_u8_t*)dest) = copy8;
             }
             break;
@@ -142,7 +142,7 @@ tbc_error_et cast_stoi2(void *const dest, char *const src, const tbc_u8_t dn, tb
                 ++index;
             }
             while(index < sn && index < dn);
-            if (res == ERROR_UNKWON) {
+            if (res == ERROR_UNKNOWN) {
                 *((tbc_u16_t*)dest) = copy16;
             }
             break;
@@ -170,7 +170,7 @@ tbc_error_et cast_stoi2(void *const dest, char *const src, const tbc_u8_t dn, tb
                 ++index;
             }
             while(index < sn && index < dn);
-            if (res == ERROR_UNKWON) {
+            if (res == ERROR_UNKNOWN) {
                 *((tbc_u32_t*)dest) = copy32;
             }
             break;
@@ -198,7 +198,7 @@ tbc_error_et cast_stoi2(void *const dest, char *const src, const tbc_u8_t dn, tb
                 ++index;
             }
             while(index < sn && index < dn);
-            if (res == ERROR_UNKWON) {
+            if (res == ERROR_UNKNOWN) {
                 *((tbc_u64_t*)dest) = copy64;
             }
             break;
