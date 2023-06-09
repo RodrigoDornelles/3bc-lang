@@ -15,7 +15,7 @@ int main()
         unsigned char stack[16] = {0};
         app.stack.raw.buffer = (unsigned char**) &stack;
         do {
-            driver_stack(&app);
+            driver_stack_init(&app);
             ++i;
         }
         while(app.rc != TBC_RET_THROW_ERROR && i < 100);
@@ -29,7 +29,7 @@ int main()
         unsigned char stack[4] = {sizeof(stack)};
         app.stack.raw.buffer = (unsigned char**) &stack;
         do {
-            driver_stack(&app);
+            driver_stack_init(&app);
             ++i;
         }
         while(app.rc != TBC_RET_THROW_ERROR && i < 100);
@@ -43,7 +43,7 @@ int main()
         unsigned char stack[16] = {sizeof(stack)};
         app.stack.raw.buffer = (unsigned char**) &stack;
         do {
-            driver_stack(&app);
+            driver_stack_init(&app);
             ++i;
         }
         while(app.rc != TBC_RET_THROW_ERROR && i < 100);

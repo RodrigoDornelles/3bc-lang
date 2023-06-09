@@ -12,7 +12,7 @@ int main()
         unsigned char i = 0;
         struct app_3bc_s app = {0};
         do {
-            driver_stack(&app);
+            driver_stack_init(&app);
             ++i;
         }
         while(app.rc != TBC_RET_OK && i < 100);
