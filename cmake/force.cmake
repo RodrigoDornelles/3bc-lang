@@ -47,6 +47,11 @@ if(DEFINED CMAKE_SYSTEM_VERSION)
         set(POSIX TRUE)
     endif()
 
+    if(${CMAKE_SYSTEM_VERSION} STREQUAL "macos")
+        set(APPLE TRUE)
+        set(POSIX TRUE)
+    endif()
+
     if(${CMAKE_SYSTEM_VERSION} MATCHES "bsd")
         set(UNIX TRUE)
         set(POSIX TRUE)
