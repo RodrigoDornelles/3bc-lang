@@ -177,7 +177,120 @@ tbc_error_et cast_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
  */
 tbc_error_et cast_stoi10(void *const dest, char *const src, const tbc_u8_t dn, tbc_u8_t sn)
 {
+    tbc_u8_t index = 0;
+    tbc_error_et res = ERROR_UNKNOWN;
+    switch(dn) {
+        case 8:
+        {
+            tbc_u8_t copy8 = 0;
+            do {
+                if (src[index] == '_' && index > 0) {
+                    ++index;
+                    continue;
+                }
+                if (src[index] == '\0') {
+                    break;
+                }
+                if (src[index] < '0' || src[index] > '9') {
+                    res = ERROR_NUMBER_WRONG_BASE;
+                    break;
+                }
+                copy8 *= 10u;
+                copy8 += src[index] - '0';
+                ++index;
+            }
+            while(index < sn);
+            if (res == ERROR_UNKNOWN) {
+                *((tbc_u8_t*)dest) = copy8;
+            }
+            break;
+        }
+        case 10:
+        case 13:
+        case 16:
+        {
+            tbc_u16_t copy16 = 0;
+            do {
+                if (src[index] == '_' && index > 0) {
+                    ++index;
+                    continue;
+                }
+                if (src[index] == '\0') {
+                    break;
+                }
+                if (src[index] < '0' || src[index] > '9') {
+                    res = ERROR_NUMBER_WRONG_BASE;
+                    break;
+                }
+                copy16 *= 10;
+                copy16 += src[index] - '0';
+                ++index;
+            }
+            while(index < sn);
+            if (res == ERROR_UNKNOWN) {
+                *((tbc_u16_t*)dest) = copy16;
+            }
+            break;
+        }
+        case 32:
+        {
+            tbc_u32_t copy32 = 0;
+            do {
+                if (src[index] == '_' && index > 0) {
+                    ++index;
+                    continue;
+                }
+                if (src[index] == '\0') {
+                    break;
+                }
+                if (src[index] < '0' || src[index] > '9') {
+                    res = ERROR_NUMBER_WRONG_BASE;
+                    break;
+                }
+                copy32 *= 10;
+                copy32 += src[index] - '0';
+                ++index;
+            }
+            while(index < sn);
+            if (res == ERROR_UNKNOWN) {
+                *((tbc_u32_t*)dest) = copy32;
+            }
+            break;
+        }
+        case 64:
+ #if !defined(TBC_NOT_INT64)
+        {
+            tbc_u64_t copy64 = 0;
+            do {
+                if (src[index] == '_' && index > 0) {
+                    ++index;
+                    continue;
+                }
+                if (src[index] == '\0') {
+                    break;
+                }
+                if (src[index] < '0' || src[index] > '9') {
+                    res = ERROR_NUMBER_WRONG_BASE;
+                    break;
+                }
+                copy64 *= 10;
+                copy64 += src[index] - '0';
+                ++index;
+            }
+            while(index < sn);
+            if (res == ERROR_UNKNOWN) {
+                *((tbc_u64_t*)dest) = copy64;
+            }
+            break;
+        }
+#endif
+    }
 
+    if (index == 0) {
+        res = ERROR_NUMBER_NO_DIGITS;
+    }
+
+    return res;
 }
 
 /**
