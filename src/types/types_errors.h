@@ -57,7 +57,7 @@ enum ___tbc_error_e {
     ERROR_NUMBER_WRONG_BASE = 18,
     ERROR_NUMBER_NEGATIVE = 19,
     ERROR_NUMBER_ZERO = 20,
-    ERROR_OUT_OF_MEMORY = 21,
+    ERROR_NUMBER_INVALID_BASE = 21,
     ERROR_NONE_TTY = 22,
     ERROR_UNSUPPORTED = 23,
     ERROR_MEMORY_CONFIG = 24,
@@ -68,7 +68,8 @@ enum ___tbc_error_e {
     ERROR_COLUMNS = 29,
     ERROR_MEM_STACK_CFG_MIS = 30,
     ERROR_MEM_STACK_CFG_MIN = 31,
-    ERROR_MEM_STACK_CFG_OUT = 32
+    ERROR_MEM_STACK_CFG_OUT = 32,
+    ERROR_OUT_OF_MEMORY = 33
 };
 
 typedef enum ___tbc_error_e tbc_error_et;

@@ -149,6 +149,9 @@ tbc_error_et util_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
             break;
         }
 #endif
+        default:
+            res = ERROR_NUMBER_INVALID_BASE;
+            break;
     }
 
     if (index == 0) {
@@ -284,6 +287,9 @@ tbc_error_et util_stoi10(void *const dest, char *const src, const tbc_u8_t dn, t
             break;
         }
 #endif
+        default:
+            res = ERROR_NUMBER_INVALID_BASE;
+            break;
     }
 
     if (index == 0) {
@@ -420,6 +426,9 @@ tbc_error_et util_stoi8(void *const dest, char *const src, const tbc_u8_t dn, tb
             break;
         }
 #endif
+        default:
+            res = ERROR_NUMBER_INVALID_BASE;
+            break;
     }
 
     if (index == 0) {
@@ -555,9 +564,12 @@ tbc_error_et util_stoi2(void *const dest, char *const src, const tbc_u8_t dn, tb
             break;
         }
 #endif
+        default:
+            res = ERROR_NUMBER_INVALID_BASE;
+            break;
     }
 
-    if (index == 0) {
+    if (index == 0 && res == ERROR_UNKNOWN) {
         res = ERROR_NUMBER_NO_DIGITS;
     }
 
