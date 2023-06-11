@@ -30,3 +30,22 @@ jobs:
           projectName: doxygen-3bc
           directory: html
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+  site:
+    name: "3bc-lang.org"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v3
+        
+      - name: Build project
+        run: > 
+          ./scripts/docs_build.sh
+
+      - name: Deploy project
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: site-3bc
+          directory: docs/site/_site
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}

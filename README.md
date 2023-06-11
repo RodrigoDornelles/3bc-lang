@@ -22,7 +22,8 @@ If you are interested in exploring or contributing to the language, follow the m
 ```
 bin/            output binaries (executable)
 cmake/          automated build magic (cmake)
-docs/           Website made with jekyll (Ruby)
+docs/           online documentation
+  site/         official website made with jekyll (Ruby)
 examples/       Syntax sampling codes (3bc, Arduino with C++)
 programs/       Embbed programs sampling codes (C)
 scripts/        Development and installation tools (Bash, Bat)
