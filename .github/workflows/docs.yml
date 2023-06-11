@@ -38,8 +38,11 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Build project
-        run: > 
-          ./scripts/docs_build.sh
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: "./docs/site"
+          destination: "./docs/site/_site"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Deploy project
         uses: cloudflare/pages-action@v1
