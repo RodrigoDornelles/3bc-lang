@@ -33,7 +33,7 @@
  */
 
 #include "3bc.h"
-#include "cast_itos.h"
+#include "util_itos.h"
 
 
 /**
@@ -78,7 +78,7 @@ void cpu_string_output(struct app_3bc_s* const self)
             switch(self->cpu.rx)
             {
                 case STRB:
-                    self->cache_l3.fixbuf.size += cast_itos2(
+                    self->cache_l3.fixbuf.size += util_itos2(
                         self->cache_l3.fixbuf.storage,
                         &self->cpu.ra,
                         sizeof(self->cache_l3.fixbuf.storage),
@@ -87,7 +87,7 @@ void cpu_string_output(struct app_3bc_s* const self)
 
                 case STRO:
                     /** @todo leading zeros */
-                    self->cache_l3.fixbuf.size += cast_itos8(
+                    self->cache_l3.fixbuf.size += util_itos8(
                         self->cache_l3.fixbuf.storage,
                         &self->cpu.ra,
                         sizeof(self->cache_l3.fixbuf.storage),
@@ -95,7 +95,7 @@ void cpu_string_output(struct app_3bc_s* const self)
                     break;
 
                 case STRI:
-                    self->cache_l3.fixbuf.size += cast_itos10(
+                    self->cache_l3.fixbuf.size += util_itos10(
                         self->cache_l3.fixbuf.storage,
                         &self->cpu.ra,
                         sizeof(self->cache_l3.fixbuf.storage),
@@ -103,7 +103,7 @@ void cpu_string_output(struct app_3bc_s* const self)
                     break;
 
                 case STRX:
-                    self->cache_l3.fixbuf.size += cast_itos16(
+                    self->cache_l3.fixbuf.size += util_itos16(
                         self->cache_l3.fixbuf.storage,
                         &self->cpu.ra,
                         sizeof(self->cache_l3.fixbuf.storage),

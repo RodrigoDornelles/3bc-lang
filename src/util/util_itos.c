@@ -1,4 +1,4 @@
-#include "cast_itos.h"
+#include "util_itos.h"
 
 /**
  * @short hexadecimal
@@ -17,7 +17,7 @@
  * @retval 0 when invalid buffer @c dest
  * @retval 0 when invalid source @c src
  */
-tbc_u8_t cast_itos16(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
+tbc_u8_t util_itos16(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
 {
     tbc_u8_t len = 0;
     
@@ -112,7 +112,7 @@ tbc_u8_t cast_itos16(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
  * @retval 0 when invalid buffer @c dest
  * @retval 0 when invalid source @c src
  */
-tbc_u8_t cast_itos10(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
+tbc_u8_t util_itos10(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
 {
     tbc_u8_t len = 0;
     
@@ -225,7 +225,7 @@ tbc_u8_t cast_itos10(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
  * @retval 0 when invalid buffer @c dest
  * @retval 0 when invalid source @c src
  */
-tbc_u8_t cast_itos8(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
+tbc_u8_t util_itos8(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
 {
     tbc_u8_t len = 0;
     
@@ -302,7 +302,7 @@ tbc_u8_t cast_itos8(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
  * @retval 0 when invalid buffer @c dest
  * @retval 0 when invalid source @c src
  */
-tbc_u8_t cast_itos2(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
+tbc_u8_t util_itos2(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
 {
     tbc_u8_t len = 0;
     

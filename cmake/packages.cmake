@@ -16,9 +16,9 @@ FILE(GLOB tbc_bus_hello_files "${CMAKE_SOURCE_DIR}/src/bus/bus_*_hello.c")
 add_library(tbc_bus_lang OBJECT "${tbc_bus_lang_files}")
 add_library(tbc_bus_hello OBJECT "${tbc_bus_hello_files}")
 
-# Casting dependencies
-FILE(GLOB tbc_cast_files "${CMAKE_SOURCE_DIR}/src/cast/*.c")
-add_library(tbc_cast OBJECT ${tbc_cast_files})
+# utility dependencies
+FILE(GLOB tbc_util_files "${CMAKE_SOURCE_DIR}/src/util/*.c")
+add_library(tbc_util OBJECT ${tbc_util_files})
 
 # Datastruct dependencies
 FILE(GLOB tbc_ds_array_files "${CMAKE_SOURCE_DIR}/src/ds/*.c")

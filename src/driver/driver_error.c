@@ -35,7 +35,7 @@
  *
  */
 #include "i18n_0000.h"
-#include "cast_itos.h"
+#include "util_itos.h"
 #include "driver_error.h"
 
 static const char ___msg_err_1[] = "[3BC] CRITICAL ERROR ABORTED THE PROGRAM";
@@ -84,7 +84,7 @@ void driver_error(struct app_3bc_s* const self)
 
         if (self->rc == TBC_RET_PRINT_ERROR_3) {
             self->cache_l3.fixbuf.size = 
-                cast_itos10(
+                util_itos10(
                     self->cache_l3.fixbuf.storage,
                     &self->id,
                     sizeof(self->cache_l3.fixbuf.storage),
@@ -101,7 +101,7 @@ void driver_error(struct app_3bc_s* const self)
 
         if (self->rc == TBC_RET_PRINT_ERROR_5) {
             self->cache_l3.fixbuf.size = 
-                cast_itos10(
+                util_itos10(
                     self->cache_l3.fixbuf.storage,
                     &self->stack.cfgmin.prog->index,
                     sizeof(self->cache_l3.fixbuf.storage),
@@ -118,7 +118,7 @@ void driver_error(struct app_3bc_s* const self)
 
         if (self->rc == TBC_RET_PRINT_ERROR_7) {
             self->cache_l3.fixbuf.size = 
-                cast_itos10(
+                util_itos10(
                     self->cache_l3.fixbuf.storage,
                     &self->cache_l1.error,
                     sizeof(self->cache_l3.fixbuf.storage),

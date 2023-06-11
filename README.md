@@ -20,24 +20,29 @@
 If you are interested in exploring or contributing to the language, follow the monolithic organization.
 
 ```
+bin/            output binaries (executable)
+cmake/          automated build magic (cmake)
 docs/           Website made with jekyll (Ruby)
 examples/       Syntax sampling codes (3bc, Arduino with C++)
 programs/       Embbed programs sampling codes (C)
 scripts/        Development and installation tools (Bash, Bat)
 src/            library source code (C)
+  alu/          Arithmetic logic unit (C)
   bus/          instruction set of vm cpu (C)
   cpu/          unit control and arithmetic of vm (C)
   driver/       guest drivers "hypervisor -> vm" (C) 
   ds/           data structures (C) 
-  lang/         interpreter "bytecode/assembly" (C)
-  pkg/          standard packages (C)
+  interpreter/  interpreter "bytecode/assembly" (C)
+  legacy/       olddated codes (C)
   sys/          system drivers "host -> hypervisor" (C)
   types/        common types headers (C)
+  util/         utility funcs (C)
 tests/          automated tests
   e2e/          Integration tests (C++, Ruby)
   unit/         Unit tests (C)
   sizes/        type definitions (C)
-utis/           utilitary (C, Ruby)
+utis/           utilitary tools (Ruby)
+vendor/         thirdy party dependencies
 ```
 
 ## How to build ##
@@ -46,7 +51,8 @@ Download interpreter **source code** and manually compile from scratch.
 
 ```BASH
 git clone https://github.com/RodrigoDornelles/3bc-lang
-make build
+cmake .
+make
 ```
 
 ## How to install ##

@@ -1,4 +1,4 @@
-#include "cast_stoi.h"
+#include "util_stoi.h"
 #include "types_null.h"
 
 /**
@@ -18,7 +18,7 @@
  * {"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "A" | "B" | "C" | "D" | "E" | "F" | "_"};
  * @endebnf
  */
-tbc_error_et cast_stoi16(void *const dest, char *const src, const tbc_u8_t dn, tbc_u8_t sn)
+tbc_error_et util_stoi16(void *const dest, char *const src, const tbc_u8_t dn, tbc_u8_t sn)
 {
     char c;
     tbc_u8_t index = 0;
@@ -175,7 +175,7 @@ tbc_error_et cast_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
  * {"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "_"};
  * @endebnf
  */
-tbc_error_et cast_stoi10(void *const dest, char *const src, const tbc_u8_t dn, tbc_u8_t sn)
+tbc_error_et util_stoi10(void *const dest, char *const src, const tbc_u8_t dn, tbc_u8_t sn)
 {
     tbc_u8_t index = 0;
     tbc_error_et res = ERROR_UNKNOWN;
@@ -310,7 +310,7 @@ tbc_error_et cast_stoi10(void *const dest, char *const src, const tbc_u8_t dn, t
  * {"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "_"};
  * @endebnf
  */
-tbc_error_et cast_stoi8(void *const dest, char *const src, const tbc_u8_t dn, tbc_u8_t sn)
+tbc_error_et util_stoi8(void *const dest, char *const src, const tbc_u8_t dn, tbc_u8_t sn)
 {
     tbc_u8_t index = 0;
     tbc_u8_t dn3bits = (dn/3) + 1;
@@ -446,7 +446,7 @@ tbc_error_et cast_stoi8(void *const dest, char *const src, const tbc_u8_t dn, tb
  * {"0" | "1" | "_"};
  * @endebnf
  */
-tbc_error_et cast_stoi2(void *const dest, char *const src, const tbc_u8_t dn, tbc_u8_t sn)
+tbc_error_et util_stoi2(void *const dest, char *const src, const tbc_u8_t dn, tbc_u8_t sn)
 {
     tbc_u8_t index = 0;
     tbc_error_et res = ERROR_UNKNOWN;
