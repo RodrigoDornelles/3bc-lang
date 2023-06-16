@@ -183,7 +183,7 @@ bool interpreter_parser_strchar(
 /**
  * Text Equivalent Hash Generator.
  */
-bool interpreter_parser_strhash(const char* string, signed long int* value)
+bool interpreter_parser_strhash(const char* string, signed long* value, long int maxdjb2)
 {
     unsigned long hash = 5381;
     int c;
@@ -206,7 +206,7 @@ bool interpreter_parser_strhash(const char* string, signed long int* value)
         ++string;
     }
 
-    *value = hash % SHRT_MAX;
+    *value = (hash % maxdjb2);
 
     return true;
 }

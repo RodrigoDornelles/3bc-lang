@@ -37,7 +37,7 @@
  * Only cpu modes 1 & 2.
  */
 
-#include "macro_consts.h"
+#include "types_consts.h"
 #include "bus_cpu_hello.h"
 #include "cpu_string.h"
 

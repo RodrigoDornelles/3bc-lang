@@ -35,8 +35,9 @@
  *
  */
 
-#include "macro_consts.h"
+#include "types_consts.h"
 #include "bus_cpu_lang.h"
+#include "cpu_jump.h"
 #include "cpu_math.h"
 #include "cpu_memory.h"
 #include "cpu_string.h"
@@ -70,6 +71,13 @@ const static tbc_method_ft ___bus_op_08[] = {
 const static tbc_u8_t ___bus_er_08[] = {
     TBC_NYZ, TBC_NRY, (TBC_RRY|TBC_NRZ),
     (TBC_RRY|TBC_NRZ), (TBC_RRY|TBC_NRZ)
+};
+const static tbc_method_ft ___bus_op_09[] = {
+    cpu_jump_goto, cpu_jump_fgto, cpu_jump_zgto, cpu_jump_pgto,
+    cpu_jump_ngto
+};
+const static tbc_u8_t ___bus_er_09[] = {
+    TBC_NRY, TBC_NRY, TBC_NRY, TBC_NRY, TBC_NRY
 };
 
 /** @par 11-39 **/
@@ -119,7 +127,7 @@ static const tbc_layout_cpu_st ___layout_cpu[] = {
         sizeof(___bus_er_08), ___bus_op_08, ___bus_er_08
     },
     {
-        0, NULL, NULL
+        sizeof(___bus_er_09), ___bus_op_09, ___bus_er_09
     },
     {
         0, NULL, NULL

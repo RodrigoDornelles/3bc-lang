@@ -1,4 +1,4 @@
-#include "cast_itos.h"
+#include "util_itos.h"
 
 /**
  * @short hexadecimal
@@ -17,7 +17,7 @@
  * @retval 0 when invalid buffer @c dest
  * @retval 0 when invalid source @c src
  */
-tbc_u8_t cast_itos16(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
+tbc_u8_t util_itos16(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
 {
     tbc_u8_t len = 0;
     
@@ -40,12 +40,15 @@ tbc_u8_t cast_itos16(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
         }
         /* safety assignment */
         {
- #if !defined(TBC_NOT_INT64)
+#if !defined(TBC_NOT_INT64)
             tbc_u64_t pit = *((tbc_u64_t*)src);
             tbc_u64_t wise = 0xF << (sn - 4);
-#else
+#elif defined(TBC_ARCH_BITS_32)
             tbc_u32_t pit = *((tbc_u32_t*)src);
             tbc_u32_t wise = 0xF << (sn - 4);
+#else
+            tbc_u16_t pit = *((tbc_u32_t*)src);
+            tbc_u16_t wise = 0xF << (sn - 4);
 #endif
             /* invalid source size */
             if (sn > (sizeof(pit) * 8)) {
@@ -109,7 +112,7 @@ tbc_u8_t cast_itos16(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
  * @retval 0 when invalid buffer @c dest
  * @retval 0 when invalid source @c src
  */
-tbc_u8_t cast_itos10(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
+tbc_u8_t util_itos10(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
 {
     tbc_u8_t len = 0;
     
@@ -222,7 +225,7 @@ tbc_u8_t cast_itos10(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
  * @retval 0 when invalid buffer @c dest
  * @retval 0 when invalid source @c src
  */
-tbc_u8_t cast_itos8(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
+tbc_u8_t util_itos8(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
 {
     tbc_u8_t len = 0;
     
@@ -299,7 +302,7 @@ tbc_u8_t cast_itos8(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
  * @retval 0 when invalid buffer @c dest
  * @retval 0 when invalid source @c src
  */
-tbc_u8_t cast_itos2(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
+tbc_u8_t util_itos2(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
 {
     tbc_u8_t len = 0;
     

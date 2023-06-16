@@ -1,5 +1,5 @@
 include(cmake/uname.cmake)
-set(ZIG_VERSION "0.10.1")
+set(ZIG_VERSION "0.9.1")
 set(ZIG_DOWNLOAD "http://ziglang.org/download")
 set(ZIG_PATHS "${CMAKE_SOURCE_DIR}/vendor/zig")
 

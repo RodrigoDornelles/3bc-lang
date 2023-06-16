@@ -43,8 +43,20 @@ static void sys_nes_output_init()
         *((unsigned char*) 0x2004) = 0xf0;
     }
 
+    /** clear screen */
+    cursor_tty.vram_address = 0x2020;
+    *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
+    *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
+    do {
+        *((unsigned char*) 0x2007) = ' ';
+        ++cursor_tty.vram_address;
+    }
+    while(cursor_tty.vram_address <= (0x2400 - 0x20));
+
     /** reset cursor position */
     cursor_tty.vram_address = 0x2020;
+    *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
+    *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
 }
 
 /**
@@ -69,13 +81,13 @@ void sys_nes_output(tbc_app_st *const self)
         sys_nes_output_init();
     }
 
-    /** turn off PPU */
-    *((unsigned char*) 0x2001) = 0b00000000;
-
     /** wait nmi */
-    while(*((signed char*) 0x2002) < 0) {
+    while(*((signed char*) 0x2002) > 0) {
         continue;
     }
+
+    /** turn off PPU */
+    *((unsigned char*) 0x2001) = 0b00000000;
 
     /** update nametable cursor position */
     *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
@@ -100,6 +112,13 @@ void sys_nes_output(tbc_app_st *const self)
         /** special char: carrier return */
         if (tile == '\r') {
             /** ignore */
+            continue;
+        }
+
+        /** 0x60 is three lines to end screen */
+        if (cursor_tty.vram_address >= (0x2400 - 0x60)) {
+            sys_nes_output_init();
+            index = 0;
             continue;
         }
 

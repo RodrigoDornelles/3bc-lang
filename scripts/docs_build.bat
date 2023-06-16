@@ -1,2 +1,2 @@
 @echo off
-cd docs && jekyll build
+cd docs/site && jekyll build

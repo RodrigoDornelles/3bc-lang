@@ -1,5 +1,5 @@
 option(TEST_SIZES "Test: sizes" OFF)
-option(TEST_SIZES "Test: unit" OFF)
+option(TEST_UNIT "Test: unit" OFF)
 
 if(DEFINED TESTS)
     if(${TESTS} MATCHES "sizes")
@@ -12,22 +12,35 @@ endif()
 
 if(TEST_SIZES)
     include(CTest)
-    add_executable("test_sizes_primitives" "${CMAKE_SOURCE_DIR}/tests/sizes/primitives.c")
-    add_test(NAME "primitives_sizes" COMMAND "test_sizes_primitives")
+    add_executable("tests_sizes_primitives" "${CMAKE_SOURCE_DIR}/tests/sizes/primitives.c")
+    add_test(NAME "primitives_sizes" COMMAND "tests_sizes_primitives")
 endif()
 
 if(TEST_UNIT)
     include(CTest)
-    add_executable("test_cast_itos2" "${CMAKE_SOURCE_DIR}/tests/unit/test_cast_itos2.c")
-    target_link_libraries("test_cast_itos2" "tbc_cast")
-    add_test(NAME "cast_itos2" COMMAND "test_cast_itos2")
-    add_executable("test_cast_itos10" "${CMAKE_SOURCE_DIR}/tests/unit/test_cast_itos10.c")
-    target_link_libraries("test_cast_itos10" "tbc_cast")
-    add_test(NAME "cast_itos10" COMMAND "test_cast_itos10")
-    add_executable("test_cast_itos16" "${CMAKE_SOURCE_DIR}/tests/unit/test_cast_itos16.c")
-    target_link_libraries("test_cast_itos16" "tbc_cast")
-    add_test(NAME "cast_itos16" COMMAND "test_cast_itos16")
-    add_executable("test_cast_itos8" "${CMAKE_SOURCE_DIR}/tests/unit/test_cast_itos8.c")
-    target_link_libraries("test_cast_itos8" "tbc_cast")
-    add_test(NAME "cast_itos8" COMMAND "test_cast_itos8")
+    set(tests
+        "error_util_djb2,src/util/util_djb2.c"
+        "error_util_stoi2,src/util/util_stoi.c"
+        "error_util_stoi8,src/util/util_stoi.c"
+        "error_util_stoi10,src/util/util_stoi.c"
+        "error_util_stoi16,src/util/util_stoi.c"
+        "error_driver_stack,src/driver/driver_stack.c"
+        "tests_util_djb2,src/util/util_djb2.c"
+        "tests_util_itos2,src/util/util_itos.c"
+        "tests_util_itos8,src/util/util_itos.c"
+        "tests_util_itos10,src/util/util_itos.c"
+        "tests_util_itos16,src/util/util_itos.c"
+        "tests_util_stoi2,src/util/util_stoi.c"
+        "tests_util_stoi8,src/util/util_stoi.c"
+        "tests_util_stoi10,src/util/util_stoi.c"
+        "tests_util_stoi16,src/util/util_stoi.c"
+        "tests_driver_stack_min,src/driver/driver_stack.c"
+    )
+    foreach(deps IN LISTS tests)
+        string(REPLACE "," ";${CMAKE_SOURCE_DIR}/" deps "${deps}")
+        list(GET deps 0 tests_name)
+        list(REMOVE_AT deps 0)
+        add_executable("${tests_name}" "${CMAKE_SOURCE_DIR}/tests/unit/${tests_name}.c;${deps}")
+        add_test(NAME "${tests_name}" COMMAND "${tests_name}")
+    endforeach()
 endif()

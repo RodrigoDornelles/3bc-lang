@@ -14,8 +14,13 @@ if(DEFINED CMAKE_SYSTEM_VERSION)
         set(CONIO TRUE)
     endif()
 
+    if(${CMAKE_SYSTEM_VERSION} STREQUAL "atari5200")
+        set(CMAKE_EXECUTABLE_SUFFIX_C ".bin")
+        set(CONIO TRUE)
+    endif()
+
     if(${CMAKE_SYSTEM_VERSION} STREQUAL "pce")
-        set(CMAKE_EXECUTABLE_SUFFIX_C ".pce")
+        set(CMAKE_EXECUTABLE_SUFFIX_C ".bin")
         set(CONIO TRUE)
     endif()
 
@@ -38,6 +43,11 @@ if(DEFINED CMAKE_SYSTEM_VERSION)
     endif()
 
     if(${CMAKE_SYSTEM_VERSION} STREQUAL "darwin")
+        set(APPLE TRUE)
+        set(POSIX TRUE)
+    endif()
+
+    if(${CMAKE_SYSTEM_VERSION} STREQUAL "macos")
         set(APPLE TRUE)
         set(POSIX TRUE)
     endif()

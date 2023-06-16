@@ -39,21 +39,28 @@ void cpu_common_null(struct app_3bc_s* const self) {}
 
 void cpu_common_mode(struct app_3bc_s* const self)
 {
-    /// @todo: VALIDATE_NOT_ADRESS
+    /** @todo remove it!
     driver_mode_set(self, self->cpu.rz);
+    */
 }
 
 void cpu_not_mode(PARAMS_DEFINE)
 {
+    /** @todo remove it!
     driver_program_error(app, ERROR_CPU_ZERO);
+    */
 }
 
 void cpu_not_exist(PARAMS_DEFINE)
 {
+    /** @todo remove it!
     driver_program_error(app, ERROR_INVALID_REGISTER);
+    */
 }
 
 void cpu_mode_reserved(PARAMS_DEFINE)
 {
+    /** @todo remove it!
     driver_custom_call(app, reg, address, value);
+    */
 }

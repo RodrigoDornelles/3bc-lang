@@ -16,11 +16,13 @@ PLANTUML_JAR_PATH      = $(PLANTUML_JAR_PATH)
 PLANTUML_CFG_FILE      =
 PLANTUML_INCLUDE_PATH  =
 OUTPUT_LANGUAGE        = English
-FILE_PATTERNS          = *.c *.h *.ino *.3bc
-EXTENSION_MAPPING      = ino=c++ 3bc=c
-INPUT                  = CONTRIBUTING.md CODE_OF_CONDUCT.md CODE_STANDARD.md src examples
+FILE_PATTERNS          = *.c *.h *.ino
+EXTENSION_MAPPING      = ino=c++ h=c 
+INPUT                  = CONTRIBUTING.md CODE_OF_CONDUCT.md CODE_STANDARD.md src
 USE_MDFILE_AS_MAINPAGE = CONTRIBUTING.md
 MARKDOWN_ID_STYLE      = GITHUB
+ALIASES               += startebnf=@startuml{ebnf}
+ALIASES               += endebnf=@enduml
 INPUT_FILTER 		   = ./utils/filter_doxygen.rb
 # Theme: https://jothepro.github.io/doxygen-awesome-css/
 GENERATE_TREEVIEW      = YES

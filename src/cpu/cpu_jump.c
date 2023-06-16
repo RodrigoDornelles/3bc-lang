@@ -33,47 +33,54 @@
  */
 
 #define TBC_SOURCE_ENTRY
-#include "3bc.h"
+#include "cpu_jump.h"
 
-void cpu_jump_goto(PARAMS_DEFINE)
+void cpu_jump_goto(struct app_3bc_s* const self)
 {
-    REQUIRED_VALUE
-    VALIDATE_NOT_ADRESS
-    app->program.label_target = value;
+    self->stack.cfgmin.prog->index = self->cpu.rz;
+    self->rc = TBC_RET_RELOAD;
 }
 
-void cpu_jump_fgto(PARAMS_DEFINE)
+void cpu_jump_fgto(struct app_3bc_s* const self)
 {
+    /** @todo rewrite 
     REQUIRED_VALUE
     VALIDATE_NOT_ADRESS
     if (AUX != 0) {
         app->program.label_target = value;
     }
+    */
 }
 
-void cpu_jump_zgto(PARAMS_DEFINE)
+void cpu_jump_zgto(struct app_3bc_s* const self)
 {
+    /** @todo rewrite 
     REQUIRED_VALUE
     VALIDATE_NOT_ADRESS
     if (AUX == 0) {
         app->program.label_target = value;
     }
+    */
 }
 
-void cpu_jump_pgto(PARAMS_DEFINE)
+void cpu_jump_pgto(struct app_3bc_s* const self)
 {
+    /** @todo rewrite 
     REQUIRED_VALUE
     VALIDATE_NOT_ADRESS
     if (0 < AUX) {
         app->program.label_target = value;
     }
+    */
 }
 
-void cpu_jump_ngto(PARAMS_DEFINE)
+void cpu_jump_ngto(struct app_3bc_s* const self)
 {
+    /** @todo rewrite 
     REQUIRED_VALUE
     VALIDATE_NOT_ADRESS
     if (0 > AUX) {
         app->program.label_target = value;
     }
+    */
 }

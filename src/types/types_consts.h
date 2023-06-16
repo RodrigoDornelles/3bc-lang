@@ -1,6 +1,18 @@
 #ifndef H_MACRO_CONSTS_TBC
 #define H_MACRO_CONSTS_TBC
 
+#ifndef TBC_MAX_RX
+#define TBC_MAX_RX 7
+#endif
+
+#ifndef TBC_MAX_RY
+#define TBC_MAX_RY 512
+#endif
+
+#ifndef TBC_MAX_RZ
+#define TBC_MAX_RZ 1023
+#endif
+
 /**
  * @par mask @c 0x1 in @c TBC_RRZ
  * @brief Required RZ

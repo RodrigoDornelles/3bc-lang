@@ -49,6 +49,7 @@ typedef struct app_3bc_s tbc_app_st;
 #include "types/types_return.h"
 #include "types_pkg.h"
 #include "types_errors.h"
+#include "types_stack.h"
 
 /**
  *  _   __                                 _       _____
@@ -172,7 +173,6 @@ typedef void (*tbc_method_ft)(struct app_3bc_s* const);
 struct app_3bc_s {
     app_3bc_id id;
     tbc_app_fsm_et state;
-    tbc_app_fsm_et previous;
     tbc_return_et rc;
     tbc_error_et error_code;
     tbc_cpu_st cpu;
@@ -181,6 +181,7 @@ struct app_3bc_s {
     union cache_l3_u cache_l3;
     tbc_cin_mt cin;
     tbc_cout_mt cout;
+    union ___tbc_stack_root_u stack;
     struct program_3bc_s program;
     struct memory_3bc_s memory;
     tbc_pkg_st* pkg_func;

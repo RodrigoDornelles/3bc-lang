@@ -46,6 +46,7 @@
 #include "driver_error.h"
 #include "driver_cpu.h"
 #include "driver_gc.h"
+#include "driver_stack.h"
 #include "bus_cpu_0000.h"
 #include "bus_sys_0000.h"
 #include "interpreter_0000.h"
@@ -190,8 +191,14 @@ bool driver_interrupt(struct app_3bc_s* const self)
             break;
 
         case FSM_3BC_STARTING:
+            /* host drivers */
             self->pkg_func = (tbc_pkg_st*) &tbc_pkg_standard;
-            self->state = FSM_3BC_VACUUM;
+            /* stack config */
+            driver_stack_init(self);
+            /* first state */
+            if (self->rc == TBC_RET_OK) {
+                self->state = FSM_3BC_VACUUM;
+            }
             break;
 
         case FSM_3BC_VACUUM:
@@ -233,6 +240,9 @@ bool driver_interrupt(struct app_3bc_s* const self)
             }
             if (self->rc == TBC_RET_OK) {
                 self->state = FSM_3BC_COUNTING;
+            }
+            if(self->rc == TBC_RET_RELOAD) {
+                self->state = FSM_3BC_LOADING;
             }
             break;
 
