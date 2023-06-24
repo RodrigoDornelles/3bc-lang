@@ -5,11 +5,15 @@
 
 #ifdef __cplusplus
 
+extern "C" {
+
 #endif
 
 bool driver_interrupt(struct app_3bc_s* const self);
 
 #ifdef __cplusplus
+
+}
 
 #endif
 

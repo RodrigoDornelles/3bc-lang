@@ -35,12 +35,15 @@
  *
  */
 
-#include "types_consts.h"
-#include "bus_cpu_lang.h"
-#include "cpu_jump.h"
-#include "cpu_math.h"
-#include "cpu_memory.h"
-#include "cpu_string.h"
+#define TBC_SOURCE_ENTRY
+#include "bus/bus_cpu_lang.h"
+#include "cpu/cpu_jump.h"
+#include "cpu/cpu_math.h"
+#include "cpu/cpu_memory.h"
+#include "cpu/cpu_string.h"
+#include "types/types_consts.h"
+
+#if !defined(TBC_SCU_OPTIONAL_FIX)
 
 /** @par 1-9 **/
 const static tbc_method_ft ___bus_op_02[] = {
@@ -223,3 +226,5 @@ static const tbc_layout_cpu_st ___layout_cpu[] = {
 
 const tbc_u8_t tbc_layout_cpu_modes = sizeof(___layout_cpu)/sizeof(tbc_layout_cpu_st);
 const tbc_layout_cpu_st* tbc_layout_cpu_funcs = ___layout_cpu;
+
+#endif

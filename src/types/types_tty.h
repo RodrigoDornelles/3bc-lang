@@ -2,7 +2,7 @@
 #define H_TYPES_TTY_TBC
 
 #include "3bc_detect.h"
-#include "types_func.h"
+#include "types/types_func.h"
 
 enum ___tbc_stream_type_e {
     STREAM_TYPE_NONE = 0,

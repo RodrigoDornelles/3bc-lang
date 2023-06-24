@@ -1,7 +1,7 @@
 
-#include "bus_cfg_0000.h"
-#include "types_null.h"
-#include "driver_stack.h"
+#include "bus/bus_cfg_0000.h"
+#include "driver/driver_stack.h"
+#include "types/types_null.h"
 
 /**
  * @throw ERROR_MEM_STACK_CFG_MIS

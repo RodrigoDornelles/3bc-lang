@@ -47,9 +47,9 @@ typedef struct app_3bc_s tbc_app_st;
 #include "types/types_cpu.h"
 #include "types/types_cache.h"
 #include "types/types_return.h"
-#include "types_pkg.h"
-#include "types_errors.h"
-#include "types_stack.h"
+#include "types/types_pkg.h"
+#include "types/types_errors.h"
+#include "types/types_stack.h"
 
 /**
  *  _   __                                 _       _____

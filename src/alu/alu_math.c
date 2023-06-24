@@ -1,6 +1,6 @@
 #include "3bc_detect.h"
 #include "alu_math.h"
-#include "types_errors.h"
+#include "types/types_errors.h"
 
 #if !defined(TBC_NOT_MATH)
 #include <math.h>
@@ -51,7 +51,7 @@
  * 38 | Logarithm Natural  | @f$\log(a)@f$             | log(a)
  * 39 | Logarithm Base N   | @f$\log_{b}(a)@f$         | log(a)/log(b)
  */
-void alu_calculator(struct app_3bc_s* const self)
+void alu_math(struct app_3bc_s* const self)
 {
     switch(self->cache_l1.math)
     {

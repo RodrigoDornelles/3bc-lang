@@ -1,8 +1,8 @@
 #ifndef H_TYPES_CACHE_TBC
 #define H_TYPES_CACHE_TBC
 
-#include "types_fsm.h"
-#include "types_errors.h"
+#include "types/types_fsm.h"
+#include "types/types_errors.h"
 
 struct ___tbc_dynamic_buffer_s {
     tbc_i8_t size;

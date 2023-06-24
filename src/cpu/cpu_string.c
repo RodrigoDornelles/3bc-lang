@@ -31,9 +31,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-
+#define TBC_SOURCE_ENTRY
 #include "3bc.h"
-#include "util_itos.h"
+#include "util/util_itos.h"
 
 
 /**

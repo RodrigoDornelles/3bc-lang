@@ -1,5 +1,5 @@
 #include "util_stoi.h"
-#include "types_null.h"
+#include "types/types_null.h"
 
 /**
  * @short hexadecimal

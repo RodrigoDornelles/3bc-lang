@@ -1,7 +1,7 @@
 #ifndef H_TYPES_CPU_TBC
 #define H_TYPES_CPU_TBC
 
-#include "types_primitive.h"
+#include "types/types_primitive.h"
 
 typedef struct ___tbc_cpu_s tbc_cpu_st;
 

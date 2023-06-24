@@ -1,11 +1,14 @@
+#define TBC_SOURCE_ENTRY
 #include "3bc_detect.h"
-#include "bus_sys_hello.h"
-#include "ds_prog_array.h"
-#include "sys_common_mock.h"
-#include "sys_conio_output.h"
-#include "sys_nes_output.h"
-#include "sys_posix_output.h"
-#include "sys_windows_output.h"
+#include "bus/bus_sys_hello.h"
+#include "ds/ds_prog_array.h"
+#include "sys/sys_common_mock.h"
+#include "sys/sys_conio_output.h"
+#include "sys/sys_nes_output.h"
+#include "sys/sys_posix_output.h"
+#include "sys/sys_windows_output.h"
+
+#if !defined(TBC_SCU_OPTIONAL_FIX)
 
 const tbc_pkg_st tbc_pkg_standard = {
     {
@@ -31,3 +34,5 @@ const tbc_pkg_st tbc_pkg_standard = {
 #endif 
     }
 };
+
+#endif

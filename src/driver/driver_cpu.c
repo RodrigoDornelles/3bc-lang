@@ -1,7 +1,7 @@
-#include "types_consts.h"
-#include "driver_cpu.h"
-#include "bus_cpu_0000.h"
-#include "types_null.h"
+#include "bus/bus_cpu_0000.h"
+#include "driver/driver_cpu.h"
+#include "types/types_consts.h"
+#include "types/types_null.h"
 
 /**
  * @throw ERROR_INVALID_CPU_MODE

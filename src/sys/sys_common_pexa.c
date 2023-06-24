@@ -2,7 +2,7 @@
 #if !defined(TBC_NOT_MALLOC)
 #include <stdlib.h>
 #endif
-#include "types_null.h"
+#include "types/types_null.h"
 
 /**
  * @throw ERROR_UNSUPPORTED

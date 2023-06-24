@@ -1,13 +1,15 @@
-#include "bus_sys_lang.h"
-#include "3bc_types.h"
-#include "ds_prog_array.h"
-#include "ds_ram_array.h"
-#include "sys_common_mock.h"
-#include "sys_common_pexa.h"
-#include "sys_conio_output.h"
-#include "sys_nes_output.h"
-#include "sys_posix_output.h"
-#include "sys_windows_output.h"
+#define TBC_SOURCE_ENTRY
+#include "bus/bus_sys_lang.h"
+#include "ds/ds_prog_array.h"
+#include "ds/ds_ram_array.h"
+#include "sys/sys_common_mock.h"
+#include "sys/sys_common_pexa.h"
+#include "sys/sys_conio_output.h"
+#include "sys/sys_nes_output.h"
+#include "sys/sys_posix_output.h"
+#include "sys/sys_windows_output.h"
+
+#if !defined(TBC_SCU_OPTIONAL_FIX)
 
 const tbc_pkg_st tbc_pkg_standard = {
     {
@@ -40,3 +42,5 @@ const tbc_pkg_st tbc_pkg_standard = {
         &ds_ram_array_write,
     }
 };
+
+#endif

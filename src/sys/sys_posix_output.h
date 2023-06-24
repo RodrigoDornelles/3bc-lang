@@ -3,6 +3,18 @@
 
 #include "3bc_types.h"
 
+#ifdef __cplusplus
+
+extern "C" {
+
+#endif
+
 void sys_posix_output(tbc_app_st *const self);
+
+#ifdef __cplusplus
+
+}
+
+#endif
 
 #endif

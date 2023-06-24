@@ -1,7 +1,7 @@
 #ifndef H_I18N_0000_TBC
 #define H_I18N_0000_TBC
 
-#include "types_primitive.h"
+#include "types/types_primitive.h"
 
 typedef struct ___tbc_error_s tbc_error_st;
 

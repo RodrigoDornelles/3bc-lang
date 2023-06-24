@@ -42,14 +42,15 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc_types.h"
-#include "alu_0000.h"
-#include "driver_error.h"
-#include "driver_cpu.h"
-#include "driver_gc.h"
-#include "driver_stack.h"
-#include "bus_cpu_0000.h"
-#include "bus_sys_0000.h"
-#include "interpreter_0000.h"
+#include "bus/bus_alu_0000.h"
+#include "bus/bus_cpu_0000.h"
+#include "bus/bus_sys_0000.h"
+#include "driver/driver_error.h"
+#include "driver/driver_cpu.h"
+#include "driver/driver_gc.h"
+#include "driver/driver_stack.h"
+/** @todo delete this **/
+#include "interpreter/interpreter_0000.h"
 
 /**
  * @short VM processor context manager, allows asychronism.
@@ -140,7 +141,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
                     break;
 
                 case TBC_RET_SYS_MATH:
-                    alu_calculator(self);
+                    tbc_layout_alu(self);
                     break;
 
                 case TBC_RET_SYS_MEM_READ:
@@ -221,6 +222,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
             break;
 
         case FSM_3BC_READING:
+            /** @todo move it to outside of vm */
             interpreter_ticket(self);
             if (self->rc == TBC_RET_FULL) {
                 self->pkg_func->prog.insert(self);

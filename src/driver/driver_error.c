@@ -34,9 +34,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>. 
  *
  */
-#include "i18n_0000.h"
-#include "util_itos.h"
-#include "driver_error.h"
+#include "driver/driver_error.h"
+#include "i18n/i18n_0000.h"
+#include "util/util_itos.h"
 
 static const char ___msg_err_1[] = "[3BC] CRITICAL ERROR ABORTED THE PROGRAM";
 static const char ___msg_err_2[] = "\n> MACHINE ID:\t";

@@ -1,8 +1,14 @@
-#include <Windows.h>
 #include "sys_windows_output.h"
+
+/** @todo USE OTHER DEFINE */
+#if !defined(TBC_USE_ARDUINO)
+#include <Windows.h>
+#endif
 
 void sys_windows_output(tbc_app_st *const self)
 {
+/** @todo USE OTHER DEFINE */
+#if !defined(TBC_USE_ARDUINO)
     static LPDWORD ruindows;
     static HANDLE fileptr = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -23,4 +29,5 @@ void sys_windows_output(tbc_app_st *const self)
             NULL
         );
     }
+#endif
 }

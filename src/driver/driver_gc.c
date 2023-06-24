@@ -35,7 +35,7 @@
  *
  */
 
-#include "types_return.h"
+#include "types/types_return.h"
 #include "3bc_types.h"
 
 #if !defined(TBC_NOT_MALLOC)

@@ -47,7 +47,7 @@
 
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
-#include "types_consts.h"
+#include "types/types_consts.h"
 
 /**
  * BRIEF:
