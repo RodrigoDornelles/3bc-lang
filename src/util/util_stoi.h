@@ -1,5 +1,5 @@
-#ifndef H_util_stoi_TBC
-#define H_util_stoi_TBC
+#ifndef H_UTIL_STOI_TBC
+#define H_UTIL_STOI_TBC
 
 #include "types_errors.h"
 #include "types_primitive.h"

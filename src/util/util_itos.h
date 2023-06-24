@@ -1,5 +1,5 @@
-#ifndef H_util_itos_TBC
-#define H_util_itos_TBC
+#ifndef H_UTIL_ITOS_TBC
+#define H_UTIL_ITOS_TBC
 
 #include "types_primitive.h"
 #include "types_null.h"
