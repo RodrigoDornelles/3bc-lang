@@ -1,6 +1,10 @@
 #ifndef H_MACRO_CONSTS_TBC
 #define H_MACRO_CONSTS_TBC
 
+#ifndef TBC_MACHINE_SIZE
+#define TBC_MACHINE_SIZE (sizeof(tbc_vm_st))
+#endif
+
 #ifndef TBC_MAX_RX
 #define TBC_MAX_RX 7
 #endif

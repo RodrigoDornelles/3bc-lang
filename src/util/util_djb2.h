@@ -1,5 +1,5 @@
-#ifndef H_util_stoi_TBC
-#define H_util_stoi_TBC
+#ifndef H_UTIL_DJB2_TBC
+#define H_UTIL_DJB2_TBC
 
 #include "types_errors.h"
 #include "types_primitive.h"

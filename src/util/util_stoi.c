@@ -569,7 +569,7 @@ tbc_error_et util_stoi2(void *const dest, char *const src, const tbc_u8_t dn, tb
             break;
     }
 
-    if (index == 0 && res == ERROR_UNKNOWN) {
+    if (index == 0) {
         res = ERROR_NUMBER_NO_DIGITS;
     }
 
