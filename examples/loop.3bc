@@ -2,8 +2,8 @@
 MODE 0 6
 ALOC 'i' 3
 
+#todo mark label
 MODE 0 0d02
-NILL 0 0x1
 STRC 0 'H'
 STRC 0 'I'
 STRC 0 '!'
@@ -19,4 +19,4 @@ MODE 0 0d08
 PULL 'i' 0
 
 MODE 0 9
-FGTO 0 0x1
+FGTO 0 0x2

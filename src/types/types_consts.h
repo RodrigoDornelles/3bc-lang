@@ -101,4 +101,12 @@
  */
 #define TBC_NYZ (0x4|0x8)
 
+/**
+ * @par mask @c 0x40 in @c TBC_IF
+ * @brief Conditional instruction
+ * @li execute according to RX and RA.
+ * @c 0b1000000
+ */
+#define TBC_IF (0x40)
+
 #endif

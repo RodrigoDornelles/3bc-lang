@@ -76,11 +76,12 @@ const static tbc_u8_t ___bus_er_08[] = {
     (TBC_RRY|TBC_NRZ), (TBC_RRY|TBC_NRZ)
 };
 const static tbc_method_ft ___bus_op_09[] = {
-    cpu_jump_goto, cpu_jump_fgto, cpu_jump_zgto, cpu_jump_pgto,
-    cpu_jump_ngto
+    cpu_jump_goto, cpu_jump_goto, cpu_jump_goto, cpu_jump_goto,
+    cpu_jump_goto
 };
 const static tbc_u8_t ___bus_er_09[] = {
-    TBC_NRY, TBC_NRY, TBC_NRY, TBC_NRY, TBC_NRY
+    (TBC_IF|TBC_NRY), (TBC_IF|TBC_NRY), (TBC_IF|TBC_NRY),
+    (TBC_IF|TBC_NRY), (TBC_IF|TBC_NRY)
 };
 
 /** @par 11-39 **/

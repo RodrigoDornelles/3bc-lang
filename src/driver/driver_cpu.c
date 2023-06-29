@@ -76,6 +76,25 @@ void driver_cpu(struct app_3bc_s* const self)
             self->cache_l1.error = ERROR_PARAM_REQUIRE_VALUE;
             break;
         }
+        if((tbc_layout_cpu_funcs[self->cpu.rm].errors[self->cpu.rx-1]&TBC_IF)
+            && self->cpu.rx > 1) {
+            if (self->cpu.rx == 2 && self->cpu.ra == 0) {
+                self->hyperload = NULL;
+                break;
+            }
+            if (self->cpu.rx == 3 && self->cpu.ra != 0) {
+                self->hyperload = NULL;
+                break;
+            }
+            if (self->cpu.rx == 4 && self->cpu.ra < 0) {
+                self->hyperload = NULL;
+                break;
+            }
+            if (self->cpu.rx == 5 && self->cpu.ra > 0) {
+                self->hyperload = NULL;
+                break;
+            }
+        }
 
         self->hyperload =
             tbc_layout_cpu_funcs[self->cpu.rm].opcodes[self->cpu.rx - 1];
