@@ -36,6 +36,7 @@ src/            library source code (C)
   interpreter/  interpreter "bytecode/assembly" (C)
   legacy/       olddated codes (C)
   sys/          system drivers "host -> hypervisor" (C)
+  pre/          preprocessor macros and constants
   types/        common types headers (C)
   util/         utility funcs (C)
 tests/          automated tests
