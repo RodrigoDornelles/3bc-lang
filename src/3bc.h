@@ -105,7 +105,6 @@
  */
 
 /** consts and types **/
-#include "3bc_errors.h"
 #include "3bc_types.h"
 
 /** functions prototypes **/
