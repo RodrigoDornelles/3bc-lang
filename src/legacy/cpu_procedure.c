@@ -8,7 +8,7 @@
  *                                     __/ |             __/ |
  *                                    |___/             |___/
  * DESCRIPTION:
- * Code refers cpu mode management in virtual machine.
+ * Code refers registers for calling procedures.
  *
  * BRIEF:
  * Low-level language, tiny virtual machine, intermediate representation,
@@ -35,23 +35,21 @@
 #define TBC_SOURCE_ENTRY
 #include "3bc.h"
 
-/**
- * switch between cpu mode channels
- */
-void driver_mode_set(struct app_3bc_s* const app, cpumode_3bc_t value)
+void cpu_procedure_call(PARAMS_DEFINE)
 {
-    if (value >= TBC_MODE_END) {
-        driver_program_error(app, ERROR_INVALID_CPU_MODE);
-    }
+    /** @todo rewrite 
+    REQUIRED_VALUE
+    VALIDATE_NOT_ADRESS
+    ds_procedure_lifo_push(app);
+    app->program.label_target = value;
+    */
+}
 
-    /** after cpu mode change **/
-    switch (app->cpu.rm) {
-    }
-
-    /** before cpu mode change **/
-    switch (value) {
-    }
-
-    /** apply cpu mode **/
-    app->cpu.rm = value;
+void cpu_procedure_back(PARAMS_DEFINE)
+{
+    /** @todo rewrite
+    VALIDATE_NOT_VALUES
+    VALIDATE_NOT_ADRESS
+    app->program.curr = ds_procedure_lifo_pop(app);
+    /** @todo driver_mode_set(app, TBC_MODE_PROCEDURE); **/
 }

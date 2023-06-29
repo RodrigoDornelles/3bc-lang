@@ -134,7 +134,7 @@ bool ds_program_fifo_avaliable(struct app_3bc_s* const app)
         }
 
         /** jump to point **/
-        driver_mode_set(app, label_node->cpumode);
+        /** @todo driver_mode_set(app, label_node->cpumode); */
         app->program.curr = label_node->point->next;
         app->program.label_target = NILL;
         return true;

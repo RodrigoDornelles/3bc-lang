@@ -46,11 +46,6 @@ extern "C" {
 #endif
 
 /*****************************************************************************/
-void cpu_not_mode(PARAMS_DEFINE);
-void cpu_not_exist(PARAMS_DEFINE);
-void cpu_mode_reserved(PARAMS_DEFINE);
-
-/*****************************************************************************/
 void cpu_procedure_call(PARAMS_DEFINE);
 void cpu_procedure_back(PARAMS_DEFINE);
 void cpu_procedure_fcal(PARAMS_DEFINE);
@@ -68,19 +63,10 @@ void cpu_sleep_micr(PARAMS_DEFINE);
 void cpu_sleep_mili(PARAMS_DEFINE);
 void cpu_sleep_seco(PARAMS_DEFINE);
 /*****************************************************************************/
-void cpu_string_debug(PARAMS_DEFINE);
-void cpu_string_input(PARAMS_DEFINE);
-void cpu_string_input_silent(PARAMS_DEFINE);
-void cpu_string_input_password(PARAMS_DEFINE);
-/*****************************************************************************/
 void driver_tty_init(void);
 void driver_tty_exit(void);
 data_3bc_t driver_tty_input(
     struct app_3bc_s* const app, tbc_tty_st *const tty, register_3bc_t type);
-void driver_tty_output(struct app_3bc_s* const app, tbc_tty_st *const tty,
-    register_3bc_t type, data_3bc_t val);
-void driver_tty_output_raw(
-    struct app_3bc_s* const app, tbc_tty_st *const tty, const char* string);
 /*****************************************************************************/
 void driver_gpio_setup(
     struct app_3bc_s* const app, memory_conf_t conf, address_3bc_t pin);
@@ -116,7 +102,6 @@ void driver_power_exit(struct app_3bc_s* const app);
 /*****************************************************************************/
 void driver_program_error(
     struct app_3bc_s* const app, tbc_error_et error_code);
-void driver_program_tick(struct app_3bc_s* const app);
 /*****************************************************************************/
 void ds_procedure_lifo_push(struct app_3bc_s* const app);
 struct line_node_s* ds_procedure_lifo_pop(struct app_3bc_s* const app);
@@ -127,9 +112,6 @@ void driver_custom_set(struct app_3bc_s* const app, cpumode_3bc_t cpu_mode,
     register_3bc_t reg, function_3bc_t lambda);
 void driver_custom_call(struct app_3bc_s* const app, register_3bc_t reg,
     address_3bc_t address, data_3bc_t value);
-/*****************************************************************************/
-data_aux_3bc_t driver_accumulator_get(struct app_3bc_s* const app);
-void driver_accumulator_set(struct app_3bc_s* const app, data_aux_3bc_t value);
 /*****************************************************************************/
 struct app_3bc_s* const ds_hypervisor_darray_new(void);
 struct app_3bc_s* const ds_hypervisor_darray_get_one(app_3bc_id app);
