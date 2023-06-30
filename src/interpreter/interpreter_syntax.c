@@ -61,15 +61,15 @@
  * why you need for CPP if C language is already 'complete and total'?
  * { .keyword.name = "mode", .opcode = 7 } <-- not allowed in C++
  */
-static const struct tbc_keyword_opcode_st opcodes_register[] = { { "aloc", 2 },
-    { "back", 1 }, { "call", 1 }, { "fake", 2 }, { "fcal", 2 }, { "fgto", 2 },
-    { "free", 1 }, { "fret", 2 }, { "goto", 1 }, { "math", 1 }, { "micr", 3 },
-    { "mili", 4 }, { "mode", 7 }, { "moff", 3 }, { "muse", 4 }, { "nb02", 1 },
-    { "nb08", 2 }, { "nb10", 3 }, { "nb16", 4 }, { "ncal", 5 }, { "ngto", 5 },
-    { "nill", 0 }, { "nret", 5 }, { "pcal", 4 }, { "pgto", 4 }, { "pret", 4 },
-    { "pull", 3 }, { "push", 5 }, { "real", 1 }, { "seco", 5 }, { "spin", 4 },
-    { "strb", 1 }, { "strc", 5 }, { "stri", 3 }, { "stro", 2 }, { "strx", 4 },
-    { "zcal", 3 }, { "zgto", 3 }, { "zret", 3 } };
+static const struct tbc_keyword_opcode_st opcodes_register[] = { { {"aloc"}, 2 },
+    { {"back"}, 1 }, { {"call"}, 1 }, { {"fake"}, 2 }, { {"fcal"}, 2 }, { {"fgto"}, 2 },
+    { {"free"}, 1 }, { {"fret"}, 2 }, { {"goto"}, 1 }, { {"math"}, 1 }, { {"micr"}, 3 },
+    { {"mili"}, 4 }, { {"mode"}, 7 }, { {"moff"}, 3 }, { {"muse"}, 4 }, { {"nb02"}, 1 },
+    { {"nb08"}, 2 }, { {"nb10"}, 3 }, { {"nb16"}, 4 }, { {"ncal"}, 5 }, { {"ngto"}, 5 },
+    { {"nill"}, 0 }, { {"nret"}, 5 }, { {"pcal"}, 4 }, { {"pgto"}, 4 }, { {"pret"}, 4 },
+    { {"pull"}, 3 }, { {"push"}, 5 }, { {"real"}, 1 }, { {"seco"}, 5 }, { {"spin"}, 4 },
+    { {"strb"}, 1 }, { {"strc"}, 5 }, { {"stri"}, 3 }, { {"stro"}, 2 }, { {"strx"}, 4 },
+    { {"zcal"}, 3 }, { {"zgto"}, 3 }, { {"zret"}, 3 } };
 
 static const tbc_i8_t opcodes_register_size
     = sizeof(opcodes_register) / sizeof(struct tbc_keyword_opcode_st);

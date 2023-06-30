@@ -106,11 +106,15 @@ bool interpreter_parser_strtol(
 
     if (decode == endptr) {
         driver_program_error(app, ERROR_NUMBER_NO_DIGITS);
-    } else if (errno == ERANGE && *value == LONG_MIN) {
+    }
+#if defined(ERANGE)
+    else if (errno == ERANGE && *value == LONG_MIN) {
         driver_program_error(app, ERROR_NUMBER_UNDERFLOW);
-    } else if (errno == ERANGE && *value == LONG_MAX) {
+    } 
+    else if (errno == ERANGE && *value == LONG_MAX) {
         driver_program_error(app, ERROR_NUMBER_OVERFLOW);
     }
+#endif
 #if defined(EINVAL)
     /** not in all c99 implementations **/
     else if (errno == EINVAL) {
