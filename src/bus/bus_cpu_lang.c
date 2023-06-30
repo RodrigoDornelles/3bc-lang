@@ -46,59 +46,59 @@
 #if !defined(TBC_SCU_OPTIONAL_FIX)
 
 /** @par 1-9 **/
-const static tbc_method_ft ___bus_op_02[] = {
+static const tbc_method_ft ___bus_op_02[] = {
     cpu_string_output, cpu_string_output, cpu_string_output,
     cpu_string_output, cpu_string_output
 };
-const static tbc_u8_t ___bus_er_02[] = {
+static const tbc_u8_t ___bus_er_02[] = {
     TBC_DUAL, TBC_DUAL, TBC_DUAL, TBC_DUAL, TBC_DUAL
 };
-const static tbc_method_ft ___bus_op_06[] = {
+static const tbc_method_ft ___bus_op_06[] = {
     cpu_memory_free, cpu_memory_aloc
 };
-const static tbc_u8_t ___bus_er_06[] = {
+static const tbc_u8_t ___bus_er_06[] = {
     (TBC_RRY|TBC_NRZ), TBC_RRY
 };
-const static tbc_method_ft ___bus_op_07[] = {
+static const tbc_method_ft ___bus_op_07[] = {
     cpu_memory_ptr_free, cpu_memory_ptr_aloc, cpu_memory_ptr_pull,
     cpu_memory_ptr_spin, cpu_memory_ptr_push
 };
-const static tbc_u8_t ___bus_er_07[] = {
+static const tbc_u8_t ___bus_er_07[] = {
     TBC_NYZ, TBC_NRY, (TBC_RRY|TBC_NRZ),
     (TBC_RRY|TBC_NRZ), (TBC_RRY|TBC_NRZ)
 };
-const static tbc_method_ft ___bus_op_08[] = {
+static const tbc_method_ft ___bus_op_08[] = {
     cpu_memory_aux_free, cpu_memory_aux_aloc, cpu_memory_aux_pull,
     cpu_memory_aux_spin, cpu_memory_aux_push
 };
-const static tbc_u8_t ___bus_er_08[] = {
+static const tbc_u8_t ___bus_er_08[] = {
     TBC_NYZ, TBC_NRY, (TBC_RRY|TBC_NRZ),
     (TBC_RRY|TBC_NRZ), (TBC_RRY|TBC_NRZ)
 };
-const static tbc_method_ft ___bus_op_09[] = {
+static const tbc_method_ft ___bus_op_09[] = {
     cpu_jump_goto, cpu_jump_goto, cpu_jump_goto, cpu_jump_goto,
     cpu_jump_goto
 };
-const static tbc_u8_t ___bus_er_09[] = {
+static const tbc_u8_t ___bus_er_09[] = {
     (TBC_IF|TBC_NRY), (TBC_IF|TBC_NRY), (TBC_IF|TBC_NRY),
     (TBC_IF|TBC_NRY), (TBC_IF|TBC_NRY)
 };
 
 /** @par 11-39 **/
-const static tbc_method_ft ___bus_op_math[] = {
+static const tbc_method_ft ___bus_op_math[] = {
     cpu_math
 };
 
-const static tbc_u8_t ___bus_er_math[] = {
+static const tbc_u8_t ___bus_er_math[] = {
     TBC_DUAL
 };
-const static tbc_method_ft ___bus_op_math_19[] = {
+static const tbc_method_ft ___bus_op_math_19[] = {
     cpu_math, cpu_math, cpu_math, cpu_math,
 };
-const static tbc_u8_t ___bus_er_math_19[] = {
+static const tbc_u8_t ___bus_er_math_19[] = {
     TBC_DUAL, TBC_DUAL, TBC_DUAL, TBC_DUAL,
 };
-const static tbc_u8_t ___bus_er_math_nryz[] = {
+static const tbc_u8_t ___bus_er_math_nryz[] = {
     (TBC_NRY|TBC_NRZ)
 };
 
