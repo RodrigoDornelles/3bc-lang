@@ -11,10 +11,10 @@ static void sys_nes_output_init(void);
 
 /**
  * @brief startup PPU, palete, scroll, sprites, nametable...
- * @link https://www.nesdev.org/wiki/PPU_registers
- * @link https://www.nesdev.org/wiki/PPU_palettes
- * @link https://www.nesdev.org/wiki/PPU_scrolling
- * @link https://www.nesdev.org/wiki/PPU_OAM
+ * @li https://www.nesdev.org/wiki/PPU_registers
+ * @li https://www.nesdev.org/wiki/PPU_palettes
+ * @li https://www.nesdev.org/wiki/PPU_scrolling
+ * @li https://www.nesdev.org/wiki/PPU_OAM
  */
 static void sys_nes_output_init()
 {
@@ -61,11 +61,11 @@ static void sys_nes_output_init()
 
 /**
  * @brief stream text in entire TV screen
- * @link https://www.nesdev.org/wiki/PPU_memory_map
- * @link https://www.nesdev.org/wiki/PPU_nametables
- * @link https://www.nesdev.org/wiki/PPU_registers
- * @link https://www.nesdev.org/wiki/NMI_thread
- * @link https://www.nesdev.org/wiki/NMI
+ * @li https://www.nesdev.org/wiki/PPU_memory_map
+ * @li https://www.nesdev.org/wiki/PPU_nametables
+ * @li https://www.nesdev.org/wiki/PPU_registers
+ * @li https://www.nesdev.org/wiki/NMI_thread
+ * @li https://www.nesdev.org/wiki/NMI
  */
 void sys_nes_output(tbc_app_st *const self)
 {

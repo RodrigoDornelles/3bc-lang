@@ -10,9 +10,9 @@
  * @return pointer to argument
  * @retval NULL when not found
  * @startebnf
- * single_flag
- *  = "-"
- *  , "a-zA-Z" (* any key *)
+ * single_flag                                                                \
+ *  = "-"                                                                     \
+ *  , "a-zA-Z" (* any key *)                                                  \
  *  ;
  * @endebnf
  */
@@ -42,10 +42,10 @@ char* util_args_has(int argc, char** argv, char key) {
  * @return pointer to argument
  * @retval NULL when not found
  * @startebnf
- * composite_flag
- *  = "-"
- *  , "a-zA-Z" (* any key *)
- *  , text (* cannot start with "-" *)
+ * composite_flag                                                             \
+ *  = "-"                                                                     \
+ *  , "a-zA-Z" (* any key *)                                                  \
+ *  , text (* cannot start with "-" *)                                        \
  *  ;
  * @endebnf
  */
