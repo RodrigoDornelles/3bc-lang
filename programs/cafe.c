@@ -15,7 +15,7 @@ int main()
     instance.cin.tty_storage.io.arr.ptr = (tbc_u8_t*) prog;
     instance.stack.cfgmin.prog_size = sizeof(prog);
 
-    while (driver_interrupt(&instance)) {
+    while (driver_interrupt(&instance) == -1) {
         continue;
     }
 

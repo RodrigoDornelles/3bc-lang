@@ -53,10 +53,11 @@
 #include "interpreter/interpreter_0000.h"
 
 /**
- * @short VM processor context manager, allows asychronism.
- * @return it is currently running
- * @retval true
- * @retval false
+ * @brief VM processor context manager, allows asychronism.
+ * @return exit code
+ * @retval -1 continue process.
+ * @retval 0 process ended, it was a success.
+ * @retval 1 process ended, an error occurred.
  *
  * @brief
  * all the functioning of the virtual machine runtime
@@ -92,31 +93,11 @@
  * state TBC_STATE_VACUUM:<b>Interpreter FSM</b> <i>(optional)</i>
  * state TBC_STATE_RUNNING:<b>CPU FSM</b> <i>(optional)</i>
  * @enduml
- * 
- * @startuml interrupts
- * rectangle "Interrupts" {
- * rectangle "Force stoped"
- * rectangle "Garbage Collector" {
- *    rectangle LV1
- *    rectangle LV2
- *    rectangle LV3
- *    rectangle LV4
- *    LV4 -right-> LV3
- *    LV3 -down-> LV2
- *    LV2 -left-> LV1
- *  }
- *  rectangle "Syscall" {
- *    rectangle "Input"
- *    rectangle "Output" 
- *    rectangle "Idle"
- *    rectangle "Memory Read"
- *    rectangle "Memory Write"
- *  }
- * }
- * @enduml
  */
-bool driver_interrupt(struct app_3bc_s* const self)
+int driver_interrupt(struct app_3bc_s* const self)
 {
+    int exit_code = -1;
+
     do {
         /**
          * @par mask @c 0x80 in @c self->rc
@@ -223,7 +204,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
 
         case FSM_3BC_READING:
             /** @todo move it to outside of vm */
-            interpreter_ticket(self);
+            //interpreter_ticket(self);
             if (self->rc == TBC_RET_FULL) {
                 self->pkg_func->prog.insert(self);
                 self->state = FSM_3BC_LOADING;
@@ -255,6 +236,8 @@ bool driver_interrupt(struct app_3bc_s* const self)
             driver_error(self);
             if (self->rc == TBC_RET_OK) {
                 self->state = FSM_3BC_EXITING;
+                /** @todo work this **/
+                exit_code = -1;
             }
             break;
 
@@ -268,6 +251,7 @@ bool driver_interrupt(struct app_3bc_s* const self)
             break;
         
         case FSM_3BC_STOPED:
+            exit_code = 0;
 #if defined(TBC_FREEZE_STOPPED)
             while(1);
 #endif
@@ -276,5 +260,5 @@ bool driver_interrupt(struct app_3bc_s* const self)
     }
     while(0);
 
-    return self->state != FSM_3BC_STOPED;
+    return exit_code;
 }

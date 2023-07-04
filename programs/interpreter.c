@@ -1,17 +1,29 @@
-#include "3bc.h"
+/**
+ * @file interpreter.c
+ * @brief Program example for a 3bc syntax interpreter
+ * using a single virtual machine.
+ */
+
+#include "pre/pre_sizes.h"
+#include "lang/lang_3bc_cli.h"
+#include "driver/driver_stack.h"
+#include "driver/driver_interrupt.h"
 
 int main(int argc, char** argv)
 {
-    int i = 0;
-    static unsigned char stack[255] = {sizeof(stack)}; 
-    struct app_3bc_s* const VM = lang_3bc_init(argc, argv);
-    VM->cin.tty_input.type = STREAM_TYPE_COMPUTER_STD;
-    VM->cin.tty_input.io.stream = stdin;
-    VM->stack.raw.buffer = (unsigned char**) &stack;
+    int exitcode = -1;
+    static tbc_u8_t stack[255];
+    static tbc_u8_t vm[TBC_MACHINE_SIZE];
+    static tbc_app_st foo = {};
 
-    while (driver_interrupt(VM)) {
-        continue;
+
+    //driver_stack_init(vm, stack, sizeof(stack));
+    //lang_3bc_cli_init((tbc_app_st*) vm, argc, argv);
+
+    while (exitcode == -1) {
+        lang_3bc_cli_compile((tbc_app_st*) vm);
+        exitcode = driver_interrupt(vm);
     }
 
-    return 0;
+    return exitcode;
 }

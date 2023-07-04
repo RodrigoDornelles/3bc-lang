@@ -9,7 +9,17 @@ extern "C" {
 
 #endif
 
-bool driver_interrupt(struct app_3bc_s* const self);
+#if defined(TBC_SOURCE_ENTRY)
+
+/** @short private */
+int driver_interrupt(struct app_3bc_s* const self);
+
+#else
+
+/** @short public */
+int driver_interrupt(void* self);
+
+#endif
 
 #ifdef __cplusplus
 
