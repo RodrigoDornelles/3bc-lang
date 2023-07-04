@@ -1,7 +1,6 @@
 #include <assert.h>
 #include <string.h>
-#include "util_stoi.h"
-#include <stdio.h>
+#include "util/util_stoi.h"
 
 int main()
 {

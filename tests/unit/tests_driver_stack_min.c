@@ -1,6 +1,6 @@
 #include <assert.h>
-#include "bus_cfg_0000.h"
-#include "driver_stack.h"
+#include "bus/bus_cfg_0000.h"
+#include "driver/driver_stack.h"
 
 const tbc_layout_cfg_st* tbc_cfg_standard = NULL;
 const tbc_u8_t tbc_cfg_size = 0;

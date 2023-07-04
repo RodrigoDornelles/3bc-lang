@@ -1,6 +1,6 @@
 #include <assert.h>
-#include "bus_cfg_0000.h"
-#include "driver_stack.h"
+#include "bus/bus_cfg_0000.h"
+#include "driver/driver_stack.h"
 
 static const tbc_layout_cfg_st ___layout_cfg[] = {{32}};
 const tbc_layout_cfg_st* tbc_cfg_standard = ___layout_cfg;

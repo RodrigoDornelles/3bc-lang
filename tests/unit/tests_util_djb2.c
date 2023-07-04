@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <string.h>
-#include "util_djb2.h"
+#include "util/util_djb2.h"
 
 int main()
 {
