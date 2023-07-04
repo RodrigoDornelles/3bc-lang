@@ -17,10 +17,10 @@ int main(int argc, char** argv)
     static tbc_u8_t vm[TBC_MACHINE_SIZE];
 
     driver_stack_init(vm, stack, sizeof(stack));
-    //lang_3bc_cli_init((tbc_app_st*) vm, argc, argv);
+    lang_3bc_cli_init(vm, argc, argv);
 
     while (exitcode == -1) {
-        lang_3bc_cli_compile((tbc_app_st*) vm);
+        lang_3bc_cli_compile(vm);
         exitcode = driver_interrupt(vm);
     }
 
