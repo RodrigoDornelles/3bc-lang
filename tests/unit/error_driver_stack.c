@@ -13,12 +13,7 @@ int main()
         unsigned char i = 0;
         struct app_3bc_s app = {0};
         unsigned char stack[16] = {0};
-        app.stack.raw.buffer = (unsigned char**) &stack;
-        do {
-            driver_stack_init(&app);
-            ++i;
-        }
-        while(app.rc != TBC_RET_THROW_ERROR && i < 100);
+        driver_stack_init(&app, &stack, 0);
         assert(app.rc == TBC_RET_THROW_ERROR);
         assert(app.cache_l1.error == ERROR_MEM_STACK_CFG_MIS);
     }
@@ -26,13 +21,8 @@ int main()
     {
         unsigned char i = 0;
         struct app_3bc_s app = {0};
-        unsigned char stack[4] = {sizeof(stack)};
-        app.stack.raw.buffer = (unsigned char**) &stack;
-        do {
-            driver_stack_init(&app);
-            ++i;
-        }
-        while(app.rc != TBC_RET_THROW_ERROR && i < 100);
+        unsigned char stack[4] = {0};
+        driver_stack_init(&app, &stack, sizeof(stack));
         assert(app.rc == TBC_RET_THROW_ERROR);
         assert(app.cache_l1.error == ERROR_MEM_STACK_CFG_MIN);
     }
@@ -40,13 +30,8 @@ int main()
     {
         unsigned char i = 0;
         struct app_3bc_s app = {0};
-        unsigned char stack[16] = {sizeof(stack)};
-        app.stack.raw.buffer = (unsigned char**) &stack;
-        do {
-            driver_stack_init(&app);
-            ++i;
-        }
-        while(app.rc != TBC_RET_THROW_ERROR && i < 100);
+        unsigned char stack[16] = {0};
+        driver_stack_init(&app, &stack, sizeof(stack));
         assert(app.rc == TBC_RET_THROW_ERROR);
         assert(app.cache_l1.error == ERROR_MEM_STACK_CFG_OUT);
     }

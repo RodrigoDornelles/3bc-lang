@@ -11,11 +11,7 @@ int main()
     {
         unsigned char i = 0;
         struct app_3bc_s app = {0};
-        do {
-            driver_stack_init(&app);
-            ++i;
-        }
-        while(app.rc != TBC_RET_OK && i < 100);
+        driver_stack_init(&app, NULL, 0);
         app.stack.cfgmin.prog->index = 42;
         assert(app.rc == TBC_RET_OK);
         assert(app.stack.cfgmin.prog_index == 42);

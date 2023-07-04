@@ -1,4 +1,4 @@
-
+#define TBC_SOURCE_ENTRY
 #include "bus/bus_cfg_0000.h"
 #include "driver/driver_stack.h"
 #include "types/types_null.h"
@@ -85,15 +85,21 @@
  * }
  * @enddot
  */
-void driver_stack_init(struct app_3bc_s* const self)
+void driver_stack_init(struct app_3bc_s* const self, tbc_u8_t* buf, tbc_u8_t len)
 {
+    tbc_u8_t cfg = 0;
+
     do {
         /* minimal stack */
-        if (self->stack.raw.buffer == NULL) {
+        if (buf == NULL) {
             self->stack.cfg.prog = &self->stack.cfgmin.prog_index;
             self->rc = TBC_RET_OK;
             break;
         }
+
+        /* attach the stack mem */
+        self->stack.raw.buffer = buf;
+        self->stack.raw.buffer[0] = len;
 
         /* first step advanced stack */
         if (self->stack.mem->sp == 0) {
@@ -111,45 +117,37 @@ void driver_stack_init(struct app_3bc_s* const self)
             }
             /* skip @c st and @c sp */
             self->stack.mem->sp += 2;
-            self->rc = TBC_RET_REPEAT;
-            break;
         }
-
-        /* add configuration */
-        if (self->rc == TBC_RET_REPEAT && self->cache_l1.u8 < tbc_cfg_size) {
+    
+        /** add configuration **/
+        while (cfg < tbc_cfg_size) {
             /* insuficient memory to configure all */
-            if ((self->stack.mem->sp + tbc_cfg_standard[self->cache_l1.u8].size) > self->stack.mem->st) {
+            if ((self->stack.mem->sp + tbc_cfg_standard[cfg].size) > self->stack.mem->st) {
                 self->rc = TBC_RET_THROW_ERROR;
                 self->cache_l1.error = ERROR_MEM_STACK_CFG_OUT;
                 break;
             }
             /** @todo document this */
-            if (self->cache_l1.u8 < sizeof(struct ___tbc_stack_cfg_s)/sizeof(void*)) {
-                /* Calculate the address of cfg based on self->cache_l1.u8 */
-                tbc_stack_basic_prog_st** cfg = ((tbc_stack_basic_prog_st**) &self->stack.cfg.___pad0) 
-                    + self->cache_l1.u8 + 1;
+            if (cfg < sizeof(struct ___tbc_stack_cfg_s)/sizeof(void*)) {
+                /* Calculate the address of cfg based on cfg */
+                tbc_stack_basic_prog_st** conf = ((tbc_stack_basic_prog_st**) &self->stack.cfg.___pad0) 
+                    + cfg + 1;
                 /* Calculate the address of buf based on self->stack.mem->sp */
-                tbc_u8_t* buf = (tbc_u8_t*) self->stack.raw.buffer;
+                tbc_u8_t* buf = self->stack.raw.buffer;
                 buf += self->stack.mem->sp;
                 /* Assign buf to the calculated cfg address */
-                *cfg = (tbc_stack_basic_prog_st*) buf; 
+                *conf = (tbc_stack_basic_prog_st*) buf; 
             }
 
             /* expand stack */
-            self->rc = TBC_RET_REPEAT;
-            self->stack.mem->sp += tbc_cfg_standard[self->cache_l1.u8].size;
-            ++self->cache_l1.u8;
-            break;
+            self->stack.mem->sp += tbc_cfg_standard[cfg].size;
+            ++cfg;
         }
 
         /* first stack size */
-        if (self->rc != TBC_RET_GC_OK) {
+        if (self->rc != TBC_RET_THROW_ERROR) {
             self->stack.mem->data[self->stack.mem->sp - 2] = self->stack.mem->sp;
-            self->rc = TBC_RET_GC_LV1;
-            break;
         }
-
-        self->rc = TBC_RET_OK;
     }
     while(0);
 }

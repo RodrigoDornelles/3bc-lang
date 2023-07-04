@@ -8,16 +8,15 @@
 #include "lang/lang_3bc_cli.h"
 #include "driver/driver_stack.h"
 #include "driver/driver_interrupt.h"
+#include <stdio.h>
 
 int main(int argc, char** argv)
 {
     int exitcode = -1;
     static tbc_u8_t stack[255];
     static tbc_u8_t vm[TBC_MACHINE_SIZE];
-    static tbc_app_st foo = {};
 
-
-    //driver_stack_init(vm, stack, sizeof(stack));
+    driver_stack_init(vm, stack, sizeof(stack));
     //lang_3bc_cli_init((tbc_app_st*) vm, argc, argv);
 
     while (exitcode == -1) {

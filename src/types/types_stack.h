@@ -28,7 +28,7 @@ struct ___tbc_stack_raw_s {
      * @pre the minimal @b size is a 8 bytes. 
      * @pre the maximum @b size is a 255 bytes. 
      */
-    tbc_u8_t** buffer;
+    tbc_u8_t* buffer;
 };
 
 /**
