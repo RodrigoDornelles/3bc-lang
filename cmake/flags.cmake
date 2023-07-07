@@ -18,3 +18,28 @@ if(${TARGET} STREQUAL msvc)
     add_compile_options("/std:c${CMAKE_C_STANDARD}")
 endif()
 
+if(NOT DEFINED VERSION_EXTRA)
+    execute_process(
+        COMMAND git log -1 --format=%h
+        RESULT_VARIABLE TMP
+        OUTPUT_VARIABLE VERSION_EXTRA
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    if(NOT TMP)
+        execute_process(
+            COMMAND git status --porcelain
+            OUTPUT_VARIABLE TMP
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+        if (TMP)
+            set(VERSION_EXTRA "dirty-${VERSION_EXTRA}")
+        endif()
+    else()
+        set(VERSION_EXTRA "compiled")
+    endif()
+    unset(TMP)
+endif()
+
+if (VERSION_EXTRA)
+    add_compile_options("-DVERSION_EXTRA=\" (${VERSION_EXTRA})\\n\"")
+endif()

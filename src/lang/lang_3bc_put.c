@@ -10,7 +10,8 @@ struct ___info_txt_s {
     const char* ptr;
     tbc_i8_t len;
 };
-static const char ___msg_version[] = VERSION_3BC"\n";
+static const char ___msg_version[] = VERSION_3BC;
+static const char ___msg_verplus[] = VERSION_EXTRA;
 static const char ___msg_info_00[] = "[3BC] VIRTUAL MACHINE INFORMATION\n";
 static const char ___msg_info_01[] = "> AUTHOR: Rodrigo Dornelles (C) 2020\n";
 static const char ___msg_info_02[] = "> LICENSE: AGPL 3.0 or higher\n";
@@ -33,6 +34,7 @@ static const struct ___info_txt_s ___infos_txt[] = {
     {___msg_info_02, (tbc_i8_t) sizeof(___msg_info_02) * (-1)},
     {___msg_info_03, (tbc_i8_t) sizeof(___msg_info_03) * (-1)},
     {___msg_version, (tbc_i8_t) sizeof(___msg_version) * (-1)},
+    {___msg_verplus, (tbc_i8_t) sizeof(___msg_verplus) * (-1)},
     {___msg_info_04, (tbc_i8_t) sizeof(___msg_info_04) * (-1)},
     {___msg_info_05, (tbc_i8_t) sizeof(___msg_info_05) * (-1)},
     {___msg_info_06, (tbc_i8_t) sizeof(___msg_info_06) * (-1)},
@@ -63,15 +65,15 @@ void lang_3bc_put(tbc_app_st *const self, char key)
         case 'i':
             while (i < sizeof(___infos_txt)/sizeof(___infos_txt[0])) {
                 if (___infos_txt[i].len == 0) {
-                    if (i == 9) {
+                    if (i == 10) {
                         self->cache_l3.fixbuf.size = util_itos10(self->cache_l3.fixbuf.storage, &self->stack.mem->st, sizeof(self->cache_l3.fixbuf.storage), 8);
                         tbc_pkg_standard.io.write(self);
                     }
-                    else if (i == 12) {
+                    else if (i == 13) {
                         self->cache_l3.fixbuf.size = util_itos10(self->cache_l3.fixbuf.storage, &sizefreestack, sizeof(self->cache_l3.fixbuf.storage), 8);
                         tbc_pkg_standard.io.write(self);
                     }
-                    else if (i == 15) {
+                    else if (i == 16) {
                         self->cache_l3.fixbuf.size = util_itos10(self->cache_l3.fixbuf.storage, &sizeobject, sizeof(self->cache_l3.fixbuf.storage), 16);
                         tbc_pkg_standard.io.write(self);
                     }

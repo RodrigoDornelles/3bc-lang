@@ -40,6 +40,9 @@
 #define VERSION_3BC_MAJOR 0
 #define VERSION_3BC_MINOR 1
 #define VERSION_3BC_PATCH 4
+#ifndef VERSION_EXTRA
+#define VERSION_EXTRA "\n"
+#endif
 
 /** environment check **/
 #include "3bc_detect.h"
