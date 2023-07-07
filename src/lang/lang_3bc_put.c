@@ -6,6 +6,10 @@
 #include "util/util_args.h"
 #include "pre/pre_date.h"
 
+#if defined(__VERSION__)
+#define __VERSION__ "CC"
+#endif
+
 struct ___info_txt_s {
     const char* ptr;
     tbc_i8_t len;
@@ -19,7 +23,7 @@ static const char ___msg_info_03[] = "> VERSION: ";
 static const char ___msg_info_04[] = "> COMPILER: "__VERSION__"\n";
 static const char ___msg_info_05[] = "> BUILD DATE: ";
 static const char ___msg_info_06[] = {
-    TBC_YEAR_CH0, TBC_YEAR_CH1, TBC_YEAR_CH2, TBC_YEAR_CH3,
+   TBC_YEAR_CH0, TBC_YEAR_CH1, TBC_YEAR_CH2, TBC_YEAR_CH3,
     '-', TBC_MONTH_CH0, TBC_MONTH_CH1,
     '-', TBC_DAY_CH0, TBC_DAY_CH1, '\n', '\0'
 };
@@ -51,7 +55,8 @@ static const struct ___info_txt_s ___infos_txt[] = {
 
 void lang_3bc_put(tbc_app_st *const self, char key)
 {
-    tbc_u8_t sizefreestack = self->stack.mem->st - self->stack.mem->sp;
+    tbc_u8_t sizetotalstack = self->stack.raw.buffer != NULL? self->stack.mem->st: sizeof(self->stack.cfgmin) - (sizeof(void*) * 2);
+    tbc_u8_t sizefreestack = self->stack.raw.buffer != NULL? self->stack.mem->st - self->stack.mem->sp: 0;
     tbc_u16_t sizeobject = sizeof(tbc_app_st);
     tbc_u8_t i = 0;
 
@@ -66,7 +71,7 @@ void lang_3bc_put(tbc_app_st *const self, char key)
             while (i < sizeof(___infos_txt)/sizeof(___infos_txt[0])) {
                 if (___infos_txt[i].len == 0) {
                     if (i == 10) {
-                        self->cache_l3.fixbuf.size = util_itos10(self->cache_l3.fixbuf.storage, &self->stack.mem->st, sizeof(self->cache_l3.fixbuf.storage), 8);
+                        self->cache_l3.fixbuf.size = util_itos10(self->cache_l3.fixbuf.storage, &sizetotalstack, sizeof(self->cache_l3.fixbuf.storage), 8);
                         tbc_pkg_standard.io.write(self);
                     }
                     else if (i == 13) {
