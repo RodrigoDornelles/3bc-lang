@@ -5,7 +5,7 @@ enum ___tbc_interpreter_type_e {
     TBC_IT_NONE = 0,
     TBC_IT_REPL = 1,
     TBC_IT_INLINE = 2,
-    TBC_IT_COMPILE = 3,
+    TBC_IT_COMPILER = 3,
     TBC_IT_ERROR_OPEN_FILE = 4
 };
 

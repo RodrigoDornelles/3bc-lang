@@ -10,6 +10,9 @@
 
 void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv)
 {
+    char* prog;
+    tbc_interpreter_root_st *const interpreter = self->stack.cfg.interpreter;
+    
     do {
         char* prog;
         if (util_args_has(argc, argv, 'v') != NULL) {
@@ -23,20 +26,22 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv)
             break;
         }
         if ((prog = util_args_get(argc, argv, 'e')) != NULL) {
-            ((tbc_interpreter_root_st*)self->stack.cfg.interpreter)->type = TBC_IT_INLINE;
-            ((tbc_interpreter_root_st*)self->stack.cfg.interpreter)->io.argument = prog;
+            interpreter->type = TBC_IT_INLINE;
+            interpreter->io.argument = prog;
             break;
         }
         if ((prog = util_args_param(argc, argv, "e", 0)) != NULL) {
             int fileid = open(prog, O_RDONLY);
             if (fileid == -1) {
-                ((tbc_interpreter_root_st*)self->stack.cfg.interpreter)->type = TBC_IT_ERROR_OPEN_FILE;
+                interpreter->type = TBC_IT_ERROR_OPEN_FILE;
                 break;
             }
+            interpreter->type = TBC_IT_COMPILER;
+            interpreter->io.fileid = fileid;
             break;
         }
 
-        ((tbc_interpreter_root_st*)self->stack.cfg.interpreter)->type = TBC_IT_REPL;
+        interpreter->type = TBC_IT_REPL;
     }
     while(0);
 }
@@ -44,12 +49,13 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv)
 void lang_3bc_cli_compile(tbc_app_st *const self)
 {
     if (self->state == FSM_3BC_VACUUM) {
-        if(((tbc_interpreter_root_st*)self->stack.cfg.interpreter)->type == TBC_IT_ERROR_OPEN_FILE) {
-            ((tbc_interpreter_root_st*)self->stack.cfg.interpreter)->type = TBC_IT_NONE;
+        tbc_interpreter_root_st *const interpreter = self->stack.cfg.interpreter;
+        if(interpreter->type == TBC_IT_ERROR_OPEN_FILE) {
+            interpreter->type = TBC_IT_NONE;
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_OPEN_FILE;
         }
-        if(((tbc_interpreter_root_st*)self->stack.cfg.interpreter)->type == TBC_IT_INLINE) {
+        if(interpreter->type == TBC_IT_INLINE) {
             
         }
     }
