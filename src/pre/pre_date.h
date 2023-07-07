@@ -4,9 +4,7 @@
 #ifndef H_PRE_DATE_TBC
 #define H_PRE_DATE_TBC
 
-#include "3bc_detect.h"
-
-#if defined(__DATE__)
+#if defined(__DATE__) && !defined(__CC65_STD__)
 
 #define TBC_YEAR_CH0 (__DATE__[7])
 #define TBC_YEAR_CH1 (__DATE__[8])
@@ -57,12 +55,6 @@
 #define TBC_SECO_CH1 (__TIME__[7])
 
 #else
-
-#if defined(TBC_PRG_WARNING)
-#pragma message("__STDC_VERSION__ not recognized.")
-#else
-#warning "__STDC_VERSION__ not recognized."
-#endif
 
 #define TBC_YEAR_CH0 '?'
 #define TBC_YEAR_CH1 '?'

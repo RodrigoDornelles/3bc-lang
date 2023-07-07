@@ -76,6 +76,12 @@
 #define TBC_CC_STD_89
 #endif
 
+#if defined(__VERSION__)
+#define TBC_COMPILER_ID __VERSION__
+#elif defined(__CC65_STD__)
+#define TBC_COMPILER_ID "CC65"
+#endif
+
 /**
  * ______ _       ___ _____ ___  ______ ______________  ___
  * | ___ \ |     / _ \_   _/ _ \ |  ___|  _  | ___ \  \/  |

@@ -6,21 +6,17 @@
 #include "util/util_args.h"
 #include "pre/pre_date.h"
 
-#if defined(__VERSION__)
-#define __VERSION__ "CC"
-#endif
-
 struct ___info_txt_s {
     const char* ptr;
     tbc_i8_t len;
 };
 static const char ___msg_version[] = VERSION_3BC;
 static const char ___msg_verplus[] = VERSION_EXTRA;
-static const char ___msg_info_00[] = "[3BC] VIRTUAL MACHINE INFORMATION\n";
-static const char ___msg_info_01[] = "> AUTHOR: Rodrigo Dornelles (C) 2020\n";
+static const char ___msg_info_00[] = "[3BC] VIRTUAL MACHINE INFO\n";
+static const char ___msg_info_01[] = "> AUTHOR: Rodrigo Dornelles\n";
 static const char ___msg_info_02[] = "> LICENSE: AGPL 3.0 or higher\n";
 static const char ___msg_info_03[] = "> VERSION: ";
-static const char ___msg_info_04[] = "> COMPILER: "__VERSION__"\n";
+static const char ___msg_info_04[] = "> COMPILER: "TBC_COMPILER_ID"\n";
 static const char ___msg_info_05[] = "> BUILD DATE: ";
 static const char ___msg_info_06[] = {
    TBC_YEAR_CH0, TBC_YEAR_CH1, TBC_YEAR_CH2, TBC_YEAR_CH3,

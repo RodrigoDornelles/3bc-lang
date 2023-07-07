@@ -44,14 +44,14 @@ static void sys_nes_output_init()
     }
 
     /** clear screen */
-    cursor_tty.vram_address = 0x2020;
+    cursor_tty.vram_address = 0x2000;
     *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
     *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
     do {
         *((unsigned char*) 0x2007) = ' ';
         ++cursor_tty.vram_address;
     }
-    while(cursor_tty.vram_address <= (0x2400 - 0x20));
+    while(cursor_tty.vram_address <= (0x2400 - 0x60));
 
     /** reset cursor position */
     cursor_tty.vram_address = 0x2020;
@@ -70,10 +70,17 @@ static void sys_nes_output_init()
 void sys_nes_output(tbc_app_st *const self)
 {
     /** interator */
+    static tbc_u8_t* buffer;
     static tbc_u8_t index;
     static tbc_u8_t tile;
 
     /** reset */
+    if(self->cache_l3.fixbuf.size < 0) {
+        buffer = self->cache_l3.buffer.storage;
+        self->cache_l3.fixbuf.size = -self->cache_l3.fixbuf.size;
+    } else {
+        buffer = self->cache_l3.fixbuf.storage;
+    }
     index = 0;
 
     /** first put */
@@ -96,7 +103,7 @@ void sys_nes_output(tbc_app_st *const self)
     /** streamming */
     while(1) {
         /** cache tile to improve perfomance */
-        tile = self->cache_l3.fixbuf.storage[index];
+        tile = buffer[index];
         ++index;
         
         /** end of of max size*/
