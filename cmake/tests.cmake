@@ -35,6 +35,7 @@ if(TEST_UNIT)
         "tests_util_stoi8,src/util/util_stoi.c"
         "tests_util_stoi10,src/util/util_stoi.c"
         "tests_util_stoi16,src/util/util_stoi.c"
+        "tests_util_strchr,src/util/util_strchr.c"
         "tests_driver_stack_min,src/driver/driver_stack.c"
     )
     foreach(deps IN LISTS tests)
