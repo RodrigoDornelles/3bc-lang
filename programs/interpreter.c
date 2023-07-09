@@ -6,6 +6,7 @@
 
 #include "pre/pre_sizes.h"
 #include "lang/lang_3bc_cli.h"
+#include "lang/lang_3bc_compile.h"
 #include "driver/driver_stack.h"
 #include "driver/driver_interrupt.h"
 #include <stdio.h>
@@ -20,7 +21,7 @@ int main(int argc, char** argv)
     lang_3bc_cli_init(vm, argc, argv);
 
     while (exitcode == -1) {
-        lang_3bc_cli_compile(vm);
+        lang_3bc_compile(vm);
         exitcode = driver_interrupt(vm);
     }
 

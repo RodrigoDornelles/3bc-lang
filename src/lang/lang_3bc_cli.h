@@ -12,12 +12,10 @@ extern "C" {
 #if defined(TBC_SOURCE_ENTRY)
 
 void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv);
-void lang_3bc_cli_compile(tbc_app_st *const self);
 
 #else
 
 void lang_3bc_cli_init(void* self, int argc, char** argv);
-void lang_3bc_cli_compile(void* self);
 
 #endif
 

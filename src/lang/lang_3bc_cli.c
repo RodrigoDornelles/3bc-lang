@@ -45,18 +45,3 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv)
     }
     while(0);
 }
-
-void lang_3bc_cli_compile(tbc_app_st *const self)
-{
-    if (self->state == FSM_3BC_VACUUM) {
-        tbc_interpreter_root_st *const interpreter = self->stack.cfg.interpreter;
-        if(interpreter->type == TBC_IT_ERROR_OPEN_FILE) {
-            interpreter->type = TBC_IT_NONE;
-            self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_OPEN_FILE;
-        }
-        if(interpreter->type == TBC_IT_INLINE) {
-            
-        }
-    }
-}
