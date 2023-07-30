@@ -1,31 +1,12 @@
 {
-   // Project or library name.
-   "name": "3bc-lang",
-
-   // Current version of the project.
-   "version": "0.1.4",
-
-   // Name of the author or maintainer of the project.
-   "author": "RodrigoDornelles",
-
-   // License under which the project is made available.
-   "license": "GPL-3.0-or-later",
-
-   // Home page or website related to the project.
-   "homepage": "https://3bc-lang.org",
-
-   // URL of the project repository on GitHub.
-   "repository": "github:rodrigodornelles/3bc-lang",
-
-   // Link to project support or funding, such as GitHub Sponsors.
-   "funding": "https://github.com/sponsors/RodrigoDornelles",
-
-   // Link to report problems or project bugs.
-   "bugs": "https://github.com/RodrigoDornelles/3bc-lang/issues",
-
-   // Keywords that describe the project and help with searching and categorization.
-   "keywords": ["language", "native", "c", "c++", "virtual machine"],
-
-   // Brief description of the project.
-   "description": "Low level language, tiny virtual machine that works on browser or nodejs. (Friendly Punched cards)"
+    "name": "3bc-lang",
+    "version": "0.1.4",
+    "author": "RodrigoDornelles",
+    "license": "GPL-3.0-or-later",
+    "homepage": "https://3bc-lang.org",
+    "repository": "github:rodrigodornelles/3bc-lang",
+    "funding": "https://github.com/sponsors/RodrigoDornelles",
+    "bugs": "https://github.com/RodrigoDornelles/3bc-lang/issues",
+    "keywords": ["language", "native", "c", "c++", "virtual machine"],
+    "description": "Low level language, tiny virtual machine that works on browser or nodejs. (Friendly Punched cards)"
 }
