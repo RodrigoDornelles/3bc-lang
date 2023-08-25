@@ -47,11 +47,6 @@ void lang_3bc_compile(tbc_app_st *const self)
         if (self->state != FSM_3BC_VACUUM) {
             break;
         }
-        if(interpreter->type == TBC_IT_ERROR_OPEN_FILE) {
-            self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_OPEN_FILE;
-            break;
-        }
         if(interpreter->type == TBC_IT_INLINE) {
             self->rc = TBC_RET_EXIT_FORCE;
             break;

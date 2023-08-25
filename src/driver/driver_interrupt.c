@@ -148,7 +148,11 @@ int driver_interrupt(struct app_3bc_s* const self)
                 case TBC_RET_PRINT_ERROR_8:
                 case TBC_RET_PRINT_ERROR_9:
                 case TBC_RET_PRINT_ERROR_A:
-                    self->pkg_func->io.write(self);
+                    if (self->pkg_func != NULL) {
+                        self->pkg_func->io.write(self);
+                    } else {
+                        tbc_pkg_standard.io.write(self);
+                    }
                     break;
 
                 case TBC_RET_GC_LV1:
