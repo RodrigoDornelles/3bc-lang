@@ -209,8 +209,6 @@ int driver_interrupt(struct app_3bc_s* const self)
             break;
 
         case FSM_3BC_READING:
-            /** @todo move it to outside of vm */
-            //interpreter_ticket(self);
             if (self->rc == TBC_RET_FULL) {
                 self->pkg_func->prog.insert(self);
                 self->state = FSM_3BC_LOADING;

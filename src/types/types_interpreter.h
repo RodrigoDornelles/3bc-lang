@@ -8,6 +8,21 @@ enum ___tbc_interpreter_type_e {
     TBC_IT_COMPILER = 3
 };
 
+enum ___tbc_fsm_compiler_e {
+    TBC_STATE_LANG_READ,
+    TBC_STATE_LANG_TYPE_TOKEN,
+    TBC_STATE_LANG_COMMENT,
+    TBC_STATE_LANG_LABEL_SCAN,
+    TBC_STATE_LANG_LABEL_COMMIT,
+    TBC_STATE_LANG_PARSE_RX,
+    TBC_STATE_LANG_PARSE_RY,
+    TBC_STATE_LANG_PARSE_RZ,
+    TBC_STATE_LANG_LINE_SCAN,
+    TBC_STATE_LANG_LINE_COMMIT,
+    TBC_STATE_LANG_LINE_PUSH
+};
+
+typedef enum ___tbc_fsm_compiler_e tbc_fsm_compiler_et;
 typedef enum ___tbc_interpreter_type_e tbc_interpreter_type_et;
 typedef struct ___tbc_interpreter_root_s tbc_interpreter_root_st;
 
@@ -25,6 +40,7 @@ struct ___tbc_interpreter_line_s {
 
 struct ___tbc_interpreter_root_s {
     tbc_interpreter_type_et type;
+    tbc_fsm_compiler_et state;
     union ___tbc_interpreter_open_u io;
     /**
      * @brief points to fist segment of @c segments (when needs)

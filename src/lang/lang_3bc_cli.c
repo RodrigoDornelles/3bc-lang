@@ -13,6 +13,7 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv, void* buf,
 {
     char* param;
     tbc_interpreter_root_st *const interpreter = self->stack.cfg.interpreter;
+    interpreter->segments = buf;
     interpreter->line_size = TBC_DEFAULT_LINE_SIZE;
     
     do {
