@@ -25,10 +25,10 @@ if(BUILD_HELLO)
     tbc_size("hello" "16k")
 endif(BUILD_HELLO)
 
-option(BUILD_CAFE "Build Cafe loop" "ON")
+option(BUILD_CAFE "Build Cafe loop" "OFF")
 if(BUILD_CAFE)
     add_executable("cafe" "${CMAKE_SOURCE_DIR}/programs/cafe.c")
-    target_link_libraries("cafe" tbc_alu_std)
+    target_link_libraries("cafe" tbc_alu_no_math)
     target_link_libraries("cafe" tbc_util)
     target_link_libraries("cafe" tbc_cpu_no_math)
     target_link_libraries("cafe" tbc_i18n)
@@ -64,12 +64,9 @@ option(BUILD_INFO "Build informations" "OFF")
 if(BUILD_INFO)
     add_executable("info" "${CMAKE_SOURCE_DIR}/programs/info.c")
     target_link_libraries("info"
-        tbc_alu_std;tbc_util;tbc_cpu_std;tbc_legacy;tbc_i18n
+        tbc_alu_no_math;tbc_util;tbc_cpu_std;tbc_legacy;tbc_i18n
         tbc_interpreter_lang;tbc_sys_std;tbc_driver_std;tbc_array_simple;
         tbc_bus_lang;tbc_lang3bc
     )
-    if(NOT MSVC)
-    target_link_libraries("info" m)
-    endif()
     tbc_size("info" "32k")
 endif(BUILD_INFO)

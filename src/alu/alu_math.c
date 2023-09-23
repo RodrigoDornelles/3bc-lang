@@ -249,7 +249,7 @@ void alu_math(struct app_3bc_s* const self)
 #endif
 
         case 39:
-#if !defined(TBC_NOT_LOG2)
+#if !defined(TBC_NOT_LOG2) && !defined(TBC_NOT_MATH)
             /** @note optmized @b log2 **/
             if(self->cache_l2.i16[1] == 2) {
                 self->cpu.ra =
@@ -268,7 +268,7 @@ void alu_math(struct app_3bc_s* const self)
                 break;
             }
 #endif
-#if !defined(TBC_NOT_LOG10)
+#if !defined(TBC_NOT_LOG10) && !defined(TBC_NOT_MATH)
             /** @note optmized @b log10 **/
             if(self->cache_l2.i16[1] == 10) {
                 self->cpu.ra =
