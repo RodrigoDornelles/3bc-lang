@@ -20,6 +20,7 @@ if(TEST_UNIT)
     include(CTest)
     set(tests
         "error_util_djb2,src/util/util_djb2.c"
+        "error_util_keyword,src/util/util_keyword.c"
         "error_util_stoi2,src/util/util_stoi.c"
         "error_util_stoi8,src/util/util_stoi.c"
         "error_util_stoi10,src/util/util_stoi.c"
@@ -31,6 +32,7 @@ if(TEST_UNIT)
         "tests_util_itos8,src/util/util_itos.c"
         "tests_util_itos10,src/util/util_itos.c"
         "tests_util_itos16,src/util/util_itos.c"
+        "tests_util_keyword,src/util/util_keyword.c"
         "tests_util_stoi2,src/util/util_stoi.c"
         "tests_util_stoi8,src/util/util_stoi.c"
         "tests_util_stoi10,src/util/util_stoi.c"
