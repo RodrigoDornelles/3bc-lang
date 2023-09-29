@@ -28,6 +28,7 @@ if(TEST_UNIT)
         "error_util_stoi16,src/util/util_stoi.c"
         "error_driver_stack,src/driver/driver_stack.c"
         "tests_util_args,src/util/util_args.c"
+        "tests_util_asm_line,src/util/util_asm.c"
         "tests_util_djb2,src/util/util_djb2.c"
         "tests_util_itos2,src/util/util_itos.c"
         "tests_util_itos8,src/util/util_itos.c"
