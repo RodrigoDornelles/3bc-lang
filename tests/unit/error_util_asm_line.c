@@ -78,5 +78,19 @@ int main()
         assert(util_asm_line(&beg, &mid, &end, src, 0) == 0);
     }
 
+    /** @test Case 9: not closed quote */
+    {
+        char src[] = "fo 'atumalaka;bar.z";
+        char *beg, *mid, *end ;
+        assert(util_asm_line(&beg, &mid, &end, src, sizeof(src)) == -3);
+    }
+
+    /** @test Case 9: not closed quote */
+    {
+        char src[] = "';bar.z";
+        char *beg, *mid, *end ;
+        assert(util_asm_line(&beg, &mid, &end, src, sizeof(src)) == -3);
+    }
+
     return 0;
 }

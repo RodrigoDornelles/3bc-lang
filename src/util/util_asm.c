@@ -98,11 +98,14 @@ tbc_i8_t util_asm_split(char** dest, char* src, tbc_u8_t dn, tbc_u8_t sn)
  * @param[in] src text instruction
  * @param[in] sn text size
  * @return instruction length
+ * @retval -2 wrong paramters
+ * @retval -3 when expected closing quote
  */
 tbc_i8_t util_asm_line(char **beg, char **mid, char **end, char *src, tbc_u8_t sn)
 {
     tbc_u8_t i = 0;
     tbc_i8_t length = -2;
+    bool in_quotes = false;
 
     do {
         if (beg == NULL) {
@@ -131,18 +134,24 @@ tbc_i8_t util_asm_line(char **beg, char **mid, char **end, char *src, tbc_u8_t s
                 break;
             }
 
-            if (*mid == NULL && (src[i] == '#' || src[i] == ';')) {
-                *mid = &src[i];
+            if (!in_quotes) {
+                if (*mid == NULL && (src[i] == '#' || src[i] == ';')) {
+                    *mid = &src[i];
+                }
+
+                if (*mid != NULL && i >= 1 && (
+                    (src[i] == '#' && src[i - 1] == '#') ||
+                    (src[i] == ';' && src[i - 1] == ';'))) {
+                    *mid = &src[i];
+                }
+
+                if (*beg == NULL && src[i] != ' ' && src[i] != '.') {
+                    *beg = &src[i];
+                }
             }
 
-            if (*mid != NULL && i >= 1 && (
-                (src[i] == '#' && src[i - 1] == '#') ||
-                (src[i] == ';' && src[i - 1] == ';'))) {
-                *mid = &src[i];
-            }
-
-            if (*beg == NULL && src[i] != ' ' && src[i] != '.') {
-                *beg = &src[i];
+            if (beg != NULL && *mid == NULL && (src[i] == '\'' ||  src[i] == '"')) {
+                in_quotes = !in_quotes;
             }
 
             if (*beg != NULL && *mid == NULL) {
@@ -158,6 +167,10 @@ tbc_i8_t util_asm_line(char **beg, char **mid, char **end, char *src, tbc_u8_t s
 
         if (*mid != NULL) {
             (*mid)++;
+        }
+
+        if (in_quotes) {
+            length = -3;
         }
     }
     while(0);

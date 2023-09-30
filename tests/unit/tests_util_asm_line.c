@@ -26,7 +26,7 @@ int main()
 
         assert(length == 20);
         assert(strncmp(beg, "This is a test line ", 20) == 0);
-        assert(mid != &src[26]);
+        assert(mid == &src[29]);
         assert(strcmp(mid, " with a comment") == 0);
         assert(end == &src[44]);
     }
@@ -45,6 +45,20 @@ int main()
         assert(end == &src[39]);
     }
 
+    /** @test Case 4: Tests with ;# inner quotes */
+    {
+        char src[] = "this is '$#fake' ;comment";
+        char *beg, *mid, *end;
+
+        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+
+        assert(length == 17);
+        assert(strncmp(beg, "this is '$#fake' ", 17) == 0);
+        assert(mid == &src[18]);
+        assert(strcmp(mid, "comment") == 0);
+        assert(end == &src[25]);
+    }
+
     /** @test Case 5: Test with a line containing a comment with no instruction content */
     {
         char src[] = "   ; This is a comment line";
@@ -59,7 +73,6 @@ int main()
         assert(end == &src[27]);
     }
 
-
     /** @test Case 6: Test with a line containing multiple comments */
     {
         char src[] = "   ; Comment 1 ; Comment 2 ; Comment 3";
@@ -71,9 +84,8 @@ int main()
         assert(beg == NULL);
         assert(mid == &src[4]);
         assert(strcmp(mid, " Comment 1 ; Comment 2 ; Comment 3") == 0);
-        assert(end != NULL);
+        assert(end == &src[38]);
     }
-
 
     /** @test Case 7: Test with a line containing a single character instruction and no comments */
     {
@@ -86,6 +98,20 @@ int main()
         assert(strcmp(beg, "a") == 0);
         assert(mid == NULL);
         assert(end == &src[4]);
+    }
+
+    /** @test Case 8: Tests not invalid quotes */
+    {
+        char src[] = "this is '#;';'not invalid quotes!";
+        char *beg, *mid, *end;
+
+        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+
+        assert(length == 12);
+        assert(strncmp(beg, "this is '#;'", 12) == 0);
+        assert(mid == &src[13]);
+        assert(strcmp(mid, "'not invalid quotes!") == 0);
+        assert(end == &src[33]);
     }
 
     return 0;
