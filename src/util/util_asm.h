@@ -4,6 +4,6 @@
 #include "types/types_primitive.h"
 
 tbc_i8_t util_asm_split(char** dest, char* src, tbc_u8_t dn, tbc_u8_t sn);
-tbc_i8_t util_asm_line(char** dest, char* src, tbc_u8_t dn, tbc_u8_t sn, char** end);
+tbc_i8_t util_asm_line(char **beg, char **mid, char **end, char *src, tbc_u8_t sn);
 
 #endif
