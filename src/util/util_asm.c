@@ -97,52 +97,70 @@ tbc_i8_t util_asm_split(char** dest, char* src, tbc_u8_t dn, tbc_u8_t sn)
  * @param[out] end end of comment.
  * @param[in] src text instruction
  * @param[in] sn text size
- * @return instruction lenght
+ * @return instruction length
  */
 tbc_i8_t util_asm_line(char **beg, char **mid, char **end, char *src, tbc_u8_t sn)
 {
-    *beg = NULL;
-    *mid = NULL;
-    *end = NULL;
     tbc_u8_t i = 0;
-    tbc_i8_t length = 0;
+    tbc_i8_t length = -2;
 
-    while (i < sn) {
-        if (src[i] == '\0' || src[i] == '\n' || src[i] == '\r') {
-            if (*beg != NULL || *mid != NULL) {
-                *end = &src[i];
-            }
+    do {
+        if (beg == NULL) {
+            break;
+        }
+        if (mid == NULL) {
+            break;
+        }
+        if (end == NULL) {
+            break;
+        }
+        if (src == NULL) {
             break;
         }
 
-        if (*mid == NULL && (src[i] == '#' || src[i] == ';')) {
-            *mid = &src[i];
-        }
-
-        if (*mid != NULL && i >= 1 && (
-            (src[i] == '#' && src[i - 1] == '#') ||
-            (src[i] == ';' && src[i - 1] == ';'))) {
-            *mid = &src[i];
-        }
-
-        if (*beg == NULL && src[i] != ' ' && src[i] != '.') {
-            *beg = &src[i];
-        }
-
-        if (*beg != NULL && *mid == NULL) {
-            ++length;
-        }
-
-        ++i;
-    }
-
-    if (*beg == *mid) {
         *beg = NULL;
-    }
+        *mid = NULL;
+        *end = NULL;
+        length = 0;
 
-    if (*mid != NULL) {
-        (*mid)++;
+        while (i < sn) {
+            if (src[i] == '\0' || src[i] == '\n' || src[i] == '\r') {
+                if (*beg != NULL || *mid != NULL) {
+                    *end = &src[i];
+                }
+                break;
+            }
+
+            if (*mid == NULL && (src[i] == '#' || src[i] == ';')) {
+                *mid = &src[i];
+            }
+
+            if (*mid != NULL && i >= 1 && (
+                (src[i] == '#' && src[i - 1] == '#') ||
+                (src[i] == ';' && src[i - 1] == ';'))) {
+                *mid = &src[i];
+            }
+
+            if (*beg == NULL && src[i] != ' ' && src[i] != '.') {
+                *beg = &src[i];
+            }
+
+            if (*beg != NULL && *mid == NULL) {
+                ++length;
+            }
+
+            ++i;
+        }
+
+        if (*beg == *mid) {
+            *beg = NULL;
+        }
+
+        if (*mid != NULL) {
+            (*mid)++;
+        }
     }
+    while(0);
 
     return length;
 }

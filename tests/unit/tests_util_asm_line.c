@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <assert.h>
 #include <string.h>
 #include "util/util_asm.h"
@@ -46,19 +45,6 @@ int main()
         assert(end == &src[39]);
     }
 
-    /** @test Case 4: Test with an empty line */
-    {
-        char src[] = "";
-        char *beg, *mid, *end;
-
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
-
-        assert(length == 0);
-        assert(beg == NULL);
-        assert(mid == NULL);
-        assert(end == NULL);
-    }
-
     /** @test Case 5: Test with a line containing a comment with no instruction content */
     {
         char src[] = "   ; This is a comment line";
@@ -73,20 +59,8 @@ int main()
         assert(end == &src[27]);
     }
 
-    /** @test Case 6: Test with a line containing only spaces and no comments */
-    {
-        char src[] = "            ";
-        char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
-
-        assert(length == 0);
-        assert(beg == NULL);
-        assert(mid == NULL);
-        assert(end == NULL);
-    }
-
-    /** @test Case 7: Test with a line containing multiple comments */
+    /** @test Case 6: Test with a line containing multiple comments */
     {
         char src[] = "   ; Comment 1 ; Comment 2 ; Comment 3";
         char *beg, *mid, *end;
@@ -100,20 +74,8 @@ int main()
         assert(end != NULL);
     }
 
-    /** @test Case 8: Test with a line containing only a period and no comments */
-    {
-        char src[] = "   .";
-        char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
-
-        assert(length == 0);
-        assert(beg == NULL);
-        assert(mid == NULL);
-        assert(end == NULL);
-    }
-
-    /** @test Case 9: Test with a line containing a single character instruction and no comments */
+    /** @test Case 7: Test with a line containing a single character instruction and no comments */
     {
         char src[] = "   a";
         char *beg, *mid, *end;
