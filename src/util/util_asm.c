@@ -111,28 +111,37 @@ tbc_i8_t util_asm_line(char **beg, char **mid, char **end, char *src, tbc_u8_t s
     int foundComment = 0;
 
     for (;i < sn; i++) {
-        if (!foundContent && src[i] != ' ' && src[i] != '.') {
-            *beg = &src[i];
-            foundContent = 1;
+        if (src[i] == '\0' || src[i] == '\n' || src[i] == '\r') {
+            if (*beg != NULL || *mid != NULL) {
+                *end = &src[i];
+            }
+            break;
         }
 
-        if (src[i] == '#' || src[i] == ';') {
+        if (*mid == NULL && (src[i] == '#' || src[i] == ';')) {
             foundComment = 1;
             *mid = &src[i];
         }
 
-        if (src[i] == '\0' || src[i] == '\n' || src[i] == '\r') {
-            *end = &src[i];
-            break;
+        if (i >= 1 && *mid != NULL && ((src[i] == '#' && src[i - 1] == '#') || (src[i] == ';' && src[i - 1] == ';'))) {
+            *mid = &src[i];
         }
-        
+
+        if (!foundComment && !foundContent && src[i] != ' ' && src[i] != '.') {
+            *beg = &src[i];
+            foundContent = 1;
+        }
+
         if (*beg != NULL && *mid == NULL) {
             length++;
         }
     }
 
-    if (foundContent && foundComment) {
-        *end = *mid;
+    if (*beg == *mid) {
+        *beg = NULL;
+    }
+
+    if (foundComment) {
         (*mid)++;
     }
 
