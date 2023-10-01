@@ -2,6 +2,8 @@
 #include <string.h>
 #include "util/util_asm.h"
 
+#include <stdio.h>
+
 int main()
 {
     /** @test case 1: Test with a line containing only instruction content */
@@ -112,6 +114,36 @@ int main()
         assert(mid == &src[13]);
         assert(strcmp(mid, "'not invalid quotes!") == 0);
         assert(end == &src[33]);
+    }
+
+    /** @test Case 9: Tests breaklines */
+    {
+        char src[] = "foo #bar\nz";
+        char *beg, *mid, *end;
+
+        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+
+        assert(length == 4);
+        assert(strncmp(beg, "foo", 3) == 0);
+        assert(mid == &src[5]);
+        assert(strncmp(mid, "bar", 3) == 0);
+        assert(end == &src[9]);
+        assert(strcmp(end, "z") == 0);
+    }
+
+    /** @test Case 10: Tests alternative sintax breaklines */
+    {
+        char src[] = "foo.#bar,z";
+        char *beg, *mid, *end;
+
+        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+
+        assert(length == 4);
+        assert(strncmp(beg, "foo", 3) == 0);
+        assert(mid == &src[5]);
+        assert(strncmp(mid, "bar", 3) == 0);
+        assert(end == &src[9]);
+        assert(strcmp(end, "z") == 0);
     }
 
     return 0;

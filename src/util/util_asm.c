@@ -127,7 +127,10 @@ tbc_i8_t util_asm_line(char **beg, char **mid, char **end, char *src, tbc_u8_t s
         length = 0;
 
         while (i < sn) {
-            if (src[i] == '\0' || src[i] == '\n' || src[i] == '\r') {
+            if (src[i] == '\0' || src[i] == '\n' || (src[i] == ',' && !in_quotes)) {
+                if (src[i] == '\n' || src[i] == ',') {
+                    ++i;
+                }
                 if (*beg != NULL || *mid != NULL) {
                     *end = &src[i];
                 }
