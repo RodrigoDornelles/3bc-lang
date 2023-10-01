@@ -42,7 +42,7 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv, void* buf,
         /* program flag */
         if ((param = util_args_get(argc, argv, 'e')) != NULL) {
             interpreter->type = TBC_IT_INLINE;
-            interpreter->io.argument = param;
+            interpreter->io.eval = param;
             break;
         }
         /* program param */

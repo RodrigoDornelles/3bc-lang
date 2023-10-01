@@ -70,7 +70,8 @@ enum ___tbc_error_e {
     ERROR_MEM_STACK_CFG_MIN = 31,
     ERROR_MEM_STACK_CFG_OUT = 32,
     ERROR_OUT_OF_MEMORY = 33,
-    ERROR_FLAG_LINE = 34
+    ERROR_FLAG_LINE = 34,
+    ERROR_INVALID_SYNTAX = 35
 };
 
 typedef enum ___tbc_error_e tbc_error_et;

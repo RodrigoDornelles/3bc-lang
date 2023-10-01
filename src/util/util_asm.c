@@ -98,6 +98,7 @@ tbc_i8_t util_asm_split(char** dest, char* src, tbc_u8_t dn, tbc_u8_t sn)
  * @param[in] src text instruction
  * @param[in] sn text size
  * @return instruction length
+ * @retval -1 empty line
  * @retval -2 wrong paramters
  * @retval -3 when expected closing quote
  */
@@ -118,6 +119,10 @@ tbc_i8_t util_asm_line(char **beg, char **mid, char **end, char *src, tbc_u8_t s
             break;
         }
         if (src == NULL) {
+            break;
+        }
+        if (i == 0 && src[i] == '\0'){
+            length = -1;
             break;
         }
 

@@ -11,10 +11,7 @@ int main()
 
         tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
 
-        assert(length == 0);
-        assert(beg == NULL);
-        assert(mid == NULL);
-        assert(end == NULL);
+        assert(length == -1);
     }
 
     /** @test Case 2: Test with a line containing only spaces and no comments */

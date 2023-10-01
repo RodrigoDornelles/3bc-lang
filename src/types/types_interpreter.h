@@ -28,7 +28,7 @@ typedef struct ___tbc_interpreter_root_s tbc_interpreter_root_st;
 
 union ___tbc_interpreter_open_u {
     tbc_u8_t fileid;
-    char* argument;
+    char* eval;
 };
 
 struct ___tbc_interpreter_line_s {
