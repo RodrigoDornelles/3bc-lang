@@ -47,14 +47,16 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv, void* buf,
         }
         /* program param */
         if ((param = util_args_param(argc, argv, "le", 0)) != NULL) {
+#if !defined(TBC_NOT_FILES)
             int fileid = open(param, O_RDONLY);
-            if (fileid == -1) {
-                self->rc = TBC_RET_THROW_ERROR;
-                self->cache_l1.error = ERROR_OPEN_FILE;
+            if (fileid != -1) {   
+                interpreter->type = TBC_IT_COMPILER;
+                interpreter->io.fileid = fileid;
                 break;
             }
-            interpreter->type = TBC_IT_COMPILER;
-            interpreter->io.fileid = fileid;
+#endif
+            self->rc = TBC_RET_THROW_ERROR;
+            self->cache_l1.error = ERROR_OPEN_FILE;
             break;
         }
 
