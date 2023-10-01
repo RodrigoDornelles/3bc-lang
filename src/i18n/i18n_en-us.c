@@ -39,6 +39,7 @@ static const char ___tbc_error_032[] = "STACK MEMORY WAS NOT ENOUGH DURING CONFI
 static const char ___tbc_error_033[] = "???";
 static const char ___tbc_error_034[] = "PARAM LINE SIZE MUST BE INTEGER";
 static const char ___tbc_error_035[] = "INVALID SYNTAX";
+static const char ___tbc_error_036[] = "NOTHING TO DO";
 
 static const tbc_error_st ___tbc_errors[] = {
     {sizeof(___tbc_error_000), (char *const)___tbc_error_000},
@@ -77,6 +78,7 @@ static const tbc_error_st ___tbc_errors[] = {
     {sizeof(___tbc_error_033), (char *const)___tbc_error_033},
     {sizeof(___tbc_error_034), (char *const)___tbc_error_034},
     {sizeof(___tbc_error_035), (char *const)___tbc_error_035},
+    {sizeof(___tbc_error_036), (char *const)___tbc_error_036},
 };
 
 const tbc_error_st* tbc_i18n_error_arr = ___tbc_errors;

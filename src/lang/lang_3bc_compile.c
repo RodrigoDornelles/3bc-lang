@@ -63,7 +63,10 @@ void lang_3bc_compile(tbc_app_st *const self)
         if (self->state != FSM_3BC_READING) {
             break;
         }
-        
+        if (self->rc == TBC_RET_CLEAN) {
+            self->rc = TBC_RET_OK;
+            break;
+        }
         /* seperate line */
         line_n = util_asm_line(&line, &tmp, &interpreter->io.eval, interpreter->io.eval, interpreter->line_size);
 

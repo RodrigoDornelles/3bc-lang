@@ -49,8 +49,6 @@
 #include "driver/driver_cpu.h"
 #include "driver/driver_gc.h"
 #include "driver/driver_stack.h"
-/** @todo delete this **/
-#include "interpreter/interpreter_0000.h"
 
 /**
  * @brief VM processor context manager, allows asychronism.
@@ -205,6 +203,7 @@ int driver_interrupt(struct app_3bc_s* const self)
             self->pkg_func->prog.expand(self);
             if(self->rc == TBC_RET_OK) {
                 self->state = FSM_3BC_READING;
+                self->rc = TBC_RET_CLEAN;
             }
             break;
 
@@ -212,6 +211,10 @@ int driver_interrupt(struct app_3bc_s* const self)
             if (self->rc == TBC_RET_FULL) {
                 self->pkg_func->prog.insert(self);
                 self->state = FSM_3BC_LOADING;
+            }
+            if (self->rc == TBC_RET_CLEAN) {
+                self->rc = TBC_RET_THROW_ERROR;
+                self->cache_l1.error = ERROR_NOTHING_TO_DO;
             }
             break;
 
