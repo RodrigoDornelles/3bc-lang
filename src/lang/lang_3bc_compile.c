@@ -33,6 +33,7 @@ void lang_3bc_compile(tbc_app_st *const self)
     tbc_i8_t tokens_idk[3];
     tbc_i8_t tokens_n;
     tbc_i8_t line_n;
+    util_stoi_ft cast;
 
     do {
         if (self->state != FSM_3BC_READING) {
@@ -74,17 +75,20 @@ void lang_3bc_compile(tbc_app_st *const self)
         tokens_idk[1] = tokens[2] - tokens[1] - 1;
         tokens_idk[2] = line_n - (tokens[2] - tokens[0]);
 
-        if(util_stoi10(&self->cpu.rx, tokens[0], 8, tokens_idk[0]) != 0) {
+        cast = util_stoi_auto(&tokens[0], &tokens_idk[0], tokens[0], tokens_idk[0]);
+        if(cast == NULL || cast(&self->cpu.rx, tokens[0], 8, tokens_idk[0]) != 0) {
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_INVALID_REGISTER;
             break;
         }
-        if(util_stoi10(&self->cpu.ry, tokens[1], 16, tokens_idk[1]) != 0) {
+        cast = util_stoi_auto(&tokens[1], &tokens_idk[1], tokens[1], tokens_idk[1]);
+        if(cast == NULL || cast(&self->cpu.ry, tokens[1], 16, tokens_idk[1]) != 0) {
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_INVALID_ADR;
             break;
         }
-        if(util_stoi10(&self->cpu.rz, tokens[2], 16, tokens_idk[2]) != 0) {
+        cast = util_stoi_auto(&tokens[2], &tokens_idk[2], tokens[2], tokens_idk[2]);
+        if(cast == NULL || cast(&self->cpu.rz, tokens[2], 16, tokens_idk[2]) != 0) {
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_INVALID_CONSTANT;
             break;

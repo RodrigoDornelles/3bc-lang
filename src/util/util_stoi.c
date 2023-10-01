@@ -2,6 +2,74 @@
 #include "types/types_null.h"
 
 /**
+ * @short cast func select
+ * @details return a parse string to integer function according the number base.
+ * @param[out] dest string destination
+ * @param[out] dn lenght destination
+ * @param[in] src string input
+ * @param[in] sn string lenght
+ * @return function pointer
+ * @retval NULL when unknown base
+ * @retval !NULL when found base
+ */
+util_stoi_ft util_stoi_auto(char** dest, tbc_i8_t* dn, char *src, tbc_i8_t sn)
+{
+    util_stoi_ft func = NULL;
+
+    do{
+        if (src == NULL) {
+            break;
+        }
+        if (dest == NULL) {
+            break;
+        }
+        if (*src == '-') {
+            ++src;
+            --sn;
+        }
+        if ('1' <= *src && *src <= '9') {
+            func = &util_stoi10;
+        }
+        if ('0' == *src){
+            ++src;
+            --sn;
+            if ('1' <= (*src) && (*src) <= '9'){
+                func = &util_stoi10;
+                break;
+            }
+            else if (*src == 'b') {
+                func = &util_stoi2;
+            }
+            else if (*src == 'o') {
+                func = &util_stoi8;
+            }
+            else if (*src == 'd' || *src == 'i') {
+                func = &util_stoi10;
+            }
+            else if (*src == 'x') {
+                func = &util_stoi16;
+            }
+            else {
+                func = &util_stoi10;
+                --src;
+                ++dn;
+                break;
+            }
+            ++src;
+            --dn;
+        }
+    }
+    while(0);
+
+    if (func != NULL) {
+        *dn = sn;
+        *dest = src;
+    }
+
+    return func;
+}
+
+/**
  * @short hexadecimal
  * @brief @par casting string to integer
  * @details parse string to integer in base 16.
