@@ -83,7 +83,7 @@ void lang_3bc_compile(tbc_app_st *const self)
         }
         
         /* separate tokens */
-        tokens_n = util_asm_split(tokens, line, sizeof(tokens)/sizeof(*tokens), line_n);
+        tokens_n = util_asm_split(tokens, tokens_idk, line, sizeof(tokens)/sizeof(*tokens), line_n);
 
         if (tokens_n < 0) {
             self->rc = TBC_RET_THROW_ERROR;
@@ -96,11 +96,6 @@ void lang_3bc_compile(tbc_app_st *const self)
             self->cache_l1.error = ERROR_COLUMNS;
             break;
         }
-
-        /* define tokens lenghts */
-        tokens_idk[0] = tokens[1] - tokens[0] - 1;
-        tokens_idk[1] = tokens[2] - tokens[1] - 1;
-        tokens_idk[2] = line_n - (tokens[2] - tokens[0]);
 
         cast = util_stoi_auto(&tokens[0], &tokens_idk[0], tokens[0], tokens_idk[0]);
         if(cast == NULL || cast(&self->cpu.rx, tokens[0], 8, tokens_idk[0]) != 0) {

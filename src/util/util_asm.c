@@ -7,7 +7,8 @@
  * @details Just like a @c split in  @b JS and @b Python or 
  * @c `explode` in @c PHP, this function separates the string text
  * according to the space between keywords giving a maximum number of tokens.
- * @param[in] dest array of pointers
+ * @param[out] dest array of tokens
+ * @param[out] dest array of token sizes
  * @param[in] src string
  * @param[in] dn number of pointers
  * @param[in] sn lenght of string
@@ -19,14 +20,18 @@
  * @retval -3 when expected closing quote
  * @retval 1..127 tokens count
  */
-tbc_i8_t util_asm_split(char** dest, char* src, tbc_u8_t dn, tbc_u8_t sn)
+tbc_i8_t util_asm_split(char** dest, tbc_u8_t* destn, char* src, tbc_u8_t dn, tbc_u8_t sn)
 {
     tbc_u8_t ret = -2;
+    tbc_u8_t size;
     char* token = NULL;
     bool in_quotes = false;
 
     do {
         if (dest == NULL) {
+            break;
+        }
+        if (destn == NULL) {
             break;
         }
         if (src == NULL) {
@@ -44,6 +49,7 @@ tbc_i8_t util_asm_split(char** dest, char* src, tbc_u8_t dn, tbc_u8_t sn)
         while (1) {
             if (*src == '\0' || sn == 0) {
                 if (token != NULL) {
+                    *destn++ = size;
                     *dest++ = token;
                 }
                 break;
@@ -54,6 +60,7 @@ tbc_i8_t util_asm_split(char** dest, char* src, tbc_u8_t dn, tbc_u8_t sn)
             }
             if ((*src == ' ' || *src == '.') && !in_quotes) {
                 if (token != NULL) {
+                    *destn++ = size;
                     *dest++ = token;
                 }
                 token = NULL;
@@ -61,18 +68,24 @@ tbc_i8_t util_asm_split(char** dest, char* src, tbc_u8_t dn, tbc_u8_t sn)
                 in_quotes = !in_quotes;
                 if (!in_quotes) {
                     if (token != NULL) {
+                        *destn++ = ++size;
                         *dest++ = token;
                     }
                     token = NULL;
                 } else {
                     token = src;
+                    size = 0;
                     ++ret;
                 }
             } else {
                 if (token == NULL) {
                     token = src;
+                    size = 0;
                     ++ret;
                 }
+            }
+            if (token != NULL) {
+                ++size;
             }
             ++src;
             --sn;

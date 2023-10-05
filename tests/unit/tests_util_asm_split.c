@@ -8,70 +8,98 @@ int main()
     {
         char src[] = "          ";
         char* dest[10];
-        int tokens = util_asm_split(dest, src, sizeof(dest)/sizeof(*dest), sizeof(src));
+        unsigned char destn[sizeof(dest)/sizeof(*dest)];
+        int tokens = util_asm_split(dest, destn, src, sizeof(dest)/sizeof(*dest), sizeof(src));
         assert(tokens == 0);
     }
     {
         char src[] = "..........";
         char* dest[10];
-        int tokens = util_asm_split(dest, src, sizeof(dest)/sizeof(*dest), sizeof(src));
+        unsigned char destn[sizeof(dest)/sizeof(*dest)];
+        int tokens = util_asm_split(dest, destn, src, sizeof(dest)/sizeof(*dest), sizeof(src));
         assert(tokens == 0);
     }
     {
         char src[] = " . . . . .";
         char* dest[10];
-        int tokens = util_asm_split(dest, src, sizeof(dest)/sizeof(*dest), sizeof(src));
+        unsigned char destn[sizeof(dest)/sizeof(*dest)];
+        int tokens = util_asm_split(dest, destn, src, sizeof(dest)/sizeof(*dest), sizeof(src));
         assert(tokens == 0);
     }
     {
         char src[] = "foo bar baz zig zag zum";
         char* dest[10];
-        int tokens = util_asm_split(dest, src, sizeof(dest)/sizeof(*dest), sizeof(src));
+        unsigned char destn[sizeof(dest)/sizeof(*dest)];
+        int tokens = util_asm_split(dest, destn, src, sizeof(dest)/sizeof(*dest), sizeof(src));
         assert(tokens == 6);
-        assert(strncmp(dest[0], "foo", 3lu) == 0);
-        assert(strncmp(dest[1], "bar", 3lu) == 0);
-        assert(strncmp(dest[2], "baz", 3lu) == 0);
-        assert(strncmp(dest[3], "zig", 3lu) == 0);
-        assert(strncmp(dest[4], "zag", 3lu) == 0);
-        assert(strncmp(dest[5], "zum", 3lu) == 0);
+        assert(destn[0] == 3);
+        assert(destn[1] == 3);
+        assert(destn[2] == 3);
+        assert(destn[3] == 3);
+        assert(destn[4] == 3);
+        assert(destn[5] == 3);
+        assert(strncmp(dest[0], "foo", destn[0]) == 0);
+        assert(strncmp(dest[1], "bar", destn[1]) == 0);
+        assert(strncmp(dest[2], "baz", destn[2]) == 0);
+        assert(strncmp(dest[3], "zig", destn[3]) == 0);
+        assert(strncmp(dest[4], "zag", destn[4]) == 0);
+        assert(strncmp(dest[5], "zum", destn[5]) == 0);
     }
     {
         char src[] = "one.two.three.four.five";
         char* dest[5];
-        int tokens = util_asm_split(dest, src, sizeof(dest)/sizeof(*dest), sizeof(src));
+        unsigned char destn[sizeof(dest)/sizeof(*dest)];
+        int tokens = util_asm_split(dest, destn, src, sizeof(dest)/sizeof(*dest), sizeof(src));
         assert(tokens == 5);
-        assert(strncmp(dest[0], "one", 3lu) == 0);
-        assert(strncmp(dest[1], "two", 3lu) == 0);
-        assert(strncmp(dest[2], "three", 5lu) == 0);
-        assert(strncmp(dest[3], "four", 4lu) == 0);
-        assert(strncmp(dest[4], "five", 4lu) == 0);
+        assert(destn[0] == 3);
+        assert(destn[1] == 3);
+        assert(destn[2] == 5);
+        assert(destn[3] == 4);
+        assert(destn[4] == 4);
+        assert(strncmp(dest[0], "one", destn[0]) == 0);
+        assert(strncmp(dest[1], "two", destn[1]) == 0);
+        assert(strncmp(dest[2], "three", destn[2]) == 0);
+        assert(strncmp(dest[3], "four", destn[3]) == 0);
+        assert(strncmp(dest[4], "five", destn[4]) == 0);
     }
     {
         char src[] = "one \"two three\" four";
         char* dest[5];
-        int tokens = util_asm_split(dest, src, sizeof(dest)/sizeof(*dest), sizeof(src));
+        unsigned char destn[sizeof(dest)/sizeof(*dest)];
+        int tokens = util_asm_split(dest, destn, src, sizeof(dest)/sizeof(*dest), sizeof(src));
         assert(tokens == 3);
-        assert(strncmp(dest[0], "one", 3lu) == 0);
-        assert(strncmp(dest[1], "\"two three\"", 9lu) == 0);
-        assert(strncmp(dest[2], "four", 4lu) == 0);
+        assert(destn[0] == 3);
+        assert(destn[1] == 11);
+        assert(destn[2] == 4);
+        assert(strncmp(dest[0], "one", destn[0]) == 0);
+        assert(strncmp(dest[1], "\"two three\"", destn[1]) == 0);
+        assert(strncmp(dest[2], "four", destn[2]) == 0);
     }
     {
         char src[] = "one two \"three four\"";
         char* dest[3];
-        int tokens = util_asm_split(dest, src, sizeof(dest)/sizeof(*dest), sizeof(src));
+        unsigned char destn[sizeof(dest)/sizeof(*dest)];
+        int tokens = util_asm_split(dest, destn, src, sizeof(dest)/sizeof(*dest), sizeof(src));
         assert(tokens == 3);
-        assert(strncmp(dest[0], "one", 3lu) == 0);
-        assert(strncmp(dest[1], "two", 3lu) == 0);
-        assert(strncmp(dest[2], "\"three four\"", 12lu) == 0);
+        assert(destn[0] == 3);
+        assert(destn[1] == 3);
+        assert(destn[2] == 12);
+        assert(strncmp(dest[0], "one", destn[0]) == 0);
+        assert(strncmp(dest[1], "two", destn[1]) == 0);
+        assert(strncmp(dest[2], "\"three four\"", destn[2]) == 0);
     }
     {
         char src[] = "\"one two\" three four";
         char* dest[3];
-        int tokens = util_asm_split(dest, src, sizeof(dest)/sizeof(*dest), sizeof(src));
+        unsigned char destn[sizeof(dest)/sizeof(*dest)];
+        int tokens = util_asm_split(dest, destn, src, sizeof(dest)/sizeof(*dest), sizeof(src));
         assert(tokens == 3);
-        assert(strncmp(dest[0], "\"one two\"", 9u) == 0);
-        assert(strncmp(dest[1], "three", 3lu) == 0);
-        assert(strncmp(dest[2], "four", 4lu) == 0);
+        assert(destn[0] == 9);
+        assert(destn[1] == 5);
+        assert(destn[2] == 4);
+        assert(strncmp(dest[0], "\"one two\"", destn[0]) == 0);
+        assert(strncmp(dest[1], "three", destn[1]) == 0);
+        assert(strncmp(dest[2], "four", destn[2]) == 0);
     }
 
     return 0;

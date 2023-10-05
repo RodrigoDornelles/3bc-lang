@@ -52,11 +52,11 @@ util_stoi_ft util_stoi_auto(char** dest, tbc_i8_t* dn, char *src, tbc_i8_t sn)
             else {
                 func = &util_stoi10;
                 --src;
-                ++dn;
+                ++sn;
                 break;
             }
             ++src;
-            --dn;
+            --sn;
         }
     }
     while(0);
