@@ -19,6 +19,7 @@ endif()
 if(TEST_UNIT)
     include(CTest)
     set(tests
+        "bugs_util_stoi,src/util/util_stoi.c"
         "error_util_asm_line,src/util/util_asm.c"
         "error_util_asm_split,src/util/util_asm.c"
         "error_util_djb2,src/util/util_djb2.c"
