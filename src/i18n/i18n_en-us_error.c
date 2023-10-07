@@ -1,5 +1,5 @@
 #define TBC_SOURCE_ENTRY
-#include "i18n_en-us.h"
+#include "i18n_0000.h"
 
 #if !defined(TBC_SCU_OPTIONAL_FIX)
 
@@ -41,7 +41,7 @@ static const char ___tbc_error_034[] = "PARAM LINE SIZE MUST BE INTEGER";
 static const char ___tbc_error_035[] = "INVALID SYNTAX";
 static const char ___tbc_error_036[] = "NOTHING TO DO";
 
-static const tbc_error_st ___tbc_errors[] = {
+static const tbc_info_txt_st ___tbc_errors[] = {
     {sizeof(___tbc_error_000), (char *const)___tbc_error_000},
     {sizeof(___tbc_error_001), (char *const)___tbc_error_001},
     {sizeof(___tbc_error_002), (char *const)___tbc_error_002},
@@ -81,7 +81,7 @@ static const tbc_error_st ___tbc_errors[] = {
     {sizeof(___tbc_error_036), (char *const)___tbc_error_036},
 };
 
-const tbc_error_st* tbc_i18n_error_arr = ___tbc_errors;
-const tbc_u8_t tbc_i18n_error_len = sizeof(___tbc_errors)/sizeof(tbc_error_st);
+const tbc_info_txt_st* tbc_i18n_error_arr = ___tbc_errors;
+const tbc_u8_t tbc_i18n_error_len = sizeof(___tbc_errors)/sizeof(tbc_info_txt_st);
 
 #endif

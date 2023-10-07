@@ -1,6 +1,7 @@
 #define TBC_SOURCE_ENTRY
+#include "bus/bus_sys_0000.h"
+#include "i18n/i18n_0000.h"
 #include "lang/lang_3bc_cli.h"
-#include "lang/lang_3bc_put.h"
 #include "util/util_stoi.h"
 #include "util/util_args.h"
 #include "types/types_interpreter.h"
@@ -29,13 +30,23 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv, void* buf,
             interpreter->line_size = new_line_size;
         }
         /* info flags */
+        if (util_args_has(argc, argv, 'h') != NULL) {
+            lang_3bc_cli_put(self, 'h');
+            self->rc = TBC_RET_EXIT_FORCE;
+            break;
+        }
         if (util_args_has(argc, argv, 'v') != NULL) {
-            lang_3bc_put(self, 'v');
+            lang_3bc_cli_put(self, 'v');
+            self->rc = TBC_RET_EXIT_FORCE;
+            break;
+        }
+        if (util_args_has(argc, argv, 'V') != NULL) {
+            lang_3bc_cli_put(self, 'V');
             self->rc = TBC_RET_EXIT_FORCE;
             break;
         }
         if (util_args_has(argc, argv, 'i') != NULL) {
-            lang_3bc_put(self, 'i');
+            lang_3bc_cli_put(self, 'i');
             self->rc = TBC_RET_EXIT_FORCE;
             break;
         }
@@ -64,4 +75,72 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv, void* buf,
         interpreter->line_size = 0;
     }
     while(0);
+}
+
+void lang_3bc_cli_put(tbc_app_st *const self, char key)
+{
+    tbc_u8_t sizetotalstack = self->stack.raw.buffer != NULL? self->stack.mem->st: sizeof(self->stack.cfgmin) - (sizeof(void*) * 2);
+    tbc_u8_t sizefreestack = self->stack.raw.buffer != NULL? self->stack.mem->st - self->stack.mem->sp: 0;
+    tbc_u16_t sizeobject = sizeof(tbc_app_st);
+    tbc_u8_t i = 0, j = 0;
+
+    switch (key)
+    {
+        case 'v':
+            self->cache_l3.buffer.storage = (char*) tbc_i18n_commons[I18N_COMMON_VERSION].ptr;
+            self->cache_l3.buffer.size = -tbc_i18n_commons[I18N_COMMON_VERSION].len;
+            tbc_pkg_standard.io.write(self);
+            break;
+        
+        case 'V':
+            while (i <= I18N_COMMON_VERPLUS) {
+                self->cache_l3.buffer.storage = (char*) tbc_i18n_commons[i].ptr;
+                self->cache_l3.buffer.size = -tbc_i18n_commons[i].len;
+                tbc_pkg_standard.io.write(self);
+                ++i;
+            }
+            break;
+        case 'h':
+            while (i < tbc_i18n_help_len) {
+                self->cache_l3.buffer.storage = (char*) tbc_i18n_help_arr[i].ptr;
+                self->cache_l3.buffer.size = -tbc_i18n_help_arr[i].len;
+                if (tbc_i18n_info_arr[i].len == 0) {
+                    self->cache_l3.buffer.storage = (char*) tbc_i18n_commons[I18N_COMMON_WEBSITE].ptr;
+                    self->cache_l3.buffer.size = -tbc_i18n_commons[I18N_COMMON_WEBSITE].len;
+                }
+                tbc_pkg_standard.io.write(self);
+                ++i;
+            }
+            break;
+        case 'i':
+            while (i < tbc_i18n_info_len) {
+                self->cache_l3.buffer.storage = (char*) tbc_i18n_info_arr[i].ptr;
+                self->cache_l3.buffer.size = -tbc_i18n_info_arr[i].len;
+                if (tbc_i18n_info_arr[i].len == 0) {
+                    switch (j) {
+                        case 0:
+                        self->cache_l3.buffer.storage = (char*) tbc_i18n_commons[I18N_COMMON_VERSION].ptr;
+                        self->cache_l3.buffer.size = -tbc_i18n_commons[I18N_COMMON_VERSION].len;
+                        break;
+                        case 1:
+                        self->cache_l3.buffer.storage = (char*) tbc_i18n_commons[I18N_COMMON_VERPLUS].ptr;
+                        self->cache_l3.buffer.size = -tbc_i18n_commons[I18N_COMMON_VERPLUS].len;
+                        break;
+                        case 2:
+                        self->cache_l3.fixbuf.size = util_itos10(self->cache_l3.fixbuf.storage, &sizetotalstack, sizeof(self->cache_l3.fixbuf.storage), 8);
+                        break;
+                        case 3:
+                        self->cache_l3.fixbuf.size = util_itos10(self->cache_l3.fixbuf.storage, &sizefreestack, sizeof(self->cache_l3.fixbuf.storage), 8);
+                        break;
+                        case 4:
+                        self->cache_l3.fixbuf.size = util_itos10(self->cache_l3.fixbuf.storage, &sizeobject, sizeof(self->cache_l3.fixbuf.storage), 16);
+                        break;
+                    }
+                    ++j;
+                }
+                tbc_pkg_standard.io.write(self);
+                ++i;
+            }
+            break;
+    }
 }
