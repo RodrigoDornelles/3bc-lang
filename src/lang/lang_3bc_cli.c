@@ -104,7 +104,7 @@ void lang_3bc_cli_put(tbc_app_st *const self, char key)
             while (i < tbc_i18n_help_len) {
                 self->cache_l3.buffer.storage = (char*) tbc_i18n_help_arr[i].ptr;
                 self->cache_l3.buffer.size = -tbc_i18n_help_arr[i].len;
-                if (tbc_i18n_info_arr[i].len == 0) {
+                if (tbc_i18n_help_arr[i].len == 0) {
                     self->cache_l3.buffer.storage = (char*) tbc_i18n_commons[I18N_COMMON_WEBSITE].ptr;
                     self->cache_l3.buffer.size = -tbc_i18n_commons[I18N_COMMON_WEBSITE].len;
                 }
