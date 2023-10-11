@@ -78,8 +78,12 @@
 
 #if defined(__VERSION__)
 #define TBC_COMPILER_ID __VERSION__
+#elif defined(__TINYC__) || defined(__TINYCC__)
+#define TBC_COMPILER_ID "TCC"
 #elif defined(__CC65_STD__)
 #define TBC_COMPILER_ID "CC65"
+#else
+#define TBC_COMPILER_ID "Unknown"
 #endif
 
 /**

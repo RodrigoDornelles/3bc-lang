@@ -4,7 +4,7 @@
 #ifndef H_PRE_DATE_TBC
 #define H_PRE_DATE_TBC
 
-#if defined(__DATE__) && !defined(__CC65_STD__)
+#if defined(__DATE__) && !defined(__CC65_STD__) && !defined(__TINYC__)
 
 #define TBC_YEAR_CH0 (__DATE__[7])
 #define TBC_YEAR_CH1 (__DATE__[8])
