@@ -40,6 +40,7 @@ static const char ___tbc_error_033[] = "???";
 static const char ___tbc_error_034[] = "PARAM LINE SIZE MUST BE INTEGER";
 static const char ___tbc_error_035[] = "INVALID SYNTAX";
 static const char ___tbc_error_036[] = "NOTHING TO DO";
+static const char ___tbc_error_037[] = "MNEMONIC NOT RECOGNIZED";
 
 static const tbc_info_txt_st ___tbc_errors[] = {
     {sizeof(___tbc_error_000), (char *const)___tbc_error_000},
@@ -79,6 +80,7 @@ static const tbc_info_txt_st ___tbc_errors[] = {
     {sizeof(___tbc_error_034), (char *const)___tbc_error_034},
     {sizeof(___tbc_error_035), (char *const)___tbc_error_035},
     {sizeof(___tbc_error_036), (char *const)___tbc_error_036},
+    {sizeof(___tbc_error_037), (char *const)___tbc_error_037},
 };
 
 const tbc_info_txt_st* tbc_i18n_error_arr = ___tbc_errors;

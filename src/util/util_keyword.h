@@ -15,6 +15,6 @@ struct ___tbc_keyword_s {
     tbc_i16_t value;
 };
 
-tbc_i16_t util_keyword(char *const src, tbc_keyword_st *const kl, tbc_i16_t kn);
+tbc_i16_t util_keyword(const char *const src, const tbc_keyword_st *const kl, tbc_i16_t kn);
 
 #endif

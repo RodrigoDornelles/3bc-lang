@@ -2,6 +2,7 @@
 #include "bus/bus_mem_0000.h"
 #include "util/util_stoi.h"
 #include "util/util_asm.h"
+#include "util/util_keyword.h"
 #include "types/types_interpreter.h"
 #include <stdio.h>
 
@@ -16,7 +17,7 @@
  * why you need for CPP if C language is already 'complete and total'?
  * { .keyword.name = "mode", .opcode = 7 } <-- not allowed in C++
  */
-static const struct tbc_keyword_opcode_st opcodes_register[] = { { "aloc", 2 },
+const tbc_keyword_st opcodes_arr[] = { { "aloc", 2 },
     { "back", 1 }, { "call", 1 }, { "fake", 2 }, { "fcal", 2 }, { "fgto", 2 },
     { "free", 1 }, { "fret", 2 }, { "goto", 1 }, { "math", 1 }, { "micr", 3 },
     { "mili", 4 }, { "mode", 7 }, { "moff", 3 }, { "muse", 4 }, { "nb02", 1 },
@@ -26,8 +27,7 @@ static const struct tbc_keyword_opcode_st opcodes_register[] = { { "aloc", 2 },
     { "strb", 1 }, { "strc", 5 }, { "stri", 3 }, { "stro", 2 }, { "strx", 4 },
     { "zcal", 3 }, { "zgto", 3 }, { "zret", 3 } };
 
-static const tbc_i8_t opcodes_register_size
-    = sizeof(opcodes_register) / sizeof(struct tbc_keyword_opcode_st);
+const tbc_i8_t opcodes_size = sizeof(opcodes_arr) / sizeof(*opcodes_arr);
 
 /**
  * @par Extended Backus-Naur Form
@@ -97,18 +97,35 @@ void lang_3bc_compile(tbc_app_st *const self)
             break;
         }
 
+        /* parse column rx */
         cast = util_stoi_auto(&tokens[0], &tokens_idk[0], tokens[0], tokens_idk[0]);
-        if(cast == NULL || cast(&self->cpu.rx, tokens[0], 8, tokens_idk[0]) != 0) {
-            self->rc = TBC_RET_THROW_ERROR;
+        if (cast != NULL) {
+            self->cache_l1.error = cast(&self->cpu.rx, tokens[0], 8, tokens_idk[0]);
+        }
+        else if (tokens_idk[0] == 4) {
+            tbc_i16_t key = util_keyword(tokens[0], opcodes_arr, opcodes_size);
+            if (key > 0) {
+                self->cpu.rx = opcodes_arr[key].value;
+            } else {
+                self->cache_l1.error = ERROR_INVALID_MNEMONIC;
+            }
+        } else {
             self->cache_l1.error = ERROR_INVALID_REGISTER;
+        }
+        if (self->cache_l1.error != ERROR_UNKNOWN) {
+            self->rc = TBC_RET_THROW_ERROR;
             break;
         }
+
+        /* parse column ry */
         cast = util_stoi_auto(&tokens[1], &tokens_idk[1], tokens[1], tokens_idk[1]);
         if(cast == NULL || cast(&self->cpu.ry, tokens[1], 16, tokens_idk[1]) != 0) {
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_INVALID_ADR;
             break;
         }
+
+        /* parse column rz */
         cast = util_stoi_auto(&tokens[2], &tokens_idk[2], tokens[2], tokens_idk[2]);
         if(cast == NULL || cast(&self->cpu.rz, tokens[2], 16, tokens_idk[2]) != 0) {
             self->rc = TBC_RET_THROW_ERROR;

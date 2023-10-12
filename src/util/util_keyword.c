@@ -21,7 +21,7 @@
  * @retval 0..32_768 when found
  *
  */
-tbc_i16_t util_keyword(char *const src, tbc_keyword_st *const kl, tbc_i16_t kn)
+tbc_i16_t util_keyword(const char *const src, const tbc_keyword_st *const kl, tbc_i16_t kn)
 {
     tbc_i16_t res = -2;
     tbc_i16_t low = 0;
