@@ -1,9 +1,11 @@
 #ifndef H_TYPES_PRIMITIVE_TBC
 #define H_TYPES_PRIMITIVE_TBC
 
-#include "3bc_detect.h"
+#include "detect/detect_cpu.h"
+#include "detect/detect_compiler.h"
+#include "detect/detect_unsupported.h"
 
-#if (defined(TBC_CC_STD_99) && !defined(TBC_NOT_INTYPES)) || defined(DOXYGEN)
+#if (defined(TBC_COMPILER_HAS_C99) && !defined(TBC_UNSUPPORTED)) || defined(DOXYGEN)
 #include <inttypes.h>
 #include <stddef.h>
 /** signed 8 bits **/
@@ -24,7 +26,7 @@ typedef uint32_t tbc_u32_t;
 typedef uint64_t tbc_u64_t;
 /** architeture pointer size */
 typedef size_t tbc_size_t;
-#elif defined(TBC_ARCH_BITS_64)
+#elif defined(TBC_CPU_ARCH_64BITS)
 /** signed 8 bits **/
 typedef signed char tbc_i8_t;
 /** signed 16 bits **/
@@ -43,7 +45,7 @@ typedef unsigned int tbc_u32_t;
 typedef unsigned long tbc_u64_t;
 /** architeture pointer size */
 typedef unsigned long tbc_size_t;
-#elif defined(TBC_ARCH_BITS_32)
+#elif defined(TBC_CPU_ARCH_32BITS)
 /** signed 8 bits **/
 typedef signed char tbc_i8_t;
 /** signed 16 bits **/
@@ -66,7 +68,7 @@ typedef unsigned long long tbc_u64_t;
 #endif
 /** architeture pointer size */
 typedef unsigned int tbc_size_t;
-#elif defined(TBC_ARCH_BITS_16)
+#elif defined(TBC_CPU_ARCH_16BITS)
 /** signed 8 bits **/
 typedef signed char tbc_i8_t;
 /** signed 16 bits **/
@@ -81,7 +83,7 @@ typedef unsigned short tbc_u16_t;
 typedef unsigned int tbc_u32_t;
 /** architeture pointer size */
 typedef unsigned short tbc_size_t;
-#elif defined(TBC_ARCH_BITS_8)
+#elif defined(TBC_CPU_ARCH_8BITS)
 /** not support integer 64 bits */
 #ifndef TBC_NOT_INT64
 #define TBC_NOT_INT64

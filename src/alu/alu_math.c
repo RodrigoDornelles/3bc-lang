@@ -1,8 +1,9 @@
-#include "3bc_detect.h"
 #include "alu_math.h"
+#include "detect/detect_warning.h"
+#include "detect/detect_unsupported.h"
 #include "types/types_errors.h"
 
-#if !defined(TBC_NOT_MATH)
+#if !defined(TBC_UNSUPPORTED_MATH)
 #include <math.h>
 #endif
 
@@ -111,11 +112,13 @@ void alu_math(struct app_3bc_s* const self)
             break;
 
         case 16:
-#if defined(TBC_NOT_MATH)
-#if defined(TBC_PRG_WARNING)
-#pragma message("[3BC] UNSUPPORTED: ALU 16")
-#else
+#if defined(TBC_UNSUPPORTED_MATH)
+#if defined(TBC_WARNING_ERR)
+#error "[3BC] UNSUPPORTED: ALU 16"
+#elif defined(TBC_WARNING_STD)
 #warning "[3BC] UNSUPPORTED: ALU 16"
+#elif defined(TBC_WARNING_MSVC)
+#pragma message("[3BC] UNSUPPORTED: ALU 16")
 #endif
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_UNSUPPORTED;
@@ -128,11 +131,13 @@ void alu_math(struct app_3bc_s* const self)
             break;
 
             case 17:
-#if defined(TBC_NOT_MATH)
-#if defined(TBC_PRG_WARNING)
-#pragma message("[3BC] UNSUPPORTED: ALU 17")
-#else
+#if defined(TBC_UNSUPPORTED_MATH)
+#if defined(TBC_WARNING_ERR)
+#error "[3BC] UNSUPPORTED: ALU 17"
+#elif defined(TBC_WARNING_STD)
 #warning "[3BC] UNSUPPORTED: ALU 17"
+#elif defined(TBC_WARNING_MSVC)
+#pragma message("[3BC] UNSUPPORTED: ALU 17")
 #endif
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_UNSUPPORTED;
@@ -228,11 +233,13 @@ void alu_math(struct app_3bc_s* const self)
             break;
 
         case 38:
-#if defined(TBC_NOT_MATH) || defined(TBC_NOT_LOG)
-#if defined(TBC_PRG_WARNING)
-#pragma message("[3BC] UNSUPPORTED: ALU 38")
-#else
+#if defined(TBC_UNSUPPORTED_MATH)
+#if defined(TBC_WARNING_ERR)
+#error "[3BC] UNSUPPORTED: ALU 38"
+#elif defined(TBC_WARNING_STD)
 #warning "[3BC] UNSUPPORTED: ALU 38"
+#elif defined(TBC_WARNING_MSVC)
+#pragma message("[3BC] UNSUPPORTED: ALU 38")
 #endif
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_UNSUPPORTED;
@@ -249,7 +256,7 @@ void alu_math(struct app_3bc_s* const self)
 #endif
 
         case 39:
-#if !defined(TBC_NOT_LOG2) && !defined(TBC_NOT_MATH)
+#if !defined(TBC_UNSUPPORTED_LOG2)
             /** @note optmized @b log2 **/
             if(self->cache_l2.i16[1] == 2) {
                 self->cpu.ra =
@@ -268,7 +275,7 @@ void alu_math(struct app_3bc_s* const self)
                 break;
             }
 #endif
-#if !defined(TBC_NOT_LOG10) && !defined(TBC_NOT_MATH)
+#if !defined(TBC_UNSUPPORTED_LOG10)
             /** @note optmized @b log10 **/
             if(self->cache_l2.i16[1] == 10) {
                 self->cpu.ra =
@@ -276,11 +283,13 @@ void alu_math(struct app_3bc_s* const self)
                 break;
             }
 #endif
-#if defined(TBC_NOT_MATH) || defined(TBC_NOT_LOG)
-#if defined(TBC_PRG_WARNING)
-#pragma message("[3BC] UNSUPPORTED: ALU 39 (PARTIAL)")
-#else
+#if defined(TBC_UNSUPPORTED_LOG)
+#if defined(TBC_WARNING_ERR)
+#error "[3BC] UNSUPPORTED: ALU 39 (PARTIAL)"
+#elif defined(TBC_WARNING_STD)
 #warning "[3BC] UNSUPPORTED: ALU 39 (PARTIAL)"
+#elif defined(TBC_WARNING_MSVC)
+#pragma message("[3BC] UNSUPPORTED: ALU 39 (PARTIAL)")
 #endif
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_UNSUPPORTED;

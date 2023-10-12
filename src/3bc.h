@@ -44,9 +44,6 @@
 #define VERSION_EXTRA "\n"
 #endif
 
-/** environment check **/
-#include "3bc_detect.h"
-
 /** prepare **/
 #include "3bc_macros.h"
 

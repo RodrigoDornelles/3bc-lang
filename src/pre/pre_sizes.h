@@ -1,10 +1,10 @@
 #ifndef H_MACRO_SIZES_TBC
 #define H_MACRO_SIZES_TBC
 
-#include "3bc_detect.h"
+#include "detect/detect_opt.h"
 
 #ifndef TBC_MAX_RAM
-#ifdef TBC_OPT_COMPACT
+#ifdef TBC_OPT_COMPACT_1
 /** @todo investigate memory usage on arduino **/
 #define TBC_MAX_RAM (128u)
 #else

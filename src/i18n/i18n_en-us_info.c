@@ -1,4 +1,5 @@
 #include "i18n_0000.h"
+#include "detect/detect_compiler.h"
 #include "pre/pre_date.h"
 #include "types/types_null.h"
 
@@ -7,7 +8,7 @@ static const char ___i18n_cli_info_001[] = "> AUTHOR: Rodrigo Dornelles\n";
 static const char ___i18n_cli_info_002[] = "> LICENSE: AGPL 3.0 or higher\n";
 static const char ___i18n_cli_info_003[] = "> VERSION: ";
 static const char ___i18n_cli_info_006[] = "> COMPILER: ";
-static const char ___i18n_cli_info_007[] = TBC_COMPILER_ID"\n";
+static const char ___i18n_cli_info_007[] = TBC_COMPILER_FULLNAME"\n";
 static const char ___i18n_cli_info_008[] = "> BUILD DATE: ";
 static const char ___i18n_cli_info_009[] = {
    TBC_YEAR_CH0, TBC_YEAR_CH1, TBC_YEAR_CH2, TBC_YEAR_CH3,

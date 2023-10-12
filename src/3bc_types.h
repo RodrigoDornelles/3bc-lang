@@ -38,7 +38,6 @@
 /** @todo move **/
 typedef struct app_3bc_s tbc_app_st;
 
-#include "3bc_detect.h"
 #include "3bc_macros.h"
 #include "types/types_primitive.h"
 #include "types/types_opcodes.h"

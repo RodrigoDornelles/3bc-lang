@@ -1,5 +1,8 @@
 #define TBC_SOURCE_ENTRY
-#include "3bc_detect.h"
+#include "detect/detect_opt.h"
+#include "detect/detect_libc.h"
+#include "detect/detect_system.h"
+#include "detect/detect_system.h"
 #include "bus/bus_sys_hello.h"
 #include "ds/ds_prog_array.h"
 #include "sys/sys_common_mock.h"
@@ -12,7 +15,7 @@
 
 const tbc_pkg_st tbc_pkg_standard = {
     {
-#if defined(TBC_OPT_ULTRA_COMPACT)
+#if defined(TBC_OPT_COMPACT_2)
         &ds_prog_array888_load,
 #else
         &ds_prog_array3912_load,
@@ -23,11 +26,11 @@ const tbc_pkg_st tbc_pkg_standard = {
         &sys_common_mock_exit_force,
         &ds_prog_arrayc_exist,
     },{
-#if defined(TBC_CONSOLE_NES)
+#if defined(TBC_SYSTEM_ID_NES)
         &sys_nes_output
-#elif defined(TBC_KERNEL_NT)
+#elif defined(TBC_LIBC_WINDOWS)
         &sys_windows_output
-#elif defined(TBC_USE_CONIO)
+#elif defined(TBC_LIBC_CONIO)
         &sys_conio_output,
 #else
         &sys_posix_output

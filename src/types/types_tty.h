@@ -1,7 +1,7 @@
 #ifndef H_TYPES_TTY_TBC
 #define H_TYPES_TTY_TBC
 
-#include "3bc_detect.h"
+#include "detect/detect_opt.h"
 #include "types/types_func.h"
 
 enum ___tbc_stream_type_e {
@@ -37,7 +37,7 @@ typedef union ___tbc_stream_io_u tbc_stream_io_ut;
 typedef struct ___tbc_tty_s tbc_tty_st;
 typedef struct ___tbc_tty_arru8_st tbc_tty_arru8_st;
 
-#if defined(TBC_OPT_ULTRA_COMPACT)
+#if defined(TBC_OPT_COMPACT_2)
 /**
  * C STANDARD INPUT
  *

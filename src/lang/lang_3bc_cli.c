@@ -6,7 +6,8 @@
 #include "util/util_args.h"
 #include "types/types_interpreter.h"
 #include "pre/pre_sizes.h"
-#if defined(TBC_USE_POSIX)
+#include "detect/detect_libc.h"
+#if defined(TBC_LIBC_POSIX)
 #include <fcntl.h>
 #endif
 
