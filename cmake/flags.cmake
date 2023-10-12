@@ -43,3 +43,7 @@ endif()
 if (VERSION_EXTRA)
     add_compile_options("-DVERSION_EXTRA=\" (${VERSION_EXTRA})\\n\"")
 endif()
+
+if (ZIG_VERSION)
+    add_compile_options("-DTBC_COMPILER_NICKNAME=\"zig ${ZIG_VERSION}\"")
+endif()
