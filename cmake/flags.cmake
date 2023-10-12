@@ -47,3 +47,7 @@ endif()
 if (ZIG_VERSION)
     add_compile_options("-DTBC_COMPILER_NICKNAME=\"zig ${ZIG_VERSION}\"")
 endif()
+
+if (TCC_VERSION)
+    add_compile_options("-DTBC_COMPILER_NICKNAME=\"${TCC_VERSION}\"")
+endif()
