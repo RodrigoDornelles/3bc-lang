@@ -104,7 +104,7 @@ void lang_3bc_compile(tbc_app_st *const self)
         }
         else if (tokens_idk[0] == 4) {
             tbc_i16_t key = util_keyword(tokens[0], opcodes_arr, opcodes_size);
-            if (key > 0) {
+            if (key >= 0) {
                 self->cpu.rx = opcodes_arr[key].value;
             } else {
                 self->cache_l1.error = ERROR_INVALID_MNEMONIC;
