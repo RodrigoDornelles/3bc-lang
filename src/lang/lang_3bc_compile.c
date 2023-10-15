@@ -100,7 +100,7 @@ void lang_3bc_compile(tbc_app_st *const self)
         /* parse column rx */
         cast = util_stoi_auto(&tokens[0], &tokens_idk[0], tokens[0], tokens_idk[0]);
         if (cast != NULL) {
-            self->cache_l1.error = cast(&self->cpu.rx, tokens[0], 8, tokens_idk[0]);
+            self->cache_l1.error = cast(&self->cpu.rx, tokens[0], 3, tokens_idk[0]);
         }
         else if (tokens_idk[0] == 4) {
             tbc_i16_t key = util_keyword(tokens[0], opcodes_arr, opcodes_size);

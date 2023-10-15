@@ -73,7 +73,8 @@ enum ___tbc_error_e {
     ERROR_FLAG_LINE = 34,
     ERROR_INVALID_SYNTAX = 35,
     ERROR_NOTHING_TO_DO = 36,
-    ERROR_INVALID_MNEMONIC = 37
+    ERROR_INVALID_MNEMONIC = 37,
+    ERROR_NUMBER_SIZE_TOO_LONG = 38
 };
 
 typedef enum ___tbc_error_e tbc_error_et;
