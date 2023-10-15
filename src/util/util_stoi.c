@@ -78,8 +78,11 @@ util_stoi_ft util_stoi_auto(char** dest, tbc_i8_t* dn, char *src, tbc_i8_t sn)
  * @param[in] dn integer destination length @b (bits)
  * @param[in] sn string source length @b (bytes)
  * @return status of parsing
- * @retval 0 when sucess
- * @retval 1 when error
+ * @retval @ref ERROR_UNKNOWN when success  
+ * @retval @ref ERROR_NUMBER_OVERFLOW when fail
+ * @retval @ref ERROR_NUMBER_NO_DIGITS when fail
+ * @retval @ref ERROR_NUMBER_WRONG_BASE when fail
+ * @retval @ref ERROR_NUMBER_SIZE_TOO_LONG when fail
  * @startebnf
  * base16 =
  * ("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "A" | "B" | "C" | "D" | "E" | "F"),
@@ -90,10 +93,10 @@ tbc_error_et util_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
 {
     char c;
     tbc_u8_t index = 0;
+    tbc_u8_t digits = 0;
     tbc_error_et res = ERROR_UNKNOWN;
-    switch(dn) {
-        case 8:
-        {
+    do {
+        if (dn <= 8) {
             tbc_u8_t copy8 = 0;
             do {
                 c = src[index];
@@ -106,6 +109,7 @@ tbc_error_et util_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
                 }
                 c |= 0x20;
                 copy8 <<= 4;
+                digits += digits || (c > '0')? 4: 0;
                 if (c >= '0' && c <= '9') {
                     copy8 |= c - '0';
                 } else if (c >= 'a' && c <= 'f') {
@@ -117,15 +121,15 @@ tbc_error_et util_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
                 ++index;
             }
             while(index < sn);
-            if (res == ERROR_UNKNOWN) {
+            if (digits > dn) {
+                res = ERROR_NUMBER_OVERFLOW;
+            }
+            if (digits > 0 && res == ERROR_UNKNOWN) {
                 *((tbc_u8_t*)dest) = copy8;
             }
             break;
         }
-        case 10:
-        case 13:
-        case 16:
-        {
+        if (dn <= 16) {
             tbc_u16_t copy16 = 0;
             do {
                 c = src[index];
@@ -138,6 +142,7 @@ tbc_error_et util_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
                 }
                 c |= 0x20;
                 copy16 <<= 4;
+                digits += digits || (c > '0')? 4: 0;
                 if (c >= '0' && c <= '9') {
                     copy16 |= c - '0';
                 } else if (c >= 'a' && c <= 'f') {
@@ -149,13 +154,15 @@ tbc_error_et util_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
                 ++index;
             }
             while(index < sn);
-            if (res == ERROR_UNKNOWN) {
+            if (digits > dn) {
+                res = ERROR_NUMBER_OVERFLOW;
+            }
+            if (digits > 0 && res == ERROR_UNKNOWN) {
                 *((tbc_u16_t*)dest) = copy16;
             }
             break;
         }
-        case 32:
-        {
+        if (dn <= 32) {
             tbc_u32_t copy32 = 0;
             do {
                 c = src[index];
@@ -168,6 +175,7 @@ tbc_error_et util_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
                 }
                 c |= 0x20;
                 copy32 <<= 4;
+                digits += digits || (c > '0')? 4: 0;
                 if (c >= '0' && c <= '9') {
                     copy32 |= c - '0';
                 } else if (c >= 'a' && c <= 'f') {
@@ -179,13 +187,16 @@ tbc_error_et util_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
                 ++index;
             }
             while(index < sn);
-            if (res == ERROR_UNKNOWN) {
+            if (digits > dn) {
+                res = ERROR_NUMBER_OVERFLOW;
+            }
+            if (digits > 0 && res == ERROR_UNKNOWN) {
                 *((tbc_u32_t*)dest) = copy32;
             }
             break;
         }
-        case 64:
  #if !defined(TBC_NOT_INT64)
+        if (dn <= 64)
         {
             tbc_u64_t copy64 = 0;
             do {
@@ -199,6 +210,7 @@ tbc_error_et util_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
                 }
                 c |= 0x20;
                 copy64 <<= 4;
+                digits += digits || (c > '0')? 4: 0;
                 if (c >= '0' && c <= '9') {
                     copy64 |= c - '0';
                 } else if (c >= 'a' && c <= 'f') {
@@ -210,18 +222,20 @@ tbc_error_et util_stoi16(void *const dest, char *const src, const tbc_u8_t dn, t
                 ++index;
             }
             while(index < sn);
-            if (res == ERROR_UNKNOWN) {
+            if (digits > dn) {
+                res = ERROR_NUMBER_OVERFLOW;
+            }
+            if (digits > 0 && res == ERROR_UNKNOWN) {
                 *((tbc_u64_t*)dest) = copy64;
             }
             break;
         }
 #endif
-        default:
-            res = ERROR_NUMBER_INVALID_BASE;
-            break;
+        res = ERROR_NUMBER_SIZE_TOO_LONG;
     }
+    while(0);
 
-    if (index == 0) {
+    if (digits == 0 && res == ERROR_UNKNOWN) {
         res = ERROR_NUMBER_NO_DIGITS;
     }
 
@@ -375,7 +389,7 @@ tbc_error_et util_stoi10(void *const dest, char *const src, const tbc_u8_t dn, t
  * @param[in] dn integer destination length @b (bits)
  * @param[in] sn string source length @b (bytes)
  * @return status of parsing
- * @retval 0 when sucess
+ * @retval @ref ERROR_UNKNOWN when success 
  * @retval @ref ERROR_NUMBER_OVERFLOW when fail
  * @retval @ref ERROR_NUMBER_NO_DIGITS when fail
  * @retval @ref ERROR_NUMBER_WRONG_BASE when fail
@@ -548,7 +562,7 @@ tbc_error_et util_stoi8(void *const dest, char *const src, const tbc_u8_t dn, tb
  * @param[in] dn integer destination length @b (bits)
  * @param[in] sn string source length @b (bytes)
  * @return status of parsing
- * @retval 0 when sucess
+ * @retval @ref ERROR_UNKNOWN when success 
  * @retval @ref ERROR_NUMBER_OVERFLOW when fail
  * @retval @ref ERROR_NUMBER_NO_DIGITS when fail
  * @retval @ref ERROR_NUMBER_WRONG_BASE when fail
