@@ -263,9 +263,8 @@ tbc_error_et util_stoi10(void *const dest, char *const src, const tbc_u8_t dn, t
 {
     tbc_u8_t index = 0;
     tbc_error_et res = ERROR_UNKNOWN;
-    switch(dn) {
-        case 8:
-        {
+    do {
+        if (dn <= 8 ) {
             tbc_u8_t copy8 = 0;
             do {
                 if (src[index] == '_' && index > 0) {
@@ -289,10 +288,7 @@ tbc_error_et util_stoi10(void *const dest, char *const src, const tbc_u8_t dn, t
             }
             break;
         }
-        case 10:
-        case 13:
-        case 16:
-        {
+        if (dn <= 16) {
             tbc_u16_t copy16 = 0;
             do {
                 if (src[index] == '_' && index > 0) {
@@ -316,8 +312,7 @@ tbc_error_et util_stoi10(void *const dest, char *const src, const tbc_u8_t dn, t
             }
             break;
         }
-        case 32:
-        {
+        if (dn <= 32) {
             tbc_u32_t copy32 = 0;
             do {
                 if (src[index] == '_' && index > 0) {
@@ -341,9 +336,8 @@ tbc_error_et util_stoi10(void *const dest, char *const src, const tbc_u8_t dn, t
             }
             break;
         }
-        case 64:
  #if !defined(TBC_NOT_INT64)
-        {
+        if (dn <= 64) {
             tbc_u64_t copy64 = 0;
             do {
                 if (src[index] == '_' && index > 0) {
@@ -368,12 +362,11 @@ tbc_error_et util_stoi10(void *const dest, char *const src, const tbc_u8_t dn, t
             break;
         }
 #endif
-        default:
-            res = ERROR_NUMBER_INVALID_BASE;
-            break;
+        res = ERROR_NUMBER_SIZE_TOO_LONG;
     }
+    while(0);
 
-    if (index == 0) {
+    if (index == 0 && res != ERROR_UNKNOWN) {
         res = ERROR_NUMBER_NO_DIGITS;
     }
 

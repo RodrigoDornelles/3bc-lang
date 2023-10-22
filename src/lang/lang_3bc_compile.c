@@ -1,10 +1,20 @@
 #include "3bc_types.h"
 #include "bus/bus_mem_0000.h"
 #include "util/util_stoi.h"
+#include "util/util_ascii.h"
 #include "util/util_asm.h"
 #include "util/util_keyword.h"
+#include "types/types_errors.h"
 #include "types/types_interpreter.h"
+
+/** @todo remove <stdio.h> */
 #include <stdio.h>
+
+union ___u8_u16_t {
+    void* ptr;
+    tbc_u8_t* u8;
+    tbc_u16_t* u16;
+};
 
 /**
  * @brief
@@ -29,6 +39,10 @@ const tbc_keyword_st opcodes_arr[] = { { "aloc", 2 },
 
 const tbc_i8_t opcodes_size = sizeof(opcodes_arr) / sizeof(*opcodes_arr);
 
+static const tbc_u8_t column_size[] = {3, 9 ,12};
+static const tbc_u8_t column_errors[] = {ERROR_INVALID_REGISTER,
+    ERROR_INVALID_ADR, ERROR_INVALID_CONSTANT };
+
 /**
  * @par Extended Backus-Naur Form
  * @startebnf
@@ -50,7 +64,9 @@ const tbc_i8_t opcodes_size = sizeof(opcodes_arr) / sizeof(*opcodes_arr);
 void lang_3bc_compile(tbc_app_st *const self)
 {
     tbc_interpreter_root_st *const interpreter = self->stack.cfg.interpreter;
+    union ___u8_u16_t cpu_r[] = {&self->cpu.rx, &self->cpu.ry, &self->cpu.rz};
     char* tokens[3];
+    char negative;
     char* line;
     char* tmp;
     /** @todo better name for @c tokens_idk (i dont known a better name)*/
@@ -58,6 +74,7 @@ void lang_3bc_compile(tbc_app_st *const self)
     tbc_i8_t tokens_n;
     tbc_i8_t line_n;
     util_stoi_ft cast;
+    tbc_u8_t i = 0;
 
     do {
         if (self->state != FSM_3BC_READING) {
@@ -97,39 +114,47 @@ void lang_3bc_compile(tbc_app_st *const self)
             break;
         }
 
-        /* parse column rx */
-        cast = util_stoi_auto(&tokens[0], &tokens_idk[0], tokens[0], tokens_idk[0]);
-        if (cast != NULL) {
-            self->cache_l1.error = cast(&self->cpu.rx, tokens[0], 3, tokens_idk[0]);
-        }
-        else if (tokens_idk[0] == 4) {
-            tbc_i16_t key = util_keyword(tokens[0], opcodes_arr, opcodes_size);
-            if (key >= 0) {
-                self->cpu.rx = opcodes_arr[key].value;
-            } else {
-                self->cache_l1.error = ERROR_INVALID_MNEMONIC;
+        /* magic array parser*/
+        while (i < tokens_n) {
+            cast = util_stoi_auto(&tokens[i], &tokens_idk[i], tokens[i], tokens_idk[i]);
+            if (cast != NULL) {
+                self->cache_l1.error = cast(cpu_r[i].ptr, tokens[i], column_size[i], tokens_idk[i]);
             }
-        } else {
-            self->cache_l1.error = ERROR_INVALID_REGISTER;
-        }
-        if (self->cache_l1.error != ERROR_UNKNOWN) {
-            self->rc = TBC_RET_THROW_ERROR;
-            break;
+            else if (tokens_idk[i] == 4) {
+                tbc_i16_t key = util_keyword(tokens[i], opcodes_arr, opcodes_size);
+                if (key >= 0) {
+                    if (column_size[i] > 8) {
+                        *cpu_r[i].u16 = opcodes_arr[key].value;
+                    } else {
+                        *cpu_r[i].u8 = opcodes_arr[key].value;
+                    }
+                } else {
+                    self->cache_l1.error = ERROR_INVALID_MNEMONIC;
+                }
+            }
+            else if (tokens[i][0] == '\'') {
+                negative = util_ascii(tokens[i], tokens_idk);
+                if (negative == 0x15) {
+                    self->cache_l1.error = ERROR_CHAR_SCAPE;
+                    break;
+                } 
+                if (column_size[i] > 8) {
+                    *cpu_r[i].u16 = negative;
+                } else {
+                    *cpu_r[i].u8 = negative;
+                }
+            }
+            else {
+                self->cache_l1.error = column_errors[i];
+            }
+            if (self->cache_l1.error != ERROR_UNKNOWN) {
+                self->rc = TBC_RET_THROW_ERROR;
+                break;
+            }
+            ++i;
         }
 
-        /* parse column ry */
-        cast = util_stoi_auto(&tokens[1], &tokens_idk[1], tokens[1], tokens_idk[1]);
-        if(cast == NULL || cast(&self->cpu.ry, tokens[1], 16, tokens_idk[1]) != 0) {
-            self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_INVALID_ADR;
-            break;
-        }
-
-        /* parse column rz */
-        cast = util_stoi_auto(&tokens[2], &tokens_idk[2], tokens[2], tokens_idk[2]);
-        if(cast == NULL || cast(&self->cpu.rz, tokens[2], 16, tokens_idk[2]) != 0) {
-            self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_INVALID_CONSTANT;
+        if (self->rc == TBC_RET_THROW_ERROR) {
             break;
         }
 

@@ -18,7 +18,7 @@ int main()
         char src[] = "'\\a'";
         assert(util_ascii(src, sizeof(src)) == 0x7);
     }
-    /** @test case 3: ascii tab caracter */     
+    /** @test case 3: ascii tab caracter */
     {
         char src[] = "'\\t'";
         assert(util_ascii(src, sizeof(src)) == 0x9);
