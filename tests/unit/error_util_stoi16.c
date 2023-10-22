@@ -6,7 +6,7 @@ int main()
 {
     {
         tbc_u8_t dest = 197u;
-        char* src = "zoo";
+        char* src = "";
         assert(util_stoi16(&dest, src, 8, 3) == ERROR_NUMBER_NO_DIGITS);
         assert(dest == 197u);
     }
@@ -18,7 +18,7 @@ int main()
     }
     {
         tbc_u16_t dest = 42069u;
-        char* src = "zoo";
+        char* src = "";
         assert(util_stoi16(&dest, src, 16, 3) == ERROR_NUMBER_NO_DIGITS);
         assert(dest == 42069u);
     }
@@ -30,7 +30,7 @@ int main()
     }
     {
         tbc_u32_t dest = 1234567890u;
-        char* src = "zoo";
+        char* src = "";
         assert(util_stoi16(&dest, src, 32, 3) == ERROR_NUMBER_NO_DIGITS);
         assert(dest == 1234567890u);
     }
@@ -42,7 +42,7 @@ int main()
     }
     {
         tbc_u64_t dest = 12899124812414948523llu;
-        char* src = "zoo";
+        char* src = "";
         assert(util_stoi16(&dest, src, 64, 3) == ERROR_NUMBER_NO_DIGITS);
         assert(dest == 12899124812414948523llu);
     }
