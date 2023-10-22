@@ -20,6 +20,7 @@ if(TEST_UNIT)
     include(CTest)
     set(tests
         "bugs_util_stoi,src/util/util_stoi.c"
+        "error_util_ascii,src/util/util_ascii.c"
         "error_util_asm_line,src/util/util_asm.c"
         "error_util_asm_split,src/util/util_asm.c"
         "error_util_djb2,src/util/util_djb2.c"
@@ -30,6 +31,7 @@ if(TEST_UNIT)
         "error_util_stoi16,src/util/util_stoi.c"
         "error_driver_stack,src/driver/driver_stack.c"
         "tests_util_args,src/util/util_args.c"
+        "tests_util_ascii,src/util/util_ascii.c"
         "tests_util_asm_line,src/util/util_asm.c"
         "tests_util_asm_split,src/util/util_asm.c"
         "tests_util_djb2,src/util/util_djb2.c"
