@@ -1,5 +1,6 @@
 #include "3bc_types.h"
 #include "bus/bus_mem_0000.h"
+#include "util/util_djb2.h"
 #include "util/util_stoi.h"
 #include "util/util_ascii.h"
 #include "util/util_asm.h"
@@ -120,6 +121,9 @@ void lang_3bc_compile(tbc_app_st *const self)
             if (cast != NULL) {
                 self->cache_l1.error = cast(cpu_r[i].ptr, tokens[i], column_size[i], tokens_idk[i]);
             }
+            else if (tokens[i][0] == ':') {                
+                self->cache_l1.error = util_djb2(cpu_r[i].ptr, tokens[i], column_size[i], tokens_idk[i]);
+            }
             else if (tokens_idk[i] == 4) {
                 tbc_i16_t key = util_keyword(tokens[i], opcodes_arr, opcodes_size);
                 if (key >= 0) {
@@ -133,7 +137,7 @@ void lang_3bc_compile(tbc_app_st *const self)
                 }
             }
             else if (tokens[i][0] == '\'') {
-                negative = util_ascii(tokens[i], tokens_idk);
+                negative = util_ascii(tokens[i], tokens_idk[i]);
                 if (negative == 0x15) {
                     self->cache_l1.error = ERROR_CHAR_SCAPE;
                     break;
