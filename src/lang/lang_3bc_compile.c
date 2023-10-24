@@ -123,18 +123,6 @@ void lang_3bc_compile(tbc_app_st *const self)
             else if (tokens[i][0] == ':') {                
                 self->cache_l1.error = util_djb2(cpu_r[i].ptr, tokens[i], column_size[i], tokens_idk[i]);
             }
-            else if (tokens_idk[i] == 4) {
-                tbc_i16_t key = util_dsl_keyword(tokens[i], opcodes_arr, opcodes_size);
-                if (key >= 0) {
-                    if (column_size[i] > 8) {
-                        *cpu_r[i].u16 = opcodes_arr[key].value;
-                    } else {
-                        *cpu_r[i].u8 = opcodes_arr[key].value;
-                    }
-                } else {
-                    self->cache_l1.error = ERROR_INVALID_MNEMONIC;
-                }
-            }
             else if (tokens[i][0] == '\'') {
                 negative = util_ascii(tokens[i], tokens_idk[i]);
                 if (negative == 0x15) {
@@ -145,6 +133,18 @@ void lang_3bc_compile(tbc_app_st *const self)
                     *cpu_r[i].u16 = negative;
                 } else {
                     *cpu_r[i].u8 = negative;
+                }
+            }
+            else if (tokens_idk[i] == 4) {
+                tbc_i16_t key = util_dsl_keyword(tokens[i], opcodes_arr, opcodes_size);
+                if (key >= 0) {
+                    if (column_size[i] > 8) {
+                        *cpu_r[i].u16 = opcodes_arr[key].value;
+                    } else {
+                        *cpu_r[i].u8 = opcodes_arr[key].value;
+                    }
+                } else {
+                    self->cache_l1.error = ERROR_INVALID_MNEMONIC;
                 }
             }
             else {
