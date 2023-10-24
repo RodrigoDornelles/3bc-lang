@@ -1,40 +1,18 @@
 /**
- * @internal
- *  ___________  _____   _
- * |____ | ___ \/  __ \ | |
- *     / / |_/ /| /  \/ | | __ _ _ __   __ _ _   _  __ _  __ _  ___
- *     \ \ ___ \| |     | |/ _` | '_ \ / _` | | | |/ _` |/ _` |/ _ \
- * .___/ / |_/ /| \__/\ | | (_| | | | | (_| | |_| | (_| | (_| |  __/
- * \____/\____/  \____/ |_|\__,_|_| |_|\__, |\__,_|\__,_|\__, |\___|
- *                                     __/ |             __/ |
- *                                    |___/             |___/
- * @endinternal
  * @file util_dsl.c
  *
- * @short
- * domain specific language utility
+ * @brief Domain-Specific Language (DSL) Utility
  *
- * @brief
- * Utility for writing simple language lexers without precedence tracking
+ * @author Rodrigo Dornelles
+ *
+ * @details
+ * This file provides a utility for creating simple language lexers without
+ * precedence tracking.
  *
  * @copyright
- * Low-level language, tiny virtual machine, intermediate representation,     \n
- * embeddable, easy for beginners. (Friendly Punched cards)                   \n
- *                                                                            \n
- * Copyright (C) 2020 Rodrigo Dornelles.                                      \n
- *                                                                            \n
- * This program is free software: you can redistribute it and/or modify       \n
- * it under the terms of the GNU Affero General Public License as published   \n
- * by the Free Software Foundation, either version 3 of the License,          \n
- * or any later version.                                                      \n
- *                                                                            \n
- * This program is distributed in the hope that it will be useful,            \n
- * but WITHOUT ANY WARRANTY; without even the implied warranty of             \n
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the              \n
- * GNU Affero General Public License for more details.                        \n
- *                                                                            \n
- * You should have received a copy of the GNU Affero General Public License   \n
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.     \n
+ * It is distributed under the GNU Affero General Public
+ * License (AGPL) version 3 or any later version. For more details, please
+ * refer to https://www.gnu.org/licenses/
  */
 
 #include <stdbool.h>
@@ -42,12 +20,12 @@
 #include "types/types_null.h"
 
 /**
- * @short parameter divider
+ * @brief extract tokens fom string
  * @details Just like a @c split in  @b JS and @b Python or 
- * @c `explode` in @c PHP, this function separates the string text
+ * @c explode in @c PHP, this function separates the string text
  * according to the space between keywords giving a maximum number of tokens.
  * @param[out] dest array of tokens
- * @param[out] dest array of token sizes
+ * @param[out] destn array of token sizes
  * @param[in] src string
  * @param[in] dn number of pointers
  * @param[in] sn lenght of string
@@ -140,7 +118,7 @@ tbc_i8_t util_dsl_split(char** dest, tbc_u8_t* destn, char* src, tbc_u8_t dn, tb
 }
 
 /**
- * @brief line mark
+ * @brief extract line from string
  * @details receives a text and marks the beginning of how many characters it has,
  * where the comments begin and where they end.
  * 
@@ -239,14 +217,15 @@ tbc_i8_t util_dsl_line(char **beg, char **mid, char **end, char *src, tbc_u8_t s
 }
 
 /**
- * @short keyword to opcode
- * @brief @par find opcode value given a list of keywords
+ * @short keyword index from string
+ * @brief find opcode value given a list of keywords
  * @details binary search optimized for 4-letter keywords in an array
  * that contains a sorted key and a 2-byte (16bit) value.
+ * @todo use string instead struct
  * @note this function is case unsensitive.
  * @note this function has operation complexity @f$O(log (n))@f$.
  * @note this function has endless optimization.
- * @todo this function has old processors optimization.
+ * @note this function has old processors optimization.
  * @param[in] src string source
  * @param[in] kl keyword list @b (array) of @c tbc_keyword_st
  * @param[in] kn keyword size @b (bytes)

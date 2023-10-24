@@ -1,20 +1,36 @@
+/**
+ * @file util_args.c
+ *
+ * @brief Argument / Parameters Interpreter Utility
+ *
+ * @author Rodrigo Dornelles
+ *
+ * @details
+ * This file provides a utility for interpreting arguments passed through
+ * the command-line interface (CLI) quickly and objectively.
+ *
+ * @copyright
+ * It is distributed under the GNU Affero General Public
+ * License (AGPL) version 3 or any later version. For more details, please
+ * refer to https://www.gnu.org/licenses/
+ */
+
 #include "util_args.h"
 #include "types/types_null.h"
 
 /**
  * @brief verify if exist a flag
  * @details can be use has @c -h or @c -v for help or version.
+ * @par Extended Backus-Naur Form
+ * @startebnf
+ * single_flag = "-", "a-zA-Z" (* any key *);
+ * @endebnf
  * @param[in] argc number of arguments
  * @param[in] argv array of arguments
  * @param[in] key single char flag
  * @return pointer to argument
  * @retval NULL when not found
- * @startebnf
- * single_flag
- *  = "-"
- *  , "a-zA-Z" (* any key *)
- *  ;
- * @endebnf
+ *
  */
 char* util_args_has(int argc, char** argv, char key) {
     char* ret = NULL;
@@ -36,18 +52,15 @@ char* util_args_has(int argc, char** argv, char key) {
 /**
  * @brief get value of a compound flag
  * @details can be use has @c -o @c value for ouput some file.
+ * @par Extended Backus-Naur Form
+ * @startebnf
+ * composite_flag = "-", "a-zA-Z" (* any key *), text (* cannot start with "-" *);
+ * @endebnf
  * @param[in] argc number of arguments
  * @param[in] argv array of arguments
  * @param[in] key single char flag
  * @return pointer to argument
  * @retval NULL when not found
- * @startebnf
- * composite_flag
- *  = "-"
- *  , "a-zA-Z" (* any key *)
- *  , text (* cannot start with "-" *)
- *  ;
- * @endebnf
  */
 char* util_args_get(int argc, char** argv, char key) {
     char* ret = NULL;

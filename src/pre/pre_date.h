@@ -1,5 +1,5 @@
 /**
- * @link https://stackoverflow.com/questions/11697820/how-to-use-date-and-time-predefined-macros-in-as-two-integers-then-stri
+ * @li https://stackoverflow.com/questions/11697820/how-to-use-date-and-time-predefined-macros-in-as-two-integers-then-stri
  */
 #ifndef H_PRE_DATE_TBC
 #define H_PRE_DATE_TBC

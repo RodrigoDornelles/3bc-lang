@@ -11,29 +11,29 @@ static void sys_nes_output_init(void);
 
 /**
  * @brief startup PPU, palete, scroll, sprites, nametable...
- * @link https://www.nesdev.org/wiki/PPU_registers
- * @link https://www.nesdev.org/wiki/PPU_palettes
- * @link https://www.nesdev.org/wiki/PPU_scrolling
- * @link https://www.nesdev.org/wiki/PPU_OAM
+ * @li https://www.nesdev.org/wiki/PPU_registers
+ * @li https://www.nesdev.org/wiki/PPU_palettes
+ * @li https://www.nesdev.org/wiki/PPU_scrolling
+ * @li https://www.nesdev.org/wiki/PPU_OAM
  */
 static void sys_nes_output_init()
 {
-    /** init PPU */
+    /* init PPU */
     *((unsigned char*) 0x2000) = 0b10101000;
 
-    /** init palette */
+    /* init palette */
     *((unsigned char*) 0x2006) = 0x3F;
     *((unsigned char*) 0x2006) = 0x00;
-    *((unsigned char*) 0x2007) = 0x0F; /**< color 0: black */
-    *((unsigned char*) 0x2007) = 0x30; /**< color 1: white */
-    *((unsigned char*) 0x2007) = 0x30; /**< color 2: white */
-    *((unsigned char*) 0x2007) = 0x30; /**< color 3: white */
+    *((unsigned char*) 0x2007) = 0x0F; /** @note color 0: black */
+    *((unsigned char*) 0x2007) = 0x30; /** @note color 1: white */
+    *((unsigned char*) 0x2007) = 0x30; /** @note color 2: white */
+    *((unsigned char*) 0x2007) = 0x30; /** @note color 3: white */
 
-    /** reset scroll */
+    /* reset scroll */
     *((unsigned char*) 0x2005) = 0x00;
     *((unsigned char*) 0x2005) = 0x00;
 
-    /** hide all sprites */
+    /* hide all sprites */
     cursor_tty.vram_pack[0] = 0x41;
     *((unsigned char*) 0x2003) = 0x00;
     while(--cursor_tty.vram_pack[0]) {
@@ -43,7 +43,7 @@ static void sys_nes_output_init()
         *((unsigned char*) 0x2004) = 0xf0;
     }
 
-    /** clear screen */
+    /* clear screen */
     cursor_tty.vram_address = 0x2000;
     *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
     *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
@@ -53,7 +53,7 @@ static void sys_nes_output_init()
     }
     while(cursor_tty.vram_address <= (0x2400 - 0x60));
 
-    /** reset cursor position */
+    /* reset cursor position */
     cursor_tty.vram_address = 0x2020;
     *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
     *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
@@ -61,20 +61,20 @@ static void sys_nes_output_init()
 
 /**
  * @brief stream text in entire TV screen
- * @link https://www.nesdev.org/wiki/PPU_memory_map
- * @link https://www.nesdev.org/wiki/PPU_nametables
- * @link https://www.nesdev.org/wiki/PPU_registers
- * @link https://www.nesdev.org/wiki/NMI_thread
- * @link https://www.nesdev.org/wiki/NMI
+ * @li https://www.nesdev.org/wiki/PPU_memory_map
+ * @li https://www.nesdev.org/wiki/PPU_nametables
+ * @li https://www.nesdev.org/wiki/PPU_registers
+ * @li https://www.nesdev.org/wiki/NMI_thread
+ * @li https://www.nesdev.org/wiki/NMI
  */
 void sys_nes_output(tbc_app_st *const self)
 {
-    /** interator */
+    /* interator */
     static tbc_u8_t* buffer;
     static tbc_u8_t index;
     static tbc_u8_t tile;
 
-    /** reset */
+    /* reset */
     if(self->cache_l3.fixbuf.size < 0) {
         buffer = self->cache_l3.buffer.storage;
         self->cache_l3.fixbuf.size = -self->cache_l3.fixbuf.size;
@@ -83,57 +83,57 @@ void sys_nes_output(tbc_app_st *const self)
     }
     index = 0;
 
-    /** first put */
+    /* first put */
     if (cursor_tty.vram_address == 0) {
         sys_nes_output_init();
     }
 
-    /** wait nmi */
+    /* wait nmi */
     while(*((signed char*) 0x2002) > 0) {
         continue;
     }
 
-    /** turn off PPU */
+    /* turn off PPU */
     *((unsigned char*) 0x2001) = 0b00000000;
 
-    /** update nametable cursor position */
+    /* update nametable cursor position */
     *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
     *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
 
-    /** streamming */
+    /* streamming */
     while(1) {
-        /** cache tile to improve perfomance */
+        /* cache tile to improve perfomance */
         tile = buffer[index];
         ++index;
         
-        /** end of of max size*/
+        /* end of of max size*/
         if (index > self->cache_l3.fixbuf.size) {
             break;
         }
 
-        /** terminator */
+        /* terminator */
         if (tile == '\0') {
             break;
         }
         
-        /** special char: carrier return */
+        /* special char: carrier return */
         if (tile == '\r') {
-            /** ignore */
+            /* ignore */
             continue;
         }
 
-        /** 0x60 is three lines to end screen */
+        /* 0x60 is three lines to end screen */
         if (cursor_tty.vram_address >= (0x2400 - 0x60)) {
             sys_nes_output_init();
             index = 0;
             continue;
         }
 
-        /** special char: tab */
+        /* special char: tab */
         if (tile == '\t') {
             /** 
-             * tabulation
-             * @joke I really don't know how it works!
+             * @par joke
+             * I really don't know how this @b tabulation works!
              */
             cursor_tty.vram_address |= 7;
             *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
@@ -141,23 +141,23 @@ void sys_nes_output(tbc_app_st *const self)
             continue;
         }
 
-        /** special char: break line */
+        /* special char: break line */
         if (tile == '\n') {
-            /** line feed */
+            /* line feed */
             cursor_tty.vram_address += 32;
-            /** carrier return */
+            /* carrier return */
             cursor_tty.vram_address &= 0xffe0;
-            /** update cursor position into the nametable */
+            /* update cursor position into the nametable */
             *((unsigned char*) 0x2006) = cursor_tty.vram_pack[1];
             *((unsigned char*) 0x2006) = cursor_tty.vram_pack[0];
             continue;
         }
 
-        /** put character to PPU */
+        /* put character to PPU */
         *((unsigned char*) 0x2007) = tile;
         ++cursor_tty.vram_address;
     }
 
-    /** turn on PPU*/
+    /* turn on PPU*/
     *((unsigned char*) 0x2001) = 0b00011110;
 }
