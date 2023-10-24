@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <string.h>
-#include "util/util_asm.h"
+#include "util/util_dsl.h"
 
 int main()
 {
@@ -9,7 +9,7 @@ int main()
         char src[] = "";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == -1);
     }
@@ -19,7 +19,7 @@ int main()
         char src[] = "            ";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 0);
         assert(beg == NULL);
@@ -32,7 +32,7 @@ int main()
         char src[] = "   .";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 0);
         assert(beg == NULL);
@@ -44,49 +44,49 @@ int main()
     {
         char src[] = "fo;bar.z";
         char *beg, *mid, *end ;
-        assert(util_asm_line(NULL, &mid, &end, src, sizeof(src)) == -2);
+        assert(util_dsl_line(NULL, &mid, &end, src, sizeof(src)) == -2);
     }
 
     /** @test Case 5: missing pointer for @c mid */
     {
         char src[] = "fo;bar.z";
         char *beg, *mid, *end ;
-        assert(util_asm_line(&beg, NULL, &end, src, sizeof(src)) == -2);
+        assert(util_dsl_line(&beg, NULL, &end, src, sizeof(src)) == -2);
     }
 
     /** @test Case 6: missing pointer for @c end */
     {
         char src[] = "fo;bar.z";
         char *beg, *mid, *end ;
-        assert(util_asm_line(&beg, &mid, NULL, src, sizeof(src)) == -2);
+        assert(util_dsl_line(&beg, &mid, NULL, src, sizeof(src)) == -2);
     }
 
     /** @test Case 7: missing source string */
     {
         char src[] = "fo;bar.z";
         char *beg, *mid, *end ;
-        assert(util_asm_line(&beg, &mid, &end, NULL, sizeof(src)) == -2);
+        assert(util_dsl_line(&beg, &mid, &end, NULL, sizeof(src)) == -2);
     }
 
     /** @test Case 8: empty source size */
     {
         char src[] = "fo;bar.z";
         char *beg, *mid, *end ;
-        assert(util_asm_line(&beg, &mid, &end, src, 0) == 0);
+        assert(util_dsl_line(&beg, &mid, &end, src, 0) == 0);
     }
 
     /** @test Case 9: not closed quote */
     {
         char src[] = "fo 'atumalaka;bar.z";
         char *beg, *mid, *end ;
-        assert(util_asm_line(&beg, &mid, &end, src, sizeof(src)) == -3);
+        assert(util_dsl_line(&beg, &mid, &end, src, sizeof(src)) == -3);
     }
 
     /** @test Case 9: not closed quote */
     {
         char src[] = "';bar.z";
         char *beg, *mid, *end ;
-        assert(util_asm_line(&beg, &mid, &end, src, sizeof(src)) == -3);
+        assert(util_dsl_line(&beg, &mid, &end, src, sizeof(src)) == -3);
     }
 
     return 0;

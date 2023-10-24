@@ -1,6 +1,6 @@
 #include <assert.h>
 #include <string.h>
-#include "util/util_asm.h"
+#include "util/util_dsl.h"
 
 #include <stdio.h>
 
@@ -11,7 +11,7 @@ int main()
         char src[] = "         foo bar zzzzzz";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 14);
         assert(strncmp(beg, "foo bar zzzzzz", length) == 0);
@@ -24,7 +24,7 @@ int main()
         char src[] = "   . This is a test line ;;;; with a comment";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 20);
         assert(strncmp(beg, "This is a test line ", 20) == 0);
@@ -38,7 +38,7 @@ int main()
         char src[] = "   ; This is a comment line with spaces";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 0);
         assert(beg == NULL);
@@ -52,7 +52,7 @@ int main()
         char src[] = "this is '$#fake' ;comment";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 17);
         assert(strncmp(beg, "this is '$#fake' ", 17) == 0);
@@ -66,7 +66,7 @@ int main()
         char src[] = "   ; This is a comment line";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 0);
         assert(beg == NULL);
@@ -80,7 +80,7 @@ int main()
         char src[] = "   ; Comment 1 ; Comment 2 ; Comment 3";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 0);
         assert(beg == NULL);
@@ -94,7 +94,7 @@ int main()
         char src[] = "   a";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 1);
         assert(strcmp(beg, "a") == 0);
@@ -107,7 +107,7 @@ int main()
         char src[] = "this is '#;';'not invalid quotes!";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 12);
         assert(strncmp(beg, "this is '#;'", 12) == 0);
@@ -121,7 +121,7 @@ int main()
         char src[] = "foo #bar\nz";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 4);
         assert(strncmp(beg, "foo", 3) == 0);
@@ -136,7 +136,7 @@ int main()
         char src[] = "foo.#bar,z";
         char *beg, *mid, *end;
 
-        tbc_i8_t length = util_asm_line(&beg, &mid, &end, src, sizeof(src));
+        tbc_i8_t length = util_dsl_line(&beg, &mid, &end, src, sizeof(src));
 
         assert(length == 4);
         assert(strncmp(beg, "foo", 3) == 0);
