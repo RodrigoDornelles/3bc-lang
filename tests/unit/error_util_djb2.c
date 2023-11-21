@@ -43,7 +43,7 @@ int main()
     {
         tbc_u64_t dest = 7777777llu;
         char* src = "";
-        assert(util_djb2(&dest, src, 64, sizeof(src)) == ERROR_NUMBER_INVALID_BASE);
+        assert(util_djb2(&dest, src, 64, sizeof(src)) == ERROR_NUMBER_SIZE_TOO_LONG);
         assert(dest == 7777777llu);
     }
 }

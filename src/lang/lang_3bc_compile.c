@@ -3,8 +3,7 @@
 #include "util/util_djb2.h"
 #include "util/util_stoi.h"
 #include "util/util_ascii.h"
-#include "util/util_asm.h"
-#include "util/util_keyword.h"
+#include "util/util_dsl.h"
 #include "types/types_errors.h"
 #include "types/types_interpreter.h"
 
@@ -86,7 +85,7 @@ void lang_3bc_compile(tbc_app_st *const self)
             break;
         }
         /* seperate line */
-        line_n = util_asm_line(&line, &tmp, &interpreter->io.eval, interpreter->io.eval, interpreter->line_size);
+        line_n = util_dsl_line(&line, &tmp, &interpreter->io.eval, interpreter->io.eval, interpreter->line_size);
 
         /* end of program */
         if (line_n == -1) {
@@ -101,7 +100,7 @@ void lang_3bc_compile(tbc_app_st *const self)
         }
         
         /* separate tokens */
-        tokens_n = util_asm_split(tokens, tokens_idk, line, sizeof(tokens)/sizeof(*tokens), line_n);
+        tokens_n = util_dsl_split(tokens, tokens_idk, line, sizeof(tokens)/sizeof(*tokens), line_n);
 
         if (tokens_n < 0) {
             self->rc = TBC_RET_THROW_ERROR;
@@ -137,7 +136,7 @@ void lang_3bc_compile(tbc_app_st *const self)
                 }
             }
             else if (tokens_idk[i] == 4) {
-                tbc_i16_t key = util_keyword(tokens[i], opcodes_arr, opcodes_size);
+                tbc_i16_t key = util_dsl_keyword(tokens[i], opcodes_arr, opcodes_size);
                 if (key >= 0) {
                     if (column_size[i] > 8) {
                         *cpu_r[i].u16 = opcodes_arr[key].value;
