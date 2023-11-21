@@ -4,6 +4,7 @@
 #include "util/util_stoi.h"
 #include "util/util_ascii.h"
 #include "util/util_dsl.h"
+#include "lang/lang_3bc_cli.h"
 #include "types/types_errors.h"
 #include "types/types_interpreter.h"
 
@@ -84,6 +85,12 @@ void lang_3bc_compile(tbc_app_st *const self)
             self->rc = TBC_RET_OK;
             break;
         }
+        if (interpreter->type == TBC_IT_STARTED_INFO) {
+            lang_3bc_cli_put(self, 'i');
+            self->rc = TBC_RET_EXIT_FORCE;
+            break;
+        }
+
         /* seperate line */
         line_n = util_dsl_line(&line, &tmp, &interpreter->io.eval, interpreter->io.eval, interpreter->line_size);
 

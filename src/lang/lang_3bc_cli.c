@@ -52,6 +52,10 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv, void* buf,
             self->rc = TBC_RET_EXIT_FORCE;
             break;
         }
+        if (util_args_has(argc, argv, 'I') != NULL) {
+            interpreter->type = TBC_IT_STARTED_INFO;
+            break;
+        }
         /* program flag */
         if ((param = util_args_get(argc, argv, 'e')) != NULL) {
             interpreter->type = TBC_IT_INLINE;

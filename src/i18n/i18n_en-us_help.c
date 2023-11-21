@@ -5,7 +5,7 @@ static const char ___i18n_cli_help_000[] = "usage: 3bc [file]\n";
 static const char ___i18n_cli_help_001[] = "\t-e <text> evaluate program\n";
 static const char ___i18n_cli_help_002[] = "\t-l <size> line max length\n";
 static const char ___i18n_cli_help_003[] = "\t-v -V     version (extra)\n";
-static const char ___i18n_cli_help_004[] = "\t-i        vm information\n";
+static const char ___i18n_cli_help_004[] = "\t-i -I     vm info (after)\n";
 static const char ___i18n_cli_help_005[] = "\n";
 
 static const tbc_info_txt_st ___i18n_cli_help_txts[] = {

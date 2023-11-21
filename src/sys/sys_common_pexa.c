@@ -1,7 +1,5 @@
-#include "sys_common_pexa.h"
-#if !defined(TBC_NOT_MALLOC)
-#include <stdlib.h>
-#endif
+#include "bus/bus_mem_0000.h"
+#include "sys/sys_common_pexa.h"
 #include "types/types_null.h"
 
 /**
@@ -16,7 +14,7 @@ void sys_common_pexams_expand(tbc_app_st *const self)
 #else
     do {
         tbc_u16_t newsize = self->stack.cfgmin.prog->size + 3;
-        tbc_u8_t* newptr = (tbc_u8_t*) realloc(self->cin.tty_storage.io.arr.ptr, newsize);
+        tbc_u8_t* newptr = (tbc_u8_t*) tbc_mem.realloc_func(self->cin.tty_storage.io.arr.ptr, newsize);
 
         if (newptr == NULL) {
             self->rc = TBC_RET_THROW_ERROR;

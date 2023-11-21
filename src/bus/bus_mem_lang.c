@@ -16,6 +16,7 @@ static void* tbc_realloc(void*, size_t);
 extern void free(void*);
 extern void* malloc(size_t);
 extern void* realloc(void*, size_t);
+static void* tbc_realloc(void*, size_t); 
 #endif
 
 #if !defined(TBC_SCU_OPTIONAL_FIX)
@@ -32,7 +33,7 @@ const tbc_mem_st tbc_mem = {
 #elif !defined(TBC_NOT_MALLOC)
     &free,
     &malloc,
-    &realloc
+    &tbc_realloc
 #else
     NULL,
     NULL,
@@ -53,6 +54,11 @@ static void* tbc_realloc(void* ptr, size_t size) {
         tbc_total_heap += size;
     }
     return newPtr;
+}
+#else
+static void* tbc_realloc(void* ptr, size_t size) {
+    tbc_total_heap += size;
+    return realloc(ptr, size);
 }
 #endif
 
