@@ -62,7 +62,3 @@ add_library(tbc_i18n OBJECT "${tbc_lang_files};${I18N_PATH}/i18n_0000.c")
 # Interpreter
 FILE(GLOB tbc_lang_3bc_files "${CMAKE_SOURCE_DIR}/src/lang/lang_3bc_*.c")
 add_library(tbc_lang3bc OBJECT ${tbc_lang_3bc_files})
-
-# Legacy
-FILE(GLOB tbc_legacy_files "${CMAKE_SOURCE_DIR}/src/legacy/*.c")
-add_library(tbc_legacy OBJECT ${tbc_legacy_files})
