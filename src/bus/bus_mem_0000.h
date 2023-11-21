@@ -13,6 +13,7 @@ struct ___tbc_mem_s {
     void* (*realloc_func)(void*, size_t);
 };
 
+extern size_t tbc_total_heap;
 extern const tbc_mem_st tbc_mem;
 
 #endif

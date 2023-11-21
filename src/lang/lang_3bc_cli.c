@@ -1,4 +1,5 @@
 #define TBC_SOURCE_ENTRY
+#include "bus/bus_mem_0000.h"
 #include "bus/bus_sys_0000.h"
 #include "i18n/i18n_0000.h"
 #include "lang/lang_3bc_cli.h"
@@ -135,6 +136,9 @@ void lang_3bc_cli_put(tbc_app_st *const self, char key)
                         break;
                         case 4:
                         self->cache_l3.fixbuf.size = util_itos10(self->cache_l3.fixbuf.storage, &sizeobject, sizeof(self->cache_l3.fixbuf.storage), 16);
+                        break;
+                        case 5:
+                        self->cache_l3.fixbuf.size = util_itos10(self->cache_l3.fixbuf.storage, &tbc_total_heap, sizeof(self->cache_l3.fixbuf.storage), sizeof(tbc_total_heap) * 8);
                         break;
                     }
                     ++j;

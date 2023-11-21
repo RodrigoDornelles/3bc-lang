@@ -17,9 +17,10 @@ static const char ___i18n_cli_info_009[] = {
     '\n', '\0'
 };
 static const char ___i18n_cli_info_010[] = "> STACK SIZE: ";
+static const char ___i18n_cli_info_012[] = " (bytes)\n";
 static const char ___i18n_cli_info_013[] = "> STACK FREE: ";
 static const char ___i18n_cli_info_016[] = "> OBJECT SIZE: ";
-static const char ___i18n_cli_info_018[] = " (bytes)\n";
+static const char ___i18n_cli_info_019[] = "> MALLOC SIZE: ";
 
 static const tbc_info_txt_st ___i18n_cli_info_txts[] = {
     {sizeof(___i18n_cli_info_000), (char *const)___i18n_cli_info_000},
@@ -34,13 +35,16 @@ static const tbc_info_txt_st ___i18n_cli_info_txts[] = {
     {sizeof(___i18n_cli_info_009), (char *const)___i18n_cli_info_009},
     {sizeof(___i18n_cli_info_010), (char *const)___i18n_cli_info_010},
     {0, NULL},
-    {sizeof(___i18n_cli_info_018), (char *const)___i18n_cli_info_018},
+    {sizeof(___i18n_cli_info_012), (char *const)___i18n_cli_info_012},
     {sizeof(___i18n_cli_info_013), (char *const)___i18n_cli_info_013},
     {0, NULL},
-    {sizeof(___i18n_cli_info_018), (char *const)___i18n_cli_info_018},
+    {sizeof(___i18n_cli_info_012), (char *const)___i18n_cli_info_012},
     {sizeof(___i18n_cli_info_016), (char *const)___i18n_cli_info_016},
     {0, NULL},
-    {sizeof(___i18n_cli_info_018), (char *const)___i18n_cli_info_018},
+    {sizeof(___i18n_cli_info_012), (char *const)___i18n_cli_info_012},
+    {sizeof(___i18n_cli_info_016), (char *const)___i18n_cli_info_019},
+    {0, NULL},
+    {sizeof(___i18n_cli_info_012), (char *const)___i18n_cli_info_012},
 };
 
 const tbc_info_txt_st* tbc_i18n_info_arr = ___i18n_cli_info_txts;

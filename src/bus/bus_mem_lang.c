@@ -2,6 +2,8 @@
 #include "bus/bus_mem_lang.h"
 #include "types/types_null.h"
 
+size_t tbc_total_heap = 0;
+
 #if defined(TBC_MALLOC_JEMALLOC)
 extern void je_free(void*);
 extern void* je_malloc(size_t);
@@ -48,6 +50,7 @@ static void* tbc_realloc(void* ptr, size_t size) {
             ++i;
         }
         tbc_mem.free_func(ptr);
+        tbc_total_heap += size;
     }
     return newPtr;
 }

@@ -4,6 +4,8 @@
 
 #if !defined(TBC_SCU_OPTIONAL_FIX)
 
+size_t tbc_total_heap = 0;
+
 const tbc_mem_st tbc_mem = {
     NULL,
     NULL,
