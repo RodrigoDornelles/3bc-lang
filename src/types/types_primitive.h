@@ -6,7 +6,9 @@
 #include "detect/detect_unsupported.h"
 
 #if (defined(TBC_COMPILER_HAS_C99) && !defined(TBC_UNSUPPORTED)) || defined(DOXYGEN)
+#if !defined(TBC_COMPILER_ID_TCC)
 #include <inttypes.h>
+#endif
 #include <stddef.h>
 /** signed 8 bits **/
 typedef int8_t tbc_i8_t;
