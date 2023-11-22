@@ -26,6 +26,7 @@ enum ___tbc_fsm_compiler_e {
 typedef enum ___tbc_fsm_compiler_e tbc_fsm_compiler_et;
 typedef enum ___tbc_interpreter_type_e tbc_interpreter_type_et;
 typedef struct ___tbc_interpreter_root_s tbc_interpreter_root_st;
+typedef struct ___tbc_interpreter_label_s tbc_interpreter_label_st;
 
 union ___tbc_interpreter_open_u {
     tbc_u8_t fileid;
@@ -37,6 +38,11 @@ struct ___tbc_interpreter_line_s {
     tbc_u16_t ry;
     tbc_u16_t rz;
     bool pending;
+};
+
+struct ___tbc_interpreter_label_s {
+    tbc_u16_t hash;
+    tbc_u16_t line;
 };
 
 struct ___tbc_interpreter_root_s {

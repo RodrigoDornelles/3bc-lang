@@ -115,7 +115,7 @@ void lang_3bc_compile(tbc_app_st *const self)
             break;
         }
 
-        if (tokens_n != 1 && tokens_n != 3) {
+        if (!(tokens_n == 3 || (tokens[0][tokens_idk[0] - 1] == ':'))) {
             self->rc = TBC_RET_THROW_ERROR;
             self->cache_l1.error = ERROR_COLUMNS;
             break;
