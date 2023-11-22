@@ -28,8 +28,13 @@ typedef void* tbc_file_mt;
 /**
  * NOTE: mixed type
  * when can be primitive, pointer, struct, union...
+ * @todo move to head top
  */
+#if defined(TBC_TCC_NOSTDINC)
+#include <tcclib.h>
+#else
 #include <stdio.h>
+#endif
 typedef FILE tbc_file_mt;
 #endif
 typedef enum ___tbc_stream_type_e tbc_stream_type_et;

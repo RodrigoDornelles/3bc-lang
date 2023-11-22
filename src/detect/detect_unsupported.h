@@ -11,7 +11,7 @@
 #endif
 #endif
 
-#if defined(__NES__) || defined(__PCE__) || defined(__ATARI5200__)
+#if defined(__NES__) || defined(__PCE__) || defined(__ATARI5200__) || defined(TBC_TCC_NOSTDINC)
 #ifndef TBC_UNSUPPORTED_FILES
 #define TBC_UNSUPPORTED_FILES
 #endif

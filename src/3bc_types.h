@@ -191,11 +191,13 @@ typedef void (*function_3bc_t)(
     struct app_3bc_s* const, register_3bc_t, address_3bc_t, data_3bc_t);
 
 /** @todo remove time.h **/
+#if !defined(TBC_TCC_NOSTDINC)
 #include <time.h>
+#endif
 
 /** GLOBAL TYPES **/
 union global_time_u {
-#if defined(TBC_P_COMPUTER)
+#if defined(TBC_P_COMPUTER) || !defined(TBC_TCC_NOSTDINC)
     struct timespec ts;
 #endif
     unsigned long count;

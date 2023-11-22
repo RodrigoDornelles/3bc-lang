@@ -13,10 +13,12 @@
 #endif
 #endif
 
+#if !defined(TBC_TCC_NOSTDINC)
 #if defined(__linux) || defined(__linux__) || defined(__gnu_linux__) ||\
      defined(__APPLE__) || defined(__unix__) || defined(BSD)
 #ifndef TBC_LIBC_POSIX
 #define TBC_LIBC_POSIX
+#endif
 #endif
 #endif
 

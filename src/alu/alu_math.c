@@ -3,6 +3,10 @@
 #include "detect/detect_unsupported.h"
 #include "types/types_errors.h"
 
+#if defined(TBC_TCC_NOSTDINC) && !defined(TBC_UNSUPPORTED_MATH)
+#define TBC_UNSUPPORTED_MATH
+#endif
+
 #if !defined(TBC_UNSUPPORTED_MATH)
 #include <math.h>
 #endif

@@ -64,7 +64,7 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv, void* buf,
         }
         /* program param */
         if ((param = util_args_param(argc, argv, "le", 0)) != NULL) {
-#if !defined(TBC_NOT_FILES)
+#if !defined(TBC_NOT_FILES) && defined(TBC_LIBC_POSIX)
             int fileid = open(param, O_RDONLY);
             if (fileid != -1) {   
                 interpreter->type = TBC_IT_COMPILER;

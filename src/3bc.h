@@ -58,6 +58,7 @@
  * BRIEF: The Application binary interface helps
  * to integrate virtual machine drivers with host system modules.
  */
+#if !defined(TBC_TCC_NOSTDINC)
 #if !defined(TBC_NOT_MATH)
 #include <math.h>
 #endif
@@ -88,6 +89,7 @@
 #endif
 #if defined(TBC_CONSOLE_NES)
 #include <nes.h>
+#endif
 #endif
 
 /** @todo move to supporting file **/

@@ -6,7 +6,7 @@
 #include "detect/detect_unsupported.h"
 
 #if (defined(TBC_COMPILER_HAS_C99) && !defined(TBC_UNSUPPORTED)) || defined(DOXYGEN)
-#if !defined(TBC_COMPILER_ID_TCC)
+#if !defined(TBC_TCC_NOSTDINC)
 #include <inttypes.h>
 #endif
 #include <stddef.h>

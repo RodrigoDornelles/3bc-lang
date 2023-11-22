@@ -9,7 +9,9 @@
 #include "types/types_interpreter.h"
 
 /** @todo remove <stdio.h> */
+#ifndef TBC_TCC_NOSTDINC
 #include <stdio.h>
+#endif
 
 union ___u8_u16_t {
     void* ptr;

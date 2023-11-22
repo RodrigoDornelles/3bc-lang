@@ -1,7 +1,7 @@
 #include "sys_posix_output.h"
 
 /** @todo USE OTHER DEFINE */
-#if !defined(TBC_USE_ARDUINO)
+#if !defined(TBC_USE_ARDUINO) && !defined(TBC_TCC_NOSTDINC)
 #include <unistd.h>
 #endif
 
@@ -11,7 +11,7 @@
 void sys_posix_output(tbc_app_st *const self)
 {
 /** @todo USE OTHER DEFINE */
-#if !defined(TBC_USE_ARDUINO)  
+#if !defined(TBC_USE_ARDUINO) && !defined(TBC_TCC_NOSTDINC)
     if (self->cache_l3.fixbuf.size > 0) {
         write(
             1,

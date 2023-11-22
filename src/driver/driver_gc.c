@@ -36,11 +36,8 @@
  */
 
 #include "types/types_return.h"
+#include "bus/bus_mem_0000.h"
 #include "3bc_types.h"
-
-#if !defined(TBC_NOT_MALLOC)
-#include <stdlib.h>
-#endif
 
 /**
  * @short internal garbage collector
@@ -88,9 +85,9 @@ void driver_gc(struct app_3bc_s* const self)
     switch((tbc_u8_t) self->rc)
     {
         case TBC_RET_GC_LV4:
-#if !defined(TBC_NOT_MALLOC)
-            free(self->cache_l3.buffer.storage);
-#endif
+            if (tbc_mem.free_func != NULL) {
+                tbc_mem.free_func(self->cache_l3.buffer.storage);
+            }
             break;
 
         case TBC_RET_GC_LV3:
