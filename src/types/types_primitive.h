@@ -5,12 +5,9 @@
 #include "detect/detect_compiler.h"
 #include "detect/detect_unsupported.h"
 
-#if (defined(TBC_COMPILER_HAS_C99) && !defined(TBC_UNSUPPORTED)) || defined(DOXYGEN)
-#if !defined(TBC_TCC_NOSTDINC)
+#if (defined(TBC_COMPILER_HAS_C99) && !defined(TBC_UNSUPPORTED) && !defined(TBC_TCC_NOSTDINC)) || defined(DOXYGEN)
 #include <inttypes.h>
-#endif
 #include <stddef.h>
-/** signed 8 bits **/
 typedef int8_t tbc_i8_t;
 /** signed 16 bits **/
 typedef int16_t tbc_i16_t;

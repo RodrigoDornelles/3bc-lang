@@ -28,6 +28,10 @@ add_library(tbc_array_simple OBJECT ${tbc_ds_array_files})
 
 # System dependencies
 FILE(GLOB tbc_sys_std_files "${CMAKE_SOURCE_DIR}/src/sys/sys_common_*.c")
+if(STANDARD)
+FILE(GLOB tbc_sys_iso_files "${CMAKE_SOURCE_DIR}/src/sys/sys_standard_*.c")
+set(tbc_sys_std_files "${tbc_sys_std_files};${tbc_sys_iso_files}")
+endif()
 if(UNIX OR LINUX OR APPLE)
 FILE(GLOB tbc_sys_posix_files "${CMAKE_SOURCE_DIR}/src/sys/sys_posix_*.c")
 set(tbc_sys_std_files "${tbc_sys_std_files};${tbc_sys_posix_files}")

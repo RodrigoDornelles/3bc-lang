@@ -10,6 +10,7 @@
 #include "sys/sys_nes_output.h"
 #include "sys/sys_posix_output.h"
 #include "sys/sys_windows_output.h"
+#include "sys/sys_standard_output.h"
 
 #if !defined(TBC_SCU_OPTIONAL_FIX)
 
@@ -26,14 +27,18 @@ const tbc_pkg_st tbc_pkg_standard = {
         &sys_common_mock_exit_force,
         &ds_prog_arrayc_exist,
     },{
-#if defined(TBC_SYSTEM_ID_NES)
+#if defined(TBC_LIBC_STANDARD)
+        &sys_standard_output
+#elif defined(TBC_SYSTEM_ID_NES)
         &sys_nes_output
-#elif defined(TBC_LIBC_WINDOWS)
+#elif defined(TBC_SYSTEM_ID_WINDOWS)
         &sys_windows_output
 #elif defined(TBC_LIBC_CONIO)
         &sys_conio_output,
-#else
+#elif defined(TBC_LIBC_POSIX)
         &sys_posix_output
+#else
+        &sys_standard_output
 #endif 
     }
 };
