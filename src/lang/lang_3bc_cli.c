@@ -4,6 +4,7 @@
 #include "i18n/i18n_0000.h"
 #include "lang/lang_3bc_cli.h"
 #include "util/util_stoi.h"
+#include "util/util_itos.h"
 #include "util/util_args.h"
 #include "types/types_interpreter.h"
 #include "pre/pre_sizes.h"

@@ -49,6 +49,7 @@
 #include "driver/driver_cpu.h"
 #include "driver/driver_gc.h"
 #include "driver/driver_stack.h"
+#include "detect/detect_extra.h"
 
 /**
  * @brief VM processor context manager, allows asychronism.
@@ -259,7 +260,7 @@ int driver_interrupt(struct app_3bc_s* const self)
         
         case FSM_3BC_STOPED:
             exit_code = 0;
-#if defined(TBC_FREEZE_STOPPED)
+#if defined(TBC_EXTRA_FREEZE_LOOP)
             while(1);
 #endif
             break;

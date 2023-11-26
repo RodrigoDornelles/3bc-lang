@@ -46,7 +46,7 @@
 
 /** prepare **/
 #include "3bc_macros.h"
-
+#include "detect/detect_unsupported.h"
 /**
  *   ___  ______ _____
  *  / _ \ | ___ \_   _|
@@ -59,7 +59,7 @@
  * to integrate virtual machine drivers with host system modules.
  */
 #if !defined(TBC_TCC_NOSTDINC)
-#if !defined(TBC_NOT_MATH)
+#if !defined(TBC_NOT_MATH) && !defined(TBC_UNSUPPORTED_MATH)
 #include <math.h>
 #endif
 #include <ctype.h>

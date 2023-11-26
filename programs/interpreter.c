@@ -10,7 +10,16 @@
 #include "driver/driver_stack.h"
 #include "driver/driver_interrupt.h"
 
+#if defined(VIRTUAL_ARGV)
+static const char *const argv[] = VIRTUAL_ARGV;
+static const int argc = sizeof(argv)/sizeof(*argv);
+#endif
+
+#if defined(VIRTUAL_ARGV)
+int main()
+#else
 int main(int argc, char** argv)
+#endif
 {
     static int exitcode = -1;
     static tbc_u8_t stack[255];
@@ -18,7 +27,7 @@ int main(int argc, char** argv)
     static tbc_u8_t vm[TBC_MACHINE_SIZE];
 
     driver_stack_init(vm, stack, sizeof(stack));
-    lang_3bc_cli_init(vm, argc, argv, builder, sizeof(builder));
+    lang_3bc_cli_init(vm, argc, (char**) argv, builder, sizeof(builder));
 
     while (exitcode == -1) {
         lang_3bc_compile(vm);

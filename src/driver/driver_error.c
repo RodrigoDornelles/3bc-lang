@@ -38,11 +38,18 @@
 #include "i18n/i18n_0000.h"
 #include "util/util_itos.h"
 
+/** @todo */
+#if defined(__NES__)
+#define DESCRIPTION_FEED "\n"
+#else
+#define DESCRIPTION_FEED "\t"
+#endif
+
 static const char ___msg_err_1[] = "[3BC] CRITICAL ERROR ABORTED THE PROGRAM";
 static const char ___msg_err_2[] = "\n> MACHINE ID:\t";
 static const char ___msg_err_4[] = "\n> ERROR LINE:\t";
 static const char ___msg_err_6[] = "\n> ERROR CODE:\t";
-static const char ___msg_err_8[] = "\n> DESCRIPTION:\t";
+static const char ___msg_err_8[] = "\n> DESCRIPTION:"DESCRIPTION_FEED;
 static const tbc_u8_t ___len_err_1 = (tbc_u8_t) (sizeof(___msg_err_1) * (-1));
 static const tbc_u8_t ___len_err_2 = (tbc_u8_t) (sizeof(___msg_err_2) * (-1));
 static const tbc_u8_t ___len_err_4 = (tbc_u8_t) (sizeof(___msg_err_4) * (-1));

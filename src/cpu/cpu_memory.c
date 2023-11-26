@@ -36,7 +36,7 @@
  */
 
 #define TBC_SOURCE_ENTRY
-#include "3bc.h"
+#include "3bc_types.h"
 
 /**
  * @brief clear memory

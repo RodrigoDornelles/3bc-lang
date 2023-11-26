@@ -66,6 +66,8 @@ static const tbc_u8_t column_errors[] = {ERROR_INVALID_REGISTER,
  */
 void lang_3bc_compile(tbc_app_st *const self)
 {
+/** @todo support CC65 */
+#if !defined(__CC65__)
     tbc_interpreter_root_st *const interpreter = self->stack.cfg.interpreter;
     union ___u8_u16_t cpu_r[] = {&self->cpu.rx, &self->cpu.ry, &self->cpu.rz};
     char* tokens[3];
@@ -173,4 +175,5 @@ void lang_3bc_compile(tbc_app_st *const self)
         self->rc = TBC_RET_FULL;
     }
     while(0);
+#endif
 }

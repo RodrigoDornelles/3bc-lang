@@ -7,6 +7,17 @@
 #define TBC_UNSUPPORTED_MATH
 #endif
 
+#if defined(TBC_NOT_MATH) && !defined(TBC_UNSUPPORTED_MATH)
+#define TBC_UNSUPPORTED_MATH
+#endif
+
+#if defined(TBC_UNSUPPORTED_MATH)
+/** @todo move to detect */
+#define TBC_UNSUPPORTED_LOG
+#define TBC_UNSUPPORTED_LOG2
+#define TBC_UNSUPPORTED_LOG10
+#endif
+
 #if !defined(TBC_UNSUPPORTED_MATH)
 #include <math.h>
 #endif
