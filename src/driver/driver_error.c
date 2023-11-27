@@ -146,7 +146,7 @@ void driver_error(struct app_3bc_s* const self)
             }
             self->cache_l3.buffer.size =
                 -tbc_i18n_error_arr[self->cache_l1.error].len;
-            self->cache_l3.buffer.storage =
+            self->cache_l3.buffer.storage = (char*)
                 tbc_i18n_error_arr[self->cache_l1.error].ptr;
             break;
         }

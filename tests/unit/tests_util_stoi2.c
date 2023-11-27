@@ -22,10 +22,13 @@ int main()
         assert(util_stoi2(&dest, src, 32, 32) == ERROR_UNKNOWN);
         assert(dest == 0xCCCCCCCC);
     }
+#if !defined(TBC_NOT_INT64)
     {
         tbc_u64_t dest = 999999999999999999llu;
         char* src = "1010101010101010101010101010101010101010101010101010101010101010";
         assert(util_stoi2(&dest, src, 64, 64) == ERROR_UNKNOWN);
         assert(dest == 0xAAAAAAAAAAAAAAAA);
     }
+#endif
+    return 0;
 }

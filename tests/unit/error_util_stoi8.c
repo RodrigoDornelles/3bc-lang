@@ -82,6 +82,7 @@ int main()
         assert(util_stoi8(&dest, src, 32, 12) == ERROR_NUMBER_OVERFLOW);
         assert(dest == 1800000001u);
     }
+#if !defined(TBC_NOT_INT64)
     {
         tbc_u64_t dest = 291204129041904091llu;
         char* src = "";
@@ -106,4 +107,5 @@ int main()
         assert(util_stoi8(&dest, src, 64, 22) == ERROR_NUMBER_OVERFLOW);
         assert(dest == 23456789012345678902llu);
     }
+#endif
 }

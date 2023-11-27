@@ -40,6 +40,7 @@ int main()
         assert(util_stoi16(&dest, src, 32, 3) == ERROR_NUMBER_WRONG_BASE);
         assert(dest == 1231231231u);
     }
+#if !defined(TBC_NOT_INT64)
     {
         tbc_u64_t dest = 12899124812414948523llu;
         char* src = "";
@@ -52,5 +53,6 @@ int main()
         assert(util_stoi16(&dest, src, 64, 3) == ERROR_NUMBER_WRONG_BASE);
         assert(dest == 12345678912345678912llu);
     }
+#endif
     return 0;
 }
