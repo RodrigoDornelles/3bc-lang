@@ -1,5 +1,5 @@
 /**
- * @file driver_interrupt.c
+ * @file driver_interrupt.h
  * @brief recognize the software
  */
 #ifndef H_DETECT_SYSTEM_TBC

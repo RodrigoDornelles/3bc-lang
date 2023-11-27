@@ -1,5 +1,5 @@
 /**
- * @file detect_unsupported.c
+ * @file detect_unsupported.h
  * @brief recognize not supported features.
  */
 #ifndef H_DETECT_UNSUPPORTED_TBC

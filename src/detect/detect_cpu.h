@@ -1,5 +1,5 @@
 /**
- * @file detect_cpu.c
+ * @file detect_cpu.h
  * @brief recognize the hardware
  * @par Joke
  * Personally, I find @b bytesex a curious term!
@@ -13,7 +13,21 @@
 
 #include "detect_warning.h"
 
-#if defined(ARDUINO_ARCH_AVR)
+#if defined(DOXYGEN)
+#define TBC_CPU_ARCH_32BITS
+#define TBC_CPU_ARCH_64BITS
+#define TBC_CPU_ARCH_8BITS
+#define TBC_CPU_BYTE_SEXBE
+#define TBC_CPU_BYTE_SEXLE
+#define TBC_CPU_TYPE_ARM
+#define TBC_CPU_TYPE_AVR
+#define TBC_CPU_TYPE_ECMA
+#define TBC_CPU_TYPE_INTEL
+#define TBC_CPU_TYPE_M6502
+#define TBC_CPU_TYPE_POWERPC
+#define TBC_CPU_TYPE_RISCV
+#define TBC_CPU_TYPE_ZIGLOG
+#elif defined(ARDUINO_ARCH_AVR)
 #define TBC_CPU_NAME "AVR"
 #define TBC_CPU_ARCH_8BITS
 #define TBC_CPU_TYPE_AVR
@@ -72,7 +86,7 @@
     (defined(__riscv) && (defined(__riscv_xlen) && __riscv_xlen == 64))
 #define TBC_CPU_NAME "RISC64"
 #define TBC_CPU_ARCH_32BITS
-#define TBC_CPU_TYPE_RISC64
+#define TBC_CPU_TYPE_RISCV
 #define TBC_CPU_BYTE_SEXLE
 #else
 #define TBC_CPU_NAME "UNKNOWN"
