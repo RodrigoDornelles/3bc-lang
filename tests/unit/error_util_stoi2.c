@@ -76,6 +76,7 @@ int main()
         assert(util_stoi2(&dest, src, 30, sizeof(src)) == ERROR_NUMBER_OVERFLOW);
         assert(dest == 1500000000lu);
     }
+#if !defined(TBC_NOT_INT64)
     {
         tbc_u64_t dest = 9223492892482944892llu;
         char* src = "111";
@@ -94,6 +95,7 @@ int main()
         assert(util_stoi2(&dest, src, 64, 3) == ERROR_NUMBER_WRONG_BASE);
         assert(dest == 8500000000llu);
     }
+    
     {
         tbc_u64_t dest = 9223372036852349038llu;
         char src[] = "111111111111111111111111111111111111111111111111111111111111111";
@@ -107,4 +109,5 @@ int main()
         assert(dest[0] == 9223372032403940943llu);
         assert(dest[1] == 9223372032403924244llu);
     }
+#endif
 }

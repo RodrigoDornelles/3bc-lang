@@ -22,10 +22,12 @@ int main()
         assert(util_stoi16(&dest, src, 32, sizeof(src)) == ERROR_UNKNOWN);
         assert(dest == 0xBABACA00);
     }
+#if !defined(TBC_NOT_INT64)
     {
         tbc_u64_t dest = 666666666666666666llu;
         char src[] = "CAFECAFECAFECAFE";
         assert(util_stoi16(&dest, src, 64, sizeof(src)) == ERROR_UNKNOWN);
         assert(dest == 0xCAFECAFECAFECAFE);
     }
+#endif
 }

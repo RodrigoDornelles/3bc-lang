@@ -1,5 +1,5 @@
 /**
- * @file driver_extra.c
+ * @file driver_extra.h
  * @brief additional usability behaviors
  */
 #ifndef H_DETECT_EXTRA_TBC

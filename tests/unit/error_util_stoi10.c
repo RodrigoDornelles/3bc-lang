@@ -40,6 +40,7 @@ int main()
         assert(util_stoi10(&dest, src, 32, 3) == ERROR_NUMBER_WRONG_BASE);
         assert(dest == 800000000lu);
     }
+#if !defined(TBC_NOT_INT64)
     {
         tbc_u64_t dest = 102030405060708090llu;
         char* src = "foo";
@@ -52,4 +53,5 @@ int main()
         assert(util_stoi10(&dest, src, 64, 3) == ERROR_NUMBER_WRONG_BASE);
         assert(dest == 112233445566778899llu);
     }
+#endif
 }
