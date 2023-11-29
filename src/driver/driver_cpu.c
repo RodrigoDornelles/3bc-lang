@@ -1,3 +1,9 @@
+/**
+ * @file src/driver/driver_cpu.c
+ * @short guest driver virtual CPU **source code**
+ * @brief fetch and decode processor registers.
+ */
+#define TBC_SOURCE_ENTRY
 #include "bus/bus_cpu_0000.h"
 #include "driver/driver_cpu.h"
 #include "types/types_consts.h"

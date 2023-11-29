@@ -1,37 +1,8 @@
 /**
- * @internal
- *  ___________  _____   _
- * |____ | ___ \/  __ \ | |
- *     / / |_/ /| /  \/ | | __ _ _ __   __ _ _   _  __ _  __ _  ___
- *     \ \ ___ \| |     | |/ _` | '_ \ / _` | | | |/ _` |/ _` |/ _ \
- * .___/ / |_/ /| \__/\ | | (_| | | | | (_| | |_| | (_| | (_| |  __/
- * \____/\____/  \____/ |_|\__,_|_| |_|\__, |\__,_|\__,_|\__, |\___|
- *                                     __/ |             __/ |
- *                                    |___/             |___/
- * @endinternal
- * @file driver_interrupt.c
- *
- * @brief
- * Code refers to the managing contexts and interrupt's of the virtual machine.
- *
- * @copyright
- * Low-level language, tiny virtual machine, intermediate representation,     \n
- * embeddable, easy for beginners. (Friendly Punched cards)                   \n
- *                                                                            \n
- * Copyright (C) 2020 Rodrigo Dornelles.                                      \n
- *                                                                            \n
- * This program is free software: you can redistribute it and/or modify       \n
- * it under the terms of the GNU General Public License as published by       \n
- * the Free Software Foundation, either version 3 of the License,             \n
- * or any later version.                                                      \n
- *                                                                            \n
- * This program is distributed in the hope that it will be useful,            \n
- * but WITHOUT ANY WARRANTY; without even the implied warranty of             \n
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the              \n
- * GNU General Public License for more details.                               \n
- *                                                                            \n
- * You should have received a copy of the GNU General Public License          \n
- * along with this program.  If not, see <https://www.gnu.org/licenses/>. 
+ * @file src/driver/driver_interrupt.c
+ * @short guest driver event loop **source code**
+ * @brief Code refers to the managing contexts and interrupt's
+ * of the virtual machine.
  *
  * @par Joke
  * @code{.unparsed}
@@ -39,7 +10,6 @@
  * this code was written in a 4:20 mode.
  * @endcode
  */
-
 #define TBC_SOURCE_ENTRY
 #include "3bc_types.h"
 #include "bus/bus_alu_0000.h"
@@ -52,22 +22,20 @@
 #include "detect/detect_extra.h"
 
 /**
+ * @public
+ * @short event loop ticket
  * @brief VM processor context manager, allows asychronism.
  * @return exit code
  * @retval -1 continue process.
  * @retval 0 process ended, it was a success.
  * @retval 1 process ended, an error occurred.
  *
- * @brief
+ * @details
  * all the functioning of the virtual machine runtime
  * including context manager, state machine, errors,
  * connection between guest drivers and host drivers,
  * and hardware and software interrupts is being handled
  * by this function.
- *
- * @note
- * **guest drivers** is a @ref src/driver source files.                      \n
- * **host drivers** is a @ref src/sys source files.                          \n
  *
  * @par Finite State Machine
  * @startuml fsm
@@ -89,8 +57,8 @@
  * TBC_STATE_EXITING -right-> TBC_STATE_STOPED
  * TBC_STATE_STOPED --> [*]
  * 
- * state TBC_STATE_VACUUM:<b>Interpreter FSM</b> <i>(optional)</i>
- * state TBC_STATE_RUNNING:<b>CPU FSM</b> <i>(optional)</i>
+ * state TBC_STATE_VACUUM:**Interpreter FSM** <i>(optional)</i>
+ * state TBC_STATE_RUNNING:**CPU FSM** <i>(optional)</i>
  * @enduml
  */
 int driver_interrupt(struct app_3bc_s* const self)

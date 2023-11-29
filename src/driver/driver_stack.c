@@ -1,3 +1,8 @@
+/**
+ * @file src/driver/driver_stack.c
+ * @short guest driver stack memory **source code**
+ * @brief internal stack memory management. 
+ */
 #define TBC_SOURCE_ENTRY
 #include "bus/bus_cfg_0000.h"
 #include "driver/driver_stack.h"
@@ -70,7 +75,7 @@
  *     "stack":FREE4 -> "legend" [style="invis"];
  *     "legend" [
  *         label = <<table cellspacing="0" cellpadding="4" border="0" cellborder="1" style="rounded">
- *                         <tr><td colspan="2" bgcolor="lightgray"><b>Legend</b></td></tr>
+ *                         <tr><td colspan="2" bgcolor="lightgray">**Legend**</td></tr>
  *                         <tr><td>PC</td><td>program counter</td></tr>
  *                         <tr><td>SS</td><td>Stack Size</td></tr>
  *                         <tr><td>SP</td><td>Stack Pointer</td></tr>
@@ -119,7 +124,7 @@ void driver_stack_init(struct app_3bc_s* const self, tbc_u8_t* buf, tbc_u8_t len
             self->stack.mem->sp += 2;
         }
     
-        /** add configuration **/
+        /* add configuration **/
         while (cfg < tbc_cfg_size) {
             /* insuficient memory to configure all */
             if ((self->stack.mem->sp + tbc_cfg_standard[cfg].size) > self->stack.mem->st) {

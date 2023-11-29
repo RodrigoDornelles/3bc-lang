@@ -97,7 +97,7 @@ tbc_u8_t util_itos16(char* dest, void *src, tbc_u8_t dn, const tbc_u8_t sn)
  * @brief @par casting integer to string
  * @details string formater intenger numbers in base 10
  * and return number of bytes writed in buffer.
- * @note this function has <b>space complexity</b> @f$O(1)@f$
+ * @note this function has **space complexity** @f$O(1)@f$
  * can be more slow in some hardwares than standard library,
  * but is minify and safety for old devices.
  * @param[out] dest string destination

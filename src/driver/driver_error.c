@@ -1,39 +1,9 @@
 /**
- * @internal
- *  ___________  _____   _
- * |____ | ___ \/  __ \ | |
- *     / / |_/ /| /  \/ | | __ _ _ __   __ _ _   _  __ _  __ _  ___
- *     \ \ ___ \| |     | |/ _` | '_ \ / _` | | | |/ _` |/ _` |/ _ \
- * .___/ / |_/ /| \__/\ | | (_| | | | | (_| | |_| | (_| | (_| |  __/
- * \____/\____/  \____/ |_|\__,_|_| |_|\__, |\__,_|\__,_|\__, |\___|
- *                                     __/ |             __/ |
- *                                    |___/             |___/
- * @endinternal
- * @file driver_error.c
- *
- * @brief
- * handler and report runtime errors.
- *
- * @copyright
- * Low-level language, tiny virtual machine, intermediate representation,     \n
- * embeddable, easy for beginners. (Friendly Punched cards)                   \n
- *                                                                            \n
- * Copyright (C) 2020 Rodrigo Dornelles.                                      \n
- *                                                                            \n
- * This program is free software: you can redistribute it and/or modify       \n
- * it under the terms of the GNU General Public License as published by       \n
- * the Free Software Foundation, either version 3 of the License,             \n
- * or any later version.                                                      \n
- *                                                                            \n
- * This program is distributed in the hope that it will be useful,            \n
- * but WITHOUT ANY WARRANTY; without even the implied warranty of             \n
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the              \n
- * GNU General Public License for more details.                               \n
- *                                                                            \n
- * You should have received a copy of the GNU General Public License          \n
- * along with this program.  If not, see <https://www.gnu.org/licenses/>. 
- *
+ * @file src/driver/driver_error.c
+ * @short guest driver error handler **source code**
+ * @brief runtime error catch and report excepetions
  */
+#define TBC_SOURCE_ENTRY
 #include "driver/driver_error.h"
 #include "i18n/i18n_0000.h"
 #include "util/util_itos.h"

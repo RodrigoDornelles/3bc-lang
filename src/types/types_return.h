@@ -40,7 +40,7 @@
  * @li after @c 1 is status communication.
  * @li after @c 128 is interrupt.
  * @li after @c 192 is blocking interrupt.
- * @note the <b> blocking interrupt </b> is the fact that it
+ * @note the ** blocking interrupt ** is the fact that it
  * does not allow the @b CPU to execute until another non-blocking return.
  */
 enum ___tbc_return_e {

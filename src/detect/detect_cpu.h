@@ -1,10 +1,17 @@
 /**
- * @file detect_cpu.c
+ * @file src/detect/detect_cpu.h
  * @brief recognize the hardware
  * @par Joke
- * Personally, I find @b bytesex a curious term!
- * I tend to easily confuse the word  @b length in English,
- * so imagine writing @b endianness all the time with two times @b N and @b S
+ * @code{.unparsed}
+ * Personally, I find "bytesex" a curious term!
+ * I tend to easily confuse the word  length in English,
+ * so imagine writing "endianness" all the time with two times 'N' and 'S'...
+ * I'm just a latin american guy.
+ * @endcode
+ * @par Songs
+ * @li @b Belchior - Apenas Um Rapaz Latino-americano
+ * @endverbatim
+ * @par Links
  * @li <https://linux.bytesex.org/>
  * @li <https://www.google.com/search?q=bytesex+site:opensource.apple.com>
  */

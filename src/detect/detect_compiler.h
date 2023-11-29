@@ -1,5 +1,5 @@
 /**
- * @file detect_compiler.c
+ * @file src/detect/detect_compiler.h
  * @brief recognize compiler
  */
 
