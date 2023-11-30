@@ -1,3 +1,9 @@
+/**
+ * @file src/sys/sys_conio_output.c
+ * @short host driver microsoft msdos output **source code**
+ * @brief print text using msdos api
+ */
+#define TBC_SOURCE_ENTRY
 #include "sys_conio_output.h"
 
 /** @todo USE OTHER DEFINE */

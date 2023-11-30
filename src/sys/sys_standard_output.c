@@ -1,3 +1,9 @@
+/**
+ * @file src/sys/sys_standard_output.c
+ * @short host driver standard libc output **source code**
+ * @brief print text as generic c language polymorphism. 
+ */
+#include TBC_SOURCE_ENTRY
 #include "sys_standard_output.h"
 
 #if !defined(TBC_USE_ARDUINO)

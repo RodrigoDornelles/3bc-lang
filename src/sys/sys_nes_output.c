@@ -1,3 +1,10 @@
+/**
+ * @file src/sys/sys_nes_output.c
+ * @short host driver famicom videogame output **source code**
+ * @brief print text as an terminal across
+ * the entire television screen.
+ */
+#include TBC_SOURCE_ENTRY
 #include "sys_nes_output.h"
 
 union ___cursor_tty_u {

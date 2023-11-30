@@ -1,3 +1,9 @@
+/**
+ * @file src/sys/sys_windows_output.c
+ * @short host driver microsoft windows output **source code**
+ * @brief print text using windows api
+ */
+#include TBC_SOURCE_ENTRY
 #include "sys_windows_output.h"
 
 /** @todo USE OTHER DEFINE */

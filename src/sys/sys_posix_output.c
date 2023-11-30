@@ -1,3 +1,9 @@
+/**
+ * @file src/sys/sys_posix_output.c
+ * @short host driver posix systems output **source code**
+ * @brief print text on unix plataforms: linux, bsd and macos.
+ */
+#include TBC_SOURCE_ENTRY
 #include "sys_posix_output.h"
 
 /** @todo USE OTHER DEFINE */

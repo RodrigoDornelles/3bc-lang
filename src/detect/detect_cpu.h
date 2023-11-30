@@ -1,6 +1,7 @@
 /**
  * @file src/detect/detect_cpu.h
- * @brief recognize the hardware
+ * @short detect cpu hardware
+ * @brief recognize the central unity processor (CPU)
  * @par Joke
  * @code{.unparsed}
  * Personally, I find "bytesex" a curious term!
@@ -8,9 +9,8 @@
  * so imagine writing "endianness" all the time with two times 'N' and 'S'...
  * I'm just a latin american guy.
  * @endcode
- * @par Songs
+ * @par Song
  * @li @b Belchior - Apenas Um Rapaz Latino-americano
- * @endverbatim
  * @par Links
  * @li <https://linux.bytesex.org/>
  * @li <https://www.google.com/search?q=bytesex+site:opensource.apple.com>
