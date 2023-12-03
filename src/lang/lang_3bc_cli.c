@@ -7,7 +7,6 @@
 #include "util/util_itos.h"
 #include "util/util_args.h"
 #include "types/types_interpreter.h"
-#include "pre/pre_sizes.h"
 #include "detect/detect_libc.h"
 #if defined(TBC_LIBC_POSIX)
 #include <fcntl.h>
@@ -18,7 +17,8 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv, void* buf,
     char* param;
     tbc_interpreter_root_st *const interpreter = self->stack.cfg.interpreter;
     interpreter->segments = buf;
-    interpreter->line_size = TBC_DEFAULT_LINE_SIZE;
+    /** @todo move magic number*/
+    interpreter->line_size = 32u;
     
     do {
         char* param;

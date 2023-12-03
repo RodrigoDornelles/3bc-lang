@@ -1,10 +1,30 @@
 /**
+ * @file src/detect/detect_datebuild.h
+ * @short detect date build binary
+ * @brief tries to recognize exact software compilation date
  * @li https://stackoverflow.com/questions/11697820/how-to-use-date-and-time-predefined-macros-in-as-two-integers-then-stri
  */
-#ifndef H_PRE_DATE_TBC
-#define H_PRE_DATE_TBC
+#ifndef H_DETECT_BUILDDATE_TBC
+#define H_DETECT_BUILDDATE_TBC
 
-#if defined(__DATE__) && !defined(__CC65_STD__) && !defined(__TINYC__)
+#if defined(DOXYGEN)
+
+#define TBC_YEAR_CH0 'Y'
+#define TBC_YEAR_CH1 'Y'
+#define TBC_YEAR_CH2 'Y'
+#define TBC_YEAR_CH3 'Y'
+#define TBC_MONTH_CH0 'M'
+#define TBC_MONTH_CH1 'M'
+#define TBC_DAY_CH1 'D'
+#define TBC_DAY_CH0 'D'
+#define TBC_HOUR_CH0 'H'
+#define TBC_HOUR_CH1 'H'
+#define TBC_MINU_CH0 'm'
+#define TBC_MINU_CH1 'm'
+#define TBC_SECO_CH0 's'
+#define TBC_SECO_CH1 's'
+
+#elif defined(__DATE__) && !defined(__CC65_STD__) && !defined(__TINYC__)
 
 #define TBC_YEAR_CH0 (__DATE__[7])
 #define TBC_YEAR_CH1 (__DATE__[8])

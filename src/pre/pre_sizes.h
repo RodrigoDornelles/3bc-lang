@@ -12,10 +12,6 @@
 #endif
 #endif
 
-#ifndef TBC_DEFAULT_LINE_SIZE
-#define TBC_DEFAULT_LINE_SIZE (32u)
-#endif
-
 #ifndef TBC_MACHINE_SIZE
 #define TBC_MACHINE_SIZE (sizeof(tbc_app_st))
 #endif

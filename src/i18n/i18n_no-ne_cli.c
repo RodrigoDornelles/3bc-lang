@@ -1,6 +1,6 @@
 #include "i18n_0000.h"
 #include "detect/detect_compiler.h"
-#include "pre/pre_date.h"
+#include "detect/detect_datebuild.h"
 #include "types/types_null.h"
 
 static const char ___i18n_cli_info_000[] = "UNKNOWN\n";
