@@ -69,61 +69,61 @@
  */
 void alu_math(struct app_3bc_s* const self)
 {
-    switch(self->cache_l1.math)
+    switch(self->cache.l1.math)
     {
         case 1:
             self->cpu.ra = 
-                (self->cache_l2.i16[0]<<1) + self->cache_l2.i16[1];
+                (self->cache.l2.i16[0]<<1) + self->cache.l2.i16[1];
             break;
 
         case 2:
             self->cpu.ra = 
-                (self->cache_l2.i16[0]<<3) + self->cache_l2.i16[1];
+                (self->cache.l2.i16[0]<<3) + self->cache.l2.i16[1];
             break;
 
         case 3:
             self->cpu.ra = 
-                (self->cache_l2.i16[0]*10) + self->cache_l2.i16[1];
+                (self->cache.l2.i16[0]*10) + self->cache.l2.i16[1];
             break;
 
         case 4:
             self->cpu.ra = 
-                (self->cache_l2.i16[0]<<4) + self->cache_l2.i16[1];
+                (self->cache.l2.i16[0]<<4) + self->cache.l2.i16[1];
             break;
 
         case 11:
             self->cpu.ra = 
-                self->cache_l2.i16[0] + self->cache_l2.i16[1];
+                self->cache.l2.i16[0] + self->cache.l2.i16[1];
             break;
 
         case 12:
             self->cpu.ra = 
-                self->cache_l2.i16[0] - self->cache_l2.i16[1];
+                self->cache.l2.i16[0] - self->cache.l2.i16[1];
             break;
 
         case 13:
             self->cpu.ra = 
-                self->cache_l2.i16[0] * self->cache_l2.i16[1];
+                self->cache.l2.i16[0] * self->cache.l2.i16[1];
             break;
 
         case 14:
-            if (self->cache_l2.i16[1] == 0) {
+            if (self->cache.l2.i16[1] == 0) {
                 self->rc = TBC_RET_THROW_ERROR;
-                self->cache_l1.error = ERROR_NUMBER_ZERO;
+                self->cache.l1.error = ERROR_NUMBER_ZERO;
                 break;
             }
             self->cpu.ra = 
-                self->cache_l2.i16[0] / self->cache_l2.i16[1];
+                self->cache.l2.i16[0] / self->cache.l2.i16[1];
             break;
 
         case 15:
-            if (self->cache_l2.i16[1] == 0) {
+            if (self->cache.l2.i16[1] == 0) {
                 self->rc = TBC_RET_THROW_ERROR;
-                self->cache_l1.error = ERROR_NUMBER_ZERO;
+                self->cache.l1.error = ERROR_NUMBER_ZERO;
                 break;
             }
             self->cpu.ra = 
-                self->cache_l2.i16[0] % self->cache_l2.i16[1];
+                self->cache.l2.i16[0] % self->cache.l2.i16[1];
             break;
 
         case 16:
@@ -136,12 +136,12 @@ void alu_math(struct app_3bc_s* const self)
 #pragma message("[3BC] UNSUPPORTED: ALU 16")
 #endif
             self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_UNSUPPORTED;
+            self->cache.l1.error = ERROR_UNSUPPORTED;
             break;
 #else
             self->cpu.ra =
-                (data_aux_3bc_t)trunc(powf((float)self->cache_l2.i16[0],
-                    (float)self->cache_l2.i16[1]));
+                (data_aux_3bc_t)trunc(powf((float)self->cache.l2.i16[0],
+                    (float)self->cache.l2.i16[1]));
 #endif
             break;
 
@@ -155,96 +155,96 @@ void alu_math(struct app_3bc_s* const self)
 #pragma message("[3BC] UNSUPPORTED: ALU 17")
 #endif
             self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_UNSUPPORTED;
+            self->cache.l1.error = ERROR_UNSUPPORTED;
             break;
 #else
             self->cpu.ra =
-                (data_aux_3bc_t)trunc(powf((float)self->cache_l2.i16[0],
-                    1.0f/(float)self->cache_l2.i16[1]));
+                (data_aux_3bc_t)trunc(powf((float)self->cache.l2.i16[0],
+                    1.0f/(float)self->cache.l2.i16[1]));
 #endif
             break;
 
         case 18:
-            self->cpu.ra = self->cache_l2.i16[0] < 0?
-                -self->cache_l2.i16[0]: 
-                self->cache_l2.i16[0];
+            self->cpu.ra = self->cache.l2.i16[0] < 0?
+                -self->cache.l2.i16[0]: 
+                self->cache.l2.i16[0];
             break;
 
         case 21:
-            self->cpu.ra = ~self->cache_l2.i16[0];
+            self->cpu.ra = ~self->cache.l2.i16[0];
             break;
 
         case 22:
             self->cpu.ra =
-                self->cache_l2.i16[0] & self->cache_l2.i16[1];
+                self->cache.l2.i16[0] & self->cache.l2.i16[1];
             break;
 
         case 23:
             self->cpu.ra =
-                self->cache_l2.i16[0] | self->cache_l2.i16[1];
+                self->cache.l2.i16[0] | self->cache.l2.i16[1];
             break;
 
         case 24:
             self->cpu.ra =
-                self->cache_l2.i16[0] ^ self->cache_l2.i16[1];
+                self->cache.l2.i16[0] ^ self->cache.l2.i16[1];
             break;
 
         case 25:
             self->cpu.ra =
-                ~(self->cache_l2.i16[0] & self->cache_l2.i16[1]);
+                ~(self->cache.l2.i16[0] & self->cache.l2.i16[1]);
             break;
 
         case 26:
             self->cpu.ra =
-                ~(self->cache_l2.i16[0] | self->cache_l2.i16[1]);
+                ~(self->cache.l2.i16[0] | self->cache.l2.i16[1]);
             break;
 
         case 27:
             self->cpu.ra =
-                ~(self->cache_l2.i16[0] ^ self->cache_l2.i16[1]);
+                ~(self->cache.l2.i16[0] ^ self->cache.l2.i16[1]);
             break;
 
         case 28:
             self->cpu.ra =
-                self->cache_l2.i16[0] << self->cache_l2.i16[1];
+                self->cache.l2.i16[0] << self->cache.l2.i16[1];
 
         case 29:
             self->cpu.ra =
-                self->cache_l2.i16[0] << self->cache_l2.i16[1];
+                self->cache.l2.i16[0] << self->cache.l2.i16[1];
             break;
 
         case 31:
-            self->cpu.ra = !self->cache_l2.i16[0];
+            self->cpu.ra = !self->cache.l2.i16[0];
             break;
 
         case 32:
             self->cpu.ra =
-                self->cache_l2.i16[0] && self->cache_l2.i16[1];
+                self->cache.l2.i16[0] && self->cache.l2.i16[1];
             break;
 
         case 33:
             self->cpu.ra =
-                self->cache_l2.i16[0] || self->cache_l2.i16[1];
+                self->cache.l2.i16[0] || self->cache.l2.i16[1];
             break;
 
         case 34:
             self->cpu.ra =
-                (!!self->cache_l2.i16[0]) ^ (!!self->cache_l2.i16[1]);
+                (!!self->cache.l2.i16[0]) ^ (!!self->cache.l2.i16[1]);
             break;
 
         case 35:
             self->cpu.ra =
-                !(self->cache_l2.i16[0] && self->cache_l2.i16[1]);
+                !(self->cache.l2.i16[0] && self->cache.l2.i16[1]);
             break;
 
         case 36:
             self->cpu.ra =
-                !(self->cache_l2.i16[0] || self->cache_l2.i16[1]);
+                !(self->cache.l2.i16[0] || self->cache.l2.i16[1]);
             break;
 
         case 37:
             self->cpu.ra =
-                !((!!self->cache_l2.i16[0]) ^ (!!self->cache_l2.i16[1]));
+                !((!!self->cache.l2.i16[0]) ^ (!!self->cache.l2.i16[1]));
             break;
 
         case 38:
@@ -257,34 +257,34 @@ void alu_math(struct app_3bc_s* const self)
 #pragma message("[3BC] UNSUPPORTED: ALU 38")
 #endif
             self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_UNSUPPORTED;
+            self->cache.l1.error = ERROR_UNSUPPORTED;
             break;
 #else
-            if (self->cache_l2.i16[0] == 0) {
+            if (self->cache.l2.i16[0] == 0) {
                 self->rc = TBC_RET_THROW_ERROR;
-                self->cache_l1.error = ERROR_NUMBER_ZERO;
+                self->cache.l1.error = ERROR_NUMBER_ZERO;
                 break;
             }
             self->cpu.ra =
-                (data_aux_3bc_t)trunc(log((double)self->cache_l2.i16[0]));
+                (data_aux_3bc_t)trunc(log((double)self->cache.l2.i16[0]));
             break;
 #endif
 
         case 39:
 #if !defined(TBC_UNSUPPORTED_LOG2)
             /** @note optmized @b log2 **/
-            if(self->cache_l2.i16[1] == 2) {
+            if(self->cache.l2.i16[1] == 2) {
                 self->cpu.ra =
-                (data_aux_3bc_t)trunc(log2((double)self->cache_l2.i16[0]));
+                (data_aux_3bc_t)trunc(log2((double)self->cache.l2.i16[0]));
                 break;
             }
 #else
             /** @note software supporting @b log2 **/
-            if(self->cache_l2.i16[1] == 2) {
+            if(self->cache.l2.i16[1] == 2) {
                 self->cpu.ra = 16;
-                while(self->cache_l2.i16[1] &&
-                    !(self->cache_l2.i16[0] & self->cache_l2.i16[1])) {
-                    self->cache_l2.i16[1] = self->cache_l2.i16[1] >> 1;
+                while(self->cache.l2.i16[1] &&
+                    !(self->cache.l2.i16[0] & self->cache.l2.i16[1])) {
+                    self->cache.l2.i16[1] = self->cache.l2.i16[1] >> 1;
                     --self->cpu.ra;
                 }
                 break;
@@ -292,9 +292,9 @@ void alu_math(struct app_3bc_s* const self)
 #endif
 #if !defined(TBC_UNSUPPORTED_LOG10)
             /** @note optmized @b log10 **/
-            if(self->cache_l2.i16[1] == 10) {
+            if(self->cache.l2.i16[1] == 10) {
                 self->cpu.ra =
-                (data_aux_3bc_t)trunc(log10((double)self->cache_l2.i16[0]));
+                (data_aux_3bc_t)trunc(log10((double)self->cache.l2.i16[0]));
                 break;
             }
 #endif
@@ -307,23 +307,23 @@ void alu_math(struct app_3bc_s* const self)
 #pragma message("[3BC] UNSUPPORTED: ALU 39 (PARTIAL)")
 #endif
             self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_UNSUPPORTED;
+            self->cache.l1.error = ERROR_UNSUPPORTED;
             break;
 #else
-            if (self->cache_l2.i16[0] == 0) {
+            if (self->cache.l2.i16[0] == 0) {
                 self->rc = TBC_RET_THROW_ERROR;
-                self->cache_l1.error = ERROR_NUMBER_ZERO;
+                self->cache.l1.error = ERROR_NUMBER_ZERO;
                 break;
             }
             self->cpu.ra =
-                (data_aux_3bc_t)trunc(log((double)self->cache_l2.i16[0])/
-                log((double)self->cache_l2.i16[0]));
+                (data_aux_3bc_t)trunc(log((double)self->cache.l2.i16[0])/
+                log((double)self->cache.l2.i16[0]));
             break;
 #endif
 
         default:
             self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_UNSUPPORTED;
+            self->cache.l1.error = ERROR_UNSUPPORTED;
             break;
     }
 }

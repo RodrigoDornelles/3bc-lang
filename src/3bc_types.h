@@ -86,9 +86,7 @@ struct app_3bc_s {
     tbc_app_fsm_et state;
     tbc_return_et rc;
     tbc_cpu_st cpu;
-    union cache_l1_u cache_l1;
-    union cache_l2_u cache_l2;
-    union cache_l3_u cache_l3;
+    struct ___tbc_cache_s cache;
     tbc_cin_mt cin;
     tbc_cout_mt cout;
     union ___tbc_stack_root_u stack;

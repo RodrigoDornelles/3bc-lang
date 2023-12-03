@@ -106,7 +106,7 @@ void lang_3bc_compile(tbc_app_st *const self)
 
         if (line_n < 0) {
             self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_INVALID_SYNTAX;
+            self->cache.l1.error = ERROR_INVALID_SYNTAX;
             break;
         }
         
@@ -115,13 +115,13 @@ void lang_3bc_compile(tbc_app_st *const self)
 
         if (tokens_n < 0) {
             self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_INVALID_SYNTAX;
+            self->cache.l1.error = ERROR_INVALID_SYNTAX;
             break;
         }
 
         if (!(tokens_n == 3 || (tokens[0][tokens_idk[0] - 1] == ':'))) {
             self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_COLUMNS;
+            self->cache.l1.error = ERROR_COLUMNS;
             break;
         }
 
@@ -129,15 +129,15 @@ void lang_3bc_compile(tbc_app_st *const self)
         while (i < tokens_n) {
             cast = util_stoi_auto(&tokens[i], &tokens_idk[i], tokens[i], tokens_idk[i]);
             if (cast != NULL) {
-                self->cache_l1.error = cast(cpu_r[i].ptr, tokens[i], column_size[i], tokens_idk[i]);
+                self->cache.l1.error = cast(cpu_r[i].ptr, tokens[i], column_size[i], tokens_idk[i]);
             }
             else if (tokens[i][0] == ':') {                
-                self->cache_l1.error = util_djb2(cpu_r[i].ptr, tokens[i], column_size[i], tokens_idk[i]);
+                self->cache.l1.error = util_djb2(cpu_r[i].ptr, tokens[i], column_size[i], tokens_idk[i]);
             }
             else if (tokens[i][0] == '\'') {
                 negative = util_ascii(tokens[i], tokens_idk[i]);
                 if (negative == 0x15) {
-                    self->cache_l1.error = ERROR_CHAR_SCAPE;
+                    self->cache.l1.error = ERROR_CHAR_SCAPE;
                     break;
                 } 
                 if (column_size[i] > 8) {
@@ -155,13 +155,13 @@ void lang_3bc_compile(tbc_app_st *const self)
                         *cpu_r[i].u8 = opcodes_arr[key].value;
                     }
                 } else {
-                    self->cache_l1.error = ERROR_INVALID_MNEMONIC;
+                    self->cache.l1.error = ERROR_INVALID_MNEMONIC;
                 }
             }
             else {
-                self->cache_l1.error = column_errors[i];
+                self->cache.l1.error = column_errors[i];
             }
-            if (self->cache_l1.error != ERROR_UNKNOWN) {
+            if (self->cache.l1.error != ERROR_UNKNOWN) {
                 self->rc = TBC_RET_THROW_ERROR;
                 break;
             }

@@ -111,13 +111,13 @@ void driver_stack_init(struct app_3bc_s* const self, tbc_u8_t* buf, tbc_u8_t len
             /* missing the size of stack */
             if (self->stack.mem->st == 0) {
                 self->rc = TBC_RET_THROW_ERROR;
-                self->cache_l1.error = ERROR_MEM_STACK_CFG_MIS;
+                self->cache.l1.error = ERROR_MEM_STACK_CFG_MIS;
                 break;
             }
             /* stack size is not enough */
             if (self->stack.mem->st < 8) {
                 self->rc = TBC_RET_THROW_ERROR;
-                self->cache_l1.error = ERROR_MEM_STACK_CFG_MIN;
+                self->cache.l1.error = ERROR_MEM_STACK_CFG_MIN;
                 break;
             }
             /* skip @c st and @c sp */
@@ -129,7 +129,7 @@ void driver_stack_init(struct app_3bc_s* const self, tbc_u8_t* buf, tbc_u8_t len
             /* insuficient memory to configure all */
             if ((self->stack.mem->sp + tbc_cfg_standard[cfg].size) > self->stack.mem->st) {
                 self->rc = TBC_RET_THROW_ERROR;
-                self->cache_l1.error = ERROR_MEM_STACK_CFG_OUT;
+                self->cache.l1.error = ERROR_MEM_STACK_CFG_OUT;
                 break;
             }
             /** @todo document this */

@@ -43,4 +43,9 @@ union cache_l3_u {
     unsigned long sleep_called;
 };
 
+struct ___tbc_cache_s {
+    union cache_l1_u l1;
+    union cache_l2_u l2;
+    union cache_l3_u l3;
+};
 #endif

@@ -183,7 +183,7 @@ int driver_interrupt(struct app_3bc_s* const self)
             }
             if (self->rc == TBC_RET_CLEAN) {
                 self->rc = TBC_RET_THROW_ERROR;
-                self->cache_l1.error = ERROR_NOTHING_TO_DO;
+                self->cache.l1.error = ERROR_NOTHING_TO_DO;
             }
             break;
 

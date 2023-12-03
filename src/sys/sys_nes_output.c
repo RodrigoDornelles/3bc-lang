@@ -82,11 +82,11 @@ void sys_nes_output(tbc_app_st *const self)
     static tbc_u8_t tile;
 
     /* reset */
-    if(self->cache_l3.fixbuf.size < 0) {
-        buffer = self->cache_l3.buffer.storage;
-        self->cache_l3.fixbuf.size = -self->cache_l3.fixbuf.size;
+    if(self->cache.l3.fixbuf.size < 0) {
+        buffer = self->cache.l3.buffer.storage;
+        self->cache.l3.fixbuf.size = -self->cache.l3.fixbuf.size;
     } else {
-        buffer = self->cache_l3.fixbuf.storage;
+        buffer = self->cache.l3.fixbuf.storage;
     }
     index = 0;
 
@@ -114,7 +114,7 @@ void sys_nes_output(tbc_app_st *const self)
         ++index;
         
         /* end of of max size*/
-        if (index > self->cache_l3.fixbuf.size) {
+        if (index > self->cache.l3.fixbuf.size) {
             break;
         }
 

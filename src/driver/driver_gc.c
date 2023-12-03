@@ -55,12 +55,12 @@ void driver_gc(struct app_3bc_s* const self)
     {
         case TBC_RET_GC_LV4:
             if (tbc_mem.free_func != NULL) {
-                tbc_mem.free_func(self->cache_l3.buffer.storage);
+                tbc_mem.free_func(self->cache.l3.buffer.storage);
             }
             break;
 
         case TBC_RET_GC_LV3:
-            buf = ((tbc_u8_t*) &self->cache_l3);
+            buf = ((tbc_u8_t*) &self->cache.l3);
             while (index < sizeof(union cache_l3_u)) {
                 buf[index] ^= buf[index];
                 ++index;
@@ -68,7 +68,7 @@ void driver_gc(struct app_3bc_s* const self)
             break;
 
         case TBC_RET_GC_LV2:
-            buf = ((tbc_u8_t*) &self->cache_l2);
+            buf = ((tbc_u8_t*) &self->cache.l2);
             while (index < sizeof(union cache_l2_u)) {
                 buf[index] ^= buf[index];
                 ++index;
@@ -76,7 +76,7 @@ void driver_gc(struct app_3bc_s* const self)
             break;
 
         case TBC_RET_GC_LV1:
-            buf = ((tbc_u8_t*) &self->cache_l1);
+            buf = ((tbc_u8_t*) &self->cache.l1);
             while (index < sizeof(union cache_l1_u)) {
                 buf[index] ^= buf[index];
                 ++index;

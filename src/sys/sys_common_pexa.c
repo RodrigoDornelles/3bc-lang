@@ -10,7 +10,7 @@ void sys_common_pexams_expand(tbc_app_st *const self)
 {
 #if defined(TBC_NOT_MALLOC)
     self->rc = TBC_RET_THROW_ERROR;
-    self->cache_l1.error = ERROR_UNSUPPORTED;
+    self->cache.l1.error = ERROR_UNSUPPORTED;
 #else
     do {
         tbc_u16_t newsize = self->stack.cfgmin.prog->size + 3;
@@ -18,7 +18,7 @@ void sys_common_pexams_expand(tbc_app_st *const self)
 
         if (newptr == NULL) {
             self->rc = TBC_RET_THROW_ERROR;
-            self->cache_l1.error = ERROR_OUT_OF_MEMORY;
+            self->cache.l1.error = ERROR_OUT_OF_MEMORY;
             break;   
         }
         

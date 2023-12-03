@@ -151,14 +151,14 @@ void cpu_memory_ptr_pull(struct app_3bc_s* const self)
     do {
         if (self->rc == TBC_RET_OK){
             self->rc = TBC_RET_SYS_MEM_READ;
-            self->cache_l2.i16[0] = self->cpu.ra;
+            self->cache.l2.i16[0] = self->cpu.ra;
             break;
         }
 
         if (self->rc == TBC_RET_SYS_MEM_READ) {
             self->cpu.ry = self->cpu.ra;
             self->rc = TBC_RET_SYS_MEM_WRITE;
-            self->cpu.ra = self->cache_l2.i16[0];
+            self->cpu.ra = self->cache.l2.i16[0];
             break;
         }
 
@@ -189,9 +189,9 @@ void cpu_memory_ptr_push(struct app_3bc_s* const self)
             break;
         }
 
-        if (self->rc == TBC_RET_SYS_MEM_READ && !self->cache_l1.retry) {
+        if (self->rc == TBC_RET_SYS_MEM_READ && !self->cache.l1.retry) {
             self->cpu.ry = self->cpu.ra;
-            self->cache_l1.retry = true;
+            self->cache.l1.retry = true;
             break;
         }
 
@@ -220,25 +220,25 @@ void cpu_memory_ptr_spin(struct app_3bc_s* const self)
     do {
         if (self->rc == TBC_RET_OK){
             self->rc = TBC_RET_SYS_MEM_READ;
-            self->cache_l2.i16[0] = self->cpu.ra;
+            self->cache.l2.i16[0] = self->cpu.ra;
             break;
         }
 
-        if (self->rc == TBC_RET_SYS_MEM_READ && !self->cache_l1.retry) {
+        if (self->rc == TBC_RET_SYS_MEM_READ && !self->cache.l1.retry) {
             self->cpu.ry = self->cpu.ra;
-            self->cache_l1.retry = true;
+            self->cache.l1.retry = true;
             break;
         }
 
         if (self->rc == TBC_RET_SYS_MEM_READ) {
-            self->cache_l2.i16[1] = self->cpu.ra;
-            self->cpu.ra = self->cache_l2.i16[0];
+            self->cache.l2.i16[1] = self->cpu.ra;
+            self->cpu.ra = self->cache.l2.i16[0];
             self->rc = TBC_RET_SYS_MEM_WRITE;
             break;
         }
 
         if (self->rc == TBC_RET_SYS_MEM_WRITE) {
-            self->cpu.ra = self->cache_l2.i16[1];
+            self->cpu.ra = self->cache.l2.i16[1];
             self->rc = TBC_RET_GC_LV2;
             break;
         }
@@ -319,20 +319,20 @@ void cpu_memory_aux_spin(struct app_3bc_s* const self)
 {
     do {
         if (self->rc == TBC_RET_OK){
-            self->cache_l2.i16[0] = self->cpu.ra;
+            self->cache.l2.i16[0] = self->cpu.ra;
             self->rc = TBC_RET_SYS_MEM_READ;
             break;
         }
 
         if (self->rc == TBC_RET_SYS_MEM_READ) {
-            self->cache_l2.i16[1] = self->cpu.ra;
-            self->cpu.ra = self->cache_l2.i16[0];
+            self->cache.l2.i16[1] = self->cpu.ra;
+            self->cpu.ra = self->cache.l2.i16[0];
             self->rc = TBC_RET_SYS_MEM_WRITE;
             break;
         }
 
         if (self->rc == TBC_RET_SYS_MEM_WRITE) {
-            self->cpu.ra = self->cache_l2.i16[1];
+            self->cpu.ra = self->cache.l2.i16[1];
             self->rc = TBC_RET_GC_LV2;
             break;
         }

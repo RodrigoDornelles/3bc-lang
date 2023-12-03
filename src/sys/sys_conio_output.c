@@ -19,9 +19,9 @@ void sys_conio_output(tbc_app_st *const self)
     static tbc_u8_t index;
 
     index = 0;
-    ptr = self->cache_l3.fixbuf.storage;
+    ptr = self->cache.l3.fixbuf.storage;
 
-    while (index <  self->cache_l3.fixbuf.size) {
+    while (index <  self->cache.l3.fixbuf.size) {
         cputc(ptr[index]);
         ++index;
     }

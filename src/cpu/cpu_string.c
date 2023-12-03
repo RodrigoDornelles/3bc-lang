@@ -78,44 +78,44 @@ void cpu_string_output(struct app_3bc_s* const self)
             switch(self->cpu.rx)
             {
                 case STRB:
-                    self->cache_l3.fixbuf.size += util_itos2(
-                        self->cache_l3.fixbuf.storage,
+                    self->cache.l3.fixbuf.size += util_itos2(
+                        self->cache.l3.fixbuf.storage,
                         &self->cpu.ra,
-                        sizeof(self->cache_l3.fixbuf.storage),
+                        sizeof(self->cache.l3.fixbuf.storage),
                         13);
                     break;
 
                 case STRO:
                     /** @todo leading zeros */
-                    self->cache_l3.fixbuf.size += util_itos8(
-                        self->cache_l3.fixbuf.storage,
+                    self->cache.l3.fixbuf.size += util_itos8(
+                        self->cache.l3.fixbuf.storage,
                         &self->cpu.ra,
-                        sizeof(self->cache_l3.fixbuf.storage),
+                        sizeof(self->cache.l3.fixbuf.storage),
                         13);
                     break;
 
                 case STRI:
-                    self->cache_l3.fixbuf.size += util_itos10(
-                        self->cache_l3.fixbuf.storage,
+                    self->cache.l3.fixbuf.size += util_itos10(
+                        self->cache.l3.fixbuf.storage,
                         &self->cpu.ra,
-                        sizeof(self->cache_l3.fixbuf.storage),
+                        sizeof(self->cache.l3.fixbuf.storage),
                         13);
                     break;
 
                 case STRX:
-                    self->cache_l3.fixbuf.size += util_itos16(
-                        self->cache_l3.fixbuf.storage,
+                    self->cache.l3.fixbuf.size += util_itos16(
+                        self->cache.l3.fixbuf.storage,
                         &self->cpu.ra,
-                        sizeof(self->cache_l3.fixbuf.storage),
+                        sizeof(self->cache.l3.fixbuf.storage),
                         16);
                     break;
 
                 case STRC:
-                    self->cache_l3.fixbuf.size = 1;
-                    self->cache_l3.fixbuf.storage[0] = self->cpu.ra;                   
+                    self->cache.l3.fixbuf.size = 1;
+                    self->cache.l3.fixbuf.storage[0] = self->cpu.ra;                   
                     break;
             }
-            self->cache_l2.tty = &(self->cout.tty_output);
+            self->cache.l2.tty = &(self->cout.tty_output);
             self->rc = TBC_RET_SYS_IO_WRITE;
             break;
         }

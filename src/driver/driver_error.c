@@ -39,7 +39,7 @@ void driver_error(struct app_3bc_s* const self)
     do {
         if (TBC_RET_PRINT_ERROR_1 <= self->rc &&
             self->rc <= TBC_RET_PRINT_ERROR_F) {
-            self->cache_l2.tty = &(self->cout.tty_output);
+            self->cache.l2.tty = &(self->cout.tty_output);
             self->rc = (tbc_return_et) (*((tbc_u8_t*) &self->rc) + 1);
         }
 
@@ -48,82 +48,82 @@ void driver_error(struct app_3bc_s* const self)
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_1) {
-            self->cache_l3.buffer.storage = (char*) ___msg_err_1;
-            self->cache_l3.buffer.size = ___len_err_1;
+            self->cache.l3.buffer.storage = (char*) ___msg_err_1;
+            self->cache.l3.buffer.size = ___len_err_1;
             break;
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_2) {
-            self->cache_l3.buffer.storage = (char*) ___msg_err_2;
-            self->cache_l3.buffer.size = ___len_err_2;
+            self->cache.l3.buffer.storage = (char*) ___msg_err_2;
+            self->cache.l3.buffer.size = ___len_err_2;
             break;
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_3) {
-            self->cache_l3.fixbuf.size = 
+            self->cache.l3.fixbuf.size = 
                 util_itos10(
-                    self->cache_l3.fixbuf.storage,
+                    self->cache.l3.fixbuf.storage,
                     &self->id,
-                    sizeof(self->cache_l3.fixbuf.storage),
+                    sizeof(self->cache.l3.fixbuf.storage),
                     sizeof(self->id) * 8
                 );
             break;
         }
         
         if (self->rc == TBC_RET_PRINT_ERROR_4) {
-            self->cache_l3.buffer.storage = (char*) ___msg_err_4;
-            self->cache_l3.buffer.size = ___len_err_4;
+            self->cache.l3.buffer.storage = (char*) ___msg_err_4;
+            self->cache.l3.buffer.size = ___len_err_4;
             break;
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_5) {
-            self->cache_l3.fixbuf.size = 
+            self->cache.l3.fixbuf.size = 
                 util_itos10(
-                    self->cache_l3.fixbuf.storage,
+                    self->cache.l3.fixbuf.storage,
                     &self->stack.cfgmin.prog->index,
-                    sizeof(self->cache_l3.fixbuf.storage),
+                    sizeof(self->cache.l3.fixbuf.storage),
                     sizeof(self->stack.cfgmin.prog->index) * 8
                 );
             break;
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_6) {
-            self->cache_l3.buffer.storage = (char*) ___msg_err_6;
-            self->cache_l3.buffer.size = ___len_err_6;
+            self->cache.l3.buffer.storage = (char*) ___msg_err_6;
+            self->cache.l3.buffer.size = ___len_err_6;
             break;
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_7) {
-            self->cache_l3.fixbuf.size = 
+            self->cache.l3.fixbuf.size = 
                 util_itos10(
-                    self->cache_l3.fixbuf.storage,
-                    &self->cache_l1.error,
-                    sizeof(self->cache_l3.fixbuf.storage),
-                    sizeof(self->cache_l1.error) * 8
+                    self->cache.l3.fixbuf.storage,
+                    &self->cache.l1.error,
+                    sizeof(self->cache.l3.fixbuf.storage),
+                    sizeof(self->cache.l1.error) * 8
                 );
             break;
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_8) {
-            self->cache_l3.buffer.storage = (char*) ___msg_err_8;
-            self->cache_l3.buffer.size = ___len_err_8;
+            self->cache.l3.buffer.storage = (char*) ___msg_err_8;
+            self->cache.l3.buffer.size = ___len_err_8;
             break;
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_9) {
-            if (self->cache_l1.error >= tbc_i18n_error_len) {
-                self->cache_l1.error = ERROR_UNKNOWN;
+            if (self->cache.l1.error >= tbc_i18n_error_len) {
+                self->cache.l1.error = ERROR_UNKNOWN;
             }
-            self->cache_l3.buffer.size =
-                -tbc_i18n_error_arr[self->cache_l1.error].len;
-            self->cache_l3.buffer.storage = (char*)
-                tbc_i18n_error_arr[self->cache_l1.error].ptr;
+            self->cache.l3.buffer.size =
+                -tbc_i18n_error_arr[self->cache.l1.error].len;
+            self->cache.l3.buffer.storage = (char*)
+                tbc_i18n_error_arr[self->cache.l1.error].ptr;
             break;
         }
 
         if (self->rc == TBC_RET_PRINT_ERROR_A) {
-            self->cache_l3.fixbuf.size = 1;
-            self->cache_l3.fixbuf.storage[0] = '\n';
+            self->cache.l3.fixbuf.size = 1;
+            self->cache.l3.fixbuf.storage[0] = '\n';
             break;
         }
 
