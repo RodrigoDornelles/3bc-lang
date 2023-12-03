@@ -45,7 +45,6 @@
 #endif
 
 /** prepare **/
-#include "3bc_macros.h"
 #include "detect/detect_unsupported.h"
 /**
  *   ___  ______ _____
@@ -108,8 +107,5 @@
 
 /** consts and types **/
 #include "3bc_types.h"
-
-/** functions prototypes **/
-#include "3bc_header.h"
 
 #endif

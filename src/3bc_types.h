@@ -38,7 +38,6 @@
 /** @todo move **/
 typedef struct app_3bc_s tbc_app_st;
 
-#include "3bc_macros.h"
 #include "types/types_primitive.h"
 #include "types/types_opcodes.h"
 #include "types/types_fsm.h"
@@ -50,35 +49,9 @@ typedef struct app_3bc_s tbc_app_st;
 #include "types/types_errors.h"
 #include "types/types_stack.h"
 
-/**
- *  _   __                                 _       _____
- * | | / /                                | |     |_   _|
- * | |/ /  ___ _   ___      _____  _ __ __| |___    | |_   _ _ __   ___  ___
- * |    \ / _ \ | | \ \ /\ / / _ \| '__/ _` / __|   | | | | | '_ \ / _ \/ __|
- * | |\  \  __/ |_| |\ V  V / (_) | | | (_| \__ \   | | |_| | |_) |  __/\__ \
- * \_| \_/\___|\__, | \_/\_/ \___/|_|  \__,_|___/   \_/\__, | .__/ \___||___/
- *              __/ |                                   __/ | |
- *             |___/                                   |___/|_|
- *
- * BRIEF:
- * types used to name and compare menemonics,
- * and also configure their opcode in the compiler.
- */
-
-/** mnemonic name as number **/
-union tbc_keyword_ut {
-    char name[5];
-    tbc_i32_t compare;
-};
-
-/** mnemonic represents opcode **/
-struct tbc_keyword_opcode_st {
-    union tbc_keyword_ut keyword;
-    tbc_u8_t opcode;
-};
-
-/** APPLICATION TYPES **/
+/** @todo remove all*/
 typedef unsigned short int line_3bc_t;
+typedef unsigned short int tbc_line_t;
 typedef unsigned char cpumode_3bc_t;
 typedef unsigned char register_3bc_t;
 typedef unsigned short address_3bc_t;
@@ -86,9 +59,6 @@ typedef unsigned char label_3bc_t;
 typedef unsigned char memory_conf_t;
 typedef signed int data_3bc_t;
 typedef signed long data_aux_3bc_t;
-
-/** @todo remove line_3bc_t **/
-typedef line_3bc_t tbc_line_t;
 
 /** application 3bc id (depends of cpu size)**/
 #if defined(TBC_ARCH_BITS_64)
@@ -108,64 +78,6 @@ typedef tbc_u8_t app_3bc_id;
 typedef tbc_u16_t app_3bc_id;
 #endif
 
-
-/** DS PROCEDURE LIFO **/
-struct procedure_3bc_s {
-    label_3bc_t label;
-    struct line_node_s* remember;
-    struct procedure_3bc_s* prev;
-};
-
-/** PROGRAM MEMORY **/
-struct label_node_s {
-    label_3bc_t label;
-    cpumode_3bc_t cpumode;
-    struct label_node_s* next;
-    struct line_node_s* point;
-};
-
-struct line_columns_s {
-    register_3bc_t reg;
-    address_3bc_t adr;
-    data_3bc_t dta;
-};
-
-struct line_node_s {
-    line_3bc_t line;
-    struct line_node_s* next;
-    struct line_columns_s column;
-};
-
-struct program_3bc_s {
-    line_3bc_t last_line;
-    cpumode_3bc_t last_cpu;
-    label_3bc_t label_target;
-    struct line_node_s* curr;
-    struct line_node_s* head;
-    struct line_node_s* tail;
-    struct label_node_s* label_table[LABEL_HASH_SIZE];
-    struct procedure_3bc_s* stack;
-};
-
-/** MEMORY PRIMARY **/
-struct memory_node_s {
-    bool color;
-    memory_conf_t conf;
-    data_3bc_t data;
-    address_3bc_t address;
-    struct memory_node_s* left;
-    struct memory_node_s* right;
-};
-
-struct memory_3bc_s {
-    struct memory_node_s* root;
-    struct memory_node_s* cache;
-    data_3bc_t (*data_get)(app_3bc_id, address_3bc_t);
-    data_3bc_t (*conf_get)(app_3bc_id, address_3bc_t);
-    void (*data_set)(app_3bc_id, address_3bc_t, data_3bc_t);
-    void (*conf_set)(app_3bc_id, address_3bc_t, data_3bc_t);
-};
-
 typedef void (*tbc_method_ft)(struct app_3bc_s* const);
 
 /** APLICATION **/
@@ -173,7 +85,6 @@ struct app_3bc_s {
     app_3bc_id id;
     tbc_app_fsm_et state;
     tbc_return_et rc;
-    tbc_error_et error_code;
     tbc_cpu_st cpu;
     union cache_l1_u cache_l1;
     union cache_l2_u cache_l2;
@@ -181,14 +92,9 @@ struct app_3bc_s {
     tbc_cin_mt cin;
     tbc_cout_mt cout;
     union ___tbc_stack_root_u stack;
-    struct program_3bc_s program;
-    struct memory_3bc_s memory;
     tbc_pkg_st* pkg_func;
     tbc_method_ft hyperload;
 };
-
-typedef void (*function_3bc_t)(
-    struct app_3bc_s* const, register_3bc_t, address_3bc_t, data_3bc_t);
 
 /** @todo remove time.h **/
 #if !defined(TBC_TCC_NOSTDINC)

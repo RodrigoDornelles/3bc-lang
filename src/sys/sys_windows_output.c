@@ -3,7 +3,7 @@
  * @short host driver microsoft windows output **source code**
  * @brief print text using windows api
  */
-#include TBC_SOURCE_ENTRY
+#define TBC_SOURCE_ENTRY
 #include "sys_windows_output.h"
 
 /** @todo USE OTHER DEFINE */

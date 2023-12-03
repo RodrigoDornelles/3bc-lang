@@ -4,7 +4,7 @@
  * @brief print text as an terminal across
  * the entire television screen.
  */
-#include TBC_SOURCE_ENTRY
+#define TBC_SOURCE_ENTRY
 #include "sys_nes_output.h"
 
 union ___cursor_tty_u {
