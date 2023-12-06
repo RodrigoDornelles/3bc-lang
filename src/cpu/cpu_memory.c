@@ -72,24 +72,6 @@ void cpu_memory_aloc(struct app_3bc_s* const self)
     while(0);
 }
 
-void cpu_memory_moff(PARAMS_DEFINE)
-{
-    /** @todo remove?
-    this config remove mask (and not)
-    driver_memory_conf_set(
-        app, address, driver_memory_conf_get(app, address) & ~value);
-    */
-}
-
-void cpu_memory_muse(PARAMS_DEFINE)
-{
-    /** @todo remove?
-    this config append mask (or) 
-    driver_memory_conf_set(
-        app, address, driver_memory_conf_get(app, address) | value);
-    */
-}
-
 void cpu_memory_ptr_free(struct app_3bc_s* const self)
 {
     do {

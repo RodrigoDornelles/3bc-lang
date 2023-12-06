@@ -35,19 +35,8 @@
 #include "3bc_types.h"
 #include "util/util_itos.h"
 
-
 /**
- * @todo refact
- */
-void cpu_string_debug(PARAMS_DEFINE)
-{
-    /** @todo
-    VALIDATE_NOT_DUALITY
-    driver_tty_output(app, &app->cout.tty_debug, reg, GET_ANY_PARAM);
-    */
-}
-
-/**
+ * @todo view the @c rx to diff with debug.
  * @startuml
  * (*) --> if "register column?" then
  *  -->[RY] "Read memory"

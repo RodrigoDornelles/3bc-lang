@@ -106,8 +106,8 @@ static const tbc_layout_cpu_st ___layout_cpu[] = {
     {
         0, NULL, NULL
     },
-    {   
-        0, NULL, NULL
+    {
+        sizeof(___bus_er_02), ___bus_op_02, ___bus_er_02
     },
     {
         sizeof(___bus_er_02), ___bus_op_02, ___bus_er_02
