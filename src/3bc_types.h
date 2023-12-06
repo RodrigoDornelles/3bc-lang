@@ -52,12 +52,6 @@ typedef struct app_3bc_s tbc_app_st;
 /** @todo remove all*/
 typedef unsigned short int line_3bc_t;
 typedef unsigned short int tbc_line_t;
-typedef unsigned char cpumode_3bc_t;
-typedef unsigned char register_3bc_t;
-typedef unsigned short address_3bc_t;
-typedef unsigned char label_3bc_t;
-typedef unsigned char memory_conf_t;
-typedef signed int data_3bc_t;
 typedef signed long data_aux_3bc_t;
 
 /** application 3bc id (depends of cpu size)**/
