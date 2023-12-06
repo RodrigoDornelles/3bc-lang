@@ -3,15 +3,14 @@
  * @short host driver standard libc output **source code**
  * @brief print text as generic c language polymorphism. 
  */
+#if !defined(ARDUINO)
 #define TBC_SOURCE_ENTRY
 #include "sys_standard_output.h"
 
-#if !defined(TBC_USE_ARDUINO)
 #if defined(TBC_TCC_NOSTDINC)
 #include <tcclib.h>
 #else
 #include <stdio.h>
-#endif
 #endif
 
 /**
@@ -19,8 +18,7 @@
  */
 void sys_standard_output(tbc_app_st *const self)
 {
-/** @todo USE OTHER DEFINE */
-#if !defined(TBC_USE_ARDUINO)
+#if !defined(ARDUINO)
     FILE* fileout = fdopen(1, "w");
     if (self->cache.l3.fixbuf.size > 0) {
         fwrite(
@@ -40,3 +38,5 @@ void sys_standard_output(tbc_app_st *const self)
     fflush(fileout);
 #endif
 }
+
+#endif

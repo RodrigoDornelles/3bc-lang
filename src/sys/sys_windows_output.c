@@ -3,18 +3,15 @@
  * @short host driver microsoft windows output **source code**
  * @brief print text using windows api
  */
+#if !defined(ARDUINO)
 #define TBC_SOURCE_ENTRY
 #include "sys_windows_output.h"
 
-/** @todo USE OTHER DEFINE */
-#if !defined(TBC_USE_ARDUINO)
 #include <Windows.h>
-#endif
 
 void sys_windows_output(tbc_app_st *const self)
 {
-/** @todo USE OTHER DEFINE */
-#if !defined(TBC_USE_ARDUINO)
+#if !defined(ARDUINO)
     static LPDWORD ruindows;
     static HANDLE fileptr = GetStdHandle(STD_OUTPUT_HANDLE);
 
@@ -37,3 +34,6 @@ void sys_windows_output(tbc_app_st *const self)
     }
 #endif
 }
+
+
+#endif
