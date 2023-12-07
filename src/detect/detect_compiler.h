@@ -132,7 +132,7 @@
  * @brief Compiler short name
  **/
 #if defined(DOXYGEN)
-#define TBC_COMPILER_NAME "DOXYGEN"
+#define TBC_COMPILER_NAME "COMILER"
 #elif defined(TBC_COMPILER_ID_TCC)
 #define TBC_COMPILER_NAME "TCC"
 #elif defined(TBC_COMPILER_ID_CC65)

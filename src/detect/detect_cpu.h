@@ -18,8 +18,6 @@
 #ifndef H_DETECT_CPU_TBC
 #define H_DETECT_CPU_TBC
 
-#include "detect_warning.h"
-
 #if defined(DOXYGEN)
 #define TBC_CPU_ARCH_32BITS
 #define TBC_CPU_ARCH_64BITS
@@ -111,12 +109,12 @@
 #define TBC_CPU_NAME "UNKNOWN"
 #define TBC_CPU_ARCH_8BITS
 #define TBC_CPU_BYTE_SEXLE
-#if defined(TBC_WARNING_ERR)
-#error "[3BC] CPU Unknown"
-#elif defined(TBC_WARNING_STD)
-#warning "[3BC] CPU Unknown"
-#elif defined(TBC_WARNING_MSVC)
+#if defined(_MSC_VER) || defined(__Z88DK) 
 #pragma message("[3BC] CPU Unknown")
+#elif defined(TBC_WARNING_ERR)
+#error "[3BC] CPU Unknown"
+#elif !defined(TBC_WARNING_NOT)
+#warning "[3BC] CPU Unknown"
 #endif
 #endif
 

@@ -1,8 +1,6 @@
 #ifndef H_BUS_MEM_0000_TBC
 #define H_BUS_MEM_0000_TBC
 
-#include "3bc_types.h"
-
 #include <stddef.h>
 
 typedef struct ___tbc_mem_s tbc_mem_st;

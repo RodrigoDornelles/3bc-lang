@@ -1,4 +1,6 @@
 #include "3bc.h"
+#include "3bc_types.h"
+#include "driver/driver_interrupt.h"
 
 static const tbc_u8_t prog[] = {
     MODE, NILL, TBC_MODE_STRING,
