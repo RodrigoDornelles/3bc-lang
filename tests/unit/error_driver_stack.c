@@ -15,7 +15,7 @@ int main()
         unsigned char stack[16] = {0};
         driver_stack_init(&app, &stack, 0);
         assert(app.rc == TBC_RET_THROW_ERROR);
-        assert(app.cache_l1.error == ERROR_MEM_STACK_CFG_MIS);
+        assert(app.cache.l1.error == ERROR_MEM_STACK_CFG_MIS);
     }
     /** Test case 2: Stack configuration with insufficient stack size */
     {
@@ -24,7 +24,7 @@ int main()
         unsigned char stack[4] = {0};
         driver_stack_init(&app, &stack, sizeof(stack));
         assert(app.rc == TBC_RET_THROW_ERROR);
-        assert(app.cache_l1.error == ERROR_MEM_STACK_CFG_MIN);
+        assert(app.cache.l1.error == ERROR_MEM_STACK_CFG_MIN);
     }
     /** Test case 3: Stack configuration with insufficient memory to configure all components */
     {
@@ -33,6 +33,6 @@ int main()
         unsigned char stack[16] = {0};
         driver_stack_init(&app, &stack, sizeof(stack));
         assert(app.rc == TBC_RET_THROW_ERROR);
-        assert(app.cache_l1.error == ERROR_MEM_STACK_CFG_OUT);
+        assert(app.cache.l1.error == ERROR_MEM_STACK_CFG_OUT);
     }
 }

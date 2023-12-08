@@ -29,7 +29,7 @@ union ___u8_u16_t {
  * @par JOKE
  * why you need for CPP if C language is already 'complete and total'?
  * { .keyword.name = "mode", .opcode = 7 } <-- not allowed in C++
- */
+ * @todo refact
 const tbc_keyword_st opcodes_arr[] = { { "aloc", 2 },
     { "back", 1 }, { "call", 1 }, { "fake", 2 }, { "fcal", 2 }, { "fgto", 2 },
     { "free", 1 }, { "fret", 2 }, { "goto", 1 }, { "math", 1 }, { "micr", 3 },
@@ -39,8 +39,8 @@ const tbc_keyword_st opcodes_arr[] = { { "aloc", 2 },
     { "pull", 3 }, { "push", 5 }, { "real", 1 }, { "seco", 5 }, { "spin", 4 },
     { "strb", 1 }, { "strc", 5 }, { "stri", 3 }, { "stro", 2 }, { "strx", 4 },
     { "zcal", 3 }, { "zgto", 3 }, { "zret", 3 } };
-
-const tbc_i8_t opcodes_size = sizeof(opcodes_arr) / sizeof(*opcodes_arr);
+*/
+//const tbc_i8_t opcodes_size = sizeof(opcodes_arr) / sizeof(*opcodes_arr);
 
 static const tbc_u8_t column_size[] = {3, 9 ,12};
 static const tbc_u8_t column_errors[] = {ERROR_INVALID_REGISTER,
@@ -147,7 +147,7 @@ void lang_3bc_compile(tbc_app_st *const self)
                 }
             }
             else if (tokens_idk[i] == 4) {
-                tbc_i16_t key = util_dsl_keyword(tokens[i], opcodes_arr, opcodes_size);
+                /*tbc_i16_t key = util_dsl_keyword(tokens[i], opcodes_arr, opcodes_size);
                 if (key >= 0) {
                     if (column_size[i] > 8) {
                         *cpu_r[i].u16 = opcodes_arr[key].value;
@@ -156,7 +156,7 @@ void lang_3bc_compile(tbc_app_st *const self)
                     }
                 } else {
                     self->cache.l1.error = ERROR_INVALID_MNEMONIC;
-                }
+                }*/
             }
             else {
                 self->cache.l1.error = column_errors[i];

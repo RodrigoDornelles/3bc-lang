@@ -2,11 +2,8 @@
 #include "types/types_null.h"
 #include "util/util_dsl.h"
 
-static tbc_keyword_st keywords[] = {
-    {"aldo", 2}, {"erdb", 3}, {"rona", 1}, {"socc", 2}
-};
-
-static const int kn = sizeof(keywords)/sizeof(tbc_keyword_st);
+static const char keywords[] = "aldo" "erdb" "rona" "socc";
+static const int kn = sizeof(keywords)/4;
 
 int main()
 {

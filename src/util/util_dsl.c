@@ -17,6 +17,7 @@
 
 #include <stdbool.h>
 #include "util_dsl.h"
+#include "detect/detect_cpu.h"
 #include "types/types_null.h"
 
 /**
@@ -237,14 +238,15 @@ tbc_i8_t util_dsl_line(char **beg, char **mid, char **end, char *src, tbc_u8_t s
  * @retval 0..32_768 when found
  *
  */
-tbc_i16_t util_dsl_keyword(const char *const src, const tbc_keyword_st *const kl, tbc_i16_t kn)
+tbc_i16_t util_dsl_keyword(const char *const src, const char *const keys, tbc_i16_t kn)
 {
     tbc_i16_t res = -2;
     tbc_i16_t low = 0;
     tbc_i16_t high = (kn - 1);
     tbc_i16_t mid;
     tbc_i32_t sum;
-    tbc_keyword_st my;
+    tbc_keyword_ut key;
+    tbc_keyword_ut *kl = (tbc_keyword_ut*) keys;
 
     do {
         if (src == NULL) {
@@ -260,27 +262,41 @@ tbc_i16_t util_dsl_keyword(const char *const src, const tbc_keyword_st *const kl
         /* correct params */
         res = -1;
 
+#if defined(TBC_CPU_BYTE_SEXBE)
+        /* copy normal */
+        key.name[0] = src[0];
+        key.name[1] = src[1];
+        key.name[2] = src[2];
+        key.name[3] = src[3];
+#elif defined(TBC_CPU_BYTE_SEXLE)
         /* copy reversed */
-        my.key.name[0] = src[3];
-        my.key.name[1] = src[2];
-        my.key.name[2] = src[1];
-        my.key.name[3] = src[0];
-
+        key.name[0] = src[3];
+        key.name[1] = src[2];
+        key.name[2] = src[1];
+        key.name[3] = src[0];
+#else
+#error "[3BC] CPU sex not found."
+#endif
         /* force to lowercase */
-        my.key.compare |= 0x20202020;
+        key.compare |= 0x20202020;
 
         /* binary search */
         do {
             /* find middle */
             mid = (low + high) / 2;
 
-            /* force litle endian sub */
+#if defined(TBC_CPU_BYTE_SEXBE)
+            /* native cpu sub */
+            sum = ((tbc_keyword_ut*)keys)[mid].compare - key.compare;
+#else
+            /* force big endian sub */
             sum = 0;
-            sum |= kl[mid].key.name[3];
-            sum |= kl[mid].key.name[2] << 8;
-            sum |= kl[mid].key.name[1] << 16;
-            sum |= kl[mid].key.name[0] << 24;
-            sum -= *(tbc_i32_t*)&my.key.compare;
+            sum |= ((tbc_keyword_ut*)keys)[mid].name[3];
+            sum |= ((tbc_keyword_ut*)keys)[mid].name[2] << 8;
+            sum |= ((tbc_keyword_ut*)keys)[mid].name[1] << 16;
+            sum |= ((tbc_keyword_ut*)keys)[mid].name[0] << 24;
+            sum -= key.compare;
+#endif
 
             /* found */
             if (sum == 0) {
@@ -298,6 +314,6 @@ tbc_i16_t util_dsl_keyword(const char *const src, const tbc_keyword_st *const kl
         } while (low <= high);
     }
     while(0);
-    
+
     return res;
 }
