@@ -2,7 +2,7 @@
 #include "util/util_dsl.h"
 
 static const char keywords[] = "aldo" "erdb" "rona" "socc";
-static const int kn = sizeof(keywords)/4;
+static const int kn = sizeof(keywords);
 
 int main()
 {

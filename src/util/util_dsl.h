@@ -12,6 +12,6 @@ union ___tbc_keyword_key_u {
 
 tbc_i8_t util_dsl_split(char** dest, tbc_u8_t* destn, char* src, tbc_u8_t dn, tbc_u8_t sn);
 tbc_i8_t util_dsl_line(char **beg, char **mid, char **end, char *src, tbc_u8_t sn);
-tbc_i16_t util_dsl_keyword(const char *const src,  const char *const keys, tbc_i16_t kn);
+tbc_i16_t util_dsl_keyword(const char *const src,  const char *const keys, tbc_u16_t kn);
 
 #endif

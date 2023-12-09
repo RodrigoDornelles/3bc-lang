@@ -24,23 +24,28 @@ union ___u8_u16_t {
  * representation of the menomonics for registers
  * with their respective opcodes.
  *
- * @note must be ordered.
- *
- * @par JOKE
- * why you need for CPP if C language is already 'complete and total'?
- * { .keyword.name = "mode", .opcode = 7 } <-- not allowed in C++
- * @todo refact
-const tbc_keyword_st opcodes_arr[] = { { "aloc", 2 },
-    { "back", 1 }, { "call", 1 }, { "fake", 2 }, { "fcal", 2 }, { "fgto", 2 },
-    { "free", 1 }, { "fret", 2 }, { "goto", 1 }, { "math", 1 }, { "micr", 3 },
-    { "mili", 4 }, { "mode", 7 }, { "moff", 3 }, { "muse", 4 }, { "nb02", 1 },
-    { "nb08", 2 }, { "nb10", 3 }, { "nb16", 4 }, { "ncal", 5 }, { "ngto", 5 },
-    { "nill", 0 }, { "nret", 5 }, { "pcal", 4 }, { "pgto", 4 }, { "pret", 4 },
-    { "pull", 3 }, { "push", 5 }, { "real", 1 }, { "seco", 5 }, { "spin", 4 },
-    { "strb", 1 }, { "strc", 5 }, { "stri", 3 }, { "stro", 2 }, { "strx", 4 },
-    { "zcal", 3 }, { "zgto", 3 }, { "zret", 3 } };
-*/
-//const tbc_i8_t opcodes_size = sizeof(opcodes_arr) / sizeof(*opcodes_arr);
+ * @pre must be ordered.
+ */
+const char opcodes_key[] = "aloc"
+    "back"  "call"  "fake"  "fcal"  "fgto"
+    "free"  "fret"  "goto"  "math"  "micr"
+    "mili"  "mode"  "moff"  "muse"  "nb02"
+    "nb08"  "nb10"  "nb16"  "ncal"  "ngto"
+    "nill"  "nret"  "pcal"  "pgto"  "pret"
+    "pull"  "push"  "real"  "seco"  "spin"
+    "strb"  "strc"  "stri"  "stro"  "strx"
+    "zcal"  "zgto"  "zret";
+
+const tbc_u8_t opcodes_val[] = { 2,
+   1, 1, 2, 2, 2,
+   1, 2, 1, 1, 3,
+   4, 7, 3, 4, 1,
+   2, 3, 4, 5, 5,
+   0, 5, 4, 4, 4,
+   3, 5, 1, 5, 4,
+   1, 5, 3, 2, 4,
+   3, 3, 3
+};
 
 static const tbc_u8_t column_size[] = {3, 9 ,12};
 static const tbc_u8_t column_errors[] = {ERROR_INVALID_REGISTER,
@@ -147,16 +152,16 @@ void lang_3bc_compile(tbc_app_st *const self)
                 }
             }
             else if (tokens_idk[i] == 4) {
-                /*tbc_i16_t key = util_dsl_keyword(tokens[i], opcodes_arr, opcodes_size);
+                tbc_i16_t key = util_dsl_keyword(tokens[i], opcodes_key, sizeof(opcodes_key));
                 if (key >= 0) {
                     if (column_size[i] > 8) {
-                        *cpu_r[i].u16 = opcodes_arr[key].value;
+                        *cpu_r[i].u16 = opcodes_val[key];
                     } else {
-                        *cpu_r[i].u8 = opcodes_arr[key].value;
+                        *cpu_r[i].u8 = opcodes_val[key];
                     }
                 } else {
                     self->cache.l1.error = ERROR_INVALID_MNEMONIC;
-                }*/
+                }
             }
             else {
                 self->cache.l1.error = column_errors[i];

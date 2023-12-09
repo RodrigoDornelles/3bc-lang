@@ -220,39 +220,37 @@ tbc_i8_t util_dsl_line(char **beg, char **mid, char **end, char *src, tbc_u8_t s
 /**
  * @short keyword index from string
  * @brief find opcode value given a list of keywords
- * @details binary search optimized for 4-letter keywords in an array
- * that contains a sorted key and a 2-byte (16bit) value.
- * @todo use string instead struct
+ * @details binary search optimized for 4-letter keywords in string.
  * @note this function is case unsensitive.
  * @note this function has operation complexity @f$O(log (n))@f$.
  * @note this function has endless optimization.
  * @note this function has old processors optimization.
  * @param[in] src string source
- * @param[in] kl keyword list @b (array) of @c tbc_keyword_st
- * @param[in] kn keyword size @b (bytes)
- * @pre @c kl must be ordered by key
- * @pre @c kl must be lowcase keywords
+ * @param[in] keys keyword list @b (char*)
+ * @param[in] kn keyword list size @b (bytes)
+ * @pre @c keys must be ordered
+ * @pre @c keys must be lowcase
+ * @pre @c kn must be @c keys*4 also size of string.
  * @return index of keyword
  * @retval -1 when not found
  * @retval -2 wrong paramters
- * @retval 0..32_768 when found
+ * @retval 0..16_383 when found
  *
  */
-tbc_i16_t util_dsl_keyword(const char *const src, const char *const keys, tbc_i16_t kn)
+tbc_i16_t util_dsl_keyword(const char *const src, const char *const keys, tbc_u16_t kn)
 {
     tbc_i16_t res = -2;
     tbc_i16_t low = 0;
-    tbc_i16_t high = (kn - 1);
+    tbc_i16_t high = ((kn - 1) >> 2);
     tbc_i16_t mid;
     tbc_i32_t sum;
     tbc_keyword_ut key;
-    tbc_keyword_ut *kl = (tbc_keyword_ut*) keys;
 
     do {
         if (src == NULL) {
             break;
         }
-        if (kl == NULL) {
+        if (keys == NULL) {
             break;    
         }
         if (kn <= 0) {
@@ -282,8 +280,8 @@ tbc_i16_t util_dsl_keyword(const char *const src, const char *const keys, tbc_i1
 
         /* binary search */
         do {
-            /* find middle */
-            mid = (low + high) / 2;
+            /* find middle (overflow protected) */
+            mid = (low+high) >> 1;
 
 #if defined(TBC_CPU_BYTE_SEXBE)
             /* native cpu sub */

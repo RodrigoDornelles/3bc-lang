@@ -3,7 +3,7 @@
 #include "util/util_dsl.h"
 
 static const char keywords[] = "aldo" "erdb" "rona" "socc";
-static const int kn = sizeof(keywords)/4;
+static const int kn = sizeof(keywords);
 
 int main()
 {
@@ -19,11 +19,6 @@ int main()
     {
         char key[] = "rona";
         int index = util_dsl_keyword(key, keywords, 0);
-        assert(index == -2);
-    }
-    {
-        char key[] = "foot";
-        int index = util_dsl_keyword(key, keywords, -1);
         assert(index == -2);
     }
     {
