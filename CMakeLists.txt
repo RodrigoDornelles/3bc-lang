@@ -72,13 +72,19 @@ if(BUILD_INTERPRETER)
     tbc_size("3bc" "32k")
 endif(BUILD_INTERPRETER)
 
-option(BUILD_INFO "Build informations" "OFF")
+option(BUILD_INFO "Build info" "OFF")
 if(BUILD_INFO)
-    add_executable("info" "${CMAKE_SOURCE_DIR}/programs/info.c")
-    target_link_libraries("info"
-        tbc_alu_no_math;tbc_util;tbc_cpu_std;tbc_i18n
-        tbc_interpreter_lang;tbc_sys_std;tbc_driver_std;tbc_array_simple;
-        tbc_bus_lang;tbc_lang3bc
-    )
-    tbc_size("info" "32k")
+    set(I18N_LANG "en-us" CACHE STRING "")
+    add_executable("info" "${CMAKE_SOURCE_DIR}/programs/interpreter.c")
+    target_compile_options("info" PRIVATE "-DVIRTUAL_ARGV={\"3bc\", \"-i\"}")
+    target_link_libraries("info" tbc_alu_no_math)
+    target_link_libraries("info" tbc_util)
+    target_link_libraries("info" tbc_cpu_no_math)
+    target_link_libraries("info" tbc_i18n)
+    target_link_libraries("info" tbc_sys_std)
+    target_link_libraries("info" tbc_driver_no_math)
+    target_link_libraries("info" tbc_array_simple)
+    target_link_libraries("info" tbc_bus_lang)
+    target_link_libraries("info" tbc_lang3bc)
+    tbc_size("info" "16k")
 endif(BUILD_INFO)

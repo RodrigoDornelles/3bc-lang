@@ -150,6 +150,10 @@ void sys_nes_output(tbc_app_st *const self)
 
         /* special char: break line */
         if (tile == '\n') {
+            /* not feed in last character */
+            if ((cursor_tty.vram_address & 31) == 0) {
+                continue;
+            }
             /* line feed */
             cursor_tty.vram_address += 32;
             /* carrier return */

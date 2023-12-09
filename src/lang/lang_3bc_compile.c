@@ -71,10 +71,8 @@ static const tbc_u8_t column_errors[] = {ERROR_INVALID_REGISTER,
  */
 void lang_3bc_compile(tbc_app_st *const self)
 {
-/** @todo support CC65 */
-#if !defined(__CC65__)
     tbc_interpreter_root_st *const interpreter = self->stack.cfg.interpreter;
-    union ___u8_u16_t cpu_r[] = {&self->cpu.rx, &self->cpu.ry, &self->cpu.rz};
+    union ___u8_u16_t cpu_r[3];
     char* tokens[3];
     char negative;
     char* line;
@@ -85,6 +83,10 @@ void lang_3bc_compile(tbc_app_st *const self)
     tbc_i8_t line_n;
     util_stoi_ft cast;
     tbc_u8_t i = 0;
+
+    cpu_r[0].ptr = &self->cpu.rx;
+    cpu_r[1].ptr = &self->cpu.ry;
+    cpu_r[2].ptr = &self->cpu.rz;
 
     do {
         if (self->state != FSM_3BC_READING) {
@@ -180,5 +182,4 @@ void lang_3bc_compile(tbc_app_st *const self)
         self->rc = TBC_RET_FULL;
     }
     while(0);
-#endif
 }
