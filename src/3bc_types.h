@@ -50,8 +50,6 @@ typedef struct app_3bc_s tbc_app_st;
 #include "types/types_stack.h"
 
 /** @todo remove all*/
-typedef unsigned short int line_3bc_t;
-typedef unsigned short int tbc_line_t;
 typedef signed long data_aux_3bc_t;
 
 /** application 3bc id (depends of cpu size)**/

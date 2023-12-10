@@ -47,6 +47,8 @@ const tbc_u8_t opcodes_val[] = { 2,
    3, 3, 3
 };
 
+static tbc_error_et lang_3bc_compile_label_insert(tbc_interpreter_root_st *const, tbc_u16_t hash);
+
 static const tbc_u8_t column_size[] = {3, 9 ,12};
 static const tbc_u8_t column_errors[] = {ERROR_INVALID_REGISTER,
     ERROR_INVALID_ADR, ERROR_INVALID_CONSTANT };
@@ -132,6 +134,16 @@ void lang_3bc_compile(tbc_app_st *const self)
             break;
         }
 
+        if(tokens_n == 1) {
+            tbc_u16_t hash;
+            util_djb2(&hash, tokens[0], 16, tokens_idk[0]);
+            self->cache.l1.error = lang_3bc_compile_label_insert(interpreter, hash);
+            if (self->cache.l1.error != ERROR_UNKNOWN) {
+                self->rc = TBC_RET_THROW_ERROR;
+            }
+            break;
+        }
+
         /* magic array parser*/
         while (i < tokens_n) {
             cast = util_stoi_auto(&tokens[i], &tokens_idk[i], tokens[i], tokens_idk[i]);
@@ -180,6 +192,37 @@ void lang_3bc_compile(tbc_app_st *const self)
         }
 
         self->rc = TBC_RET_FULL;
+        ++interpreter->line;
     }
     while(0);
+}
+
+static tbc_error_et lang_3bc_compile_label_insert(tbc_interpreter_root_st *const interpreter, tbc_u16_t hash)
+{
+    tbc_u16_t index;
+    tbc_error_et res = ERROR_UNKNOWN;
+    tbc_interpreter_label_st* segment_label;
+    
+    do {
+        if ((interpreter->index_line + interpreter->index_label + sizeof(tbc_interpreter_label_st)) >= interpreter->segment_size) {
+            res = ERROR_MEM_BUILDER_LABEL_OUT;
+            break;
+        }
+
+        while (index <= interpreter->index_label) {
+            ++index;
+            segment_label = &interpreter->segments[interpreter->segment_size - (index * sizeof(tbc_interpreter_label_st))];
+            if (segment_label->hash == hash) {
+                res = ERROR_INVALID_LABEL_EXIST;
+                break;
+            }
+        }
+
+        segment_label->hash = hash;
+        segment_label->line = interpreter->line;
+        ++interpreter->index_label;
+    }
+    while(0);
+
+    return res;
 }

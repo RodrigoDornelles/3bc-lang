@@ -17,8 +17,8 @@ void lang_3bc_cli_init(tbc_app_st *const self, int argc, char** argv, void* buf,
     char* param;
     tbc_interpreter_root_st *const interpreter = self->stack.cfg.interpreter;
     interpreter->segments = buf;
-    /** @todo move magic number*/
     interpreter->line_size = 32u;
+    interpreter->segment_size = size - sizeof(tbc_interpreter_root_st);
     
     do {
         char* param;

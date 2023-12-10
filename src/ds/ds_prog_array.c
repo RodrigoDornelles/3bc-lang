@@ -13,7 +13,7 @@ void ds_prog_arrayc_next(tbc_app_st *const self)
  */
 void ds_prog_arrayc_clean(tbc_app_st *const self)
 {
-    tbc_line_t program_counter = (self->stack.cfgmin.prog->index * 3);
+    tbc_u16_t program_counter = (self->stack.cfgmin.prog->index * 3);
     while (program_counter && self->cin.tty_storage.io.arr.ptr) {
         self->cin.tty_storage.io.arr.ptr[program_counter] = 0;
         --program_counter;
@@ -37,7 +37,7 @@ void ds_prog_arrayc_exist(tbc_app_st *const self)
  */
 void ds_prog_array888_load(tbc_app_st *const self)
 {
-    tbc_line_t program_counter = self->stack.cfgmin.prog->index * 3;
+    tbc_u16_t program_counter = self->stack.cfgmin.prog->index * 3;
     self->cpu.rx = self->cin.tty_storage.io.arr.ptr[program_counter];
     ++program_counter;
     self->cpu.ry = self->cin.tty_storage.io.arr.ptr[program_counter];
@@ -51,7 +51,7 @@ void ds_prog_array888_load(tbc_app_st *const self)
  */
 void ds_prog_array888_insert(tbc_app_st *const self)
 {
-    tbc_line_t program_counter = (self->stack.cfgmin.prog->index * 3);
+    tbc_u16_t program_counter = (self->stack.cfgmin.prog->index * 3);
     self->cin.tty_storage.io.arr.ptr[program_counter] = self->cpu.rx;
     ++program_counter;
     self->cin.tty_storage.io.arr.ptr[program_counter] = self->cpu.ry;
@@ -67,7 +67,7 @@ void ds_prog_array888_insert(tbc_app_st *const self)
  */
 void ds_prog_array3912_load(tbc_app_st *const self)
 {
-    tbc_line_t program_counter = (self->stack.cfgmin.prog->index * 3) + 2;
+    tbc_u16_t program_counter = (self->stack.cfgmin.prog->index * 3) + 2;
     self->cpu.rz = self->cin.tty_storage.io.arr.ptr[program_counter];
     --program_counter;
     self->cpu.ry = self->cin.tty_storage.io.arr.ptr[program_counter];
@@ -86,7 +86,7 @@ void ds_prog_array3912_load(tbc_app_st *const self)
  */
 void ds_prog_array3912_insert(tbc_app_st *const self)
 {
-    tbc_line_t program_counter = self->stack.cfgmin.prog->index * 3;
+    tbc_u16_t program_counter = self->stack.cfgmin.prog->index * 3;
     self->cin.tty_storage.io.arr.ptr[program_counter] = (0x7 & self->cpu.rx);
     self->cin.tty_storage.io.arr.ptr[program_counter] |= (0x800 & self->cpu.rx) >> 8;
     self->cin.tty_storage.io.arr.ptr[program_counter] |= (0xf0000 & self->cpu.rz) >> 8;

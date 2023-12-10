@@ -48,6 +48,8 @@ struct ___tbc_interpreter_label_s {
 struct ___tbc_interpreter_root_s {
     tbc_interpreter_type_et type;
     tbc_fsm_compiler_et state;
+    tbc_u16_t segment_size;
+    tbc_u16_t line;
     union ___tbc_interpreter_open_u io;
     /**
      * @brief points to fist segment of @c segments (when needs)
