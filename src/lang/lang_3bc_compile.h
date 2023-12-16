@@ -11,7 +11,11 @@ extern "C" {
 
 #if defined(TBC_SOURCE_ENTRY)
 
+#include "types/types_errors.h"
+#include "types/types_interpreter.h"
+
 void lang_3bc_compile(tbc_app_st *const self);
+tbc_error_et lang_3bc_compile_label_insert(tbc_interpreter_root_st *const, tbc_u16_t hash);
 
 #else
 

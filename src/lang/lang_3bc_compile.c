@@ -1,3 +1,4 @@
+#define TBC_SOURCE_ENTRY
 #include "3bc_types.h"
 #include "bus/bus_mem_0000.h"
 #include "util/util_djb2.h"
@@ -5,8 +6,7 @@
 #include "util/util_ascii.h"
 #include "util/util_dsl.h"
 #include "lang/lang_3bc_cli.h"
-#include "types/types_errors.h"
-#include "types/types_interpreter.h"
+#include "lang/lang_3bc_compile.h"
 
 /** @todo remove <stdio.h> */
 #ifndef TBC_TCC_NOSTDINC
@@ -46,8 +46,6 @@ const tbc_u8_t opcodes_val[] = { 2,
    1, 5, 3, 2, 4,
    3, 3, 3
 };
-
-static tbc_error_et lang_3bc_compile_label_insert(tbc_interpreter_root_st *const, tbc_u16_t hash);
 
 static const tbc_u8_t column_size[] = {3, 9 ,12};
 static const tbc_u8_t column_errors[] = {ERROR_INVALID_REGISTER,
@@ -197,7 +195,7 @@ void lang_3bc_compile(tbc_app_st *const self)
     while(0);
 }
 
-static tbc_error_et lang_3bc_compile_label_insert(tbc_interpreter_root_st *const interpreter, tbc_u16_t hash)
+tbc_error_et lang_3bc_compile_label_insert(tbc_interpreter_root_st *const interpreter, tbc_u16_t hash)
 {
     tbc_u16_t index;
     tbc_error_et res = ERROR_UNKNOWN;
@@ -210,8 +208,8 @@ static tbc_error_et lang_3bc_compile_label_insert(tbc_interpreter_root_st *const
         }
 
         while (index <= interpreter->index_label) {
-            ++index;
-            segment_label = &interpreter->segments[interpreter->segment_size - (index * sizeof(tbc_interpreter_label_st))];
+            index += sizeof(tbc_interpreter_label_st);
+            segment_label = &interpreter->segments[interpreter->segment_size - index];
             if (segment_label->hash == hash) {
                 res = ERROR_INVALID_LABEL_EXIST;
                 break;
@@ -220,7 +218,7 @@ static tbc_error_et lang_3bc_compile_label_insert(tbc_interpreter_root_st *const
 
         segment_label->hash = hash;
         segment_label->line = interpreter->line;
-        ++interpreter->index_label;
+        interpreter->index_label = index;
     }
     while(0);
 
