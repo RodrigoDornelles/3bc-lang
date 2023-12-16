@@ -16,6 +16,7 @@ extern "C" {
 
 void lang_3bc_compile(tbc_app_st *const self);
 tbc_error_et lang_3bc_compile_label_insert(tbc_interpreter_root_st *const, tbc_u16_t hash);
+bool lang_3bc_compile_label_search(tbc_interpreter_root_st *const interpreter, tbc_u16_t hash, tbc_u16_t *const line);
 
 #else
 

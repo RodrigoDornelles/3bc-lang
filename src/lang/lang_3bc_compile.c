@@ -55,19 +55,25 @@ static const tbc_u8_t column_errors[] = {ERROR_INVALID_REGISTER,
  * @par Extended Backus-Naur Form
  * @startebnf
  * line = instruction, [comment] | comment | tag;
- * instruction = register, address, constant;
- * comment = ("#" | ";"), {?any ASCII character? (* Ignore everything until\nline break or end of file *)}-;
- * register = mnemonic | number | nill;
- * address = character | number | hash | nill;
- * constant = character | number | hash | label | nill;
+ * instruction = 3 * column;
+ * column = mnemonic | number | character | label | hash;
  * mnemonic = 4*"a-Z0-9";
- * number = ?0-9?, {?0-9? | "_"} | "0b", ?0-1?, {?0-1? | "_"} | "0o", ?0-7?, {?0-7? | "_"} | ("0d" | "0i"), ?0-9?, {?0-9? | "_"} | "0x", ?0-9A-F?, {?0-9A-F? | "_"};
- * nill = "nill";
+ * number = "0b", ?0-1?, {?0-1? | "_"} | "0o", ?0-7?, {?0-7? | "_"} | ["0d"], ?0-9?, {?0-9? | "_"} | "0x", ?0-9A-F?, {?0-9A-F? | "_"};
  * character = "'", ?any ASCII character? , "'" | "'", "\", ("0" | "t" | "n" | "'" | "\") , "'" ;
  * hash = ":", { ?non-special ASCII character? }-;
  * label = "$", { ?non-special ASCII character? }-;
  * tag = { ?non-special ASCII character? }-, ":";
+ * comment = ("#" | ";"), {?any ASCII character? (* Ignore everything until\nline break or end of file *)}-;
  * @endebnf
+ * @throw ERROR_INVALID_SYNTAX
+ * @throw ERROR_COLUMNS
+ * @throw ERROR_INVALID_LABEL_COLUMN
+ * @throw ERROR_CHAR_SCAPE
+ * @throw ERROR_COLUMNS
+ * @throw ERROR_INVALID_MNEMONIC
+ * @throw ERROR_INVALID_REGISTER
+ * @throw ERROR_INVALID_ADR
+ * @throw ERROR_INVALID_CONSTANT
  */
 void lang_3bc_compile(tbc_app_st *const self)
 {
@@ -134,7 +140,7 @@ void lang_3bc_compile(tbc_app_st *const self)
 
         if(tokens_n == 1) {
             tbc_u16_t hash;
-            util_djb2(&hash, tokens[0], 16, tokens_idk[0]);
+            util_djb2(&hash, tokens[0], 16, tokens_idk[0] - 1);
             self->cache.l1.error = lang_3bc_compile_label_insert(interpreter, hash);
             if (self->cache.l1.error != ERROR_UNKNOWN) {
                 self->rc = TBC_RET_THROW_ERROR;
@@ -150,6 +156,17 @@ void lang_3bc_compile(tbc_app_st *const self)
             }
             else if (tokens[i][0] == ':') {                
                 self->cache.l1.error = util_djb2(cpu_r[i].ptr, tokens[i], column_size[i], tokens_idk[i]);
+            }
+            else if (tokens[i][0] == '$') {
+                tbc_u16_t hash;
+                util_djb2(&hash, &tokens[i][1], 16, tokens_idk[i] - 1);
+                if (i < 2) {
+                    self->cache.l1.error = ERROR_INVALID_LABEL_COLUMN;
+                }
+                else if (!lang_3bc_compile_label_search(interpreter, hash, cpu_r[i].u16)) {
+                    /** @todo label to future */
+                    self->cache.l1.error = ERROR_INVALID_CONSTANT;
+                }
             }
             else if (tokens[i][0] == '\'') {
                 negative = util_ascii(tokens[i], tokens_idk[i]);
@@ -209,7 +226,7 @@ tbc_error_et lang_3bc_compile_label_insert(tbc_interpreter_root_st *const interp
 
         while (index <= interpreter->index_label) {
             index += sizeof(tbc_interpreter_label_st);
-            segment_label = &interpreter->segments[interpreter->segment_size - index];
+            segment_label = (tbc_interpreter_label_st*) &interpreter->segments[interpreter->segment_size - index];
             if (segment_label->hash == hash) {
                 res = ERROR_INVALID_LABEL_EXIST;
                 break;
@@ -221,6 +238,25 @@ tbc_error_et lang_3bc_compile_label_insert(tbc_interpreter_root_st *const interp
         interpreter->index_label = index;
     }
     while(0);
+
+    return res;
+}
+
+bool lang_3bc_compile_label_search(tbc_interpreter_root_st *const interpreter, tbc_u16_t hash, tbc_u16_t *const line)
+{
+    tbc_u16_t index;
+    tbc_interpreter_label_st* segment_label;
+    bool res = false;
+
+    while (index <= interpreter->index_label) {
+        index += sizeof(tbc_interpreter_label_st);
+        segment_label = (tbc_interpreter_label_st*) &interpreter->segments[interpreter->segment_size - index];
+        if (segment_label->hash == hash) {
+            *line = segment_label->line;
+            res = true;
+            break;
+        }
+    }
 
     return res;
 }
