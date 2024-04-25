@@ -2,7 +2,7 @@
 #define H_TYPES_FUNC_TBC
 
 #include "types/types_primitive.h"
-#include <stdbool.h>
+#include "types/types_bool.h"
 
 typedef union ___tbc_func_u tbc_func_ft;
 

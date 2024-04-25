@@ -15,9 +15,9 @@
  * refer to https://www.gnu.org/licenses/
  */
 
-#include <stdbool.h>
 #include "util_dsl.h"
 #include "detect/detect_cpu.h"
+#include "types/types_bool.h"
 #include "types/types_null.h"
 
 /**
